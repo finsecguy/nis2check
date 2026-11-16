@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import datetime as dt
+import mimetypes
 import os
 import threading
 
@@ -15,6 +16,9 @@ from .config import load_settings
 from .models import ROLE_LABELS, User, make_session
 
 csrf = CSRFProtect()
+
+# Guarantee the manifest's type on minimal images that lack it, so nosniff does not reject it.
+mimetypes.add_type("application/manifest+json", ".webmanifest")
 
 
 def create_app(**overrides) -> Flask:

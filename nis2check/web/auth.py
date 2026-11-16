@@ -19,10 +19,8 @@ bp = Blueprint("auth", __name__)
 MIN_PASSWORD = 12
 MAX_FAILURES, WINDOW_SECONDS = 10, 15 * 60
 MAX_FAILURES_PER_ACCOUNT = 30  # across all addresses, against distributed guessing
-# In-memory failed-login counters. These live in the process and reset on restart, and
-# are not shared between workers, so the throttle is only correct while the app runs as a
-# single process. The Dockerfile pins gunicorn to one worker (--workers 1) for this reason;
-# running multiple workers or replicas would give each its own counters and weaken it.
+# Per-process failed-login counters; reset on restart. Correct only with one worker
+# (the Dockerfile pins --workers 1), as counters are not shared across processes.
 _failures: dict[str, deque] = defaultdict(deque)
 
 
@@ -130,8 +128,7 @@ def _email_verified(provider: str, claims: dict) -> bool:
 
     if _true(claims.get("email_verified")):
         return True
-    # xms_edov vouches for the `email` claim specifically, so ignore it when the address
-    # had to be taken from the preferred_username fallback instead.
+    # xms_edov vouches for the `email` claim only, not a preferred_username fallback.
     if provider != "google" and _true(claims.get("xms_edov")) and claims.get("email"):
         return True
     return False
@@ -164,8 +161,7 @@ def resolve_sso_user(db, settings, provider: str, claims: dict) -> User:
     if user is None:
         if not settings.oidc_auto_provision:
             raise SSOError("You do not have an account yet. Ask an administrator to add you.")
-        # A brand-new account gets the default (low) role and puts no existing account at
-        # risk; the domain allow-list is the guard here, so we do not require xms_edov.
+        # A new account gets the default role; the domain allow-list is the guard, so no xms_edov.
         user = User(email=email, name=claims.get("name", ""), role=settings.oidc_default_role,
                     sso_subject=subject)
         db.add(user)
@@ -177,9 +173,8 @@ def resolve_sso_user(db, settings, provider: str, claims: dict) -> User:
     if user.sso_subject and user.sso_subject != subject:
         raise SSOError("This account is linked to a different sign-in identity.")
     if not user.sso_subject:
-        # First SSO sign-in for a pre-existing account (e.g. the local setup admin).
-        # Only bind it to this identity when the provider has verified the address,
-        # otherwise anyone able to mint an unverified token for it takes the account over.
+        # First SSO sign-in for a pre-existing account: bind it only on a verified address,
+        # else anyone minting an unverified token for it could take it over.
         if not verified:
             raise SSOError(
                 "Your identity provider has not verified your email address, so it cannot "
@@ -233,9 +228,7 @@ def login():
     if request.method == "POST":
         if not settings.local_login:
             abort(404)
-        # Cap the submitted email (254 is the RFC 5321 maximum) before it becomes a
-        # throttle key or an audit entry, so an attacker cannot bloat either with an
-        # arbitrarily long value.
+        # Cap at the RFC 5321 maximum before it becomes a throttle key or audit entry.
         email = request.form.get("email", "").strip().lower()[:254]
         password = request.form.get("password", "")
         if _throttled(email):

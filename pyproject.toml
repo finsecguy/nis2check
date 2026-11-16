@@ -32,7 +32,8 @@ nis2check = "nis2check.cli:main"
 include = ["nis2check*"]
 
 [tool.setuptools.package-data]
-nis2check = ["data/*.yaml", "templates/*.j2", "web/templates/*.html", "web/static/*.css", "web/static/*.js", "web/static/fonts/*"]
+nis2check = ["data/*.yaml", "templates/*.j2", "web/templates/*.html", "web/static/*.css", "web/static/*.js",
+             "web/static/*.svg", "web/static/*.png", "web/static/*.ico", "web/static/*.webmanifest", "web/static/fonts/*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

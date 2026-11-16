@@ -239,9 +239,8 @@ def scheduler(app) -> None:
         try:
             with app.app_context():
                 db = app.extensions["nis2_db"]()
-                # NIS2_THREAT_AUTO_CHECK is a deployment gate (e.g. off for air-gapped
-                # installs); the DB setting is the in-app toggle. Both must be on, so an
-                # operator who disables it in the environment never gets outbound fetches.
+                # Env gate (e.g. off for air-gapped) and in-app toggle must both be on
+                # before any outbound fetch.
                 enabled = settings.threat_auto_check and get_setting(db, "threat_auto_check", "1") == "1"
                 last = get_setting(db, "threat_last_check", "")
                 app.extensions["nis2_db"].remove()

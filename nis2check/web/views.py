@@ -195,9 +195,8 @@ def save_question(qid: str):
     valid_until = _parse_date(request.form.get("valid_until"))
     back = redirect(url_for("main.assessment_domain", domain_id=q.domain_id, _anchor=qid))
 
-    # Validate the evidence before touching the database. A bad attachment or link is
-    # reported but must not discard the answer/notes (which are the primary data) or any
-    # valid evidence submitted with it, and a rejected file is never written to disk.
+    # Validate evidence first: a bad link or file is reported but never discards the
+    # answer/notes or a valid attachment, and a rejected file is never written to disk.
     errors: list[str] = []
     link = request.form.get("link", "").strip()
     if link and not _is_http_url(link):
@@ -241,12 +240,7 @@ def save_question(qid: str):
 
 
 def _is_http_url(link: str) -> bool:
-    """Accept only web links: the scheme must be http or https and a host must be present.
-
-    Parsing with urlsplit rejects other schemes (javascript:, data:, file:, ...) and
-    bare scheme-only values like https:foo that have no host. A malformed value that
-    urlsplit cannot parse is treated as invalid rather than raising.
-    """
+    """A web link only: http/https scheme with a host. Rejects javascript:, data:, file:, etc."""
     try:
         parts = urlsplit(link)
     except ValueError:
