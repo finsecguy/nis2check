@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Assessment{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div><h1>Assessment</h1><div class="sub">Forty questions across the twelve NIS2 requirements. Each answer is saved on its own, so you can stop at any point and pick up later.</div></div>
+</div>
+<table>
+  <thead><tr><th>Requirement</th><th class="nowrap">NIS2</th><th>Answered</th><th style="width: 20%;"></th><th class="num">Score</th><th class="num">Need evidence</th></tr></thead>
+  <tbody>
+  {% for d in result.domains %}
+    {% set dc = d.counts %}
+    {% set answered = dc.met + dc.partial + dc.gap + dc.na %}
+    {% set total = d.findings | length %}
+    <tr>
+      <td><span class="rag rag-{{ d.score_pct | rag }}" aria-hidden="true"></span><a href="{{ url_for('main.assessment_domain', domain_id=d.domain.id) }}">{{ d.domain.title }}</a></td>
+      <td class="nowrap small muted">{{ d.domain.article }}</td>
+      <td class="nowrap">{{ answered }} of {{ total }}</td>
+      <td><div class="bar" aria-hidden="true"><span class="rag-{{ d.score_pct | rag }}" style="width: {{ d.score_pct or 0 }}%"></span></div></td>
+      <td class="num">{{ d.score_pct | pct }}</td>
+      <td class="num">{{ d.findings | selectattr("evidence_issues") | list | length }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

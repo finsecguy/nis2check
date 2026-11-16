@@ -1,0 +1,6 @@
+{% extends "base.html" if current_user else "auth_base.html" %}
+{% block title %}Error {{ code }}{% endblock %}
+{% block content %}
+<h1>{{ message }}</h1>
+<p class="muted">Error {{ code }}. <a href="{{ url_for('main.dashboard') }}">Back to the dashboard</a></p>
+{% endblock %}

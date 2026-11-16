@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Organisation{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>Organisation</h1><div class="sub">These details decide whether NIS2 likely applies to you, and appear on the report cover.</div></div></div>
+
+<div class="grid2">
+<div>
+  <form method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    {% set ro = not current_user.can('admin') %}
+    <label for="name">Organisation name</label>
+    <input type="text" id="name" name="name" value="{{ org.name }}" {{ 'disabled' if ro }}>
+    <label for="sector">Sector</label>
+    <select id="sector" name="sector" {{ 'disabled' if ro }}>
+      <option value="">Select a sector</option>
+      {% for key, label in sectors.items() | sort(attribute="1") %}
+        <option value="{{ key }}" {{ 'selected' if org.sector == key }}>{{ label }}</option>
+      {% endfor %}
+      <option value="other" {{ 'selected' if org.sector == 'other' }}>Other (not listed in NIS2 Annex I or II)</option>
+    </select>
+    <div class="row">
+      <div><label for="employees">Employees</label>
+        <input type="number" min="0" id="employees" name="employees" value="{{ org.employees if org.employees is not none }}" {{ 'disabled' if ro }}></div>
+      <div><label for="t">Annual turnover (EUR)</label>
+        <input type="number" min="0" step="any" id="t" name="annual_turnover_eur" value="{{ '%.0f' % org.annual_turnover_eur if org.annual_turnover_eur is not none }}" {{ 'disabled' if ro }}></div>
+      <div><label for="b">Balance sheet total (EUR)</label>
+        <input type="number" min="0" step="any" id="b" name="balance_sheet_eur" value="{{ '%.0f' % org.balance_sheet_eur if org.balance_sheet_eur is not none }}" {{ 'disabled' if ro }}></div>
+    </div>
+    <label class="check"><input type="checkbox" name="size_exempt" {{ 'checked' if org.size_exempt }} {{ 'disabled' if ro }}>
+      We are a DNS provider, TLD registry or trust service provider (in scope regardless of size)</label>
+    {% if not ro %}<div class="actions"><button class="btn" type="submit">Save</button></div>
+    {% else %}<p class="small muted">Only administrators can change these details.</p>{% endif %}
+  </form>
+</div>
+<div>
+  <h2 style="margin-top: 0;">Does NIS2 apply?</h2>
+  <table class="kv">
+    <tr><th>Outcome</th><td><strong>{{ scope.label }}</strong></td></tr>
+    <tr><th>Enterprise size</th><td>{{ scope.size | capitalize }}</td></tr>
+    <tr><th>NIS2 annex</th><td>{{ "Annex " ~ scope.annex if scope.annex else "Not listed" }}</td></tr>
+  </table>
+  {% for n in scope.notes %}<div class="note">{{ n }}</div>{% endfor %}
+  <p class="small muted">Based on the size-cap rule and the sectors in NIS2 Annexes I and II. National law and designations by the competent authority can change the outcome.</p>
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NIS2 Gap Assessment - Acme Logistics s.r.o. (fictional)</title>
+<style>
+  /* White, black and one navy accent; red, amber and green only for status. */
+  @page {
+    size: A4;
+    margin: 20mm 18mm 20mm 18mm;
+    @bottom-left { content: "NIS2 gap assessment, confidential"; font: 7.5pt "Public Sans", Arial, sans-serif; color: rgba(0,0,0,.55); }
+    @bottom-right { content: counter(page) " of " counter(pages); font: 7.5pt "Public Sans", Arial, sans-serif; color: rgba(0,0,0,.55); }
+  }
+  :root {
+    --navy: #16285a; --black: #000; --text-2: rgba(0,0,0,.62); --line: rgba(0,0,0,.16);
+    --red: #b3261e; --amber: #e0a100; --green: #1e7f4f; --grey: rgba(0,0,0,.3);
+    --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+    --sans: "Public Sans", "Helvetica Neue", Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { background: #fff; }
+  body { margin: 0; font: 400 9.5pt/1.5 var(--sans); color: var(--black); }
+  .page { max-width: 210mm; margin: 0 auto 24px; padding: 20mm 18mm; }
+  h1 { font: 400 28pt/1.1 var(--serif); letter-spacing: -.01em; margin: 2pt 0 6pt; }
+  h2 { font: 600 14pt/1.3 var(--serif); margin: 26pt 0 9pt; page-break-after: avoid; break-after: avoid; }
+  h3 { font: 600 11pt/1.3 var(--serif); margin: 16pt 0 6pt; page-break-after: avoid; break-after: avoid; }
+  p { margin: 0 0 7pt; }
+  .kicker { font-size: 10pt; color: var(--text-2); }
+  .muted { color: var(--text-2); }
+  .small { font-size: 8pt; }
+
+  table { width: 100%; border-collapse: collapse; margin: 4pt 0 8pt; font-size: 8.5pt; }
+  th, td { padding: 5pt 8pt 5pt 0; text-align: left; vertical-align: top; border-bottom: 0.5pt solid var(--line); }
+  thead th { font-weight: 600; border-bottom: 1pt solid var(--black); }
+  td:last-child, th:last-child { padding-right: 0; }
+  tr { page-break-inside: avoid; break-inside: avoid; }
+  td.num, th.num { text-align: right; white-space: nowrap; }
+  td.c, th.c { text-align: center; }
+  .nowrap { white-space: nowrap; }
+
+  table.control { border-top: 1pt solid var(--black); }
+  table.control th { width: 30%; font-weight: 600; }
+
+  .rag { display: inline-block; width: 7pt; height: 7pt; border-radius: 50%; vertical-align: 0; margin-right: 5pt; }
+  .rag-red { background: var(--red); } .rag-amber { background: var(--amber); }
+  .rag-green { background: var(--green); } .rag-grey { background: var(--grey); }
+
+  table.headline td { border: 0; vertical-align: bottom; padding: 4pt 0 10pt; }
+  .figure { font: 400 64pt/0.9 var(--serif); color: var(--navy); letter-spacing: -.02em; white-space: nowrap; padding-right: 18pt !important; width: 1%; }
+  .figure sup { font-size: 26pt; vertical-align: top; }
+  .lede { font: 400 14pt/1.4 var(--serif); }
+  table.facts { border-top: 0.5pt solid var(--line); }
+  table.facts td { border: 0; width: 25%; padding-top: 8pt; color: var(--text-2); font-size: 8.5pt; }
+  table.facts strong { display: block; font: 600 14pt/1.2 var(--serif); color: var(--black); }
+
+  table.heat { width: auto; margin: 6pt 0 4pt; }
+  table.heat th, table.heat td { text-align: center; padding: 6pt 12pt; min-width: 22mm; border: 0.5pt solid #fff; }
+  table.heat thead th { border-bottom: 1pt solid var(--black); }
+  table.heat tbody th { text-align: left; font-weight: 600; }
+  table.heat td { font-weight: 600; font-size: 10pt; }
+  .h-red { background: var(--red); color: #fff; }
+  .h-amber, .h-yellow { background: var(--amber); }
+  .h-green { background: var(--green); color: #fff; }
+  td.h-empty { background: #fff; color: rgba(0,0,0,.35); border: 0.5pt solid var(--line); }
+
+  .bar { width: 100%; height: 3pt; background: var(--line); margin-top: 4pt; }
+  .bar span { display: block; height: 100%; }
+
+  table.matrix th, table.matrix td { border: 0.5pt solid var(--line); padding: 7pt 9pt; }
+  table.matrix thead th { border-bottom: 1pt solid var(--black); }
+  table.matrix td { width: 40%; height: 24mm; }
+  table.matrix tbody th { width: 20%; vertical-align: middle; font-weight: 600; }
+  .q-title { font-weight: 600; display: block; margin-bottom: 3pt; }
+  table.matrix td.q-quick { border: 1.25pt solid var(--navy); }
+  .q-quick .q-title { color: var(--navy); }
+  .note { border-left: 2pt solid var(--navy); padding: 2pt 0 2pt 10pt; margin: 8pt 0 10pt; font-size: 8.5pt; }
+  .appendix, .new-page { page-break-before: always; break-before: page; }
+
+  .toolbar { max-width: 210mm; margin: 0 auto; padding: 16px 18mm 0; text-align: right; }
+  .toolbar button { font: 600 13px var(--sans); color: #000; background: #fff; border: 1px solid #000;
+                    border-radius: 4px; padding: 6px 14px; margin-left: 6px; cursor: pointer; }
+  .toolbar button:first-child { background: var(--navy); border-color: var(--navy); color: #fff; }
+
+  @media print {
+    .toolbar { display: none; }
+    .page { padding: 0; margin: 0; max-width: none; }
+    thead { display: table-header-group; }
+  }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <button type="button" onclick="window.print()">Download PDF</button>
+  <button type="button" id="dl-csv">Download gap register (CSV)</button>
+</div>
+
+<div class="page">
+
+  <div class="kicker">NIS2 gap assessment</div>
+  <h1>Acme Logistics s.r.o. (fictional)</h1>
+  <p class="muted" style="margin-bottom: 14pt;">A self-assessment against Articles 20, 21 and 23 of Directive (EU) 2022/2555.</p>
+
+  <table class="control">
+    <tbody>
+      <tr><th>Organisation</th><td>Acme Logistics s.r.o. (fictional)</td></tr>
+      <tr><th>Assessment date</th><td>2026-11-15</td></tr>
+      <tr><th>Prepared by</th><td>Example assessor</td></tr>
+      <tr><th>Framework</th><td>Directive (EU) 2022/2555 (NIS2) (control catalogue v1.1)</td></tr>
+      <tr><th>Control weighting</th><td>Threat-informed (threat data of 2026-11-15: VCDB 2020-2026, ATT&amp;CK v20.1)</td></tr>
+      <tr><th>Report generated</th><td>16 Nov 2026 with nis2check 0.2.0</td></tr>
+      <tr><th>Classification</th><td>Confidential</td></tr>
+    </tbody>
+  </table>
+
+  <h2>1. Executive summary</h2>
+
+  <table class="headline">
+    <tbody><tr>
+      <td class="figure">54<sup>%</sup></td>
+      <td class="lede">of the NIS2 measures are in place. 40% can be shown with evidence today.</td>
+    </tr></tbody>
+  </table>
+  <table class="facts">
+    <tbody><tr>
+      <td><strong><span class="rag rag-amber"></span>Partial</strong>maturity</td>
+      <td><strong>13 of 39</strong>controls fully met</td>
+      <td><strong>1</strong>critical control not met</td>
+      <td><strong>10</strong>answers need evidence</td>
+    </tr></tbody>
+  </table>
+<p>Acme Logistics s.r.o. (fictional) was assessed against the cybersecurity risk-management, governance and incident reporting requirements of Directive (EU) 2022/2555 (NIS2), Articles 20, 21 and 23. Based on the information provided, the organisation is likely within the scope of NIS2 as an <b>important entity</b> (medium enterprise, Annex I sector).</p><p>Overall compliance is assessed at <b>54%</b> (maturity: partial). Of 39 applicable controls, 13 are met, 9 partially met, 15 not met and 2 not yet assessed. Only <b>40%</b> is supported by evidence, so the position should be treated as indicative until the 10 evidence gaps are closed.</p><p>The weakest areas are assessing the effectiveness of measures (Art. 21(2)(f), 0%), incident reporting obligations (Art. 23, 0%) and secure acquisition, development and maintenance; vulnerability handling (Art. 21(2)(e), 27%). 1 critical control is not met or not assessed; these should be addressed first (see section 4).</p><p>8 open items are high impact and low effort (quick wins): REP-02, BCM-02, GOV-03, REP-01, REP-03, MFA-01, and others. Closing these first gives the fastest reduction in risk (see section 3.3).</p>
+  <h2>2. Scope and applicability</h2>
+  <table class="control">
+    <tbody>
+      <tr><th>Indicative outcome</th><td><strong>Likely in scope (important entity)</strong></td></tr>
+      <tr><th>Sector</th><td>Transport (Annex I)</td></tr>
+      <tr><th>Enterprise size</th><td>Medium (85 employees)</td></tr>
+    </tbody>
+  </table>
+  <div class="note">Medium enterprise in an Annex I sector (Transport).<br>Member States may still designate it as essential.</div>
+
+  <h2>3. Compliance overview</h2>
+  <h3>3.1 Status by NIS2 requirement</h3>
+  <table>
+    <thead><tr>
+      <th class="c">RAG</th><th>Ref</th><th>Requirement</th><th class="nowrap">NIS2 ref.</th>
+      <th class="c">Met</th><th style="width: 22%;">Coverage</th><th class="num">Score</th><th class="num">Evidenced</th>
+    </tr></thead>
+    <tbody>
+      <tr>
+        <td class="c"><span class="rag rag-amber" style="margin:0"></span></td>
+        <td><strong>GOV</strong></td>
+        <td>Governance and management accountability</td>
+        <td class="nowrap">Art. 20</td>
+        <td class="c nowrap">2/4</td>
+        <td style="vertical-align: middle;"><div class="bar"><span class="rag-amber" style="width: 59.6%"></span></div></td>
+        <td class="num"><strong>60%</strong></td>
+        <td class="num">36%</td>
+      </tr>
+      <tr>
+        <td class="c"><span class="rag rag-green" style="margin:0"></span></td>
+        <td><strong>RISK</strong></td>
+        <td>Risk analysis and information system security policies</td>
+        <td class="nowrap">Art. 21(2)(a)</td>
+        <td class="c nowrap">2/3</td>
+        <td style="vertical-align: middle;"><div class="bar"><span class="rag-green" style="width: 87.5%"></span></div></td>
+        <td class="num"><strong>88%</strong></td>
+        <td class="num">88%</td>
+      </tr>
+      <tr>
+        <td class="c"><span class="rag rag-amber" style="margin:0"></span></td>
+        <td><strong>INC</strong></td>
+        <td>Incident handling</td>
+        <td class="nowrap">Art. 21(2)(b)</td>
+        <td class="c nowrap">1/3</td>
+        <td style="vertical-align: middle;"><div class="bar"><span class="rag-amber" style="width: 66.4%"></span></div></td>
+        <td class="num"><strong>66%</strong></td>
+        <td class="num">49%</td>
+      </tr>
+      <tr>
+        <td class="c"><span class="rag rag-amber" style="margin:0"></span></td>
+        <td><strong>BCM</strong></td>
+        <td>Business continuity and crisis management</td>
+        <td class="nowrap">Art. 21(2)(c)</td>
+        <td class="c nowrap">1/4</td>
+        <td style="vertical-align: middle;"><div class="bar"><span class="rag-amber" style="width: 44.8%"></span></div></td>
+        <td class="num"><strong>45%</strong></td>
+        <td class="num">45%</td>
+      </tr>
+      <tr>
+        <td class="c"><span class="rag rag-amber" style="margin:0"></span></td>
+        <td><strong>SUP</strong></td>
+        <td>Supply chain security</td>
+        <td class="nowrap">Art. 21(2)(d)</td>
+        <td class="c nowrap">1/3</td>
+        <td style="vertical-align: middle;"><div class="bar"><span class="rag-amber" style="width: 50.0%"></span></div></td>
+        <td class="num"><strong>50%</strong></td>
+        <td class="num">40%</td>
+      </tr>
+      <tr>
+        <td class="c"><span class="rag rag-red" style="margin:0"></span></td>
+        <td><strong>SDLC</strong></td>
+        <td>Secure acquisition, development and maintenance; vulnerability handling</td>
+        <td class="nowrap">Art. 21(2)(e)</td>
+        <td class="c nowrap">0/3</td>
+        <td style="vertical-align: middle;"><div class="bar"><span class="rag-red" style="width: 26.6%"></span></div></td>
+        <td class="num"><strong>27%</strong></td>
+        <td class="num">0%</td>
+      </tr>
+      <tr>
+        <td class="c"><span class="rag rag-red" style="margin:0"></span></td>
+        <td><strong>EFF</strong></td>
+        <td>Assessing the effectiveness of measures</td>
+        <td class="nowrap">Art. 21(2)(f)</td>
+        <td class="c nowrap">0/2</td>
+        <td style="vertical-align: middle;"><div class="bar"><span class="rag-red" style="width: 0%"></span></div></td>
+        <td class="num"><strong>0%</strong></td>
+        <td class="num">0%</td>
+      </tr>
+      <tr>
+        <td class="c"><span class="rag rag-amber" style="margin:0"></span></td>
+        <td><strong>HYG</strong></td>
+        <td>Cyber hygiene and training</td>
+        <td class="nowrap">Art. 21(2)(g)</td>
+        <td class="c nowrap">1/3</td>
+        <td style="vertical-align: middle;"><div class="bar"><span class="rag-amber" style="width: 61.8%"></span></div></td>
+        <td class="num"><strong>62%</strong></td>
+        <td class="num">41%</td>
+      </tr>
+      <tr>
+        <td class="c"><span class="rag rag-amber" style="margin:0"></span></td>
+        <td><strong>CRY</strong></td>
+        <td>Cryptography and encryption</td>
+        <td class="nowrap">Art. 21(2)(h)</td>
+        <td class="c nowrap">1/3</td>
+        <td style="vertical-align: middle;"><div class="bar"><span class="rag-amber" style="width: 59.7%"></span></div></td>
+        <td class="num"><strong>60%</strong></td>
+        <td class="num">0%</td>
+      </tr>
+      <tr>
+        <td class="c"><span class="rag rag-green" style="margin:0"></span></td>
+        <td><strong>ACC</strong></td>
+        <td>HR security, access control and asset management</td>
+        <td class="nowrap">Art. 21(2)(i)</td>
+        <td class="c nowrap">2/4</td>
+        <td style="vertical-align: middle;"><div class="bar"><span class="rag-green" style="width: 77.3%"></span></div></td>
+        <td class="num"><strong>77%</strong></td>
+        <td class="num">68%</td>
+      </tr>
+      <tr>
+        <td class="c"><span class="rag rag-green" style="margin:0"></span></td>
+        <td><strong>MFA</strong></td>
+        <td>Multi-factor authentication and secure communications</td>
+        <td class="nowrap">Art. 21(2)(j)</td>
+        <td class="c nowrap">2/4</td>
+        <td style="vertical-align: middle;"><div class="bar"><span class="rag-green" style="width: 70.0%"></span></div></td>
+        <td class="num"><strong>70%</strong></td>
+        <td class="num">59%</td>
+      </tr>
+      <tr>
+        <td class="c"><span class="rag rag-red" style="margin:0"></span></td>
+        <td><strong>REP</strong></td>
+        <td>Incident reporting obligations</td>
+        <td class="nowrap">Art. 23</td>
+        <td class="c nowrap">0/3</td>
+        <td style="vertical-align: middle;"><div class="bar"><span class="rag-red" style="width: 0%"></span></div></td>
+        <td class="num"><strong>0%</strong></td>
+        <td class="num">0%</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="small muted">RAG: green 70% and above, amber 40 to 69%, red below 40%. "Evidenced" counts only answers supported by existing evidence.</p>
+
+  <h3>3.2 Control heat map (priority x status)</h3>
+  <table class="heat">
+    <thead><tr><th>Priority</th><th>Not met</th><th>Not assessed</th><th>Partially met</th><th>Met</th></tr></thead>
+    <tbody>
+      <tr>
+        <th>Critical</th>
+        <td class="h-red h-empty">0</td>
+        <td class="h-red">1</td>
+        <td class="h-amber">2</td>
+        <td class="h-green">7</td>
+      </tr>
+      <tr>
+        <th>High</th>
+        <td class="h-red">7</td>
+        <td class="h-red">1</td>
+        <td class="h-amber">6</td>
+        <td class="h-green">4</td>
+      </tr>
+      <tr>
+        <th>Medium</th>
+        <td class="h-amber">8</td>
+        <td class="h-amber h-empty">0</td>
+        <td class="h-yellow">1</td>
+        <td class="h-green">2</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="small muted">Number of controls in each cell. Colour shows severity: control priority weighted by missing coverage.</p>
+
+  <h3>3.3 Impact vs effort</h3>
+  <table class="matrix">
+    <thead><tr><th></th><th>Low effort</th><th>Medium or high effort</th></tr></thead>
+    <tbody>
+      <tr>
+        <th>High impact</th>
+        <td class="q-quick"><span class="q-title">Quick wins (8)</span>
+          <span class="small">REP-02, BCM-02, GOV-03, REP-01, REP-03, MFA-01, ACC-04, HYG-01</span></td>
+        <td class="q-major"><span class="q-title">Major projects (5)</span>
+          <span class="small">SDLC-02, SUP-02, BCM-03, EFF-01, SDLC-01</span></td>
+      </tr>
+      <tr>
+        <th>Lower impact</th>
+        <td class="q-fill"><span class="q-title">Fill-ins (7)</span>
+          <span class="small">HYG-03, SDLC-04, GOV-02, INC-03, EFF-02, CRY-01, MFA-04</span></td>
+        <td class="q-later"><span class="q-title">Schedule later (6)</span>
+          <span class="small">CRY-03, INC-02, ACC-01, RISK-03, BCM-04, SUP-03</span></td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="small muted">Impact is the risk reduction from closing the item (control weight x missing coverage); high means at or above the median of open items. Effort is an estimate for an SME. Quick wins are the natural first wave of remediation.</p>
+
+  <h2>4. Remediation plan</h2>
+  <p>The 10 highest-priority open items are listed below, out of 26 in total. The full gap register is available as a CSV download. Items are ranked by risk reduction (control weight x missing coverage), using threat-informed weights. Owners and target dates are left for the organisation to assign.</p>
+  <table>
+    <thead><tr>
+      <th>#</th><th>Ref</th><th style="width: 27%;">Finding</th><th>Priority</th><th>Status</th><th>Effort</th>
+      <th style="width: 27%;">Recommended action</th><th>Owner</th><th>Target</th>
+    </tr></thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td class="nowrap"><strong>REP-02</strong><br><span class="small muted">Art. 23</span></td>
+        <td>Is there a procedure to send an early warning to the CSIRT within 24 hours?</td>
+        <td class="nowrap"><span class="rag rag-red"></span>Critical</td>
+        <td class="nowrap">Not assessed</td>
+        <td class="nowrap">Low</td>
+        <td>Document who reports to the national CSIRT, how, and within 24 hours.</td>
+        <td></td><td></td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td class="nowrap"><strong>BCM-02</strong><br><span class="small muted">Art. 21(2)(c)</span></td>
+        <td>Has restoring from backup been tested in the last 12 months?</td>
+        <td class="nowrap"><span class="rag rag-red"></span>High</td>
+        <td class="nowrap">Not met</td>
+        <td class="nowrap">Low</td>
+        <td>Run and document a restore test at least once a year.</td>
+        <td></td><td></td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td class="nowrap"><strong>GOV-03</strong><br><span class="small muted">Art. 20</span></td>
+        <td>Have members of the management body completed cybersecurity training?</td>
+        <td class="nowrap"><span class="rag rag-red"></span>High</td>
+        <td class="nowrap">Not met</td>
+        <td class="nowrap">Low</td>
+        <td>Book cybersecurity awareness training for all management body members and keep attendance records.</td>
+        <td></td><td></td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td class="nowrap"><strong>SDLC-02</strong><br><span class="small muted">Art. 21(2)(e)</span></td>
+        <td>Are systems scanned for vulnerabilities regularly?</td>
+        <td class="nowrap"><span class="rag rag-red"></span>High</td>
+        <td class="nowrap">Not met</td>
+        <td class="nowrap">Medium</td>
+        <td>Run regular vulnerability scans on internet-facing and critical systems.</td>
+        <td></td><td></td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td class="nowrap"><strong>SUP-02</strong><br><span class="small muted">Art. 21(2)(d)</span></td>
+        <td>Are critical suppliers assessed for security before onboarding and periodically?</td>
+        <td class="nowrap"><span class="rag rag-red"></span>High</td>
+        <td class="nowrap">Not met</td>
+        <td class="nowrap">Medium</td>
+        <td>Send a security questionnaire to critical suppliers and record the outcome.</td>
+        <td></td><td></td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td class="nowrap"><strong>BCM-03</strong><br><span class="small muted">Art. 21(2)(c)</span></td>
+        <td>Is there a business continuity or disaster recovery plan for critical services?</td>
+        <td class="nowrap"><span class="rag rag-red"></span>High</td>
+        <td class="nowrap">Not met</td>
+        <td class="nowrap">High</td>
+        <td>Write a continuity plan listing critical services, recovery targets and recovery steps.</td>
+        <td></td><td></td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td class="nowrap"><strong>REP-01</strong><br><span class="small muted">Art. 23</span></td>
+        <td>Is it defined what counts as a &#39;significant incident&#39; for your organisation?</td>
+        <td class="nowrap"><span class="rag rag-red"></span>High</td>
+        <td class="nowrap">Not met</td>
+        <td class="nowrap">Low</td>
+        <td>Define significance criteria (impact on service, financial loss, affected users).</td>
+        <td></td><td></td>
+      </tr>
+      <tr>
+        <td>8</td>
+        <td class="nowrap"><strong>REP-03</strong><br><span class="small muted">Art. 23</span></td>
+        <td>Does the procedure cover the 72-hour notification and the one-month final report?</td>
+        <td class="nowrap"><span class="rag rag-red"></span>High</td>
+        <td class="nowrap">Not assessed</td>
+        <td class="nowrap">Low</td>
+        <td>Add the 72-hour notification and one-month final report steps, with templates.</td>
+        <td></td><td></td>
+      </tr>
+      <tr>
+        <td>9</td>
+        <td class="nowrap"><strong>EFF-01</strong><br><span class="small muted">Art. 21(2)(f)</span></td>
+        <td>Are security controls tested or audited periodically (internal audit, penetration test, review)?</td>
+        <td class="nowrap"><span class="rag rag-red"></span>High</td>
+        <td class="nowrap">Not met</td>
+        <td class="nowrap">High</td>
+        <td>Plan an annual internal review or external test of key controls.</td>
+        <td></td><td></td>
+      </tr>
+      <tr>
+        <td>10</td>
+        <td class="nowrap"><strong>SDLC-01</strong><br><span class="small muted">Art. 21(2)(e)</span></td>
+        <td>Are security patches applied within a defined timeframe?</td>
+        <td class="nowrap"><span class="rag rag-amber"></span>Critical</td>
+        <td class="nowrap">Partially met</td>
+        <td class="nowrap">Medium</td>
+        <td>Define patch timeframes (e.g. critical within 14 days) and track compliance.</td>
+        <td></td><td></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>5. Evidence review</h2>
+  <p>10 controls are reported as met or partially met without usable evidence. Until evidence is provided, these controls are excluded from the evidence-backed score.</p>
+  <table>
+    <thead><tr><th>Ref</th><th>Reported status</th><th>Expected evidence</th><th>Issue</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="nowrap"><strong>GOV-02</strong></td>
+        <td class="nowrap">Partially met</td>
+        <td>Quarterly security report, risk dashboard, meeting agendas</td>
+        <td>No evidence recorded</td>
+      </tr>
+      <tr>
+        <td class="nowrap"><strong>GOV-04</strong></td>
+        <td class="nowrap">Met</td>
+        <td>Org chart, role description, appointment letter</td>
+        <td>Evidence file not found: evidence/org-chart.pdf</td>
+      </tr>
+      <tr>
+        <td class="nowrap"><strong>INC-02</strong></td>
+        <td class="nowrap">Partially met</td>
+        <td>Logging configuration, SIEM or alerting screenshots</td>
+        <td>No evidence recorded</td>
+      </tr>
+      <tr>
+        <td class="nowrap"><strong>SUP-03</strong></td>
+        <td class="nowrap">Partially met</td>
+        <td>Contract clauses, data processing agreements</td>
+        <td>No evidence recorded</td>
+      </tr>
+      <tr>
+        <td class="nowrap"><strong>SDLC-01</strong></td>
+        <td class="nowrap">Partially met</td>
+        <td>Patch management policy, patch status report</td>
+        <td>No evidence recorded</td>
+      </tr>
+      <tr>
+        <td class="nowrap"><strong>HYG-01</strong></td>
+        <td class="nowrap">Partially met</td>
+        <td>Training completion records</td>
+        <td>No evidence recorded</td>
+      </tr>
+      <tr>
+        <td class="nowrap"><strong>CRY-02</strong></td>
+        <td class="nowrap">Met</td>
+        <td>TLS configuration, disk encryption status report</td>
+        <td>No evidence recorded</td>
+      </tr>
+      <tr>
+        <td class="nowrap"><strong>CRY-03</strong></td>
+        <td class="nowrap">Partially met</td>
+        <td>Secrets manager configuration, key management procedure</td>
+        <td>No evidence recorded</td>
+      </tr>
+      <tr>
+        <td class="nowrap"><strong>ACC-01</strong></td>
+        <td class="nowrap">Partially met</td>
+        <td>Asset inventory</td>
+        <td>No evidence recorded</td>
+      </tr>
+      <tr>
+        <td class="nowrap"><strong>MFA-03</strong></td>
+        <td class="nowrap">Met</td>
+        <td>List of approved communication tools and their settings</td>
+        <td>No evidence recorded</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="appendix">
+    <h2>Appendix A. Detailed control results</h2>
+    <h3>GOV. Governance and management accountability (Art. 20): 60%</h3>
+    <table>
+      <thead><tr><th style="width: 8%;">Ref</th><th style="width: 32%;">Control</th><th style="width: 8%;">Priority</th><th style="width: 13%;">Status</th><th style="width: 19%;">Evidence</th><th style="width: 20%;">Notes</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="nowrap">GOV-01</td>
+          <td>Has the management body formally approved the cybersecurity risk-management measures?</td>
+          <td class="nowrap">Critical</td>
+          <td class="nowrap"><span class="rag rag-green"></span>Met</td>
+          <td class="small">evidence/board-minutes-2026-03.md</td>
+          <td class="small"></td>
+        </tr>
+        <tr>
+          <td class="nowrap">GOV-02</td>
+          <td>Does management receive regular reporting on cybersecurity risks and the status of measures?</td>
+          <td class="nowrap">High</td>
+          <td class="nowrap"><span class="rag rag-amber"></span>Partially met</td>
+          <td class="small"><br><span style="color: var(--red);">No evidence recorded</span></td>
+          <td class="small">Ad hoc updates only, no fixed schedule</td>
+        </tr>
+        <tr>
+          <td class="nowrap">GOV-03</td>
+          <td>Have members of the management body completed cybersecurity training?</td>
+          <td class="nowrap">High</td>
+          <td class="nowrap"><span class="rag rag-red"></span>Not met</td>
+          <td class="small"></td>
+          <td class="small">Planned for Q1 2027</td>
+        </tr>
+        <tr>
+          <td class="nowrap">GOV-04</td>
+          <td>Is there a named person responsible for cybersecurity (e.g. CISO or security officer)?</td>
+          <td class="nowrap">Medium</td>
+          <td class="nowrap"><span class="rag rag-green"></span>Met</td>
+          <td class="small">evidence/org-chart.pdf<br><span style="color: var(--red);">Evidence file not found: evidence/org-chart.pdf</span></td>
+          <td class="small">IT lead acts as security officer</td>
+        </tr>
+      </tbody>
+    </table>
+    <h3>RISK. Risk analysis and information system security policies (Art. 21(2)(a)): 88%</h3>
+    <table>
+      <thead><tr><th style="width: 8%;">Ref</th><th style="width: 32%;">Control</th><th style="width: 8%;">Priority</th><th style="width: 13%;">Status</th><th style="width: 19%;">Evidence</th><th style="width: 20%;">Notes</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="nowrap">RISK-01</td>
+          <td>Is there a documented, approved information security policy?</td>
+          <td class="nowrap">Critical</td>
+          <td class="nowrap"><span class="rag rag-green"></span>Met</td>
+          <td class="small">evidence/infosec-policy.md</td>
+          <td class="small"></td>
+        </tr>
+        <tr>
+          <td class="nowrap">RISK-02</td>
+          <td>Is a cybersecurity risk assessment performed at least annually and documented?</td>
+          <td class="nowrap">Critical</td>
+          <td class="nowrap"><span class="rag rag-green"></span>Met</td>
+          <td class="small">evidence/risk-register.csv</td>
+          <td class="small"></td>
+        </tr>
+        <tr>
+          <td class="nowrap">RISK-03</td>
+          <td>Do identified risks have owners and treatment decisions (mitigate, accept, transfer, avoid)?</td>
+          <td class="nowrap">High</td>
+          <td class="nowrap"><span class="rag rag-amber"></span>Partially met</td>
+          <td class="small">evidence/risk-register.csv</td>
+          <td class="small">Owners set, treatment plans incomplete</td>
+        </tr>
+      </tbody>
+    </table>
+    <h3>INC. Incident handling (Art. 21(2)(b)): 66%</h3>
+    <table>
+      <thead><tr><th style="width: 8%;">Ref</th><th style="width: 32%;">Control</th><th style="width: 8%;">Priority</th><th style="width: 13%;">Status</th><th style="width: 19%;">Evidence</th><th style="width: 20%;">Notes</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="nowrap">INC-01</td>
+          <td>Is there a documented incident response plan with roles and escalation paths?</td>
+          <td class="nowrap">Critical</td>
+          <td class="nowrap"><span class="rag rag-green"></span>Met</td>
+          <td class="small">evidence/incident-response-plan.md</td>
+          <td class="small"></td>
+        </tr>
+        <tr>
+          <td class="nowrap">INC-02</td>
+          <td>Are security events logged and monitored so incidents can be detected?</td>
+          <td class="nowrap">High</td>
+          <td class="nowrap"><span class="rag rag-amber"></span>Partially met</td>
+          <td class="small"><br><span style="color: var(--red);">No evidence recorded</span></td>
+          <td class="small">M365 alerts only, servers not monitored</td>
+        </tr>
+        <tr>
+          <td class="nowrap">INC-03</td>
+          <td>Are incidents recorded and reviewed afterwards (lessons learned)?</td>
+          <td class="nowrap">Medium</td>
+          <td class="nowrap"><span class="rag rag-amber"></span>Not met</td>
+          <td class="small"></td>
+          <td class="small"></td>
+        </tr>
+      </tbody>
+    </table>
+    <h3>BCM. Business continuity and crisis management (Art. 21(2)(c)): 45%</h3>
+    <table>
+      <thead><tr><th style="width: 8%;">Ref</th><th style="width: 32%;">Control</th><th style="width: 8%;">Priority</th><th style="width: 13%;">Status</th><th style="width: 19%;">Evidence</th><th style="width: 20%;">Notes</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="nowrap">BCM-01</td>
+          <td>Are backups of critical data taken regularly and stored separately (offline or immutable)?</td>
+          <td class="nowrap">Critical</td>
+          <td class="nowrap"><span class="rag rag-green"></span>Met</td>
+          <td class="small">evidence/backup-report-2026-10.md</td>
+          <td class="small"></td>
+        </tr>
+        <tr>
+          <td class="nowrap">BCM-02</td>
+          <td>Has restoring from backup been tested in the last 12 months?</td>
+          <td class="nowrap">High</td>
+          <td class="nowrap"><span class="rag rag-red"></span>Not met</td>
+          <td class="small"></td>
+          <td class="small">Never tested</td>
+        </tr>
+        <tr>
+          <td class="nowrap">BCM-03</td>
+          <td>Is there a business continuity or disaster recovery plan for critical services?</td>
+          <td class="nowrap">High</td>
+          <td class="nowrap"><span class="rag rag-red"></span>Not met</td>
+          <td class="small"></td>
+          <td class="small"></td>
+        </tr>
+        <tr>
+          <td class="nowrap">BCM-04</td>
+          <td>Is there a crisis management procedure, including how to communicate during a major incident?</td>
+          <td class="nowrap">Medium</td>
+          <td class="nowrap"><span class="rag rag-amber"></span>Not met</td>
+          <td class="small"></td>
+          <td class="small"></td>
+        </tr>
+      </tbody>
+    </table>
+    <h3>SUP. Supply chain security (Art. 21(2)(d)): 50%</h3>
+    <table>
+      <thead><tr><th style="width: 8%;">Ref</th><th style="width: 32%;">Control</th><th style="width: 8%;">Priority</th><th style="width: 13%;">Status</th><th style="width: 19%;">Evidence</th><th style="width: 20%;">Notes</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="nowrap">SUP-01</td>
+          <td>Is there an inventory of suppliers and service providers with access to systems or data?</td>
+          <td class="nowrap">High</td>
+          <td class="nowrap"><span class="rag rag-green"></span>Met</td>
+          <td class="small">evidence/supplier-register.csv</td>
+          <td class="small"></td>
+        </tr>
+        <tr>
+          <td class="nowrap">SUP-02</td>
+          <td>Are critical suppliers assessed for security before onboarding and periodically?</td>
+          <td class="nowrap">High</td>
+          <td class="nowrap"><span class="rag rag-red"></span>Not met</td>
+          <td class="small"></td>
+          <td class="small"></td>
+        </tr>
+        <tr>
+          <td class="nowrap">SUP-03</td>
+          <td>Do supplier contracts include security requirements (e.g. incident notification, data protection)?</td>
+          <td class="nowrap">Medium</td>
+          <td class="nowrap"><span class="rag rag-amber"></span>Partially met</td>
+          <td class="small"><br><span style="color: var(--red);">No evidence recorded</span></td>
+          <td class="small">DPAs signed, no security clauses</td>
+        </tr>
+      </tbody>
+    </table>
+    <h3>SDLC. Secure acquisition, development and maintenance; vulnerability handling (Art. 21(2)(e)): 27%</h3>
+    <table>
+      <thead><tr><th style="width: 8%;">Ref</th><th style="width: 32%;">Control</th><th style="width: 8%;">Priority</th><th style="width: 13%;">Status</th><th style="width: 19%;">Evidence</th><th style="width: 20%;">Notes</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="nowrap">SDLC-01</td>
+          <td>Are security patches applied within a defined timeframe?</td>
+          <td class="nowrap">Critical</td>
+          <td class="nowrap"><span class="rag rag-amber"></span>Partially met</td>
+          <td class="small"><br><span style="color: var(--red);">No evidence recorded</span></td>
+          <td class="small">Windows auto-updates, servers patched manually</td>
+        </tr>
+        <tr>
+          <td class="nowrap">SDLC-02</td>
+          <td>Are systems scanned for vulnerabilities regularly?</td>
+          <td class="nowrap">High</td>
+          <td class="nowrap"><span class="rag rag-red"></span>Not met</td>
+          <td class="small"></td>
+          <td class="small"></td>
+        </tr>
+        <tr>
+          <td class="nowrap">SDLC-03</td>
+          <td>Are security requirements considered when buying or developing systems?</td>
+          <td class="nowrap">Medium</td>
+          <td class="nowrap"><span class="rag rag-grey"></span>N/A</td>
+          <td class="small"></td>
+          <td class="small">No in-house development; purchasing covered by SUP</td>
+        </tr>
+        <tr>
+          <td class="nowrap">SDLC-04</td>
+          <td>Is there a way for outsiders to report vulnerabilities (e.g. security.txt, disclosure policy)?</td>
+          <td class="nowrap">Medium</td>
+          <td class="nowrap"><span class="rag rag-amber"></span>Not met</td>
+          <td class="small"></td>
+          <td class="small"></td>
+        </tr>
+      </tbody>
+    </table>
+    <h3>EFF. Assessing the effectiveness of measures (Art. 21(2)(f)): 0%</h3>
+    <table>
+      <thead><tr><th style="width: 8%;">Ref</th><th style="width: 32%;">Control</th><th style="width: 8%;">Priority</th><th style="width: 13%;">Status</th><th style="width: 19%;">Evidence</th><th style="width: 20%;">Notes</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="nowrap">EFF-01</td>
+          <td>Are security controls tested or audited periodically (internal audit, penetration test, review)?</td>
+          <td class="nowrap">High</td>
+          <td class="nowrap"><span class="rag rag-red"></span>Not met</td>
+          <td class="small"></td>
+          <td class="small"></td>
+        </tr>
+        <tr>
+          <td class="nowrap">EFF-02</td>
+          <td>Are security metrics or KPIs tracked (e.g. patch compliance, training completion)?</td>
+          <td class="nowrap">Medium</td>
+          <td class="nowrap"><span class="rag rag-amber"></span>Not met</td>
+          <td class="small"></td>
+          <td class="small"></td>
+        </tr>
+      </tbody>
+    </table>
+    <h3>HYG. Cyber hygiene and training (Art. 21(2)(g)): 62%</h3>
+    <table>
+      <thead><tr><th style="width: 8%;">Ref</th><th style="width: 32%;">Control</th><th style="width: 8%;">Priority</th><th style="width: 13%;">Status</th><th style="width: 19%;">Evidence</th><th style="width: 20%;">Notes</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="nowrap">HYG-01</td>
+          <td>Do all employees receive security awareness training at least annually?</td>
+          <td class="nowrap">High</td>
+          <td class="nowrap"><span class="rag rag-amber"></span>Partially met</td>
+          <td class="small"><br><span style="color: var(--red);">No evidence recorded</span></td>
+          <td class="small">Onboarding training only</td>
+        </tr>
+        <tr>
+          <td class="nowrap">HYG-02</td>
+          <td>Are basic hygiene controls in place (endpoint protection, secure configuration, no shared accounts)?</td>
+          <td class="nowrap">High</td>
+          <td class="nowrap"><span class="rag rag-green"></span>Met</td>
+          <td class="small">https://example.com/acme/endpoint-console</td>
+          <td class="small"></td>
+        </tr>
+        <tr>
+          <td class="nowrap">HYG-03</td>
+          <td>Are phishing simulations or similar exercises run?</td>
+          <td class="nowrap">Medium</td>
+          <td class="nowrap"><span class="rag rag-amber"></span>Not met</td>
+          <td class="small"></td>
+          <td class="small"></td>
+        </tr>
+      </tbody>
+    </table>
+    <h3>CRY. Cryptography and encryption (Art. 21(2)(h)): 60%</h3>
+    <table>
+      <thead><tr><th style="width: 8%;">Ref</th><th style="width: 32%;">Control</th><th style="width: 8%;">Priority</th><th style="width: 13%;">Status</th><th style="width: 19%;">Evidence</th><th style="width: 20%;">Notes</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="nowrap">CRY-01</td>
+          <td>Is there a policy defining when and how encryption must be used?</td>
+          <td class="nowrap">Medium</td>
+          <td class="nowrap"><span class="rag rag-amber"></span>Not met</td>
+          <td class="small"></td>
+          <td class="small"></td>
+        </tr>
+        <tr>
+          <td class="nowrap">CRY-02</td>
+          <td>Are data in transit and sensitive data at rest encrypted (TLS, disk encryption)?</td>
+          <td class="nowrap">High</td>
+          <td class="nowrap"><span class="rag rag-green"></span>Met</td>
+          <td class="small"><br><span style="color: var(--red);">No evidence recorded</span></td>
+          <td class="small">TLS everywhere, BitLocker on laptops</td>
+        </tr>
+        <tr>
+          <td class="nowrap">CRY-03</td>
+          <td>Are encryption keys and secrets managed securely (not hardcoded, access-controlled)?</td>
+          <td class="nowrap">High</td>
+          <td class="nowrap"><span class="rag rag-amber"></span>Partially met</td>
+          <td class="small"><br><span style="color: var(--red);">No evidence recorded</span></td>
+          <td class="small"></td>
+        </tr>
+      </tbody>
+    </table>
+    <h3>ACC. HR security, access control and asset management (Art. 21(2)(i)): 77%</h3>
+    <table>
+      <thead><tr><th style="width: 8%;">Ref</th><th style="width: 32%;">Control</th><th style="width: 8%;">Priority</th><th style="width: 13%;">Status</th><th style="width: 19%;">Evidence</th><th style="width: 20%;">Notes</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="nowrap">ACC-01</td>
+          <td>Is there an up-to-date inventory of hardware, software and data assets?</td>
+          <td class="nowrap">High</td>
+          <td class="nowrap"><span class="rag rag-amber"></span>Partially met</td>
+          <td class="small"><br><span style="color: var(--red);">No evidence recorded</span></td>
+          <td class="small">Hardware only</td>
+        </tr>
+        <tr>
+          <td class="nowrap">ACC-02</td>
+          <td>Is access granted on a role basis and least-privilege principle?</td>
+          <td class="nowrap">Critical</td>
+          <td class="nowrap"><span class="rag rag-green"></span>Met</td>
+          <td class="small">evidence/access-control-policy.md</td>
+          <td class="small"></td>
+        </tr>
+        <tr>
+          <td class="nowrap">ACC-03</td>
+          <td>Are joiner, mover and leaver processes defined so access is granted and removed on time?</td>
+          <td class="nowrap">High</td>
+          <td class="nowrap"><span class="rag rag-green"></span>Met</td>
+          <td class="small">evidence/access-control-policy.md</td>
+          <td class="small"></td>
+        </tr>
+        <tr>
+          <td class="nowrap">ACC-04</td>
+          <td>Are user access rights reviewed periodically?</td>
+          <td class="nowrap">Medium</td>
+          <td class="nowrap"><span class="rag rag-amber"></span>Not met</td>
+          <td class="small"></td>
+          <td class="small"></td>
+        </tr>
+      </tbody>
+    </table>
+    <h3>MFA. Multi-factor authentication and secure communications (Art. 21(2)(j)): 70%</h3>
+    <table>
+      <thead><tr><th style="width: 8%;">Ref</th><th style="width: 32%;">Control</th><th style="width: 8%;">Priority</th><th style="width: 13%;">Status</th><th style="width: 19%;">Evidence</th><th style="width: 20%;">Notes</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="nowrap">MFA-01</td>
+          <td>Is MFA enforced for all remote access and cloud services?</td>
+          <td class="nowrap">Critical</td>
+          <td class="nowrap"><span class="rag rag-amber"></span>Partially met</td>
+          <td class="small">evidence/mfa-coverage.csv</td>
+          <td class="small">ERP still without MFA</td>
+        </tr>
+        <tr>
+          <td class="nowrap">MFA-02</td>
+          <td>Is MFA enforced for all privileged and administrator accounts?</td>
+          <td class="nowrap">Critical</td>
+          <td class="nowrap"><span class="rag rag-green"></span>Met</td>
+          <td class="small">evidence/mfa-coverage.csv</td>
+          <td class="small"></td>
+        </tr>
+        <tr>
+          <td class="nowrap">MFA-03</td>
+          <td>Are internal voice, video and messaging tools secured (approved tools, encryption)?</td>
+          <td class="nowrap">Medium</td>
+          <td class="nowrap"><span class="rag rag-green"></span>Met</td>
+          <td class="small"><br><span style="color: var(--red);">No evidence recorded</span></td>
+          <td class="small">Teams only</td>
+        </tr>
+        <tr>
+          <td class="nowrap">MFA-04</td>
+          <td>Is there a secured emergency communication channel if primary systems are down?</td>
+          <td class="nowrap">Medium</td>
+          <td class="nowrap"><span class="rag rag-amber"></span>Not met</td>
+          <td class="small"></td>
+          <td class="small"></td>
+        </tr>
+      </tbody>
+    </table>
+    <h3>REP. Incident reporting obligations (Art. 23): 0%</h3>
+    <table>
+      <thead><tr><th style="width: 8%;">Ref</th><th style="width: 32%;">Control</th><th style="width: 8%;">Priority</th><th style="width: 13%;">Status</th><th style="width: 19%;">Evidence</th><th style="width: 20%;">Notes</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="nowrap">REP-01</td>
+          <td>Is it defined what counts as a &#39;significant incident&#39; for your organisation?</td>
+          <td class="nowrap">High</td>
+          <td class="nowrap"><span class="rag rag-red"></span>Not met</td>
+          <td class="small"></td>
+          <td class="small"></td>
+        </tr>
+        <tr>
+          <td class="nowrap">REP-02</td>
+          <td>Is there a procedure to send an early warning to the CSIRT within 24 hours?</td>
+          <td class="nowrap">Critical</td>
+          <td class="nowrap"><span class="rag rag-red"></span>Not assessed</td>
+          <td class="small"></td>
+          <td class="small"></td>
+        </tr>
+        <tr>
+          <td class="nowrap">REP-03</td>
+          <td>Does the procedure cover the 72-hour notification and the one-month final report?</td>
+          <td class="nowrap">High</td>
+          <td class="nowrap"><span class="rag rag-red"></span>Not assessed</td>
+          <td class="small"></td>
+          <td class="small"></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Appendix B. Methodology</h2>
+    <p>Each NIS2 requirement is broken down into practical controls, and each control is given a regulatory priority: critical (weight 3), high (weight 2) or medium (weight 1). This baseline is then raised by up to 50% for controls that counter threats common in recent incident data: the uplift is proportional to the combined prevalence of the threat patterns the control counters, relative to the most exposed control. Threat data can raise a weight but never lower it below the regulatory baseline, because every control is a legal requirement. Sources and links are listed in Appendix C. Answers are scored as met = 1, partially met = 0.5, not met = 0 and not assessed = 0. Controls marked not applicable are excluded.</p>
+    <p>The overall and per-requirement scores are weighted averages of the applicable controls. The evidence-backed score applies the same calculation but counts a control only when every evidence item recorded for it exists. Open items are ranked by control weight multiplied by missing coverage, so an unaddressed critical control ranks above a partially met medium one.</p>
+    <p>Effort is an estimate (low, medium, high) of the work needed for an SME to implement the control. Risk reduction per unit of effort divides the risk reduction by 1, 2 or 3 respectively and drives the impact vs effort matrix.</p>
+    <p>Maturity bands: strong (90% and above), substantial (70 to 89%), partial (40 to 69%), low (below 40%).</p>
+    <p class="small muted">This report is a self-assessment and does not constitute a certification, audit opinion or legal advice. National transposition laws, implementing acts and guidance from the competent authority may impose additional or more specific requirements.</p>
+
+    <h2 class="new-page">Appendix C. Threat data and weighting</h2>
+    <p>Control weights in this report use threat data of 2026-11-15: VCDB 2020-2026, ATT&amp;CK v20.1. Prevalence is the share of confirmed or suspected incident events in the VERIS Community Database (VCDB) matching each threat pattern, with mass campaigns counted once. Links between controls and threat patterns come from MITRE ATT&amp;CK mitigation relationships, plus catalogue links for patterns ATT&amp;CK does not cover (human error, insider misuse, physical loss, supplier involvement).</p>
+
+    <h3>C.1 Sources</h3>
+    <table>
+      <thead><tr><th>Source</th><th>Version</th><th>Retrieved</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>VERIS Community Database (VCDB)</td>
+          <td class="small">2020-2026, 541 events</td>
+          <td class="small nowrap">2026-11-15</td>
+          <td class="nowrap"><span class="rag rag-green"></span>Used</td>
+        </tr>
+        <tr>
+          <td>MITRE ATT&amp;CK Enterprise</td>
+          <td class="small">20.1</td>
+          <td class="small nowrap">2026-11-15</td>
+          <td class="nowrap"><span class="rag rag-green"></span>Used</td>
+        </tr>
+        <tr>
+          <td>CISA Known Exploited Vulnerabilities</td>
+          <td class="small">n/a</td>
+          <td class="small nowrap">n/a</td>
+          <td class="nowrap"><span class="rag rag-amber"></span>Unavailable</td>
+        </tr>
+        <tr>
+          <td>ENISA EU Vulnerability Database</td>
+          <td class="small">n/a</td>
+          <td class="small nowrap">n/a</td>
+          <td class="nowrap"><span class="rag rag-amber"></span>Unavailable</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="small muted">Exploitation trend factor: 1.0 (neutral; no trend data available or no change). Applied to the vulnerability exploitation pattern only, within the range 0.8 to 1.25.</p>
+
+    <h3>C.2 Threat patterns</h3>
+    <table>
+      <thead><tr><th>Pattern</th><th class="num">Events</th><th class="num">Prevalence</th><th>ATT&amp;CK mitigations linked</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Human error</td>
+          <td class="num">146</td>
+          <td class="num">27.0%</td>
+          <td class="small">Catalogue links only</td>
+        </tr>
+        <tr>
+          <td>Ransomware</td>
+          <td class="num">127</td>
+          <td class="num">23.5%</td>
+          <td class="small">M1018, M1028, M1038, M1040, M1053</td>
+        </tr>
+        <tr>
+          <td>Stolen or brute-forced credentials</td>
+          <td class="num">91</td>
+          <td class="num">16.8%</td>
+          <td class="small">M1013, M1015, M1017, M1018, M1026, M1027, M1032, M1036, M1051</td>
+        </tr>
+        <tr>
+          <td>Exploitation of vulnerabilities</td>
+          <td class="num">36</td>
+          <td class="num">6.7%</td>
+          <td class="small">M1016, M1019, M1026, M1030, M1035, M1037, M1042, M1048, M1050, M1051</td>
+        </tr>
+        <tr>
+          <td>Phishing and pretexting</td>
+          <td class="num">28</td>
+          <td class="num">5.2%</td>
+          <td class="small">M1017, M1018, M1021, M1031, M1047, M1049, M1054</td>
+        </tr>
+        <tr>
+          <td>Insider misuse of privileges</td>
+          <td class="num">22</td>
+          <td class="num">4.1%</td>
+          <td class="small">Catalogue links only</td>
+        </tr>
+        <tr>
+          <td>Physical theft or loss of assets</td>
+          <td class="num">13</td>
+          <td class="num">2.4%</td>
+          <td class="small">Catalogue links only</td>
+        </tr>
+        <tr>
+          <td>Supplier or partner involvement</td>
+          <td class="num">3</td>
+          <td class="num">0.5%</td>
+          <td class="small">M1013, M1016, M1018, M1030, M1032, M1033, M1046, M1051</td>
+        </tr>
+        <tr>
+          <td>Denial of service</td>
+          <td class="num">2</td>
+          <td class="num">0.4%</td>
+          <td class="small">M1037</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="small muted">Campaigns counted once: 2023: MOVEit vulnerability exploited.  Data stolen. (747 records); campaign CBAA666B-8213-4F6B-B6AC-29896A9C1455 (89 records); campaign 0A74F3BC-4844-4D5F-A350-017A9C81B464 (60 records).</p>
+
+    <h3>C.3 Controls with a threat-informed uplift</h3>
+    <table>
+      <thead><tr><th>Ref</th><th class="num">Baseline</th><th class="num">Weight</th><th>Counters</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="nowrap"><strong>ACC-02</strong></td>
+          <td class="num">3</td>
+          <td class="num">4.50</td>
+          <td class="small">Ransomware <span class="muted">(ATT&amp;CK M1018)</span>; Stolen or brute-forced credentials <span class="muted">(ATT&amp;CK M1018, M1026)</span>; Exploitation of vulnerabilities <span class="muted">(ATT&amp;CK M1026)</span>; Phishing and pretexting <span class="muted">(ATT&amp;CK M1018)</span>; Insider misuse of privileges <span class="muted">(catalogue)</span>; Supplier or partner involvement <span class="muted">(ATT&amp;CK M1018)</span></td>
+        </tr>
+        <tr>
+          <td class="nowrap"><strong>BCM-01</strong></td>
+          <td class="num">3</td>
+          <td class="num">4.40</td>
+          <td class="small">Human error <span class="muted">(catalogue)</span>; Ransomware <span class="muted">(ATT&amp;CK M1053)</span>; Physical theft or loss of assets <span class="muted">(catalogue)</span></td>
+        </tr>
+        <tr>
+          <td class="nowrap"><strong>ACC-03</strong></td>
+          <td class="num">2</td>
+          <td class="num">2.88</td>
+          <td class="small">Ransomware <span class="muted">(ATT&amp;CK M1018)</span>; Stolen or brute-forced credentials <span class="muted">(ATT&amp;CK M1018)</span>; Phishing and pretexting <span class="muted">(ATT&amp;CK M1018)</span>; Insider misuse of privileges <span class="muted">(catalogue)</span>; Supplier or partner involvement <span class="muted">(ATT&amp;CK M1018)</span></td>
+        </tr>
+        <tr>
+          <td class="nowrap"><strong>ACC-04</strong></td>
+          <td class="num">1</td>
+          <td class="num">1.44</td>
+          <td class="small">Ransomware <span class="muted">(ATT&amp;CK M1018)</span>; Stolen or brute-forced credentials <span class="muted">(ATT&amp;CK M1018)</span>; Phishing and pretexting <span class="muted">(ATT&amp;CK M1018)</span>; Insider misuse of privileges <span class="muted">(catalogue)</span>; Supplier or partner involvement <span class="muted">(ATT&amp;CK M1018)</span></td>
+        </tr>
+        <tr>
+          <td class="nowrap"><strong>HYG-01</strong></td>
+          <td class="num">2</td>
+          <td class="num">2.86</td>
+          <td class="small">Human error <span class="muted">(catalogue)</span>; Stolen or brute-forced credentials <span class="muted">(ATT&amp;CK M1017)</span>; Phishing and pretexting <span class="muted">(ATT&amp;CK M1017)</span></td>
+        </tr>
+        <tr>
+          <td class="nowrap"><strong>HYG-02</strong></td>
+          <td class="num">2</td>
+          <td class="num">2.81</td>
+          <td class="small">Ransomware <span class="muted">(ATT&amp;CK M1018, M1028, M1040)</span>; Stolen or brute-forced credentials <span class="muted">(ATT&amp;CK M1018)</span>; Phishing and pretexting <span class="muted">(ATT&amp;CK M1018, M1049)</span>; Supplier or partner involvement <span class="muted">(ATT&amp;CK M1018)</span></td>
+        </tr>
+        <tr>
+          <td class="nowrap"><strong>SDLC-01</strong></td>
+          <td class="num">3</td>
+          <td class="num">3.64</td>
+          <td class="small">Stolen or brute-forced credentials <span class="muted">(ATT&amp;CK M1051)</span>; Exploitation of vulnerabilities <span class="muted">(ATT&amp;CK M1051)</span>; Supplier or partner involvement <span class="muted">(ATT&amp;CK M1051)</span></td>
+        </tr>
+        <tr>
+          <td class="nowrap"><strong>MFA-02</strong></td>
+          <td class="num">3</td>
+          <td class="num">3.64</td>
+          <td class="small">Stolen or brute-forced credentials <span class="muted">(ATT&amp;CK M1026, M1032)</span>; Exploitation of vulnerabilities <span class="muted">(ATT&amp;CK M1026)</span>; Supplier or partner involvement <span class="muted">(ATT&amp;CK M1032)</span></td>
+        </tr>
+        <tr>
+          <td class="nowrap"><strong>BCM-02</strong></td>
+          <td class="num">2</td>
+          <td class="num">2.41</td>
+          <td class="small">Ransomware <span class="muted">(ATT&amp;CK M1053)</span></td>
+        </tr>
+        <tr>
+          <td class="nowrap"><strong>GOV-03</strong></td>
+          <td class="num">2</td>
+          <td class="num">2.39</td>
+          <td class="small">Stolen or brute-forced credentials <span class="muted">(ATT&amp;CK M1017)</span>; Phishing and pretexting <span class="muted">(ATT&amp;CK M1017)</span></td>
+        </tr>
+        <tr>
+          <td class="nowrap"><strong>HYG-03</strong></td>
+          <td class="num">1</td>
+          <td class="num">1.19</td>
+          <td class="small">Stolen or brute-forced credentials <span class="muted">(ATT&amp;CK M1017)</span>; Phishing and pretexting <span class="muted">(ATT&amp;CK M1017)</span></td>
+        </tr>
+        <tr>
+          <td class="nowrap"><strong>SDLC-03</strong></td>
+          <td class="num">1</td>
+          <td class="num">1.15</td>
+          <td class="small">Stolen or brute-forced credentials <span class="muted">(ATT&amp;CK M1013)</span>; Supplier or partner involvement <span class="muted">(ATT&amp;CK M1013)</span></td>
+        </tr>
+        <tr>
+          <td class="nowrap"><strong>MFA-01</strong></td>
+          <td class="num">3</td>
+          <td class="num">3.46</td>
+          <td class="small">Stolen or brute-forced credentials <span class="muted">(ATT&amp;CK M1032)</span>; Supplier or partner involvement <span class="muted">(ATT&amp;CK M1032)</span></td>
+        </tr>
+        <tr>
+          <td class="nowrap"><strong>CRY-03</strong></td>
+          <td class="num">2</td>
+          <td class="num">2.30</td>
+          <td class="small">Stolen or brute-forced credentials <span class="muted">(catalogue)</span></td>
+        </tr>
+        <tr>
+          <td class="nowrap"><strong>SDLC-02</strong></td>
+          <td class="num">2</td>
+          <td class="num">2.13</td>
+          <td class="small">Exploitation of vulnerabilities <span class="muted">(ATT&amp;CK M1016)</span>; Supplier or partner involvement <span class="muted">(ATT&amp;CK M1016)</span></td>
+        </tr>
+        <tr>
+          <td class="nowrap"><strong>SDLC-04</strong></td>
+          <td class="num">1</td>
+          <td class="num">1.06</td>
+          <td class="small">Exploitation of vulnerabilities <span class="muted">(catalogue)</span></td>
+        </tr>
+        <tr>
+          <td class="nowrap"><strong>INC-02</strong></td>
+          <td class="num">2</td>
+          <td class="num">2.09</td>
+          <td class="small">Phishing and pretexting <span class="muted">(ATT&amp;CK M1047)</span></td>
+        </tr>
+        <tr>
+          <td class="nowrap"><strong>CRY-02</strong></td>
+          <td class="num">2</td>
+          <td class="num">2.04</td>
+          <td class="small">Physical theft or loss of assets <span class="muted">(catalogue)</span></td>
+        </tr>
+        <tr>
+          <td class="nowrap"><strong>ACC-01</strong></td>
+          <td class="num">2</td>
+          <td class="num">2.04</td>
+          <td class="small">Physical theft or loss of assets <span class="muted">(catalogue)</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="small muted">Caveats: VCDB contains publicly reported incidents, mostly from the United States and weighted toward breaches that reach the news; it is not the full Verizon DBIR dataset. CISA KEV is US-centric; ENISA EUVD gives an EU view but is newer.</p>
+  </div>
+
+</div>
+
+<script id="gap-register" type="application/json">"\ufeffRank,Ref,NIS2 reference,Domain,Control,Priority,Status,RAG,Effort,Weight,Risk reduction,Risk reduction per effort,Quadrant,Recommended action,Evidence issue,Owner,Target date,Weight rationale,Assessor notes\r\n1,REP-02,Art. 23,Incident reporting obligations,Is there a procedure to send an early warning to the CSIRT within 24 hours?,Critical,Not assessed,Red,Low,3.0,3.0,3.0,Quick win,\"Document who reports to the national CSIRT, how, and within 24 hours.\",,,,Regulatory baseline 3 (no linked threat pattern).,\r\n2,BCM-02,Art. 21(2)(c),Business continuity and crisis management,Has restoring from backup been tested in the last 12 months?,High,Not met,Red,Low,2.41,2.41,2.41,Quick win,Run and document a restore test at least once a year.,,,,Baseline 2 x 1.21 = 2.41. Counters: Ransomware 23% of incidents (ATT\u0026CK M1053).,Never tested\r\n3,GOV-03,Art. 20,Governance and management accountability,Have members of the management body completed cybersecurity training?,High,Not met,Red,Low,2.39,2.39,2.39,Quick win,Book cybersecurity awareness training for all management body members and keep attendance records.,,,,Baseline 2 x 1.19 = 2.39. Counters: Stolen or brute-forced credentials 17% of incidents (ATT\u0026CK M1017); Phishing and pretexting 5.2% of incidents (ATT\u0026CK M1017).,Planned for Q1 2027\r\n4,SDLC-02,Art. 21(2)(e),\"Secure acquisition, development and maintenance; vulnerability handling\",Are systems scanned for vulnerabilities regularly?,High,Not met,Red,Medium,2.13,2.13,1.065,Major project,Run regular vulnerability scans on internet-facing and critical systems.,,,,Baseline 2 x 1.06 = 2.13. Counters: Exploitation of vulnerabilities 6.7% of incidents (ATT\u0026CK M1016); Supplier or partner involvement 0.5% of incidents (ATT\u0026CK M1016).,\r\n5,SUP-02,Art. 21(2)(d),Supply chain security,Are critical suppliers assessed for security before onboarding and periodically?,High,Not met,Red,Medium,2.01,2.01,1.005,Major project,Send a security questionnaire to critical suppliers and record the outcome.,,,,Baseline 2 x 1.00 = 2.01. Counters: Supplier or partner involvement 0.5% of incidents (catalogue).,\r\n6,BCM-03,Art. 21(2)(c),Business continuity and crisis management,Is there a business continuity or disaster recovery plan for critical services?,High,Not met,Red,High,2.01,2.01,0.67,Major project,\"Write a continuity plan listing critical services, recovery targets and recovery steps.\",,,,Baseline 2 x 1.00 = 2.01. Counters: Denial of service 0.4% of incidents (catalogue).,\r\n7,REP-01,Art. 23,Incident reporting obligations,Is it defined what counts as a \u0027significant incident\u0027 for your organisation?,High,Not met,Red,Low,2.0,2.0,2.0,Quick win,\"Define significance criteria (impact on service, financial loss, affected users).\",,,,Regulatory baseline 2 (no linked threat pattern).,\r\n8,REP-03,Art. 23,Incident reporting obligations,Does the procedure cover the 72-hour notification and the one-month final report?,High,Not assessed,Red,Low,2.0,2.0,2.0,Quick win,\"Add the 72-hour notification and one-month final report steps, with templates.\",,,,Regulatory baseline 2 (no linked threat pattern).,\r\n9,EFF-01,Art. 21(2)(f),Assessing the effectiveness of measures,\"Are security controls tested or audited periodically (internal audit, penetration test, review)?\",High,Not met,Red,High,2.0,2.0,0.667,Major project,Plan an annual internal review or external test of key controls.,,,,Regulatory baseline 2 (no linked threat pattern).,\r\n10,SDLC-01,Art. 21(2)(e),\"Secure acquisition, development and maintenance; vulnerability handling\",Are security patches applied within a defined timeframe?,Critical,Partially met,Amber,Medium,3.64,1.82,0.91,Major project,Define patch timeframes (e.g. critical within 14 days) and track compliance.,No evidence recorded,,,Baseline 3 x 1.21 = 3.64. Counters: Stolen or brute-forced credentials 17% of incidents (ATT\u0026CK M1051); Exploitation of vulnerabilities 6.7% of incidents (ATT\u0026CK M1051); Supplier or partner involvement 0.5% of incidents (ATT\u0026CK M1051).,\"Windows auto-updates, servers patched manually\"\r\n11,MFA-01,Art. 21(2)(j),Multi-factor authentication and secure communications,Is MFA enforced for all remote access and cloud services?,Critical,Partially met,Amber,Low,3.46,1.73,1.73,Quick win,Enforce MFA in the identity provider for all users and remote access.,,,,Baseline 3 x 1.15 = 3.46. Counters: Stolen or brute-forced credentials 17% of incidents (ATT\u0026CK M1032); Supplier or partner involvement 0.5% of incidents (ATT\u0026CK M1032).,ERP still without MFA\r\n12,ACC-04,Art. 21(2)(i),\"HR security, access control and asset management\",Are user access rights reviewed periodically?,Medium,Not met,Amber,Low,1.44,1.44,1.44,Quick win,Review access rights at least twice a year and record the result.,,,,Baseline 1 x 1.44 = 1.44. Counters: Ransomware 23% of incidents (ATT\u0026CK M1018); Stolen or brute-forced credentials 17% of incidents (ATT\u0026CK M1018); Phishing and pretexting 5.2% of incidents (ATT\u0026CK M1018); Insider misuse of privileges 4.1% of incidents (catalogue); Supplier or partner involvement 0.5% of incidents (ATT\u0026CK M1018).,\r\n13,HYG-01,Art. 21(2)(g),Cyber hygiene and training,Do all employees receive security awareness training at least annually?,High,Partially met,Amber,Low,2.86,1.43,1.43,Quick win,Roll out annual awareness training and track completion per employee.,No evidence recorded,,,Baseline 2 x 1.43 = 2.86. Counters: Human error 27% of incidents (catalogue); Stolen or brute-forced credentials 17% of incidents (ATT\u0026CK M1017); Phishing and pretexting 5.2% of incidents (ATT\u0026CK M1017).,Onboarding training only\r\n14,HYG-03,Art. 21(2)(g),Cyber hygiene and training,Are phishing simulations or similar exercises run?,Medium,Not met,Amber,Low,1.19,1.19,1.19,Fill-in,Run periodic phishing simulations and follow up with targeted training.,,,,Baseline 1 x 1.19 = 1.19. Counters: Stolen or brute-forced credentials 17% of incidents (ATT\u0026CK M1017); Phishing and pretexting 5.2% of incidents (ATT\u0026CK M1017).,\r\n15,CRY-03,Art. 21(2)(h),Cryptography and encryption,\"Are encryption keys and secrets managed securely (not hardcoded, access-controlled)?\",High,Partially met,Amber,Medium,2.3,1.15,0.575,Schedule later,Move secrets into a secrets manager and restrict who can read them.,No evidence recorded,,,Baseline 2 x 1.15 = 2.30. Counters: Stolen or brute-forced credentials 17% of incidents (catalogue).,\r\n16,SDLC-04,Art. 21(2)(e),\"Secure acquisition, development and maintenance; vulnerability handling\",\"Is there a way for outsiders to report vulnerabilities (e.g. security.txt, disclosure policy)?\",Medium,Not met,Amber,Low,1.06,1.06,1.06,Fill-in,Publish a vulnerability disclosure policy and a security.txt file.,,,,Baseline 1 x 1.06 = 1.06. Counters: Exploitation of vulnerabilities 6.7% of incidents (catalogue).,\r\n17,INC-02,Art. 21(2)(b),Incident handling,Are security events logged and monitored so incidents can be detected?,High,Partially met,Amber,High,2.09,1.045,0.348,Schedule later,Centralise logs from key systems and set alerts for suspicious activity.,No evidence recorded,,,Baseline 2 x 1.05 = 2.09. Counters: Phishing and pretexting 5.2% of incidents (ATT\u0026CK M1047).,\"M365 alerts only, servers not monitored\"\r\n18,ACC-01,Art. 21(2)(i),\"HR security, access control and asset management\",\"Is there an up-to-date inventory of hardware, software and data assets?\",High,Partially met,Amber,Medium,2.04,1.02,0.51,Schedule later,Build and maintain an asset inventory with owners.,No evidence recorded,,,Baseline 2 x 1.02 = 2.04. Counters: Physical theft or loss of assets 2.4% of incidents (catalogue).,Hardware only\r\n19,GOV-02,Art. 20,Governance and management accountability,Does management receive regular reporting on cybersecurity risks and the status of measures?,High,Partially met,Amber,Low,2.0,1.0,1.0,Fill-in,Set up a recurring (at least quarterly) security status report to management.,No evidence recorded,,,Regulatory baseline 2 (no linked threat pattern).,\"Ad hoc updates only, no fixed schedule\"\r\n20,INC-03,Art. 21(2)(b),Incident handling,Are incidents recorded and reviewed afterwards (lessons learned)?,Medium,Not met,Amber,Low,1.0,1.0,1.0,Fill-in,Keep an incident log and hold a short review after each significant incident.,,,,Regulatory baseline 1 (no linked threat pattern).,\r\n21,EFF-02,Art. 21(2)(f),Assessing the effectiveness of measures,\"Are security metrics or KPIs tracked (e.g. patch compliance, training completion)?\",Medium,Not met,Amber,Low,1.0,1.0,1.0,Fill-in,Pick a few measurable security KPIs and report them to management.,,,,Regulatory baseline 1 (no linked threat pattern).,\r\n22,CRY-01,Art. 21(2)(h),Cryptography and encryption,Is there a policy defining when and how encryption must be used?,Medium,Not met,Amber,Low,1.0,1.0,1.0,Fill-in,\"Write a short cryptography policy covering data at rest, in transit and key management.\",,,,Regulatory baseline 1 (no linked threat pattern).,\r\n23,MFA-04,Art. 21(2)(j),Multi-factor authentication and secure communications,Is there a secured emergency communication channel if primary systems are down?,Medium,Not met,Amber,Low,1.0,1.0,1.0,Fill-in,Set up an out-of-band channel (e.g. separate messaging group) for emergencies.,,,,Regulatory baseline 1 (no linked threat pattern).,\r\n24,RISK-03,Art. 21(2)(a),Risk analysis and information system security policies,\"Do identified risks have owners and treatment decisions (mitigate, accept, transfer, avoid)?\",High,Partially met,Amber,Medium,2.0,1.0,0.5,Schedule later,Assign an owner and treatment decision to every risk in the register.,,,,Regulatory baseline 2 (no linked threat pattern).,\"Owners set, treatment plans incomplete\"\r\n25,BCM-04,Art. 21(2)(c),Business continuity and crisis management,\"Is there a crisis management procedure, including how to communicate during a major incident?\",Medium,Not met,Amber,Medium,1.0,1.0,0.5,Schedule later,Define a crisis team and out-of-band communication channels.,,,,Regulatory baseline 1 (no linked threat pattern).,\r\n26,SUP-03,Art. 21(2)(d),Supply chain security,\"Do supplier contracts include security requirements (e.g. incident notification, data protection)?\",Medium,Partially met,Amber,Medium,1.0,0.5,0.25,Schedule later,Add security and incident-notification clauses to contracts with critical suppliers.,No evidence recorded,,,Baseline 1 x 1.00 = 1.00. Counters: Supplier or partner involvement 0.5% of incidents (catalogue).,\"DPAs signed, no security clauses\"\r\n"</script>
+<script>
+  document.getElementById("dl-csv").addEventListener("click", function () {
+    var csv = JSON.parse(document.getElementById("gap-register").textContent);
+    var blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "NIS2-gap-register-Acme-Logistics-s-r-o---fictional.csv";
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 0);
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+id,risk,owner,likelihood,impact,treatment
+R1,Ransomware on dispatch servers,IT lead,high,high,mitigate
+R2,Supplier compromise (fleet telematics),Operations,medium,high,mitigate
+R3,Phishing of finance staff,Finance lead,high,medium,mitigate

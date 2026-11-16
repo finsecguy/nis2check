@@ -1,0 +1,382 @@
+# NIS2 control catalogue
+#
+# Source: Directive (EU) 2022/2555 (NIS2), Articles 20, 21(2) and 23.
+# Each domain maps to one legal requirement. Each question is a practical
+# check an SME can answer with yes / partial / no / na and back with evidence.
+#
+# priority: critical (weight 3), high (weight 2), medium (weight 1). This is the
+#   regulatory baseline weight.
+# effort: low | medium | high. An estimate of implementation effort for an SME.
+# attack_mitigations: MITRE ATT&CK Enterprise mitigation IDs this control implements.
+#   Links to threat patterns are derived from ATT&CK "mitigates" relationships.
+# threat_patterns: extra links to patterns that ATT&CK does not cover
+#   (error, misuse, physical) or where the link is direct (supply chain).
+
+version: "1.1"
+source: "Directive (EU) 2022/2555 (NIS2)"
+
+domains:
+  - id: GOV
+    article: "Art. 20"
+    title: "Governance and management accountability"
+    summary: >
+      Management bodies must approve the cybersecurity risk-management
+      measures, oversee their implementation, can be held liable for
+      infringements, and must follow cybersecurity training.
+    questions:
+      - id: GOV-01
+        text: "Has the management body formally approved the cybersecurity risk-management measures?"
+        priority: critical
+        effort: low
+        evidence_hint: "Board or management meeting minutes, signed policy approval"
+        remediation: "Present the security policy set to management and record formal approval in minutes."
+      - id: GOV-02
+        text: "Does management receive regular reporting on cybersecurity risks and the status of measures?"
+        priority: high
+        effort: low
+        evidence_hint: "Quarterly security report, risk dashboard, meeting agendas"
+        remediation: "Set up a recurring (at least quarterly) security status report to management."
+      - id: GOV-03
+        text: "Have members of the management body completed cybersecurity training?"
+        priority: high
+        effort: low
+        attack_mitigations: [M1017]
+        evidence_hint: "Training certificates or attendance records for each manager"
+        remediation: "Book cybersecurity awareness training for all management body members and keep attendance records."
+      - id: GOV-04
+        text: "Is there a named person responsible for cybersecurity (e.g. CISO or security officer)?"
+        priority: medium
+        effort: low
+        evidence_hint: "Org chart, role description, appointment letter"
+        remediation: "Appoint a security owner and document the role's responsibilities."
+
+  - id: RISK
+    article: "Art. 21(2)(a)"
+    title: "Risk analysis and information system security policies"
+    summary: >
+      Policies on risk analysis and information system security.
+    questions:
+      - id: RISK-01
+        text: "Is there a documented, approved information security policy?"
+        priority: critical
+        effort: medium
+        evidence_hint: "Information security policy with version and approval date"
+        remediation: "Write a top-level information security policy and have it approved by management."
+      - id: RISK-02
+        text: "Is a cybersecurity risk assessment performed at least annually and documented?"
+        priority: critical
+        effort: medium
+        evidence_hint: "Risk register, risk assessment report"
+        remediation: "Run a risk assessment covering assets, threats and impact; record results in a risk register."
+      - id: RISK-03
+        text: "Do identified risks have owners and treatment decisions (mitigate, accept, transfer, avoid)?"
+        priority: high
+        effort: medium
+        evidence_hint: "Risk register with owner and treatment columns"
+        remediation: "Assign an owner and treatment decision to every risk in the register."
+
+  - id: INC
+    article: "Art. 21(2)(b)"
+    title: "Incident handling"
+    summary: >
+      Procedures to prevent, detect, respond to and recover from incidents.
+    questions:
+      - id: INC-01
+        text: "Is there a documented incident response plan with roles and escalation paths?"
+        priority: critical
+        effort: medium
+        evidence_hint: "Incident response plan, contact list"
+        remediation: "Document an incident response plan: roles, severity levels, escalation contacts, communication."
+      - id: INC-02
+        text: "Are security events logged and monitored so incidents can be detected?"
+        priority: high
+        effort: high
+        attack_mitigations: [M1047]
+        evidence_hint: "Logging configuration, SIEM or alerting screenshots"
+        remediation: "Centralise logs from key systems and set alerts for suspicious activity."
+      - id: INC-03
+        text: "Are incidents recorded and reviewed afterwards (lessons learned)?"
+        priority: medium
+        effort: low
+        evidence_hint: "Incident log, post-incident review notes"
+        remediation: "Keep an incident log and hold a short review after each significant incident."
+
+  - id: BCM
+    article: "Art. 21(2)(c)"
+    title: "Business continuity and crisis management"
+    summary: >
+      Business continuity, such as backup management and disaster recovery,
+      and crisis management.
+    questions:
+      - id: BCM-01
+        text: "Are backups of critical data taken regularly and stored separately (offline or immutable)?"
+        priority: critical
+        effort: medium
+        attack_mitigations: [M1053, M1029]
+        threat_patterns: [error, physical]
+        evidence_hint: "Backup policy, backup job reports"
+        remediation: "Schedule automated backups of critical data with at least one offline or immutable copy."
+      - id: BCM-02
+        text: "Has restoring from backup been tested in the last 12 months?"
+        priority: high
+        effort: low
+        attack_mitigations: [M1053]
+        evidence_hint: "Restore test record with date and result"
+        remediation: "Run and document a restore test at least once a year."
+      - id: BCM-03
+        text: "Is there a business continuity or disaster recovery plan for critical services?"
+        priority: high
+        effort: high
+        threat_patterns: [denial_of_service]
+        evidence_hint: "BCP/DRP document with recovery time objectives"
+        remediation: "Write a continuity plan listing critical services, recovery targets and recovery steps."
+      - id: BCM-04
+        text: "Is there a crisis management procedure, including how to communicate during a major incident?"
+        priority: medium
+        effort: medium
+        evidence_hint: "Crisis communication plan, out-of-band contact list"
+        remediation: "Define a crisis team and out-of-band communication channels."
+
+  - id: SUP
+    article: "Art. 21(2)(d)"
+    title: "Supply chain security"
+    summary: >
+      Security of the relationships with direct suppliers and service providers.
+    questions:
+      - id: SUP-01
+        text: "Is there an inventory of suppliers and service providers with access to systems or data?"
+        priority: high
+        effort: low
+        threat_patterns: [supply_chain]
+        evidence_hint: "Supplier register"
+        remediation: "List all suppliers with access to your systems or data, with the access each one has."
+      - id: SUP-02
+        text: "Are critical suppliers assessed for security before onboarding and periodically?"
+        priority: high
+        effort: medium
+        threat_patterns: [supply_chain]
+        evidence_hint: "Supplier security questionnaires, assessment records"
+        remediation: "Send a security questionnaire to critical suppliers and record the outcome."
+      - id: SUP-03
+        text: "Do supplier contracts include security requirements (e.g. incident notification, data protection)?"
+        priority: medium
+        effort: medium
+        threat_patterns: [supply_chain]
+        evidence_hint: "Contract clauses, data processing agreements"
+        remediation: "Add security and incident-notification clauses to contracts with critical suppliers."
+
+  - id: SDLC
+    article: "Art. 21(2)(e)"
+    title: "Secure acquisition, development and maintenance; vulnerability handling"
+    summary: >
+      Security in network and information systems acquisition, development
+      and maintenance, including vulnerability handling and disclosure.
+    questions:
+      - id: SDLC-01
+        text: "Are security patches applied within a defined timeframe?"
+        priority: critical
+        effort: medium
+        attack_mitigations: [M1051]
+        evidence_hint: "Patch management policy, patch status report"
+        remediation: "Define patch timeframes (e.g. critical within 14 days) and track compliance."
+      - id: SDLC-02
+        text: "Are systems scanned for vulnerabilities regularly?"
+        priority: high
+        effort: medium
+        attack_mitigations: [M1016]
+        evidence_hint: "Vulnerability scan reports"
+        remediation: "Run regular vulnerability scans on internet-facing and critical systems."
+      - id: SDLC-03
+        text: "Are security requirements considered when buying or developing systems?"
+        priority: medium
+        effort: medium
+        attack_mitigations: [M1013]
+        evidence_hint: "Procurement checklist, secure development guidelines"
+        remediation: "Add security requirements to procurement and development checklists."
+      - id: SDLC-04
+        text: "Is there a way for outsiders to report vulnerabilities (e.g. security.txt, disclosure policy)?"
+        priority: medium
+        effort: low
+        threat_patterns: [vuln_exploitation]
+        evidence_hint: "Vulnerability disclosure policy, security.txt"
+        remediation: "Publish a vulnerability disclosure policy and a security.txt file."
+
+  - id: EFF
+    article: "Art. 21(2)(f)"
+    title: "Assessing the effectiveness of measures"
+    summary: >
+      Policies and procedures to assess the effectiveness of cybersecurity
+      risk-management measures.
+    questions:
+      - id: EFF-01
+        text: "Are security controls tested or audited periodically (internal audit, penetration test, review)?"
+        priority: high
+        effort: high
+        evidence_hint: "Audit reports, penetration test reports"
+        remediation: "Plan an annual internal review or external test of key controls."
+      - id: EFF-02
+        text: "Are security metrics or KPIs tracked (e.g. patch compliance, training completion)?"
+        priority: medium
+        effort: low
+        evidence_hint: "KPI dashboard or report"
+        remediation: "Pick a few measurable security KPIs and report them to management."
+
+  - id: HYG
+    article: "Art. 21(2)(g)"
+    title: "Cyber hygiene and training"
+    summary: >
+      Basic cyber hygiene practices and cybersecurity training.
+    questions:
+      - id: HYG-01
+        text: "Do all employees receive security awareness training at least annually?"
+        priority: high
+        effort: low
+        attack_mitigations: [M1017]
+        threat_patterns: [error]
+        evidence_hint: "Training completion records"
+        remediation: "Roll out annual awareness training and track completion per employee."
+      - id: HYG-02
+        text: "Are basic hygiene controls in place (endpoint protection, secure configuration, no shared accounts)?"
+        priority: high
+        effort: medium
+        attack_mitigations: [M1049, M1040, M1028, M1018]
+        evidence_hint: "Endpoint protection console, configuration baseline"
+        remediation: "Deploy endpoint protection, apply secure baselines and remove shared accounts."
+      - id: HYG-03
+        text: "Are phishing simulations or similar exercises run?"
+        priority: medium
+        effort: low
+        attack_mitigations: [M1017]
+        evidence_hint: "Phishing simulation results"
+        remediation: "Run periodic phishing simulations and follow up with targeted training."
+
+  - id: CRY
+    article: "Art. 21(2)(h)"
+    title: "Cryptography and encryption"
+    summary: >
+      Policies and procedures regarding the use of cryptography and,
+      where appropriate, encryption.
+    questions:
+      - id: CRY-01
+        text: "Is there a policy defining when and how encryption must be used?"
+        priority: medium
+        effort: low
+        evidence_hint: "Cryptography policy"
+        remediation: "Write a short cryptography policy covering data at rest, in transit and key management."
+      - id: CRY-02
+        text: "Are data in transit and sensitive data at rest encrypted (TLS, disk encryption)?"
+        priority: high
+        effort: medium
+        attack_mitigations: [M1041]
+        threat_patterns: [physical]
+        evidence_hint: "TLS configuration, disk encryption status report"
+        remediation: "Enforce TLS on all services and enable full-disk encryption on laptops and servers."
+      - id: CRY-03
+        text: "Are encryption keys and secrets managed securely (not hardcoded, access-controlled)?"
+        priority: high
+        effort: medium
+        attack_mitigations: [M1041]
+        threat_patterns: [credential_abuse]
+        evidence_hint: "Secrets manager configuration, key management procedure"
+        remediation: "Move secrets into a secrets manager and restrict who can read them."
+
+  - id: ACC
+    article: "Art. 21(2)(i)"
+    title: "HR security, access control and asset management"
+    summary: >
+      Human resources security, access control policies and asset management.
+    questions:
+      - id: ACC-01
+        text: "Is there an up-to-date inventory of hardware, software and data assets?"
+        priority: high
+        effort: medium
+        threat_patterns: [physical]
+        evidence_hint: "Asset inventory"
+        remediation: "Build and maintain an asset inventory with owners."
+      - id: ACC-02
+        text: "Is access granted on a role basis and least-privilege principle?"
+        priority: critical
+        effort: medium
+        attack_mitigations: [M1026, M1018]
+        threat_patterns: [misuse]
+        evidence_hint: "Access control policy, role matrix"
+        remediation: "Define roles and grant only the access each role needs."
+      - id: ACC-03
+        text: "Are joiner, mover and leaver processes defined so access is granted and removed on time?"
+        priority: high
+        effort: low
+        attack_mitigations: [M1018]
+        threat_patterns: [misuse]
+        evidence_hint: "Onboarding and offboarding checklists"
+        remediation: "Create onboarding and offboarding checklists that include access changes."
+      - id: ACC-04
+        text: "Are user access rights reviewed periodically?"
+        priority: medium
+        effort: low
+        attack_mitigations: [M1018]
+        threat_patterns: [misuse]
+        evidence_hint: "Access review records"
+        remediation: "Review access rights at least twice a year and record the result."
+
+  - id: MFA
+    article: "Art. 21(2)(j)"
+    title: "Multi-factor authentication and secure communications"
+    summary: >
+      Multi-factor or continuous authentication, secured voice, video and
+      text communications and secured emergency communication systems,
+      where appropriate.
+    questions:
+      - id: MFA-01
+        text: "Is MFA enforced for all remote access and cloud services?"
+        priority: critical
+        effort: low
+        attack_mitigations: [M1032]
+        evidence_hint: "Identity provider MFA policy, coverage report"
+        remediation: "Enforce MFA in the identity provider for all users and remote access."
+      - id: MFA-02
+        text: "Is MFA enforced for all privileged and administrator accounts?"
+        priority: critical
+        effort: low
+        attack_mitigations: [M1032, M1026]
+        evidence_hint: "Admin account MFA report"
+        remediation: "Require phishing-resistant MFA for every admin account."
+      - id: MFA-03
+        text: "Are internal voice, video and messaging tools secured (approved tools, encryption)?"
+        priority: medium
+        effort: low
+        evidence_hint: "List of approved communication tools and their settings"
+        remediation: "Approve a set of secure communication tools and disable unapproved ones."
+      - id: MFA-04
+        text: "Is there a secured emergency communication channel if primary systems are down?"
+        priority: medium
+        effort: low
+        attack_mitigations: [M1060]
+        evidence_hint: "Emergency communication procedure"
+        remediation: "Set up an out-of-band channel (e.g. separate messaging group) for emergencies."
+
+  - id: REP
+    article: "Art. 23"
+    title: "Incident reporting obligations"
+    summary: >
+      Significant incidents must be reported to the CSIRT or competent
+      authority: early warning within 24 hours, incident notification within
+      72 hours, final report within one month.
+    questions:
+      - id: REP-01
+        text: "Is it defined what counts as a 'significant incident' for your organisation?"
+        priority: high
+        effort: low
+        evidence_hint: "Incident classification criteria"
+        remediation: "Define significance criteria (impact on service, financial loss, affected users)."
+      - id: REP-02
+        text: "Is there a procedure to send an early warning to the CSIRT within 24 hours?"
+        priority: critical
+        effort: low
+        evidence_hint: "Reporting procedure with CSIRT contact details"
+        remediation: "Document who reports to the national CSIRT, how, and within 24 hours."
+      - id: REP-03
+        text: "Does the procedure cover the 72-hour notification and the one-month final report?"
+        priority: high
+        effort: low
+        evidence_hint: "Reporting procedure, report templates"
+        remediation: "Add the 72-hour notification and one-month final report steps, with templates."

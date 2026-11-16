@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Settings{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>Settings</h1></div></div>
+<div>
+<form method="post">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <label>Control weighting</label>
+  <label class="check"><input type="radio" name="weighting" value="threat" {{ 'checked' if weighting == 'threat' }}> Threat-informed: regulatory baseline raised by up to 50% for controls that counter common threats (recommended)</label>
+  <label class="check"><input type="radio" name="weighting" value="static" {{ 'checked' if weighting == 'static' }}> Regulatory baseline only (critical 3, high 2, medium 1)</label>
+
+  <label style="margin-top: 16px;">Remediation plan order</label>
+  <label class="check"><input type="radio" name="rank_by" value="risk" {{ 'checked' if rank_by == 'risk' }}> By risk reduction (biggest gaps first)</label>
+  <label class="check"><input type="radio" name="rank_by" value="value" {{ 'checked' if rank_by == 'value' }}> By risk reduction per unit of effort (quick wins first)</label>
+
+  <label style="margin-top: 16px;">Threat data</label>
+  <label class="check"><input type="checkbox" name="threat_auto_check" {{ 'checked' if auto }}> Check for threat data updates automatically every {{ (settings.threat_check_hours / 24) | round(0) | int }} days (updates still need approval)</label>
+  {% if not settings.threat_auto_check %}
+  <p class="muted small">Automatic checks are turned off for this deployment by <code>NIS2_THREAT_AUTO_CHECK</code>; this setting has no effect until that is changed.</p>
+  {% endif %}
+  <div class="actions"><button class="btn" type="submit">Save settings</button></div>
+</form>
+</div>
+
+<h2>Installation</h2>
+<table class="kv">
+  <tr><th>Data folder</th><td>{{ settings.data_dir }}</td></tr>
+  <tr><th>Single sign-on</th><td>{{ settings.oidc_providers | map(attribute='label') | join(', ') or 'Not configured' }}</td></tr>
+  <tr><th>Password sign-in</th><td>{{ 'Enabled' if settings.local_login else 'Disabled' }}</td></tr>
+  <tr><th>Maximum upload</th><td>{{ settings.max_upload_mb }} MB</td></tr>
+</table>
+<p class="small muted">These are set with environment variables when the app is started. See the README.</p>
+{% endblock %}

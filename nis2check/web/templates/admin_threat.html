@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Threat data{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div><h1>Threat data</h1>
+    <div class="sub">Priorities draw on public incident and vulnerability data. The app fetches new data on its own, but nothing changes until you approve it.</div></div>
+  <form method="post" action="{{ url_for('admin.threat_check') }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <button class="btn secondary" type="submit" {{ 'disabled' if running }}>{{ 'Checking...' if running else 'Check for new data' }}</button>
+  </form>
+</div>
+
+<h2>Currently in use</h2>
+<table class="kv">
+  <tr><th>Version</th><td>{{ active.version_label }} <span class="muted">({{ active.path }})</span></td></tr>
+  <tr><th>Sample</th><td>{{ active.vcdb.sample_size }} incident events, {{ active.vcdb.window.from_year }} to {{ active.vcdb.window.to_year }}</td></tr>
+  <tr><th>Exploitation trend factor</th><td>{{ active.trend.factor }}</td></tr>
+  <tr><th>Sources</th><td>{% set names = {"vcdb": "VERIS Community Database", "mitre_attack": "MITRE ATT&CK", "cisa_kev": "CISA KEV", "enisa_euvd": "ENISA EUVD"} %}{% for key, s in active.sources.items() %}<span class="nowrap"><span class="rag rag-{{ 'green' if s.status == 'ok' else 'amber' }}"></span>{{ names.get(key, key) }}{% if s.version %} {{ s.version }}{% endif %}{% if s.status != 'ok' %} <span class="muted">(unavailable)</span>{% endif %}</span>{% if not loop.last %} &nbsp; {% endif %}{% endfor %}</td></tr>
+  <tr><th>Last check</th><td>{{ last_check[:16].replace('T', ' ') if last_check else 'Never' }} UTC. Automatic checks are {{ 'on' if (auto and settings.threat_auto_check) else 'off' }}{% if not settings.threat_auto_check %} (disabled by NIS2_THREAT_AUTO_CHECK){% endif %}.</td></tr>
+</table>
+
+<h2>Waiting for your approval</h2>
+{% if pending %}
+<div class="panel change-report">
+  {{ pending_html }}
+  {% if pending.warnings %}<div class="note">{% for w in pending.warnings %}{{ w }}<br>{% endfor %}</div>{% endif %}
+  <div class="actions">
+    <form class="inline" method="post" action="{{ url_for('admin.threat_decide', vid=pending.id, decision='approve') }}" data-confirm="Approve this update? New reports will use the new weights.">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="btn" type="submit">Approve update</button>
+    </form>
+    <form class="inline" method="post" action="{{ url_for('admin.threat_decide', vid=pending.id, decision='reject') }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="btn danger" type="submit">Reject</button>
+    </form>
+    <span class="small muted">Fetched {{ pending.fetched_at.strftime("%Y-%m-%d %H:%M") }} UTC by {{ pending.triggered_by }}</span>
+  </div>
+</div>
+{% else %}
+<p class="muted">Nothing to approve.</p>
+{% endif %}
+
+<h2>History</h2>
+<table>
+  <thead><tr><th>Fetched (UTC)</th><th>Triggered by</th><th>Result</th><th>Reviewed</th></tr></thead>
+  <tbody>
+  {% for v in history %}
+    <tr>
+      <td class="nowrap small">{{ v.fetched_at.strftime("%Y-%m-%d %H:%M") }}</td>
+      <td class="small">{{ v.triggered_by }}</td>
+      <td class="small">{{ {"pending": "Waiting for review", "active": "Approved, in use", "rejected": "Rejected", "superseded": "Superseded", "failed": "Failed: " ~ v.error[:120], "no_change": "No changes"}[v.status] }}</td>
+      <td class="small">{{ v.reviewed_by or "" }}{% if v.reviewed_at %}, {{ v.reviewed_at.strftime("%Y-%m-%d") }}{% endif %}</td>
+    </tr>
+  {% else %}
+    <tr><td colspan="4" class="muted">No checks yet. The bundled snapshot is in use.</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

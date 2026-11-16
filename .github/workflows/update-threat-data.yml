@@ -1,0 +1,57 @@
+name: update threat data
+
+# Refreshes nis2check/data/threat_data.yaml from VCDB, MITRE ATT&CK, CISA KEV and
+# ENISA EUVD, then opens (or updates) a pull request with a change report.
+# Nothing changes in the tool until a person reviews and merges that pull request.
+
+on:
+  schedule:
+    - cron: "17 5 * * 1"   # Mondays 05:17 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: update-threat-data
+  cancel-in-progress: true
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install
+        run: pip install -e ".[dev]"
+
+      - name: Fetch sources and rebuild threat data
+        run: |
+          nis2check update-threat-data \
+            --output nis2check/data/threat_data.yaml \
+            --change-report "$RUNNER_TEMP/change-report.md"
+
+      - name: Run tests against the new data
+        run: pytest -q
+
+      - name: Regenerate the example report
+        run: nis2check report examples/acme-assessment.yaml -o examples/acme-report.html --csv examples/acme-gap-register.csv -q
+
+      - name: Open pull request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: automation/threat-data
+          delete-branch: true
+          commit-message: "Update threat data"
+          title: "Update threat data"
+          body-path: ${{ runner.temp }}/change-report.md
+          labels: threat-data
+          add-paths: |
+            nis2check/data/threat_data.yaml
+            examples/acme-report.html
+            examples/acme-gap-register.csv

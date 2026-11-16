@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Users{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>People and access</h1>
+  <div class="sub">Administrators manage people and settings. Assessors answer questions and attach evidence. Viewers, for example management, can read everything and download reports.</div></div></div>
+
+<table>
+  <thead><tr><th>Person</th><th>Role</th><th>Signs in with</th><th>Last signed in</th><th>Status</th><th></th></tr></thead>
+  <tbody>
+  {% for u in users %}
+    <tr>
+      <td><strong>{{ u.name or u.email }}</strong><br><span class="small muted">{{ u.email }}</span></td>
+      <td>
+        <form class="inline" method="post" action="{{ url_for('admin.update_user', uid=u.id) }}">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <input type="hidden" name="action" value="role">
+          <select name="role" aria-label="Role for {{ u.email }}" style="width: auto;">
+            {% for r in roles %}<option value="{{ r }}" {{ 'selected' if u.role == r }}>{{ role_labels[r] }}</option>{% endfor %}
+          </select>
+          <button class="btn secondary small" type="submit">Change</button>
+        </form>
+      </td>
+      <td class="small">{% if u.sso_subject %}SSO ({{ u.sso_subject.split(':')[0] }}){% endif %}{% if u.sso_subject and u.password_hash %} + {% endif %}{% if u.password_hash %}Password{% endif %}{% if not u.sso_subject and not u.password_hash %}SSO (not yet signed in){% endif %}</td>
+      <td class="small nowrap">{{ u.last_login.strftime("%d %b %Y") if u.last_login else "Never" }}</td>
+      <td>{% if u.active %}<span class="rag rag-green"></span>Active{% else %}<span class="rag rag-grey"></span>Deactivated{% endif %}</td>
+      <td class="nowrap">
+        <form class="inline" method="post" action="{{ url_for('admin.update_user', uid=u.id) }}">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          {% if u.active %}<button class="btn danger small" name="action" value="deactivate" type="submit">Deactivate</button>
+          {% else %}<button class="btn secondary small" name="action" value="activate" type="submit">Reactivate</button>{% endif %}
+          {% if u.password_hash %}<button class="btn secondary small" name="action" value="reset_password" type="submit">Reset password</button>{% endif %}
+          {% if u.sso_subject %}<button class="btn secondary small" name="action" value="unlink_sso" type="submit">Unlink SSO</button>{% endif %}
+        </form>
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+<h2>Invite someone</h2>
+<div>
+<form method="post">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <div class="row">
+    <div><label for="email">Work email</label><input type="email" id="email" name="email" required></div>
+    <div><label for="name">Name</label><input type="text" id="name" name="name"></div>
+    <div><label for="role">Role</label><select id="role" name="role">{% for r in roles %}<option value="{{ r }}" {{ 'selected' if r == 'viewer' }}>{{ role_labels[r] }}</option>{% endfor %}</select></div>
+    <div><label for="method">Sign-in</label><select id="method" name="method">
+      {% if settings.oidc_providers %}<option value="sso">Single sign-on ({{ settings.oidc_providers | map(attribute='label') | map('replace', 'Sign in with ', '') | join(' or ') }})</option>{% endif %}
+      {% if settings.local_login %}<option value="local">Password (temporary password shown once)</option>{% endif %}
+    </select></div>
+  </div>
+  <div class="actions"><button class="btn" type="submit">Invite</button></div>
+</form>
+{% if settings.oidc_auto_provision %}<p class="small muted">Automatic provisioning is on: anyone from {{ settings.oidc_allowed_domains | join(', ') or 'any domain' }} who signs in with SSO gets the {{ role_labels[settings.oidc_default_role] }} role.</p>{% endif %}
+</div>
+{% endblock %}

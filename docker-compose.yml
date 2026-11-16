@@ -1,0 +1,16 @@
+services:
+  nis2check:
+    build: .
+    image: nis2check:latest
+    container_name: nis2check
+    ports:
+      - "8080:8080"
+    env_file:
+      - path: .env
+        required: false
+    volumes:
+      - nis2check-data:/data
+    restart: unless-stopped
+
+volumes:
+  nis2check-data:

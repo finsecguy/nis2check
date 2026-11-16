@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Audit log{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>Activity log</h1><div class="sub">Every sign-in, answer, evidence change, download and setting change, newest first. Shows the latest 500.</div></div>
+  <form method="get" style="display: flex; gap: 8px;">
+    <input type="text" name="q" value="{{ q }}" placeholder="Search by person, action or item" aria-label="Filter">
+    <button class="btn secondary" type="submit">Search</button>
+  </form>
+</div>
+<table>
+  <thead><tr><th>When (UTC)</th><th>Who</th><th>Action</th><th>Item</th><th>Detail</th><th>IP</th></tr></thead>
+  <tbody>
+  {% for a in entries %}
+    <tr><td class="nowrap small">{{ a.ts.strftime("%Y-%m-%d %H:%M:%S") }}</td><td class="small">{{ a.actor }}</td><td class="small">{{ a.action | humanize }}</td>
+        <td class="small">{{ a.target }}</td><td class="small">{{ a.detail }}</td><td class="small">{{ a.ip }}</td></tr>
+  {% else %}
+    <tr><td colspan="6" class="muted">No entries.</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

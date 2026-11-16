@@ -1,0 +1,4 @@
+supplier,service,data_access,critical
+FleetTrack,Telematics platform,location data,yes
+CloudERP,ERP hosting,customer and finance data,yes
+PrintCo,Printing,none,no

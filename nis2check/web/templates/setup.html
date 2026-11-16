@@ -1,0 +1,20 @@
+{% extends "auth_base.html" %}
+{% block title %}First-time setup{% endblock %}
+{% block content %}
+<h1>Set up the assessment</h1>
+<p class="muted">Create the first administrator account. You can invite colleagues and connect single sign-on afterwards.</p>
+<form method="post">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <label for="org_name">Organisation name</label>
+  <input type="text" id="org_name" name="org_name" required>
+  <label for="name">Your name</label>
+  <input type="text" id="name" name="name" required>
+  <label for="email">Your work email</label>
+  <input type="email" id="email" name="email" required>
+  <label for="password">Password <span class="muted small">(at least 12 characters, upper- and lower-case)</span></label>
+  <input type="password" id="password" name="password" autocomplete="new-password" required>
+  <label for="password2">Repeat password</label>
+  <input type="password" id="password2" name="password2" autocomplete="new-password" required>
+  <div class="actions"><button class="btn" type="submit">Create account and continue</button></div>
+</form>
+{% endblock %}

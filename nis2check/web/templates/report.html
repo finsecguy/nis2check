@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Report{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div><h1>Report</h1><div class="sub">Built from the current answers and evidence every time you open or download it.</div></div>
+  <div class="actions" style="margin: 0;">
+    <a class="btn" href="{{ url_for('main.report_download', fmt='pdf') }}">Download PDF</a>
+    <a class="btn secondary" href="{{ url_for('main.report_download', fmt='csv') }}">Gap register for Excel</a>
+    <a class="btn secondary" href="{{ url_for('main.report_download', fmt='html') }}">HTML</a>
+    <a class="btn secondary" href="{{ url_for('main.report_download', fmt='json') }}">JSON</a>
+  </div>
+</div>
+<iframe class="report" src="{{ url_for('main.report_view') }}" title="NIS2 gap assessment report"></iframe>
+{% endblock %}

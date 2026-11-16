@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+.pytest_cache/
+
+# your own assessments and reports (keep the bundled example)
+assessment.yaml
+assessment.html
+*.json
+!examples/acme-report.json

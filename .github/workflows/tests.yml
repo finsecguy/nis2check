@@ -1,0 +1,43 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: pip install -e ".[dev,web]"
+      - run: pytest -q
+      - run: nis2check report examples/acme-assessment.yaml -q
+
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build image
+        run: docker build -t nis2check:ci .
+      - name: Start container and check it responds
+        run: |
+          docker run -d --name nis2 -p 8080:8080 nis2check:ci
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:8080/healthz; then break; fi
+            sleep 2
+          done
+          curl -fsS http://127.0.0.1:8080/healthz
+          test "$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:8080/setup)" = "200"
+      - name: Create admin and render a PDF inside the container
+        run: |
+          docker exec nis2 nis2check web create-admin ci@example.com --password "CiPassword123"
+          docker exec nis2 python -c "import weasyprint; weasyprint.HTML(string='<p>ok</p>').write_pdf('/tmp/t.pdf')"
+      - name: Logs on failure
+        if: failure()
+        run: docker logs nis2

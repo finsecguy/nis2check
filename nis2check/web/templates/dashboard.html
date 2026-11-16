@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% block title %}Overview{% endblock %}
+{% block content %}
+{% set c = result.counts %}
+{% set critical_open = result.gaps | selectattr("question.priority", "equalto", "critical") | rejectattr("status", "equalto", "partial") | list %}
+
+<div class="page-head">
+  <div>
+    <h1>{{ org.name or "Your organisation" }}</h1>
+    <div class="sub">{{ result.applicability.label }}.</div>
+  </div>
+  <div class="actions" style="margin: 0;">
+    <a class="btn" href="{{ url_for('main.report_download', fmt='pdf') }}">Download report</a>
+    <a class="btn secondary" href="{{ url_for('main.report_download', fmt='csv') }}">Gap register for Excel</a>
+  </div>
+</div>
+
+{% if pending %}
+<div class="note">New threat data is waiting for your approval. <a href="{{ url_for('admin.threat_data') }}">Review it</a></div>
+{% endif %}
+
+{% if answered == 0 %}
+<div class="headline">
+  <div class="figure">0<sup>%</sup></div>
+  <p class="lede">Nothing assessed yet. Check your <a href="{{ url_for('main.organisation_page') }}">organisation details</a>, then start the <a href="{{ url_for('main.assessment_index') }}">assessment</a>.</p>
+</div>
+{% else %}
+<div class="headline">
+  <div class="figure">{{ "%.0f" | format(result.score_pct or 0) }}<sup>%</sup></div>
+  <p class="lede">of the NIS2 measures are in place. {{ result.verified_pct | pct }} can be shown with evidence today.</p>
+</div>
+{% endif %}
+<ul class="facts">
+  <li><strong><span class="rag rag-{{ result.score_pct | rag }}"></span>{{ result.maturity }}</strong>maturity</li>
+  <li><strong>{{ answered }} of {{ total }}</strong>questions answered</li>
+  <li><strong>{{ critical_open | length }}</strong>critical {{ "measure" if critical_open | length == 1 else "measures" }} not met</li>
+  <li><strong>{{ result.evidence_issues | length }}</strong>{{ "answer needs" if result.evidence_issues | length == 1 else "answers need" }} evidence</li>
+</ul>
+
+<div class="grid2">
+  <section>
+    <h2>Where you stand</h2>
+    <table>
+      <thead><tr><th>Requirement</th><th class="nowrap">NIS2</th><th style="width: 22%;"></th><th class="num">Score</th></tr></thead>
+      <tbody>
+      {% for d in result.domains %}
+        <tr>
+          <td><span class="rag rag-{{ d.score_pct | rag }}" aria-hidden="true"></span><a href="{{ url_for('main.assessment_domain', domain_id=d.domain.id) }}">{{ d.domain.title }}</a></td>
+          <td class="nowrap small muted">{{ d.domain.article }}</td>
+          <td><div class="bar" aria-hidden="true"><span class="rag-{{ d.score_pct | rag }}" style="width: {{ d.score_pct or 0 }}%"></span></div></td>
+          <td class="num">{{ d.score_pct | pct }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </section>
+  <section>
+    <h2>Progress</h2>
+    {% if trend %}
+      <svg class="trend" viewBox="0 0 {{ trend.w }} {{ trend.h }}" width="100%" role="img" aria-label="Compliance score over time">
+        {% for v, y in trend.grid %}
+          <line x1="{{ trend.pad }}" x2="{{ trend.w - trend.pad }}" y1="{{ y }}" y2="{{ y }}" stroke="rgba(0,0,0,.1)"/>
+          <text x="0" y="{{ y + 4 }}">{{ v }}%</text>
+        {% endfor %}
+        <polyline points="{{ trend.verified }}" fill="none" stroke="#000" stroke-opacity=".45" stroke-width="1.5" stroke-dasharray="4 4"/>
+        <polyline points="{{ trend.line }}" fill="none" stroke="#16285a" stroke-width="2.5"/>
+        {% for x, label in trend.labels %}<text x="{{ x }}" y="{{ trend.h - 6 }}" text-anchor="middle">{{ label }}</text>{% endfor %}
+      </svg>
+      <p class="small muted">The solid line is your overall score, the dashed line the part backed by evidence.</p>
+    {% else %}
+      <p class="muted small">A progress line appears once answers have been saved on two different days.</p>
+    {% endif %}
+
+    <h2>Start here</h2>
+    {% set quick = matrix["Quick win"] %}
+    {% if quick %}
+    <p class="small muted">High impact and little effort.</p>
+    <ol class="wins">
+      {% for f in quick[:5] %}
+        <li><a href="{{ url_for('main.assessment_domain', domain_id=f.question.domain_id, _anchor=f.question.id) }}">{{ f.question.id }}</a><span>{{ f.question.remediation }}</span></li>
+      {% endfor %}
+    </ol>
+    {% if quick | length > 5 %}<p class="small muted" style="margin-top: 8px;">{{ quick | length - 5 }} more in the report.</p>{% endif %}
+    {% else %}
+    <p class="muted small">No quick wins open right now.</p>
+    {% endif %}
+  </section>
+</div>
+
+<h2>Recent activity</h2>
+<table>
+  <thead><tr><th>When (UTC)</th><th>Who</th><th>What</th><th>Item</th></tr></thead>
+  <tbody>
+  {% for a in activity %}
+    <tr><td class="nowrap small">{{ a.ts.strftime("%d %b %Y, %H:%M") }}</td><td class="small">{{ a.actor }}</td><td class="small">{{ a.action | humanize }}</td><td class="small">{{ a.target }}{% if a.detail %}: {{ a.detail }}{% endif %}</td></tr>
+  {% else %}
+    <tr><td colspan="4" class="muted">Nothing yet.</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

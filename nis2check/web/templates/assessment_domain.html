@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block title %}{{ domain.id }}: {{ domain.title }}{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <div class="small"><a href="{{ url_for('main.assessment_index') }}">Assessment</a>, {{ domain.article }}</div>
+    <h1>{{ domain.title }}</h1>
+    <div class="sub">{{ domain.summary }}</div>
+  </div>
+  <div class="nowrap" style="text-align: right;">
+    <div style="font: 400 44px/1 var(--serif); color: var(--navy);">{{ dres.score_pct | pct }}</div>
+    <div class="small muted">{{ dres.verified_pct | pct }} with evidence</div>
+  </div>
+</div>
+
+{% set editable = current_user.can('edit') %}
+{% if not editable %}<div class="note">You can read this page but not change it. Ask an administrator for the assessor role to answer questions.</div>{% endif %}
+
+{% for q in domain.questions %}
+  {% set f = findings[q.id] %}
+  {% set r = responses.get(q.id) %}
+  <div class="question{{ ' first' if loop.first }}" id="{{ q.id }}">
+    <div class="qhead">
+      <div class="qtext"><span class="qid">{{ q.id }}</span>{{ q.text }}</div>
+      <div class="nowrap">
+        <span class="tag {{ q.priority }}">{{ q.priority | capitalize }} priority</span>
+        <span class="tag">{{ q.effort | capitalize }} effort</span>
+      </div>
+    </div>
+    <div class="qbody">
+      <div class="hint">Good evidence: {{ q.evidence_hint[:1] | lower }}{{ q.evidence_hint[1:] }}.</div>
+      <form method="post" action="{{ url_for('main.save_question', qid=q.id) }}" enctype="multipart/form-data">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <div class="answers" role="radiogroup" aria-label="Answer for {{ q.id }}">
+          {% for key, label in answer_labels.items() %}
+            <label><input type="radio" name="answer" value="{{ key }}" {{ 'checked' if r and r.answer == key }} {{ 'disabled' if not editable }}><span>{{ label }}</span></label>
+          {% endfor %}
+          <label><input type="radio" name="answer" value="" {{ 'checked' if not r or not r.answer }} {{ 'disabled' if not editable }}><span>Not assessed</span></label>
+        </div>
+        <label for="notes-{{ q.id }}">Notes</label>
+        <textarea id="notes-{{ q.id }}" name="notes" {{ 'disabled' if not editable }} placeholder="What is in place, what is missing, who owns it">{{ r.notes if r }}</textarea>
+
+        {% if editable %}
+        <details>
+          <summary>Attach evidence</summary>
+          <div class="row">
+            <div><label class="small" for="file-{{ q.id }}">File</label><input type="file" id="file-{{ q.id }}" name="file"></div>
+            <div><label class="small" for="ft-{{ q.id }}">What the file is (optional)</label><input type="text" id="ft-{{ q.id }}" name="file_title"></div>
+          </div>
+          <div class="row">
+            <div><label class="small" for="link-{{ q.id }}">Or a link to it (SharePoint, Drive, wiki)</label><input type="url" id="link-{{ q.id }}" name="link" placeholder="https://"></div>
+            <div><label class="small" for="lt-{{ q.id }}">What the link is (optional)</label><input type="text" id="lt-{{ q.id }}" name="link_title"></div>
+          </div>
+          <div class="row">
+            <div><label class="small" for="vu-{{ q.id }}">Valid until (optional, for example a yearly test)</label><input type="date" id="vu-{{ q.id }}" name="valid_until"></div>
+            <div></div>
+          </div>
+        </details>
+        <div class="actions"><button class="btn" type="submit">Save</button>
+          {% if r and r.updated_by %}<span class="small muted">Saved by {{ r.updated_by }} on {{ r.updated_at.strftime("%d %b %Y") }}</span>{% endif %}
+        </div>
+        {% endif %}
+      </form>
+
+      {% set items = evidence.get(q.id, []) %}
+      {% if items or f.evidence_issues %}
+      <div class="evlist">
+        {% if items %}
+        <table>
+          <thead><tr><th>Evidence</th><th>Added by</th><th>Valid until</th><th></th></tr></thead>
+          <tbody>
+          {% for ev in items %}
+            <tr>
+              <td>{% if ev.kind == 'file' %}<a href="{{ url_for('main.download_evidence', eid=ev.id) }}">{{ ev.title }}</a> <span class="muted">({{ ev.filename }}, {{ ev.size | filesize }})</span>
+                  {% else %}<a href="{{ ev.url }}" rel="noopener noreferrer" target="_blank">{{ ev.title }}</a> <span class="muted">(link)</span>{% endif %}</td>
+              <td class="nowrap">{{ ev.uploaded_by }}<br><span class="muted">{{ ev.uploaded_at.strftime("%d %b %Y") }}</span></td>
+              <td class="nowrap">{% if ev.valid_until %}{% if ev.valid_until < today %}<span class="issue">Expired {{ ev.valid_until }}</span>{% else %}{{ ev.valid_until }}{% endif %}{% else %}<span class="muted">No end date</span>{% endif %}</td>
+              <td class="nowrap">{% if editable %}
+                <form class="inline" method="post" action="{{ url_for('main.delete_evidence', eid=ev.id) }}" data-confirm="Remove this evidence?">
+                  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                  <button class="btn danger small" type="submit">Remove</button>
+                </form>{% endif %}</td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+        {% endif %}
+        {% for issue in f.evidence_issues %}<div class="issue">{{ "Attach evidence so this answer counts as proven." if issue == "No evidence recorded" else issue }}</div>{% endfor %}
+      </div>
+      {% endif %}
+
+      {% set reason = plain_reason(f.weight_info, threat) if f.weight_info else None %}
+      {% if reason %}<p class="why">{{ reason }}</p>{% endif %}
+    </div>
+  </div>
+{% endfor %}
+
+<div class="actions">
+  {% if prev_id %}<a class="btn secondary" href="{{ url_for('main.assessment_domain', domain_id=prev_id) }}">Previous requirement</a>{% endif %}
+  {% if next_id %}<a class="btn secondary" href="{{ url_for('main.assessment_domain', domain_id=next_id) }}">Next requirement</a>{% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,77 @@
+# Threat pattern taxonomy
+#
+# Each pattern is measured in the VERIS Community Database (VCDB) with the
+# rules under `veris`, and linked to MITRE ATT&CK Enterprise techniques under
+# `attack_techniques` (sub-techniques are included automatically).
+#
+# veris rules: a pattern matches an incident when ANY rule matches.
+#   - path: dotted path into the VERIS record
+#     any_of: list of values; matches if the field (string or list) contains one
+#     present: true; matches if the path exists (in VERIS the key itself signals the category)
+
+version: "1.0"
+
+patterns:
+  - id: ransomware
+    name: Ransomware
+    veris:
+      - path: action.malware.variety
+        any_of: [Ransomware]
+    attack_techniques: [T1486, T1490]
+
+  - id: phishing
+    name: Phishing and pretexting
+    veris:
+      - path: action.social.variety
+        any_of: [Phishing, Pretexting]
+    attack_techniques: [T1566, T1598]
+
+  - id: credential_abuse
+    name: Stolen or brute-forced credentials
+    veris:
+      - path: action.hacking.variety
+        any_of: [Use of stolen creds, Brute force]
+    attack_techniques: [T1078, T1110]
+
+  - id: vuln_exploitation
+    name: Exploitation of vulnerabilities
+    veris:
+      - path: action.hacking.variety
+        any_of: [Exploit vuln, SQLi]
+    attack_techniques: [T1190, T1203, T1210]
+    exploitation_trend: true  # adjusted by CISA KEV and ENISA EUVD trends
+
+  - id: denial_of_service
+    name: Denial of service
+    veris:
+      - path: action.hacking.variety
+        any_of: [DoS]
+    attack_techniques: [T1498, T1499]
+
+  - id: supply_chain
+    name: Supplier or partner involvement
+    veris:
+      - path: actor.partner
+        present: true
+    attack_techniques: [T1195, T1199]
+
+  - id: error
+    name: Human error
+    veris:
+      - path: action.error
+        present: true
+    attack_techniques: []
+
+  - id: misuse
+    name: Insider misuse of privileges
+    veris:
+      - path: action.misuse
+        present: true
+    attack_techniques: []
+
+  - id: physical
+    name: Physical theft or loss of assets
+    veris:
+      - path: action.physical
+        present: true
+    attack_techniques: []

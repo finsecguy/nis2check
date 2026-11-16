@@ -1,0 +1,78 @@
+import csv
+import io
+from pathlib import Path
+
+import pytest
+
+from nis2check.assessment import load_assessment, parse_assessment
+from nis2check.cli import main
+from nis2check.controls import load_catalogue
+from nis2check.report import (
+    CSV_COLUMNS, executive_summary, heat_map, render_csv, render_html,
+)
+from nis2check.scoring import evaluate
+
+CATALOGUE = load_catalogue()
+EXAMPLE = Path(__file__).resolve().parent.parent / "examples" / "acme-assessment.yaml"
+
+
+@pytest.fixture
+def example():
+    assessment = load_assessment(EXAMPLE, CATALOGUE)
+    return evaluate(CATALOGUE, assessment), assessment
+
+
+def test_csv_gap_register(example):
+    result, _ = example
+    text = render_csv(result)
+    assert text.startswith("﻿")  # BOM for Excel
+    rows = list(csv.DictReader(io.StringIO(text.lstrip("﻿"))))
+    assert list(rows[0]) == CSV_COLUMNS
+    assert len(rows) == len(result.gaps)
+    assert rows[0]["Rank"] == "1"
+    assert rows[0]["Priority"] == "Critical"
+    assert all(r["Owner"] == "" for r in rows)
+
+
+def test_heat_map_counts_add_up(example):
+    result, _ = example
+    total = sum(cell["count"] for row in heat_map(result) for cell in row["cells"])
+    assert total == len(result.findings) - result.counts["na"]
+
+
+def test_heat_map_colours():
+    result = evaluate(CATALOGUE, parse_assessment({}, CATALOGUE, Path(".")))
+    rows = {r["label"]: [c["colour"] for c in r["cells"]] for r in heat_map(result)}
+    assert rows["Critical"] == ["red", "red", "amber", "green"]
+    assert rows["Medium"] == ["amber", "amber", "yellow", "green"]
+
+
+def test_summary_escapes_user_input(tmp_path):
+    data = {"entity": {"name": "<script>alert(1)</script>", "sector": "energy", "employees": 400}}
+    a = parse_assessment(data, CATALOGUE, tmp_path)
+    paras = executive_summary(evaluate(CATALOGUE, a), a)
+    assert "<script>" not in paras[0]
+    assert "&lt;script&gt;" in paras[0]
+    assert "<b>essential entity</b>" in paras[0]
+
+
+def test_html_has_download_controls_and_sections(example):
+    result, assessment = example
+    html = render_html(result, assessment, CATALOGUE)
+    for text in ("Download PDF", "Download gap register (CSV)", "1. Executive summary",
+                 "3.2 Control heat map", "4. Remediation plan", "Appendix B. Methodology",
+                 "Transport"):
+        assert text in html
+
+
+def test_cli_writes_csv(tmp_path):
+    out = tmp_path / "gaps.csv"
+    assert main(["report", str(EXAMPLE), "-o", str(tmp_path / "r.html"), "--csv", str(out), "-q"]) == 0
+    assert "REP-02" in out.read_text("utf-8-sig")
+
+
+def test_cli_writes_pdf(tmp_path):
+    pytest.importorskip("weasyprint")
+    out = tmp_path / "r.pdf"
+    assert main(["report", str(EXAMPLE), "-o", str(tmp_path / "r.html"), "--pdf", str(out), "-q"]) == 0
+    assert out.read_bytes().startswith(b"%PDF")

@@ -1,0 +1,297 @@
+# NIS2 self-assessment
+#
+# Answer each question with: yes | partial | no | na
+# List evidence as file paths (relative to this file) or URLs.
+# Then run:  nis2check report <this file>
+
+assessed_on: "2026-11-15"
+assessor: "Example assessor"
+
+entity:
+  name: "Acme Logistics s.r.o. (fictional)"
+  # sector: one of banking, chemicals, digital_infrastructure, digital_providers, drinking_water, energy, financial_market_infrastructure, food, health, ict_service_management, manufacturing, postal_courier, public_administration, research, space, transport, waste_management, waste_water, or other
+  sector: "transport"
+  employees: 85
+  annual_turnover_eur: 9500000
+  balance_sheet_eur: 6000000
+  # size_exempt: true for DNS providers, TLD registries, trust service providers
+  size_exempt: false
+
+responses:
+
+  # GOV | Art. 20 | Governance and management accountability
+  GOV-01:
+    # [critical] Has the management body formally approved the cybersecurity risk-management measures?
+    # Evidence: Board or management meeting minutes, signed policy approval
+    answer: "yes"
+    evidence:
+      - "evidence/board-minutes-2026-03.md"
+    notes: ""
+  GOV-02:
+    # [high] Does management receive regular reporting on cybersecurity risks and the status of measures?
+    # Evidence: Quarterly security report, risk dashboard, meeting agendas
+    answer: "partial"
+    evidence: []
+    notes: "Ad hoc updates only, no fixed schedule"
+  GOV-03:
+    # [high] Have members of the management body completed cybersecurity training?
+    # Evidence: Training certificates or attendance records for each manager
+    answer: "no"
+    evidence: []
+    notes: "Planned for Q1 2027"
+  GOV-04:
+    # [medium] Is there a named person responsible for cybersecurity (e.g. CISO or security officer)?
+    # Evidence: Org chart, role description, appointment letter
+    answer: "yes"
+    evidence:
+      - "evidence/org-chart.pdf"
+    notes: "IT lead acts as security officer"
+
+  # RISK | Art. 21(2)(a) | Risk analysis and information system security policies
+  RISK-01:
+    # [critical] Is there a documented, approved information security policy?
+    # Evidence: Information security policy with version and approval date
+    answer: "yes"
+    evidence:
+      - "evidence/infosec-policy.md"
+    notes: ""
+  RISK-02:
+    # [critical] Is a cybersecurity risk assessment performed at least annually and documented?
+    # Evidence: Risk register, risk assessment report
+    answer: "yes"
+    evidence:
+      - "evidence/risk-register.csv"
+    notes: ""
+  RISK-03:
+    # [high] Do identified risks have owners and treatment decisions (mitigate, accept, transfer, avoid)?
+    # Evidence: Risk register with owner and treatment columns
+    answer: "partial"
+    evidence:
+      - "evidence/risk-register.csv"
+    notes: "Owners set, treatment plans incomplete"
+
+  # INC | Art. 21(2)(b) | Incident handling
+  INC-01:
+    # [critical] Is there a documented incident response plan with roles and escalation paths?
+    # Evidence: Incident response plan, contact list
+    answer: "yes"
+    evidence:
+      - "evidence/incident-response-plan.md"
+    notes: ""
+  INC-02:
+    # [high] Are security events logged and monitored so incidents can be detected?
+    # Evidence: Logging configuration, SIEM or alerting screenshots
+    answer: "partial"
+    evidence: []
+    notes: "M365 alerts only, servers not monitored"
+  INC-03:
+    # [medium] Are incidents recorded and reviewed afterwards (lessons learned)?
+    # Evidence: Incident log, post-incident review notes
+    answer: "no"
+    evidence: []
+    notes: ""
+
+  # BCM | Art. 21(2)(c) | Business continuity and crisis management
+  BCM-01:
+    # [critical] Are backups of critical data taken regularly and stored separately (offline or immutable)?
+    # Evidence: Backup policy, backup job reports
+    answer: "yes"
+    evidence:
+      - "evidence/backup-report-2026-10.md"
+    notes: ""
+  BCM-02:
+    # [high] Has restoring from backup been tested in the last 12 months?
+    # Evidence: Restore test record with date and result
+    answer: "no"
+    evidence: []
+    notes: "Never tested"
+  BCM-03:
+    # [high] Is there a business continuity or disaster recovery plan for critical services?
+    # Evidence: BCP/DRP document with recovery time objectives
+    answer: "no"
+    evidence: []
+    notes: ""
+  BCM-04:
+    # [medium] Is there a crisis management procedure, including how to communicate during a major incident?
+    # Evidence: Crisis communication plan, out-of-band contact list
+    answer: "no"
+    evidence: []
+    notes: ""
+
+  # SUP | Art. 21(2)(d) | Supply chain security
+  SUP-01:
+    # [high] Is there an inventory of suppliers and service providers with access to systems or data?
+    # Evidence: Supplier register
+    answer: "yes"
+    evidence:
+      - "evidence/supplier-register.csv"
+    notes: ""
+  SUP-02:
+    # [high] Are critical suppliers assessed for security before onboarding and periodically?
+    # Evidence: Supplier security questionnaires, assessment records
+    answer: "no"
+    evidence: []
+    notes: ""
+  SUP-03:
+    # [medium] Do supplier contracts include security requirements (e.g. incident notification, data protection)?
+    # Evidence: Contract clauses, data processing agreements
+    answer: "partial"
+    evidence: []
+    notes: "DPAs signed, no security clauses"
+
+  # SDLC | Art. 21(2)(e) | Secure acquisition, development and maintenance; vulnerability handling
+  SDLC-01:
+    # [critical] Are security patches applied within a defined timeframe?
+    # Evidence: Patch management policy, patch status report
+    answer: "partial"
+    evidence: []
+    notes: "Windows auto-updates, servers patched manually"
+  SDLC-02:
+    # [high] Are systems scanned for vulnerabilities regularly?
+    # Evidence: Vulnerability scan reports
+    answer: "no"
+    evidence: []
+    notes: ""
+  SDLC-03:
+    # [medium] Are security requirements considered when buying or developing systems?
+    # Evidence: Procurement checklist, secure development guidelines
+    answer: "na"
+    evidence: []
+    notes: "No in-house development; purchasing covered by SUP"
+  SDLC-04:
+    # [medium] Is there a way for outsiders to report vulnerabilities (e.g. security.txt, disclosure policy)?
+    # Evidence: Vulnerability disclosure policy, security.txt
+    answer: "no"
+    evidence: []
+    notes: ""
+
+  # EFF | Art. 21(2)(f) | Assessing the effectiveness of measures
+  EFF-01:
+    # [high] Are security controls tested or audited periodically (internal audit, penetration test, review)?
+    # Evidence: Audit reports, penetration test reports
+    answer: "no"
+    evidence: []
+    notes: ""
+  EFF-02:
+    # [medium] Are security metrics or KPIs tracked (e.g. patch compliance, training completion)?
+    # Evidence: KPI dashboard or report
+    answer: "no"
+    evidence: []
+    notes: ""
+
+  # HYG | Art. 21(2)(g) | Cyber hygiene and training
+  HYG-01:
+    # [high] Do all employees receive security awareness training at least annually?
+    # Evidence: Training completion records
+    answer: "partial"
+    evidence: []
+    notes: "Onboarding training only"
+  HYG-02:
+    # [high] Are basic hygiene controls in place (endpoint protection, secure configuration, no shared accounts)?
+    # Evidence: Endpoint protection console, configuration baseline
+    answer: "yes"
+    evidence:
+      - "https://example.com/acme/endpoint-console"
+    notes: ""
+  HYG-03:
+    # [medium] Are phishing simulations or similar exercises run?
+    # Evidence: Phishing simulation results
+    answer: "no"
+    evidence: []
+    notes: ""
+
+  # CRY | Art. 21(2)(h) | Cryptography and encryption
+  CRY-01:
+    # [medium] Is there a policy defining when and how encryption must be used?
+    # Evidence: Cryptography policy
+    answer: "no"
+    evidence: []
+    notes: ""
+  CRY-02:
+    # [high] Are data in transit and sensitive data at rest encrypted (TLS, disk encryption)?
+    # Evidence: TLS configuration, disk encryption status report
+    answer: "yes"
+    evidence: []
+    notes: "TLS everywhere, BitLocker on laptops"
+  CRY-03:
+    # [high] Are encryption keys and secrets managed securely (not hardcoded, access-controlled)?
+    # Evidence: Secrets manager configuration, key management procedure
+    answer: "partial"
+    evidence: []
+    notes: ""
+
+  # ACC | Art. 21(2)(i) | HR security, access control and asset management
+  ACC-01:
+    # [high] Is there an up-to-date inventory of hardware, software and data assets?
+    # Evidence: Asset inventory
+    answer: "partial"
+    evidence: []
+    notes: "Hardware only"
+  ACC-02:
+    # [critical] Is access granted on a role basis and least-privilege principle?
+    # Evidence: Access control policy, role matrix
+    answer: "yes"
+    evidence:
+      - "evidence/access-control-policy.md"
+    notes: ""
+  ACC-03:
+    # [high] Are joiner, mover and leaver processes defined so access is granted and removed on time?
+    # Evidence: Onboarding and offboarding checklists
+    answer: "yes"
+    evidence:
+      - "evidence/access-control-policy.md"
+    notes: ""
+  ACC-04:
+    # [medium] Are user access rights reviewed periodically?
+    # Evidence: Access review records
+    answer: "no"
+    evidence: []
+    notes: ""
+
+  # MFA | Art. 21(2)(j) | Multi-factor authentication and secure communications
+  MFA-01:
+    # [critical] Is MFA enforced for all remote access and cloud services?
+    # Evidence: Identity provider MFA policy, coverage report
+    answer: "partial"
+    evidence:
+      - "evidence/mfa-coverage.csv"
+    notes: "ERP still without MFA"
+  MFA-02:
+    # [critical] Is MFA enforced for all privileged and administrator accounts?
+    # Evidence: Admin account MFA report
+    answer: "yes"
+    evidence:
+      - "evidence/mfa-coverage.csv"
+    notes: ""
+  MFA-03:
+    # [medium] Are internal voice, video and messaging tools secured (approved tools, encryption)?
+    # Evidence: List of approved communication tools and their settings
+    answer: "yes"
+    evidence: []
+    notes: "Teams only"
+  MFA-04:
+    # [medium] Is there a secured emergency communication channel if primary systems are down?
+    # Evidence: Emergency communication procedure
+    answer: "no"
+    evidence: []
+    notes: ""
+
+  # REP | Art. 23 | Incident reporting obligations
+  REP-01:
+    # [high] Is it defined what counts as a 'significant incident' for your organisation?
+    # Evidence: Incident classification criteria
+    answer: "no"
+    evidence: []
+    notes: ""
+  REP-02:
+    # [critical] Is there a procedure to send an early warning to the CSIRT within 24 hours?
+    # Evidence: Reporting procedure with CSIRT contact details
+    answer: 
+    evidence: []
+    notes: ""
+  REP-03:
+    # [high] Does the procedure cover the 72-hour notification and the one-month final report?
+    # Evidence: Reporting procedure, report templates
+    answer: 
+    evidence: []
+    notes: ""
