@@ -6,8 +6,15 @@ dist/
 .venv/
 .pytest_cache/
 
-# your own assessments and reports (keep the bundled example)
+# your own assessments and reports
 assessment.yaml
 assessment.html
-*.json
-!examples/acme-report.json
+/assessment.json
+/report.json
+
+# local secrets, database and runtime data directory
+.env
+/data/
+*.db
+*.sqlite3
+.secret_key

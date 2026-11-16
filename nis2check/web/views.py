@@ -7,6 +7,7 @@ import hashlib
 import re
 import secrets
 from pathlib import Path
+from urllib.parse import urlsplit
 
 from flask import (
     Blueprint, Response as FlaskResponse, abort, current_app, flash, g, redirect, render_template,
@@ -199,7 +200,7 @@ def save_question(qid: str):
     # valid evidence submitted with it, and a rejected file is never written to disk.
     errors: list[str] = []
     link = request.form.get("link", "").strip()
-    if link and not link.lower().startswith(("https://", "http://")):
+    if link and not _is_http_url(link):
         errors.append("Links must start with https:// or http://")
         link = ""
     upload = request.files.get("file")
@@ -237,6 +238,20 @@ def save_question(qid: str):
     flash(f"{qid} answer saved; see the error above about the evidence." if errors
           else f"{qid} saved.", "ok")
     return back
+
+
+def _is_http_url(link: str) -> bool:
+    """Accept only web links: the scheme must be http or https and a host must be present.
+
+    Parsing with urlsplit rejects other schemes (javascript:, data:, file:, ...) and
+    bare scheme-only values like https:foo that have no host. A malformed value that
+    urlsplit cannot parse is treated as invalid rather than raising.
+    """
+    try:
+        parts = urlsplit(link)
+    except ValueError:
+        return False
+    return parts.scheme in ("http", "https") and bool(parts.netloc)
 
 
 def _parse_date(raw: str | None) -> dt.date | None:

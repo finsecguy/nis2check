@@ -23,5 +23,8 @@ HEALTHCHECK --interval=30s --timeout=5s --start-period=20s \
   CMD python -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/healthz', timeout=4)"
 
 # One worker keeps the built-in scheduler single; threads handle concurrent users.
+# --workers 1 is also required by the in-memory login throttle in auth.py (_failures):
+# the failure counters are per process, so extra workers would each keep their own and
+# weaken the throttle. Scale with threads, not workers.
 CMD ["gunicorn", "--workers", "1", "--threads", "8", "--bind", "0.0.0.0:8080", \
      "--access-logfile", "-", "nis2check.web:create_app()"]

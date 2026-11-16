@@ -19,6 +19,10 @@ bp = Blueprint("auth", __name__)
 MIN_PASSWORD = 12
 MAX_FAILURES, WINDOW_SECONDS = 10, 15 * 60
 MAX_FAILURES_PER_ACCOUNT = 30  # across all addresses, against distributed guessing
+# In-memory failed-login counters. These live in the process and reset on restart, and
+# are not shared between workers, so the throttle is only correct while the app runs as a
+# single process. The Dockerfile pins gunicorn to one worker (--workers 1) for this reason;
+# running multiple workers or replicas would give each its own counters and weaken it.
 _failures: dict[str, deque] = defaultdict(deque)
 
 
@@ -229,7 +233,10 @@ def login():
     if request.method == "POST":
         if not settings.local_login:
             abort(404)
-        email = request.form.get("email", "").strip().lower()
+        # Cap the submitted email (254 is the RFC 5321 maximum) before it becomes a
+        # throttle key or an audit entry, so an attacker cannot bloat either with an
+        # arbitrarily long value.
+        email = request.form.get("email", "").strip().lower()[:254]
         password = request.form.get("password", "")
         if _throttled(email):
             flash("Too many failed attempts. Try again in 15 minutes.", "error")

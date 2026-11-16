@@ -28,7 +28,7 @@ NIS2 (Directive (EU) 2022/2555) requires medium and large organisations in criti
 You need a server or VM with [Docker](https://docs.docker.com/engine/install/). Then:
 
 ```bash
-git clone https://github.com/<your-username>/nis2check.git
+git clone https://github.com/finsecguy/nis2check.git
 cd nis2check
 docker compose up -d
 ```

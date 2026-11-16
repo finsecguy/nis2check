@@ -1,0 +1,190 @@
+{
+ "type": "bundle",
+ "id": "bundle--1",
+ "objects": [
+  {
+   "type": "x-mitre-collection",
+   "id": "x-mitre-collection--1",
+   "x_mitre_version": "99.0"
+  },
+  {
+   "type": "attack-pattern",
+   "id": "attack-pattern--1",
+   "external_references": [
+    {
+     "source_name": "mitre-attack",
+     "external_id": "T1486"
+    }
+   ],
+   "name": "T1486"
+  },
+  {
+   "type": "attack-pattern",
+   "id": "attack-pattern--2",
+   "external_references": [
+    {
+     "source_name": "mitre-attack",
+     "external_id": "T1566.001"
+    }
+   ],
+   "name": "T1566.001"
+  },
+  {
+   "type": "attack-pattern",
+   "id": "attack-pattern--3",
+   "external_references": [
+    {
+     "source_name": "mitre-attack",
+     "external_id": "T1110"
+    }
+   ],
+   "name": "T1110"
+  },
+  {
+   "type": "attack-pattern",
+   "id": "attack-pattern--4",
+   "external_references": [
+    {
+     "source_name": "mitre-attack",
+     "external_id": "T1190"
+    }
+   ],
+   "name": "T1190"
+  },
+  {
+   "type": "attack-pattern",
+   "id": "attack-pattern--5",
+   "external_references": [
+    {
+     "source_name": "mitre-attack",
+     "external_id": "T1078"
+    }
+   ],
+   "name": "T1078"
+  },
+  {
+   "type": "attack-pattern",
+   "id": "attack-pattern--6",
+   "external_references": [
+    {
+     "source_name": "mitre-attack",
+     "external_id": "T9999"
+    }
+   ],
+   "name": "T9999"
+  },
+  {
+   "type": "course-of-action",
+   "id": "course-of-action--1",
+   "external_references": [
+    {
+     "source_name": "mitre-attack",
+     "external_id": "M1053"
+    }
+   ],
+   "name": "Data Backup"
+  },
+  {
+   "type": "course-of-action",
+   "id": "course-of-action--2",
+   "external_references": [
+    {
+     "source_name": "mitre-attack",
+     "external_id": "M1017"
+    }
+   ],
+   "name": "User Training"
+  },
+  {
+   "type": "course-of-action",
+   "id": "course-of-action--3",
+   "external_references": [
+    {
+     "source_name": "mitre-attack",
+     "external_id": "M1032"
+    }
+   ],
+   "name": "Multi-factor Authentication"
+  },
+  {
+   "type": "course-of-action",
+   "id": "course-of-action--4",
+   "external_references": [
+    {
+     "source_name": "mitre-attack",
+     "external_id": "M1051"
+    }
+   ],
+   "name": "Update Software"
+  },
+  {
+   "type": "course-of-action",
+   "id": "course-of-action--5",
+   "external_references": [
+    {
+     "source_name": "mitre-attack",
+     "external_id": "M1099"
+    }
+   ],
+   "name": "Deprecated Thing",
+   "x_mitre_deprecated": true
+  },
+  {
+   "type": "relationship",
+   "id": "relationship--1",
+   "relationship_type": "mitigates",
+   "source_ref": "course-of-action--1",
+   "target_ref": "attack-pattern--1"
+  },
+  {
+   "type": "relationship",
+   "id": "relationship--2",
+   "relationship_type": "mitigates",
+   "source_ref": "course-of-action--2",
+   "target_ref": "attack-pattern--2"
+  },
+  {
+   "type": "relationship",
+   "id": "relationship--3",
+   "relationship_type": "mitigates",
+   "source_ref": "course-of-action--3",
+   "target_ref": "attack-pattern--3"
+  },
+  {
+   "type": "relationship",
+   "id": "relationship--4",
+   "relationship_type": "mitigates",
+   "source_ref": "course-of-action--3",
+   "target_ref": "attack-pattern--5"
+  },
+  {
+   "type": "relationship",
+   "id": "relationship--5",
+   "relationship_type": "mitigates",
+   "source_ref": "course-of-action--4",
+   "target_ref": "attack-pattern--4"
+  },
+  {
+   "type": "relationship",
+   "id": "relationship--6",
+   "relationship_type": "mitigates",
+   "source_ref": "course-of-action--5",
+   "target_ref": "attack-pattern--4"
+  },
+  {
+   "type": "relationship",
+   "id": "relationship--7",
+   "relationship_type": "mitigates",
+   "source_ref": "course-of-action--2",
+   "target_ref": "attack-pattern--6"
+  },
+  {
+   "type": "relationship",
+   "id": "relationship--8",
+   "relationship_type": "mitigates",
+   "source_ref": "course-of-action--4",
+   "target_ref": "attack-pattern--1",
+   "revoked": true
+  }
+ ]
+}

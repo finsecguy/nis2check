@@ -79,6 +79,22 @@ def test_login_and_throttling(app):
     assert login(c, "admin@acme.sk", "nope").status_code == 429
 
 
+def test_failed_login_email_is_truncated(app):
+    from nis2check.web import auth
+    from nis2check.web.models import AuditLog
+    c = app.test_client()
+    setup_admin(c)
+    c.post("/logout")
+    long_email = "a" * 500 + "@acme.sk"
+    c.post("/login", data=dict(email=long_email, password="nope"))
+    # the audit entry records the email capped at 254 chars, not the raw 508
+    entry = db(app).query(AuditLog).filter_by(action="login.failed").one()
+    assert entry.target == long_email[:254] and len(entry.target) == 254
+    assert entry.actor == long_email[:254]
+    # the throttle keys ("<ip>|<email>" and "account|<email>") carry the capped email too
+    assert auth._failures and all(key.rsplit("|", 1)[-1] == long_email[:254] for key in auth._failures)
+
+
 def test_open_redirect_blocked(app):
     c = app.test_client()
     setup_admin(c)
@@ -195,6 +211,25 @@ def test_bad_evidence_keeps_answer_and_leaves_no_orphan(app, client):
     assert db(app).get(Response, "GOV-02").answer == "yes"
     # only the one stored file ever written was none (the link has no stored file)
     assert list(app.extensions["nis2_settings"].evidence_dir.iterdir()) == []
+
+
+def test_evidence_link_scheme_validation(app, client):
+    setup_admin(client)
+    # http and https links are accepted and stored as evidence
+    for i, url in enumerate(("http://x.example/doc", "https://x.example/doc")):
+        qid = f"GOV-0{i + 1}"
+        r = client.post(f"/assessment/question/{qid}", data={"answer": "yes", "link": url},
+                        follow_redirects=True)
+        assert b"must start with https://" not in r.data
+    links = [e.url for e in db(app).query(Evidence).all()]
+    assert links == ["http://x.example/doc", "https://x.example/doc"]
+
+    # non-web schemes are rejected and never stored
+    for bad in ("javascript:alert(1)", "data:text/html,<script>alert(1)</script>"):
+        r = client.post("/assessment/question/GOV-03", data={"answer": "yes", "link": bad},
+                        follow_redirects=True)
+        assert b"must start with https://" in r.data
+    assert db(app).query(Evidence).count() == 2  # only the two web links above
 
 
 def test_import_yaml_rejects_path_traversal(app, tmp_path):

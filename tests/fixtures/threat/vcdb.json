@@ -1,0 +1,428 @@
+[
+ {
+  "security_incident": "Confirmed",
+  "summary": "Ransomware attack encrypted hospital file servers",
+  "timeline": {
+   "incident": {
+    "year": 2025
+   }
+  },
+  "action": {
+   "malware": {
+    "variety": [
+     "Ransomware"
+    ]
+   }
+  },
+  "actor": {
+   "external": {}
+  }
+ },
+ {
+  "security_incident": "Confirmed",
+  "summary": "Phishing email led to mailbox compromise at law firm",
+  "timeline": {
+   "incident": {
+    "year": 2025
+   }
+  },
+  "action": {
+   "social": {
+    "variety": [
+     "Phishing"
+    ]
+   },
+   "hacking": {
+    "variety": [
+     "Use of stolen creds"
+    ]
+   }
+  },
+  "actor": {
+   "external": {}
+  }
+ },
+ {
+  "security_incident": "Confirmed",
+  "summary": "Employee emailed spreadsheet to the wrong recipient",
+  "timeline": {
+   "incident": {
+    "year": 2025
+   }
+  },
+  "action": {
+   "error": {
+    "variety": [
+     "Misdelivery"
+    ]
+   }
+  },
+  "actor": {
+   "external": {}
+  }
+ },
+ {
+  "security_incident": "Confirmed",
+  "summary": "Laptop stolen from employee car",
+  "timeline": {
+   "incident": {
+    "year": 2025
+   }
+  },
+  "action": {
+   "physical": {
+    "variety": [
+     "Theft"
+    ]
+   }
+  },
+  "actor": {
+   "external": {}
+  }
+ },
+ {
+  "security_incident": "Confirmed",
+  "summary": "Mass exploitation of file transfer appliance, data stolen",
+  "timeline": {
+   "incident": {
+    "year": 2024
+   }
+  },
+  "action": {
+   "hacking": {
+    "variety": [
+     "Exploit vuln"
+    ]
+   }
+  },
+  "actor": {
+   "external": {}
+  }
+ },
+ {
+  "security_incident": "Confirmed",
+  "summary": "Mass exploitation of file transfer appliance, data stolen",
+  "timeline": {
+   "incident": {
+    "year": 2024
+   }
+  },
+  "action": {
+   "hacking": {
+    "variety": [
+     "Exploit vuln"
+    ]
+   }
+  },
+  "actor": {
+   "external": {}
+  }
+ },
+ {
+  "security_incident": "Confirmed",
+  "summary": "Mass exploitation of file transfer appliance, data stolen",
+  "timeline": {
+   "incident": {
+    "year": 2024
+   }
+  },
+  "action": {
+   "hacking": {
+    "variety": [
+     "Exploit vuln"
+    ]
+   }
+  },
+  "actor": {
+   "external": {}
+  }
+ },
+ {
+  "security_incident": "Confirmed",
+  "summary": "Mass exploitation of file transfer appliance, data stolen",
+  "timeline": {
+   "incident": {
+    "year": 2024
+   }
+  },
+  "action": {
+   "hacking": {
+    "variety": [
+     "Exploit vuln"
+    ]
+   }
+  },
+  "actor": {
+   "external": {}
+  }
+ },
+ {
+  "security_incident": "Confirmed",
+  "summary": "Mass exploitation of file transfer appliance, data stolen",
+  "timeline": {
+   "incident": {
+    "year": 2024
+   }
+  },
+  "action": {
+   "hacking": {
+    "variety": [
+     "Exploit vuln"
+    ]
+   }
+  },
+  "actor": {
+   "external": {}
+  }
+ },
+ {
+  "security_incident": "Confirmed",
+  "summary": "Mass exploitation of file transfer appliance, data stolen",
+  "timeline": {
+   "incident": {
+    "year": 2024
+   }
+  },
+  "action": {
+   "hacking": {
+    "variety": [
+     "Exploit vuln"
+    ]
+   }
+  },
+  "actor": {
+   "external": {}
+  }
+ },
+ {
+  "security_incident": "Confirmed",
+  "summary": "Brute force against VPN portal victim 0",
+  "timeline": {
+   "incident": {
+    "year": 2024
+   }
+  },
+  "action": {
+   "hacking": {
+    "variety": [
+     "Brute force"
+    ]
+   }
+  },
+  "actor": {
+   "external": {}
+  },
+  "campaign_id": "CAMP-1"
+ },
+ {
+  "security_incident": "Confirmed",
+  "summary": "Brute force against VPN portal victim 1",
+  "timeline": {
+   "incident": {
+    "year": 2024
+   }
+  },
+  "action": {
+   "hacking": {
+    "variety": [
+     "Brute force"
+    ]
+   }
+  },
+  "actor": {
+   "external": {}
+  },
+  "campaign_id": "CAMP-1"
+ },
+ {
+  "security_incident": "Confirmed",
+  "summary": "Brute force against VPN portal victim 2",
+  "timeline": {
+   "incident": {
+    "year": 2024
+   }
+  },
+  "action": {
+   "hacking": {
+    "variety": [
+     "Brute force"
+    ]
+   }
+  },
+  "actor": {
+   "external": {}
+  },
+  "campaign_id": "CAMP-1"
+ },
+ {
+  "security_incident": "Confirmed",
+  "summary": "DoS attack",
+  "timeline": {
+   "incident": {
+    "year": 2024
+   }
+  },
+  "action": {
+   "hacking": {
+    "variety": [
+     "DoS"
+    ]
+   }
+  },
+  "actor": {
+   "external": {}
+  }
+ },
+ {
+  "security_incident": "Confirmed",
+  "summary": "DoS attack",
+  "timeline": {
+   "incident": {
+    "year": 2024
+   }
+  },
+  "action": {
+   "hacking": {
+    "variety": [
+     "DoS"
+    ]
+   }
+  },
+  "actor": {
+   "external": {}
+  }
+ },
+ {
+  "security_incident": "Confirmed",
+  "summary": "DoS attack",
+  "timeline": {
+   "incident": {
+    "year": 2024
+   }
+  },
+  "action": {
+   "hacking": {
+    "variety": [
+     "DoS"
+    ]
+   }
+  },
+  "actor": {
+   "external": {}
+  }
+ },
+ {
+  "security_incident": "Confirmed",
+  "summary": "DoS attack",
+  "timeline": {
+   "incident": {
+    "year": 2024
+   }
+  },
+  "action": {
+   "hacking": {
+    "variety": [
+     "DoS"
+    ]
+   }
+  },
+  "actor": {
+   "external": {}
+  }
+ },
+ {
+  "security_incident": "Confirmed",
+  "summary": "DoS attack",
+  "timeline": {
+   "incident": {
+    "year": 2024
+   }
+  },
+  "action": {
+   "hacking": {
+    "variety": [
+     "DoS"
+    ]
+   }
+  },
+  "actor": {
+   "external": {}
+  }
+ },
+ {
+  "security_incident": "Confirmed",
+  "summary": "DoS attack",
+  "timeline": {
+   "incident": {
+    "year": 2024
+   }
+  },
+  "action": {
+   "hacking": {
+    "variety": [
+     "DoS"
+    ]
+   }
+  },
+  "actor": {
+   "external": {}
+  }
+ },
+ {
+  "security_incident": "Confirmed",
+  "summary": "Contractor abused access to customer records",
+  "timeline": {
+   "incident": {
+    "year": 2023
+   }
+  },
+  "action": {
+   "misuse": {
+    "variety": [
+     "Privilege abuse"
+    ]
+   }
+  },
+  "actor": {
+   "partner": {}
+  }
+ },
+ {
+  "security_incident": "Near miss",
+  "summary": "Near miss phishing caught by filter, nothing happened",
+  "timeline": {
+   "incident": {
+    "year": 2025
+   }
+  },
+  "action": {
+   "social": {
+    "variety": [
+     "Phishing"
+    ]
+   }
+  },
+  "actor": {
+   "external": {}
+  }
+ },
+ {
+  "security_incident": "Confirmed",
+  "summary": "Old ransomware incident at a manufacturer plant",
+  "timeline": {
+   "incident": {
+    "year": 2012
+   }
+  },
+  "action": {
+   "malware": {
+    "variety": [
+     "Ransomware"
+    ]
+   }
+  },
+  "actor": {
+   "external": {}
+  }
+ }
+]
