@@ -36,7 +36,7 @@ class User(Base):
     must_change_password: Mapped[bool] = mapped_column(Boolean, default=False)
     active: Mapped[bool] = mapped_column(Boolean, default=True)
     sso_subject: Mapped[str | None] = mapped_column(String(255), nullable=True)
-    # Rotated on password change/reset to invalidate the user's other sessions.
+    # Rotated on login, logout, password change and password reset so an old cookie stops working.
     session_token: Mapped[str | None] = mapped_column(String(32), nullable=True)
     created_at: Mapped[dt.datetime] = mapped_column(DateTime, default=utcnow)
     last_login: Mapped[dt.datetime | None] = mapped_column(DateTime, nullable=True)

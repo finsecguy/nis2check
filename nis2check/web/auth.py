@@ -88,9 +88,10 @@ def new_session_token() -> str:
 
 
 def login_user(user: User) -> None:
+    # Always mint a new token. Reusing the stored one would keep a copied cookie
+    # valid across a later login.
     session.clear()
-    if not user.session_token:
-        user.session_token = new_session_token()
+    user.session_token = new_session_token()
     session["uid"] = user.id
     session["sv"] = user.session_token
     session["csrf_seed"] = secrets.token_hex(8)
@@ -256,9 +257,13 @@ def login():
 
 @bp.route("/logout", methods=["POST"])
 def logout():
-    if g.get("user"):
+    user = g.get("user")
+    if user is not None:
         db = current_app.extensions["nis2_db"]()
-        audit(db, "logout", g.user.email)
+        # Rotate before clearing the cookie, and commit it, so a copy of the
+        # cookie no longer matches the token stored for this user.
+        user.session_token = new_session_token()
+        audit(db, "logout", user.email)
         db.commit()
     session.clear()
     return redirect(url_for("auth.login"))

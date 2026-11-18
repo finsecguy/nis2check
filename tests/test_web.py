@@ -47,6 +47,13 @@ def login(client, email, password=PASSWORD):
     return client.post("/login", data=dict(email=email, password=password))
 
 
+def copy_session(src, dst):
+    """Give dst the same session cookie as src, as a copied browser would have."""
+    cookie = src.get_cookie("nis2check_session")
+    assert cookie is not None
+    dst.set_cookie(cookie.key, cookie.value)
+
+
 def db(app):
     return app.extensions["nis2_db"]()
 
@@ -152,13 +159,43 @@ def test_new_local_user_must_change_password(app, client):
 def test_password_change_logs_out_other_sessions(app):
     c1, c2 = app.test_client(), app.test_client()
     setup_admin(c1)
-    login(c2, "admin@acme.sk")  # a second session for the same admin
+    copy_session(c1, c2)  # a second browser holding the same session cookie
     assert c2.get("/").status_code == 200
     r = c1.post("/account/password",
                 data={"current": PASSWORD, "password": "NewPassword123", "password2": "NewPassword123"})
     assert r.status_code == 302
     assert c1.get("/").status_code == 200                       # the session that changed it stays in
     assert c2.get("/").headers["Location"].startswith("/login")  # the other one is signed out
+
+
+def test_logout_invalidates_copied_cookie(app):
+    c = app.test_client()
+    setup_admin(c)
+    stolen = c.get_cookie("nis2check_session")
+    assert stolen is not None
+    assert c.post("/logout").status_code == 302
+    replay = app.test_client()
+    replay.set_cookie(stolen.key, stolen.value)
+    assert replay.get("/").headers["Location"].startswith("/login")
+    assert c.get("/").headers["Location"].startswith("/login")
+
+
+def test_login_issues_a_fresh_session_token(app):
+    c1 = app.test_client()
+    setup_admin(c1)
+    c1.post("/logout")
+    login(c1, "admin@acme.sk")
+    first = db(app).query(User).filter_by(email="admin@acme.sk").one().session_token
+    stolen = c1.get_cookie("nis2check_session")
+    assert stolen is not None
+    c2 = app.test_client()
+    login(c2, "admin@acme.sk")
+    second = db(app).query(User).filter_by(email="admin@acme.sk").one().session_token
+    assert first and second and first != second
+    replay = app.test_client()
+    replay.set_cookie(stolen.key, stolen.value)
+    assert replay.get("/").headers["Location"].startswith("/login")
+    assert c2.get("/").status_code == 200
 
 
 def test_admin_reset_logs_out_user_sessions(app):
