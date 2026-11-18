@@ -149,6 +149,30 @@ def test_new_local_user_must_change_password(app, client):
     assert client.get("/").status_code == 200
 
 
+def test_password_change_logs_out_other_sessions(app):
+    c1, c2 = app.test_client(), app.test_client()
+    setup_admin(c1)
+    login(c2, "admin@acme.sk")  # a second session for the same admin
+    assert c2.get("/").status_code == 200
+    r = c1.post("/account/password",
+                data={"current": PASSWORD, "password": "NewPassword123", "password2": "NewPassword123"})
+    assert r.status_code == 302
+    assert c1.get("/").status_code == 200                       # the session that changed it stays in
+    assert c2.get("/").headers["Location"].startswith("/login")  # the other one is signed out
+
+
+def test_admin_reset_logs_out_user_sessions(app):
+    ca = app.test_client()
+    setup_admin(ca)
+    add_user(app, "assessor@acme.sk", "assessor")
+    cu = app.test_client()
+    login(cu, "assessor@acme.sk")
+    assert cu.get("/").status_code == 200
+    uid = db(app).query(User).filter_by(email="assessor@acme.sk").one().id
+    ca.post(f"/admin/users/{uid}", data={"action": "reset_password"})
+    assert cu.get("/").headers["Location"].startswith("/login")  # their session is signed out
+
+
 # ------------------------------------------------------------------ assessment and evidence
 
 def test_answer_saves_snapshot_and_audit(app, client):

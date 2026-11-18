@@ -9,7 +9,7 @@ from flask import Blueprint, abort, current_app, flash, g, redirect, render_temp
 from markupsafe import Markup
 from sqlalchemy import func, select
 
-from .auth import hash_password, require, temporary_password
+from .auth import hash_password, new_session_token, require, temporary_password
 from .models import ROLES, AuditLog, ThreatDataVersion, User, utcnow
 from .services import (
     active_threat_data, audit, check_running, current_app_parts, get_setting, set_setting, start_threat_check,
@@ -94,6 +94,7 @@ def update_user(uid: int):
         temp = temporary_password()
         user.password_hash = hash_password(temp)
         user.must_change_password = True
+        user.session_token = new_session_token()  # end the user's existing sessions
         audit(db, "user.password_reset", user.email)
         flash(f"Temporary password for {user.email}: {temp} (shown once).", "secret")
     elif action == "unlink_sso":

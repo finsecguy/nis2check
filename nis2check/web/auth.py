@@ -83,9 +83,16 @@ def _safe_next(nxt: str) -> str:
     return url_for("main.dashboard")
 
 
+def new_session_token() -> str:
+    return secrets.token_hex(16)
+
+
 def login_user(user: User) -> None:
     session.clear()
+    if not user.session_token:
+        user.session_token = new_session_token()
     session["uid"] = user.id
+    session["sv"] = user.session_token
     session["csrf_seed"] = secrets.token_hex(8)
     session.permanent = True
     user.last_login = utcnow()
@@ -275,6 +282,8 @@ def change_password():
         else:
             user.password_hash = hash_password(new)
             user.must_change_password = False
+            user.session_token = new_session_token()  # sign out this user's other sessions
+            session["sv"] = user.session_token         # but keep this one signed in
             audit(db, "password.changed", user.email)
             db.commit()
             flash("Password changed.", "ok")

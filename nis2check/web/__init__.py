@@ -73,7 +73,9 @@ def create_app(**overrides) -> Flask:
         uid = session.get("uid")
         if uid:
             user = db().get(User, uid)
-            if user and user.active:
+            # session["sv"] must still match the user's token; a password change or
+            # reset rotates the token and so invalidates sessions opened before it.
+            if user and user.active and session.get("sv") == user.session_token:
                 g.user = user
             else:
                 session.clear()
