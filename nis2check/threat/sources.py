@@ -40,15 +40,36 @@ def _now() -> str:
     return dt.datetime.now(dt.timezone.utc).replace(microsecond=0).isoformat()
 
 
+class _HTTPSOnlyRedirectHandler(urllib.request.HTTPRedirectHandler):
+    """Refuse a redirect whose next hop is not https.
+
+    urllib follows redirects on its own. Checking only the URL we were given
+    would still let an https source bounce to http or ftp.
+    """
+
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        if urllib.parse.urlsplit(newurl).scheme.lower() != "https":
+            fp.close()
+            raise SourceError(f"refusing non-https redirect to {newurl}")
+        return super().redirect_request(req, fp, code, msg, headers, newurl)
+
+
 def _get(url: str) -> bytes:
     # Guard every fetch, including URLs read from a fetched index (ATT&CK), so a
-    # tampered source cannot redirect us to file:// or a plaintext endpoint.
-    if not url.lower().startswith("https://"):
+    # tampered source cannot send us to file:// or a plaintext endpoint. Every
+    # redirect hop is checked as well, not only the first URL.
+    if urllib.parse.urlsplit(url).scheme.lower() != "https":
         raise SourceError(f"refusing non-https source URL: {url}")
     req = urllib.request.Request(url, headers={"User-Agent": f"nis2check/{__version__}"})
+    opener = urllib.request.build_opener(_HTTPSOnlyRedirectHandler)
     try:
-        with urllib.request.urlopen(req, timeout=TIMEOUT) as resp:  # noqa: S310 (fixed https URLs)
+        with opener.open(req, timeout=TIMEOUT) as resp:
+            final = resp.geturl()
+            if urllib.parse.urlsplit(final).scheme.lower() != "https":
+                raise SourceError(f"refusing non-https source URL: {final}")
             return resp.read()
+    except SourceError:
+        raise
     except Exception as exc:  # network errors, HTTP errors, timeouts
         raise SourceError(f"{url}: {exc}") from exc
 

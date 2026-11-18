@@ -1,5 +1,9 @@
 import datetime as dt
+import io
 import json
+import urllib.request
+import urllib.response
+from http.client import HTTPMessage
 from pathlib import Path
 
 import pytest
@@ -117,6 +121,69 @@ def test_optional_sources_can_fail(tmp_path):
 def test_required_source_failure_raises(tmp_path):
     with pytest.raises(sources.SourceError):
         collect(TODAY, tmp_path)
+
+
+def _scripted_fetch(monkeypatch, routes):
+    """Serve canned responses through urllib's real redirect loop.
+
+    Nothing is opened on the network: HTTPS, HTTP, file and ftp handlers are
+    replaced, and every URL they are asked for is recorded.
+    """
+    fetched: list[str] = []
+
+    def make(url, code, location, body):
+        headers = HTTPMessage()
+        if location:
+            headers["Location"] = location
+        resp = urllib.response.addinfourl(io.BytesIO(body), headers, url, code)
+        resp.msg = "OK" if 200 <= code < 300 else "Redirect"
+        return resp
+
+    def open_scripted(self, req):
+        fetched.append(req.full_url)
+        code, location, body = routes.get(req.full_url, (200, None, b"followed"))
+        return make(req.full_url, code, location, body)
+
+    monkeypatch.setattr(urllib.request.HTTPSHandler, "https_open", open_scripted)
+    monkeypatch.setattr(urllib.request.HTTPHandler, "http_open", open_scripted)
+    monkeypatch.setattr(urllib.request.FileHandler, "file_open", open_scripted)
+    monkeypatch.setattr(urllib.request.FTPHandler, "ftp_open", open_scripted)
+    return fetched
+
+
+def test_get_refuses_non_https_url():
+    with pytest.raises(sources.SourceError, match="non-https"):
+        sources._get("http://127.0.0.1/vcdb.json.zip")
+
+
+def test_get_refuses_redirect_that_leaves_https(monkeypatch):
+    # The second hop is https too, then the third drops to http. Every hop
+    # has to stay https, so the plaintext body must never be fetched.
+    fetched = _scripted_fetch(monkeypatch, {
+        "https://127.0.0.1/a": (302, "https://127.0.0.1/b", b""),
+        "https://127.0.0.1/b": (302, "http://127.0.0.1/secret", b""),
+        "http://127.0.0.1/secret": (200, None, b"secret"),
+    })
+    with pytest.raises(sources.SourceError, match="non-https"):
+        sources._get("https://127.0.0.1/a")
+    assert fetched == ["https://127.0.0.1/a", "https://127.0.0.1/b"]
+
+    # urllib itself allows an ftp redirect; that hop has to be refused too.
+    fetched_ftp = _scripted_fetch(monkeypatch, {
+        "https://127.0.0.1/a": (302, "ftp://127.0.0.1/secret", b""),
+    })
+    with pytest.raises(sources.SourceError, match="non-https"):
+        sources._get("https://127.0.0.1/a")
+    assert fetched_ftp == ["https://127.0.0.1/a"]
+
+
+def test_get_follows_https_redirects(monkeypatch):
+    fetched = _scripted_fetch(monkeypatch, {
+        "https://127.0.0.1/a": (302, "https://127.0.0.1/b", b""),
+        "https://127.0.0.1/b": (200, None, b"ok-body"),
+    })
+    assert sources._get("https://127.0.0.1/a") == b"ok-body"
+    assert fetched == ["https://127.0.0.1/a", "https://127.0.0.1/b"]
 
 
 # ------------------------------------------------------------ weighting
