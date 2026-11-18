@@ -102,6 +102,45 @@ def test_failed_login_email_is_truncated(app):
     assert auth._failures and all(key.rsplit("|", 1)[-1] == long_email[:254] for key in auth._failures)
 
 
+def test_failure_table_drops_expired_keys_and_stays_bounded(app, monkeypatch):
+    from nis2check.web import auth
+    monkeypatch.setattr(auth, "_MAX_FAILURE_KEYS", 3)
+    clock = {"t": 1_000.0}
+    monkeypatch.setattr(auth.time, "monotonic", lambda: clock["t"])
+    auth._failures.clear()
+
+    with app.test_request_context(environ_base={"REMOTE_ADDR": "10.0.0.8"}):
+        # a lookup must not create a key; previously every probe left an empty deque
+        for i in range(20):
+            assert auth._throttled(f"ghost{i}@acme.sk") is False
+        assert auth._failures == {}
+
+        for _ in range(auth.MAX_FAILURES_PER_ACCOUNT):
+            auth._record_failure("victim@acme.sk")
+        assert auth._throttled("victim@acme.sk")
+        locked = dict(auth._failures)
+
+        # cap is 3: victim holds 2 keys, one more account fits, the rest are not stored
+        auth._record_failure("other@acme.sk")
+        auth._record_failure("third@acme.sk")
+        assert len(auth._failures) <= 3
+        assert "account|third@acme.sk" not in auth._failures
+        # the lockout is still there, with the same attempts, after the table filled up
+        assert auth._throttled("victim@acme.sk")
+        assert list(auth._failures["account|victim@acme.sk"]) == list(locked["account|victim@acme.sk"])
+
+        # once the window passes, expired keys are removed and the lockout lifts
+        clock["t"] += auth.WINDOW_SECONDS + 1
+        assert auth._throttled("victim@acme.sk") is False
+        assert auth._failures == {}
+
+        # a fresh failure after the sweep counts again, and does not revive the old key
+        auth._record_failure("new@acme.sk")
+        assert auth._recent("account|new@acme.sk") == 1
+        assert "account|victim@acme.sk" not in auth._failures
+        assert not auth._throttled("new@acme.sk")
+
+
 def test_login_checks_password_hash_when_user_is_missing(app, monkeypatch):
     from nis2check.web import auth
     seen = []
