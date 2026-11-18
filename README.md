@@ -2,6 +2,12 @@
 
 **Self-hosted NIS2 gap assessment for the whole team: questionnaire, evidence, threat-informed priorities and audit-ready reports.**
 
+> **Disclaimer.** nis2check gives an *indicative* self-assessment to help you find and
+> prioritise gaps. It is not legal advice, not an official audit, and not a certification
+> of compliance. NIS2 is implemented through national transposition laws, and the final
+> say on scope and obligations rests with your competent authority and your own legal
+> and security advisers. Use the output as a starting point, not as proof of compliance.
+
 NIS2 (Directive (EU) 2022/2555) requires medium and large organisations in critical sectors to put cybersecurity risk-management measures in place, have management approve them, and report significant incidents within 24 hours. Commercial compliance platforms are priced for larger companies, and spreadsheets do not hold evidence or history. `nis2check` runs on your own server, keeps your data in-house, and answers four questions:
 
 1. **Are we likely in scope?** An indicative check based on company size and the Annex I and II sectors.

@@ -41,6 +41,10 @@ def _now() -> str:
 
 
 def _get(url: str) -> bytes:
+    # Guard every fetch, including URLs read from a fetched index (ATT&CK), so a
+    # tampered source cannot redirect us to file:// or a plaintext endpoint.
+    if not url.lower().startswith("https://"):
+        raise SourceError(f"refusing non-https source URL: {url}")
     req = urllib.request.Request(url, headers={"User-Agent": f"nis2check/{__version__}"})
     try:
         with urllib.request.urlopen(req, timeout=TIMEOUT) as resp:  # noqa: S310 (fixed https URLs)

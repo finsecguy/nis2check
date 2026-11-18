@@ -6,7 +6,7 @@ import datetime as dt
 import json
 
 from sqlalchemy import (
-    Boolean, Date, DateTime, Float, Integer, String, Text, create_engine, event, select,
+    Boolean, Date, DateTime, Float, Integer, String, Text, create_engine, event, inspect, select, text,
 )
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, scoped_session, sessionmaker
 
@@ -158,6 +158,33 @@ DEFAULT_SETTINGS = {
 }
 
 
+def _sync_columns(engine) -> None:
+    """Add columns that exist on a model but not yet in the database.
+
+    create_all() makes missing tables but never alters existing ones, so after an
+    upgrade a new column would be absent on installs that already have the table.
+    This adds each one with ALTER TABLE ADD COLUMN (nullable; the ORM supplies the
+    default on write), which covers how the schema evolves here. A change SQLite
+    cannot do this way (rename, drop, retype) would need a real migration tool.
+    """
+    insp = inspect(engine)
+    tables = set(insp.get_table_names())
+    additions: list[str] = []
+    for table in Base.metadata.sorted_tables:
+        if table.name not in tables:
+            continue
+        have = {c["name"] for c in insp.get_columns(table.name)}
+        for col in table.columns:
+            if col.name in have:
+                continue
+            coltype = col.type.compile(dialect=engine.dialect)
+            additions.append(f'ALTER TABLE "{table.name}" ADD COLUMN "{col.name}" {coltype}')
+    if additions:
+        with engine.begin() as conn:
+            for ddl in additions:
+                conn.execute(text(ddl))
+
+
 def make_session(db_url: str) -> scoped_session:
     engine = create_engine(db_url, connect_args={"check_same_thread": False}, future=True)
 
@@ -169,6 +196,7 @@ def make_session(db_url: str) -> scoped_session:
         cur.close()
 
     Base.metadata.create_all(engine)
+    _sync_columns(engine)
     session = scoped_session(sessionmaker(bind=engine, expire_on_commit=False, future=True))
     s = session()
     for key, value in DEFAULT_SETTINGS.items():
