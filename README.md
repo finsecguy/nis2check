@@ -1,4 +1,7 @@
-# nis2check
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/brand/banner-dark.svg">
+  <img alt="nis2check: self-hosted NIS2 gap assessment" src="docs/brand/banner-light.svg" width="640">
+</picture>
 
 **Self-hosted NIS2 gap assessment for the whole team: questionnaire, evidence, threat-informed priorities and audit-ready reports.**
 

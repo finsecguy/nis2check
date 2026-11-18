@@ -13,7 +13,10 @@
 <script src="{{ url_for('static', filename='app.js') }}" defer></script>
 </head>
 <body>
-<header class="topbar"><span class="brand">NIS2 Gap Assessment</span></header>
+<header class="topbar"><span class="brand">
+  <img class="brand-mark" src="{{ url_for('static', filename='logo-mark.svg') }}" alt="" width="26" height="26">
+  <span>NIS2 Gap Assessment</span>
+</span></header>
 <div class="auth">
   {% with messages = get_flashed_messages(with_categories=true) %}
     {% for cat, msg in messages %}<div class="flash {{ cat }}" role="status">{{ msg }}</div>{% endfor %}
