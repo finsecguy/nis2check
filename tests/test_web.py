@@ -102,6 +102,49 @@ def test_failed_login_email_is_truncated(app):
     assert auth._failures and all(key.rsplit("|", 1)[-1] == long_email[:254] for key in auth._failures)
 
 
+def test_login_checks_password_hash_when_user_is_missing(app, monkeypatch):
+    from nis2check.web import auth
+    seen = []
+    real = auth.check_password_hash
+
+    def spy(stored, password):
+        seen.append(stored)
+        return real(stored, password)
+
+    monkeypatch.setattr(auth, "check_password_hash", spy)
+    c = app.test_client()
+    setup_admin(c)
+    c.post("/logout")
+
+    seen.clear()
+    missing = c.post("/login", data=dict(email="nobody@acme.sk", password="WhateverPass12"))
+    assert b"Wrong email or password" in missing.data
+    assert seen == [auth._DUMMY_PASSWORD_HASH]
+
+    # a real account still checks its own hash, and the right password still signs in
+    seen.clear()
+    wrong = c.post("/login", data=dict(email="admin@acme.sk", password="wrong-password"))
+    assert b"Wrong email or password" in wrong.data
+    assert len(seen) == 1 and seen[0].startswith("scrypt:") and seen[0] != auth._DUMMY_PASSWORD_HASH
+    seen.clear()
+    assert login(c, "admin@acme.sk").status_code == 302
+    assert len(seen) == 1 and seen[0] != auth._DUMMY_PASSWORD_HASH
+
+    # inactive and passwordless accounts used to skip the hash check too
+    c.post("/logout")
+    add_user(app, "idle@acme.sk", "viewer")
+    idle = db(app).query(User).filter_by(email="idle@acme.sk").one()
+    idle.active = False
+    db(app).add(User(email="sso@acme.sk", role="viewer"))
+    db(app).commit()
+    seen.clear()
+    assert b"Wrong email or password" in login(c, "idle@acme.sk").data
+    assert b"Wrong email or password" in login(c, "sso@acme.sk").data
+    assert len(seen) == 2
+    assert seen[0] != auth._DUMMY_PASSWORD_HASH  # inactive account, real hash
+    assert seen[1] == auth._DUMMY_PASSWORD_HASH  # no password stored
+
+
 def test_open_redirect_blocked(app):
     c = app.test_client()
     setup_admin(c)

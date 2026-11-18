@@ -34,6 +34,16 @@ def hash_password(password: str) -> str:
     return generate_password_hash(password, method="scrypt")
 
 
+# Checked when an attempt has no stored hash, so a missing or passwordless
+# account costs the same scrypt work as a wrong password for a real one.
+_DUMMY_PASSWORD_HASH = hash_password(secrets.token_urlsafe(32))
+
+
+def _password_matches(user: User | None, password: str) -> bool:
+    stored = user.password_hash if user is not None and user.password_hash else _DUMMY_PASSWORD_HASH
+    return check_password_hash(stored, password)
+
+
 def password_problem(password: str) -> str | None:
     if len(password) < MIN_PASSWORD:
         return f"Use at least {MIN_PASSWORD} characters."
@@ -243,7 +253,10 @@ def login():
             flash("Too many failed attempts. Try again in 15 minutes.", "error")
             return render_template("login.html", providers=settings.oidc_providers, local=settings.local_login), 429
         user = db.execute(select(User).where(User.email == email)).scalar_one_or_none()
-        if user and user.active and user.password_hash and check_password_hash(user.password_hash, password):
+        # Always run the hash check. Skipping it when the email is unknown
+        # answers "does this account exist?" by how fast the response returns.
+        password_ok = _password_matches(user, password)
+        if user is not None and user.active and user.password_hash and password_ok:
             login_user(user)
             audit(db, "login", email, "local", actor=email)
             db.commit()
