@@ -47,6 +47,13 @@ def login(client, email, password=PASSWORD):
     return client.post("/login", data=dict(email=email, password=password))
 
 
+def copy_session(src, dst):
+    """Give dst the same session cookie as src, as a copied browser would have."""
+    cookie = src.get_cookie("nis2check_session")
+    assert cookie is not None
+    dst.set_cookie(cookie.key, cookie.value)
+
+
 def db(app):
     return app.extensions["nis2_db"]()
 
@@ -93,6 +100,88 @@ def test_failed_login_email_is_truncated(app):
     assert entry.actor == long_email[:254]
     # the throttle keys ("<ip>|<email>" and "account|<email>") carry the capped email too
     assert auth._failures and all(key.rsplit("|", 1)[-1] == long_email[:254] for key in auth._failures)
+
+
+def test_failure_table_drops_expired_keys_and_stays_bounded(app, monkeypatch):
+    from nis2check.web import auth
+    monkeypatch.setattr(auth, "_MAX_FAILURE_KEYS", 3)
+    clock = {"t": 1_000.0}
+    monkeypatch.setattr(auth.time, "monotonic", lambda: clock["t"])
+    auth._failures.clear()
+
+    with app.test_request_context(environ_base={"REMOTE_ADDR": "10.0.0.8"}):
+        # a lookup must not create a key; previously every probe left an empty deque
+        for i in range(20):
+            assert auth._throttled(f"ghost{i}@acme.sk") is False
+        assert auth._failures == {}
+
+        for _ in range(auth.MAX_FAILURES_PER_ACCOUNT):
+            auth._record_failure("victim@acme.sk")
+        assert auth._throttled("victim@acme.sk")
+        locked = dict(auth._failures)
+
+        # cap is 3: victim holds 2 keys, one more account fits, the rest are not stored
+        auth._record_failure("other@acme.sk")
+        auth._record_failure("third@acme.sk")
+        assert len(auth._failures) <= 3
+        assert "account|third@acme.sk" not in auth._failures
+        # the lockout is still there, with the same attempts, after the table filled up
+        assert auth._throttled("victim@acme.sk")
+        assert list(auth._failures["account|victim@acme.sk"]) == list(locked["account|victim@acme.sk"])
+
+        # once the window passes, expired keys are removed and the lockout lifts
+        clock["t"] += auth.WINDOW_SECONDS + 1
+        assert auth._throttled("victim@acme.sk") is False
+        assert auth._failures == {}
+
+        # a fresh failure after the sweep counts again, and does not revive the old key
+        auth._record_failure("new@acme.sk")
+        assert auth._recent("account|new@acme.sk") == 1
+        assert "account|victim@acme.sk" not in auth._failures
+        assert not auth._throttled("new@acme.sk")
+
+
+def test_login_checks_password_hash_when_user_is_missing(app, monkeypatch):
+    from nis2check.web import auth
+    seen = []
+    real = auth.check_password_hash
+
+    def spy(stored, password):
+        seen.append(stored)
+        return real(stored, password)
+
+    monkeypatch.setattr(auth, "check_password_hash", spy)
+    c = app.test_client()
+    setup_admin(c)
+    c.post("/logout")
+
+    seen.clear()
+    missing = c.post("/login", data=dict(email="nobody@acme.sk", password="WhateverPass12"))
+    assert b"Wrong email or password" in missing.data
+    assert seen == [auth._DUMMY_PASSWORD_HASH]
+
+    # a real account still checks its own hash, and the right password still signs in
+    seen.clear()
+    wrong = c.post("/login", data=dict(email="admin@acme.sk", password="wrong-password"))
+    assert b"Wrong email or password" in wrong.data
+    assert len(seen) == 1 and seen[0].startswith("scrypt:") and seen[0] != auth._DUMMY_PASSWORD_HASH
+    seen.clear()
+    assert login(c, "admin@acme.sk").status_code == 302
+    assert len(seen) == 1 and seen[0] != auth._DUMMY_PASSWORD_HASH
+
+    # inactive and passwordless accounts used to skip the hash check too
+    c.post("/logout")
+    add_user(app, "idle@acme.sk", "viewer")
+    idle = db(app).query(User).filter_by(email="idle@acme.sk").one()
+    idle.active = False
+    db(app).add(User(email="sso@acme.sk", role="viewer"))
+    db(app).commit()
+    seen.clear()
+    assert b"Wrong email or password" in login(c, "idle@acme.sk").data
+    assert b"Wrong email or password" in login(c, "sso@acme.sk").data
+    assert len(seen) == 2
+    assert seen[0] != auth._DUMMY_PASSWORD_HASH  # inactive account, real hash
+    assert seen[1] == auth._DUMMY_PASSWORD_HASH  # no password stored
 
 
 def test_open_redirect_blocked(app):
@@ -152,13 +241,43 @@ def test_new_local_user_must_change_password(app, client):
 def test_password_change_logs_out_other_sessions(app):
     c1, c2 = app.test_client(), app.test_client()
     setup_admin(c1)
-    login(c2, "admin@acme.sk")  # a second session for the same admin
+    copy_session(c1, c2)  # a second browser holding the same session cookie
     assert c2.get("/").status_code == 200
     r = c1.post("/account/password",
                 data={"current": PASSWORD, "password": "NewPassword123", "password2": "NewPassword123"})
     assert r.status_code == 302
     assert c1.get("/").status_code == 200                       # the session that changed it stays in
     assert c2.get("/").headers["Location"].startswith("/login")  # the other one is signed out
+
+
+def test_logout_invalidates_copied_cookie(app):
+    c = app.test_client()
+    setup_admin(c)
+    stolen = c.get_cookie("nis2check_session")
+    assert stolen is not None
+    assert c.post("/logout").status_code == 302
+    replay = app.test_client()
+    replay.set_cookie(stolen.key, stolen.value)
+    assert replay.get("/").headers["Location"].startswith("/login")
+    assert c.get("/").headers["Location"].startswith("/login")
+
+
+def test_login_issues_a_fresh_session_token(app):
+    c1 = app.test_client()
+    setup_admin(c1)
+    c1.post("/logout")
+    login(c1, "admin@acme.sk")
+    first = db(app).query(User).filter_by(email="admin@acme.sk").one().session_token
+    stolen = c1.get_cookie("nis2check_session")
+    assert stolen is not None
+    c2 = app.test_client()
+    login(c2, "admin@acme.sk")
+    second = db(app).query(User).filter_by(email="admin@acme.sk").one().session_token
+    assert first and second and first != second
+    replay = app.test_client()
+    replay.set_cookie(stolen.key, stolen.value)
+    assert replay.get("/").headers["Location"].startswith("/login")
+    assert c2.get("/").status_code == 200
 
 
 def test_admin_reset_logs_out_user_sessions(app):
@@ -202,6 +321,52 @@ def test_evidence_upload_download_delete(app, client):
     assert r.data == b"minutes" and "attachment" in r.headers["Content-Disposition"]
     client.post(f"/evidence/{ev.id}/delete")
     assert not stored.exists()
+    assert db(app).query(Evidence).count() == 0
+
+
+def test_failed_commit_keeps_evidence_files_and_rows_together(app, client):
+    from sqlalchemy import event
+    from sqlalchemy.orm import Session
+    setup_admin(client)
+    client.post("/assessment/question/GOV-01",
+                data={"answer": "yes", "file": (io.BytesIO(b"keep"), "keep.pdf")},
+                content_type="multipart/form-data")
+    kept = db(app).query(Evidence).one()
+    kept_id, kept_name = kept.id, kept.stored_name
+    evidence_dir = app.extensions["nis2_settings"].evidence_dir
+    kept_path = evidence_dir / kept_name
+    assert kept_path.read_bytes() == b"keep"
+
+    def boom(session):
+        raise RuntimeError("commit failed")
+
+    event.listen(Session, "before_commit", boom)
+    try:
+        with pytest.raises(RuntimeError, match="commit failed"):
+            client.post("/assessment/question/GOV-02",
+                        data={"answer": "yes", "notes": "should roll back",
+                              "file": (io.BytesIO(b"new"), "new.pdf")},
+                        content_type="multipart/form-data")
+    finally:
+        event.remove(Session, "before_commit", boom)
+
+    assert [p.name for p in evidence_dir.iterdir()] == [kept_name]
+    assert kept_path.read_bytes() == b"keep"
+    assert [row.question_id for row in db(app).query(Evidence).all()] == ["GOV-01"]
+    assert db(app).get(Response, "GOV-02") is None
+
+    event.listen(Session, "before_commit", boom)
+    try:
+        with pytest.raises(RuntimeError, match="commit failed"):
+            client.post(f"/evidence/{kept_id}/delete")
+    finally:
+        event.remove(Session, "before_commit", boom)
+    assert kept_path.read_bytes() == b"keep"
+    assert db(app).get(Evidence, kept_id) is not None
+
+    # the row is still usable: a later delete removes the file and the row together
+    client.post(f"/evidence/{kept_id}/delete")
+    assert not kept_path.exists()
     assert db(app).query(Evidence).count() == 0
 
 

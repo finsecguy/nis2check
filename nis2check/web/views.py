@@ -209,29 +209,39 @@ def save_question(qid: str):
         if err:
             errors.append(err)
 
-    # Apply the answer and any valid evidence in one transaction.
-    r = db.get(Response, qid)
-    if r is None:
-        r = Response(question_id=qid)
-        db.add(r)
-    changed = (r.answer != answer) or (r.notes != notes)
-    r.answer, r.notes = answer, notes
-    if changed:
-        r.updated_by, r.updated_at = g.user.email, utcnow()
-        audit(db, "answer.saved", qid, f"answer={answer or 'not assessed'}")
+    # Apply the answer and any valid evidence in one transaction. A file is written
+    # before commit because scoring checks that it exists, and removed again if the
+    # commit does not land, so a failed request cannot leave an orphan on disk.
+    written: Path | None = None
+    try:
+        r = db.get(Response, qid)
+        if r is None:
+            r = Response(question_id=qid)
+            db.add(r)
+        changed = (r.answer != answer) or (r.notes != notes)
+        r.answer, r.notes = answer, notes
+        if changed:
+            r.updated_by, r.updated_at = g.user.email, utcnow()
+            audit(db, "answer.saved", qid, f"answer={answer or 'not assessed'}")
 
-    if pending_file:
-        _write_upload(db, settings, qid, pending_file, request.form.get("file_title", ""), valid_until)
-    if link:
-        db.add(Evidence(question_id=qid, kind="link", url=link[:2000],
-                        title=request.form.get("link_title", "").strip()[:255] or link[:255],
-                        valid_until=valid_until, uploaded_by=g.user.email))
-        audit(db, "evidence.link_added", qid, link[:200])
+        if pending_file:
+            written = _write_upload(
+                db, settings, qid, pending_file, request.form.get("file_title", ""), valid_until)
+        if link:
+            db.add(Evidence(question_id=qid, kind="link", url=link[:2000],
+                            title=request.form.get("link_title", "").strip()[:255] or link[:255],
+                            valid_until=valid_until, uploaded_by=g.user.email))
+            audit(db, "evidence.link_added", qid, link[:200])
 
-    db.flush()
-    result, _a, _t = evaluate_current(db, catalogue, settings.evidence_dir)
-    record_snapshot(db, result)
-    db.commit()
+        db.flush()
+        result, _a, _t = evaluate_current(db, catalogue, settings.evidence_dir)
+        record_snapshot(db, result)
+        db.commit()
+    except Exception:
+        db.rollback()
+        if written is not None:
+            written.unlink(missing_ok=True)
+        raise
     for message in errors:
         flash(message, "error")
     flash(f"{qid} answer saved; see the error above about the evidence." if errors
@@ -271,17 +281,26 @@ def _read_upload(upload) -> tuple[dict | None, str | None]:
     return {"filename": filename, "data": data}, None
 
 
-def _write_upload(db, settings, qid, payload, title, valid_until) -> None:
-    """Persist a payload from :func:`_read_upload` to disk and record the Evidence row."""
+def _write_upload(db, settings, qid, payload, title, valid_until) -> Path:
+    """Persist a payload from :func:`_read_upload` to disk and record the Evidence row.
+
+    Returns the path so the caller can delete it if the surrounding commit fails.
+    """
     filename, data = payload["filename"], payload["data"]
     stored = secrets.token_hex(16)
-    (settings.evidence_dir / stored).write_bytes(data)
-    db.add(Evidence(
-        question_id=qid, kind="file", filename=filename, stored_name=stored, size=len(data),
-        sha256=hashlib.sha256(data).hexdigest(), title=title.strip()[:255] or filename,
-        valid_until=valid_until, uploaded_by=g.user.email,
-    ))
-    audit(db, "evidence.uploaded", qid, f"{filename} ({len(data)} bytes)")
+    path = settings.evidence_dir / stored
+    path.write_bytes(data)
+    try:
+        db.add(Evidence(
+            question_id=qid, kind="file", filename=filename, stored_name=stored, size=len(data),
+            sha256=hashlib.sha256(data).hexdigest(), title=title.strip()[:255] or filename,
+            valid_until=valid_until, uploaded_by=g.user.email,
+        ))
+        audit(db, "evidence.uploaded", qid, f"{filename} ({len(data)} bytes)")
+    except Exception:
+        path.unlink(missing_ok=True)
+        raise
+    return path
 
 
 @bp.route("/evidence/<int:eid>/download")
@@ -307,14 +326,17 @@ def delete_evidence(eid: int):
     if ev is None:
         abort(404)
     qid = ev.question_id
-    if ev.kind == "file" and ev.stored_name:
-        (settings.evidence_dir / ev.stored_name).unlink(missing_ok=True)
+    # Drop the row first and commit, then the file. Unlinking first would leave
+    # the row pointing at a missing file when the commit fails.
+    stored_path = settings.evidence_dir / ev.stored_name if ev.kind == "file" and ev.stored_name else None
     audit(db, "evidence.deleted", qid, ev.filename or ev.url or "")
     db.delete(ev)
     db.flush()
     result, _a, _t = evaluate_current(db, catalogue, settings.evidence_dir)
     record_snapshot(db, result)
     db.commit()
+    if stored_path is not None:
+        stored_path.unlink(missing_ok=True)
     flash("Evidence removed.", "ok")
     return redirect(url_for("main.assessment_domain", domain_id=catalogue.question(qid).domain_id, _anchor=qid))
 
