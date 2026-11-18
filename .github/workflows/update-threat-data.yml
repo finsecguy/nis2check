@@ -43,7 +43,7 @@ jobs:
         run: nis2check report examples/acme-assessment.yaml -o examples/acme-report.html --csv examples/acme-gap-register.csv -q
 
       - name: Open pull request
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           branch: automation/threat-data
           delete-branch: true
