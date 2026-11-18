@@ -437,6 +437,52 @@ def test_import_yaml_rejects_path_traversal(app, tmp_path):
     assert db(app).query(Evidence).count() == 0
 
 
+def test_import_yaml_commit_failure_removes_copied_files(app, tmp_path):
+    from sqlalchemy import event
+    from sqlalchemy.orm import Session
+    from nis2check.web.manage import import_yaml
+    from nis2check.web.models import Organisation
+
+    evidence_dir = app.extensions["nis2_settings"].evidence_dir
+    sentinel = evidence_dir / "already-there"
+    sentinel.write_bytes(b"keep")
+    assess_dir = tmp_path / "assess"
+    assess_dir.mkdir()
+    (assess_dir / "policy.md").write_bytes(b"policy text")
+    (assess_dir / "a.yaml").write_text(
+        "entity:\n  name: Imported Org\n"
+        "responses:\n"
+        "  GOV-01:\n    answer: yes\n    evidence:\n      - policy.md\n"
+        "  GOV-02:\n    answer: partial\n    evidence:\n      - policy.md\n"
+    )
+
+    def boom(session):
+        raise RuntimeError("commit failed")
+
+    event.listen(Session, "before_commit", boom)
+    try:
+        with pytest.raises(RuntimeError, match="commit failed"):
+            import_yaml(app, assess_dir / "a.yaml")
+    finally:
+        event.remove(Session, "before_commit", boom)
+
+    # both copies from this import are gone; the file that was already stored stays
+    assert [p.name for p in evidence_dir.iterdir()] == ["already-there"]
+    assert sentinel.read_bytes() == b"keep"
+    assert (assess_dir / "policy.md").read_bytes() == b"policy text"
+    assert db(app).query(Evidence).count() == 0
+    assert db(app).query(Response).count() == 0
+    assert db(app).query(Organisation).one().name == ""
+
+    # the session is usable again, and a later import of the same file still lands
+    counts = import_yaml(app, assess_dir / "a.yaml")
+    assert counts["files"] == 2 and counts["answers"] == 2
+    assert db(app).query(Evidence).count() == 2
+    assert db(app).query(Organisation).one().name == "Imported Org"
+    assert sentinel.read_bytes() == b"keep"
+    assert len(list(evidence_dir.iterdir())) == 3
+
+
 def test_expired_evidence_is_an_issue(app, client):
     setup_admin(client)
     past = (dt.date.today() - dt.timedelta(days=1)).isoformat()

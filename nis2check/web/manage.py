@@ -48,44 +48,57 @@ def import_yaml(app, path: str | Path, actor: str = "import") -> dict:
     org.annual_turnover_eur, org.balance_sheet_eur = e.annual_turnover_eur, e.balance_sheet_eur
     org.size_exempt = e.size_exempt
 
+    # Copies are written before commit because scoring checks that the file exists.
+    # If the commit does not land, delete just those copies so a failed import
+    # cannot leave files with no row, and cannot remove anything already stored.
     counts = {"answers": 0, "files": 0, "links": 0, "missing_files": 0, "rejected_files": 0}
-    base_dir = assessment.base_dir.resolve()
-    for qid, r in assessment.responses.items():
-        if r.answer is None and not r.notes and not r.evidence:
-            continue
-        row = db.get(Response, qid) or Response(question_id=qid)
-        row.answer, row.notes, row.updated_by, row.updated_at = r.answer, r.notes, actor, utcnow()
-        db.add(row)
-        counts["answers"] += 1
-        for item in r.evidence:
-            if item.lower().startswith(("http://", "https://")):
-                db.add(Evidence(question_id=qid, kind="link", url=item, title=item, uploaded_by=actor))
-                counts["links"] += 1
+    written: list[Path] = []
+    try:
+        base_dir = assessment.base_dir.resolve()
+        for qid, r in assessment.responses.items():
+            if r.answer is None and not r.notes and not r.evidence:
                 continue
-            src = _contained(base_dir, item)
-            if src is None:
-                counts["rejected_files"] += 1
-                continue
-            if not src.is_file():
-                counts["missing_files"] += 1
-                continue
-            data = src.read_bytes()
-            stored = secrets.token_hex(16)
-            (settings.evidence_dir / stored).write_bytes(data)
-            db.add(Evidence(question_id=qid, kind="file", filename=src.name, stored_name=stored,
-                            size=len(data), sha256=hashlib.sha256(data).hexdigest(), title=src.name,
-                            uploaded_by=actor))
-            counts["files"] += 1
-    audit(db, "assessment.imported", Path(path).name,
-          f"{counts['answers']} answers, {counts['files']} files, {counts['links']} links"
-          + (f", {counts['missing_files']} evidence files not found" if counts["missing_files"] else "")
-          + (f", {counts['rejected_files']} evidence paths rejected" if counts["rejected_files"] else ""),
-          actor=actor)
-    db.flush()
-    result, _a, _t = evaluate_current(db, catalogue, settings.evidence_dir)
-    record_snapshot(db, result)
-    db.commit()
-    app.extensions["nis2_db"].remove()
+            row = db.get(Response, qid) or Response(question_id=qid)
+            row.answer, row.notes, row.updated_by, row.updated_at = r.answer, r.notes, actor, utcnow()
+            db.add(row)
+            counts["answers"] += 1
+            for item in r.evidence:
+                if item.lower().startswith(("http://", "https://")):
+                    db.add(Evidence(question_id=qid, kind="link", url=item, title=item, uploaded_by=actor))
+                    counts["links"] += 1
+                    continue
+                src = _contained(base_dir, item)
+                if src is None:
+                    counts["rejected_files"] += 1
+                    continue
+                if not src.is_file():
+                    counts["missing_files"] += 1
+                    continue
+                data = src.read_bytes()
+                stored = secrets.token_hex(16)
+                dest = settings.evidence_dir / stored
+                dest.write_bytes(data)
+                written.append(dest)
+                db.add(Evidence(question_id=qid, kind="file", filename=src.name, stored_name=stored,
+                                size=len(data), sha256=hashlib.sha256(data).hexdigest(), title=src.name,
+                                uploaded_by=actor))
+                counts["files"] += 1
+        audit(db, "assessment.imported", Path(path).name,
+              f"{counts['answers']} answers, {counts['files']} files, {counts['links']} links"
+              + (f", {counts['missing_files']} evidence files not found" if counts["missing_files"] else "")
+              + (f", {counts['rejected_files']} evidence paths rejected" if counts["rejected_files"] else ""),
+              actor=actor)
+        db.flush()
+        result, _a, _t = evaluate_current(db, catalogue, settings.evidence_dir)
+        record_snapshot(db, result)
+        db.commit()
+    except Exception:
+        db.rollback()
+        for dest in written:
+            dest.unlink(missing_ok=True)
+        raise
+    finally:
+        app.extensions["nis2_db"].remove()
     return counts
 
 
