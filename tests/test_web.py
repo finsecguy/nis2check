@@ -324,6 +324,52 @@ def test_evidence_upload_download_delete(app, client):
     assert db(app).query(Evidence).count() == 0
 
 
+def test_failed_commit_keeps_evidence_files_and_rows_together(app, client):
+    from sqlalchemy import event
+    from sqlalchemy.orm import Session
+    setup_admin(client)
+    client.post("/assessment/question/GOV-01",
+                data={"answer": "yes", "file": (io.BytesIO(b"keep"), "keep.pdf")},
+                content_type="multipart/form-data")
+    kept = db(app).query(Evidence).one()
+    kept_id, kept_name = kept.id, kept.stored_name
+    evidence_dir = app.extensions["nis2_settings"].evidence_dir
+    kept_path = evidence_dir / kept_name
+    assert kept_path.read_bytes() == b"keep"
+
+    def boom(session):
+        raise RuntimeError("commit failed")
+
+    event.listen(Session, "before_commit", boom)
+    try:
+        with pytest.raises(RuntimeError, match="commit failed"):
+            client.post("/assessment/question/GOV-02",
+                        data={"answer": "yes", "notes": "should roll back",
+                              "file": (io.BytesIO(b"new"), "new.pdf")},
+                        content_type="multipart/form-data")
+    finally:
+        event.remove(Session, "before_commit", boom)
+
+    assert [p.name for p in evidence_dir.iterdir()] == [kept_name]
+    assert kept_path.read_bytes() == b"keep"
+    assert [row.question_id for row in db(app).query(Evidence).all()] == ["GOV-01"]
+    assert db(app).get(Response, "GOV-02") is None
+
+    event.listen(Session, "before_commit", boom)
+    try:
+        with pytest.raises(RuntimeError, match="commit failed"):
+            client.post(f"/evidence/{kept_id}/delete")
+    finally:
+        event.remove(Session, "before_commit", boom)
+    assert kept_path.read_bytes() == b"keep"
+    assert db(app).get(Evidence, kept_id) is not None
+
+    # the row is still usable: a later delete removes the file and the row together
+    client.post(f"/evidence/{kept_id}/delete")
+    assert not kept_path.exists()
+    assert db(app).query(Evidence).count() == 0
+
+
 def test_disallowed_upload_and_link(app, client):
     setup_admin(client)
     r = client.post("/assessment/question/GOV-01", data={"answer": "yes", "file": (io.BytesIO(b"x"), "run.exe")},
