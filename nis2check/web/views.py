@@ -16,6 +16,8 @@ from flask import (
 from sqlalchemy import select
 
 from ..assessment import ANSWER_VALUES
+from ..ciso import export_zip
+from ..frameworks import DORA_SCOPE_NOTE, framework_ids_of, framework_label, parse_frameworks
 from ..scope import assess_scope, cached_scope_rules, implied_subsector, scope_for_organisation
 from ..report import STATUS_LABELS, effort_matrix, fonts_css_uri, render_csv, render_html, render_json, write_pdf
 from ..weighting import plain_reason
@@ -100,7 +102,7 @@ def dashboard():
 @bp.route("/organisation", methods=["GET", "POST"])
 @require("view")
 def organisation_page():
-    db, _catalogue, _settings = current_app_parts()
+    db, _catalogue, settings = current_app_parts()
     org = organisation(db)
     if request.method == "POST":
         if not g.user.can("admin"):
@@ -137,15 +139,31 @@ def organisation_page():
             )
             org.sector = result.organisation_sector
             org.size_exempt = result.size_exempt
+            selected = parse_frameworks(request.form.getlist("frameworks"), default=None)
+            changed = tuple(selected) != org.framework_ids
+            org.frameworks = ",".join(selected)
         except ValueError as exc:
             db.rollback()
-            flash(f"Enter a number for {str(exc).replace('_', ' ')}.", "error")
+            message = str(exc)
+            if message.startswith("select at least"):
+                message = "Select at least one framework (NIS2, DORA, or both)."
+            elif message.startswith("unknown framework"):
+                message = message[0].upper() + message[1:] + "."
+            else:
+                message = f"Enter a number for {message.replace('_', ' ')}."
+            flash(message, "error")
             return redirect(url_for("main.organisation_page"))
         except KeyError:
             db.rollback()
             flash("Choose a sector from the list.", "error")
             return redirect(url_for("main.organisation_page"))
-        audit(db, "organisation.updated", org.name)
+        audit(db, "organisation.updated", org.name, "frameworks: " + org.frameworks)
+        if changed:
+            # Score the newly selected frameworks. evaluate_current narrows the
+            # full catalogue to whatever is now stored on the organisation.
+            full = current_app.extensions["nis2_catalogue"]
+            scored, _a, _t = evaluate_current(db, full, settings.evidence_dir)
+            record_snapshot(db, scored)
         db.commit()
         flash("Organisation details saved.", "ok")
         return redirect(url_for("main.organisation_page"))
@@ -157,6 +175,7 @@ def organisation_page():
     return render_template(
         "organisation.html", org=org, rules=rules, scope=scope,
         selected_subsector=org.subsector_id or implied_subsector(rules, org.sector),
+        dora_scope_note=DORA_SCOPE_NOTE,
     )
 
 
@@ -390,7 +409,11 @@ def report_view():
 @require("view")
 def report_download(fmt: str):
     db, catalogue, result, assessment, threat, org = _report_parts()
-    stem = f"NIS2-gap-assessment-{_slug(org.name)}-{dt.date.today():%Y-%m-%d}"
+    stem = (
+        f"{framework_label(framework_ids_of(catalogue)).replace(' ', '-')}"
+        f"-gap-assessment-{_slug(org.name)}-{dt.date.today():%Y-%m-%d}"
+    )
+    ext = fmt
     if fmt == "pdf":
         import tempfile
         html = render_html(result, assessment, catalogue, top=10, threat=threat, embedded=True,
@@ -407,10 +430,14 @@ def report_download(fmt: str):
     elif fmt == "html":
         body = render_html(result, assessment, catalogue, top=10, threat=threat).encode("utf-8")
         mime = "text/html; charset=utf-8"
+    elif fmt == "ciso":
+        body, mime = export_zip(result, catalogue, assessment), "application/zip"
+        stem = f"ciso-assistant-{_slug(org.name)}-{dt.date.today():%Y-%m-%d}"
+        ext = "zip"
     else:
         abort(404)
     audit(db, "report.downloaded", fmt)
     db.commit()
     resp = FlaskResponse(body, mimetype=mime)
-    resp.headers["Content-Disposition"] = f'attachment; filename="{stem}.{fmt}"'
+    resp.headers["Content-Disposition"] = f'attachment; filename="{stem}.{ext}"'
     return resp

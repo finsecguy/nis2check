@@ -71,11 +71,19 @@ class Organisation(Base):
     # re-runs that same check from these, rather than the coarse sector alone.
     subsector_id: Mapped[str | None] = mapped_column(String(64), nullable=True)
     special_cases: Mapped[str] = mapped_column(Text, default="")
+    # Comma-separated framework ids. NULL on a database created before this column
+    # means NIS2, which is what those installs were assessing.
+    frameworks: Mapped[str | None] = mapped_column(String(32), nullable=True, default="nis2")
     updated_at: Mapped[dt.datetime] = mapped_column(DateTime, default=utcnow, onupdate=utcnow)
 
     @property
     def special_case_ids(self) -> list[str]:
         return [part for part in (self.special_cases or "").split(",") if part]
+
+    @property
+    def framework_ids(self) -> tuple[str, ...]:
+        from ..frameworks import parse_frameworks
+        return parse_frameworks(self.frameworks)
 
 
 class Response(Base):

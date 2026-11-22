@@ -28,6 +28,7 @@ class Question:
     effort: str = "medium"
     attack_mitigations: tuple[str, ...] = ()
     threat_patterns: tuple[str, ...] = ()
+    article: str = ""
 
     @property
     def effort_cost(self) -> int:
@@ -45,6 +46,7 @@ class Domain:
     title: str
     summary: str
     questions: tuple[Question, ...]
+    framework: str = "nis2"
 
 
 @dataclass(frozen=True)
@@ -84,11 +86,13 @@ def parse_catalogue(data: dict) -> Catalogue:
     if not isinstance(data, dict) or not isinstance(data.get("domains"), list):
         raise CatalogueError("catalogue must be a mapping with a 'domains' list")
 
+    framework = str(data.get("framework") or "nis2").strip().lower() or "nis2"
     seen_ids: set[str] = set()
     domains: list[Domain] = []
     for d in data["domains"]:
         domain_id = _require(d, "id", "domain")
         where = f"domain {domain_id}"
+        domain_framework = str(d.get("framework") or framework).strip().lower() or framework
         if domain_id in seen_ids:
             raise CatalogueError(f"duplicate id '{domain_id}'")
         seen_ids.add(domain_id)
@@ -120,6 +124,7 @@ def parse_catalogue(data: dict) -> Catalogue:
                     effort=effort,
                     attack_mitigations=tuple(q.get("attack_mitigations") or ()),
                     threat_patterns=tuple(q.get("threat_patterns") or ()),
+                    article=str(q.get("article") or "").strip(),
                 )
             )
         if not questions:
@@ -132,6 +137,7 @@ def parse_catalogue(data: dict) -> Catalogue:
                 title=_require(d, "title", where),
                 summary=" ".join(str(d.get("summary", "")).split()),
                 questions=tuple(questions),
+                framework=domain_framework,
             )
         )
 

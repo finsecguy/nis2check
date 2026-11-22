@@ -155,7 +155,9 @@ def test_organisation_page_agrees_with_the_wizard(app, payload, label):
 def test_organisation_form_uses_the_wizard_rules(app):
     client = app.test_client()
     _setup(client)
-    saved = client.post("/organisation", data={"name": "Acme", "subsector_id": "dns", "employees": "80"})
+    saved = client.post("/organisation", data={
+        "name": "Acme", "subsector_id": "dns", "employees": "80", "frameworks": "nis2",
+    })
     assert saved.status_code == 302
     organisation = client.get("/organisation").data.decode()
     wizard = client.post("/scope", data={"subsector_id": "dns", "employees": "80"}).data.decode()

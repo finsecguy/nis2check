@@ -11,6 +11,7 @@ import yaml
 
 from .applicability import SECTORS, Entity
 from .controls import Catalogue
+from .frameworks import framework_ids_of, parse_frameworks
 
 ANSWER_VALUES: dict[str, float | None] = {"yes": 1.0, "partial": 0.5, "no": 0.0, "na": None}
 
@@ -35,6 +36,7 @@ class Assessment:
     base_dir: Path = field(default_factory=Path.cwd)
     assessed_on: str | None = None
     assessor: str = ""
+    frameworks: tuple[str, ...] = ("nis2",)
 
 
 def _number(value, field_name: str, cast=float):
@@ -103,12 +105,20 @@ def parse_assessment(data: dict, catalogue: Catalogue, base_dir: Path) -> Assess
         )
 
     assessed_on = data.get("assessed_on")
+    if "frameworks" in data:
+        try:
+            frameworks = parse_frameworks(data.get("frameworks"), default=None)
+        except ValueError as exc:
+            raise AssessmentError(str(exc)) from exc
+    else:
+        frameworks = framework_ids_of(catalogue)
     return Assessment(
         entity=entity,
         responses=responses,
         base_dir=base_dir,
         assessed_on=str(assessed_on) if assessed_on else None,
         assessor=str(data.get("assessor") or ""),
+        frameworks=frameworks,
     )
 
 
@@ -127,6 +137,7 @@ def new_assessment(catalogue: Catalogue, name: str = "", base_dir: Path | None =
         responses={qid: Response(qid) for qid in catalogue.question_ids},
         base_dir=base_dir or Path.cwd(),
         assessed_on=dt.date.today().isoformat(),
+        frameworks=framework_ids_of(catalogue),
     )
 
 
@@ -144,8 +155,10 @@ def _scalar(value) -> str:
 def render_assessment(assessment: Assessment, catalogue: Catalogue) -> str:
     """Write an assessment as commented YAML, so it doubles as a fill-in form."""
     e = assessment.entity
+    names = {"nis2": "NIS2", "dora": "DORA"}
+    title = " and ".join(names.get(fw, fw) for fw in assessment.frameworks) or "NIS2"
     lines = [
-        "# NIS2 self-assessment",
+        f"# {title} self-assessment",
         "#",
         "# Answer each question with: yes | partial | no | na",
         "# List evidence as file paths (relative to this file) or URLs.",
@@ -153,6 +166,7 @@ def render_assessment(assessment: Assessment, catalogue: Catalogue) -> str:
         "",
         f"assessed_on: {_scalar(assessment.assessed_on)}",
         f"assessor: {_scalar(assessment.assessor)}",
+        "frameworks: [" + ", ".join(assessment.frameworks) + "]",
         "",
         "entity:",
         f"  name: {_scalar(e.name)}",

@@ -3,18 +3,19 @@
   <img alt="nis2check: self-hosted NIS2 gap assessment" src="docs/brand/banner-light.svg" width="640">
 </picture>
 
-**Self-hosted NIS2 gap assessment for the whole team: questionnaire, evidence, threat-informed priorities and audit-ready reports.**
+**Self-hosted NIS2 and DORA gap assessment for the whole team: questionnaire, evidence, threat-informed priorities and audit-ready reports.**
 
 > **Disclaimer.** nis2check gives an *indicative* self-assessment to help you find and
 > prioritise gaps. It is not legal advice, not an official audit, and not a certification
-> of compliance. NIS2 is implemented through national transposition laws, and the final
-> say on scope and obligations rests with your competent authority and your own legal
-> and security advisers. Use the output as a starting point, not as proof of compliance.
+> of compliance. NIS2 is implemented through national transposition laws, and DORA
+> applies to financial entities as a regulation. The final say on scope and obligations
+> rests with your competent authority and your own legal and security advisers. Use the
+> output as a starting point, not as proof of compliance.
 
-NIS2 (Directive (EU) 2022/2555) requires medium and large organisations in critical sectors to put cybersecurity risk-management measures in place, have management approve them, and report significant incidents within 24 hours. Commercial compliance platforms are priced for larger companies, and spreadsheets do not hold evidence or history. `nis2check` runs on your own server, keeps your data in-house, and answers four questions:
+NIS2 (Directive (EU) 2022/2555) requires medium and large organisations in critical sectors to put cybersecurity risk-management measures in place, have management approve them, and report significant incidents within 24 hours. DORA (Regulation (EU) 2022/2554) sets digital operational resilience duties for financial entities. For those entities, DORA is lex specialis to NIS2 where it covers ICT risk management and incident reporting. Commercial compliance platforms are priced for larger companies, and spreadsheets do not hold evidence or history. `nis2check` runs on your own server, keeps your data in-house, and answers four questions:
 
 1. **Are we likely in scope?** An indicative check based on company size and the Annex I and II sectors.
-2. **Where are our gaps?** 40 practical questions mapped to Articles 20, 21(2)(a) to (j) and 23.
+2. **Where are our gaps?** 40 NIS2 questions mapped to Articles 20, 21(2)(a) to (j) and 23, and 27 DORA questions across the five pillars (Articles 5 to 45). Pick one framework or both.
 3. **Can we prove it?** Evidence files and links per question, with expiry dates. A second, evidence-backed score counts only answers with valid evidence.
 4. **What should we fix first?** Priorities informed by open threat data (VERIS Community Database, MITRE ATT&CK, CISA KEV, ENISA EUVD) and an impact vs effort matrix.
 
@@ -27,7 +28,7 @@ NIS2 (Directive (EU) 2022/2555) requires medium and large organisations in criti
 - **Single sign-on** with Microsoft Entra ID or Google Workspace, plus local accounts.
 - **Evidence register.** Upload files or link to SharePoint, Drive or a wiki; set "valid until" dates for things like yearly restore tests. Expired evidence is flagged automatically.
 - **Dashboard** with RAG status per requirement, progress over time and quick wins.
-- **Audit-style report** as PDF, HTML, CSV gap register (opens in Excel) or JSON.
+- **Audit-style report** as PDF, HTML, CSV gap register (opens in Excel), JSON, or a CISO Assistant import.
 - **Threat data updates with approval.** The app checks the public sources weekly; an administrator reviews a change report and approves or rejects it before any weight changes.
 - **Audit log** of every sign-in, answer, upload, download and setting change.
 - **Your data stays with you.** Everything lives in one Docker volume on your server.
@@ -170,7 +171,43 @@ The report follows the structure of an internal-audit gap assessment and prints 
 | MFA | Art. 21(2)(j) | Multi-factor authentication, secure communications |
 | REP | Art. 23 | 24-hour early warning, 72-hour notification, final report |
 
-The control catalogue ([`nis2check/data/controls.yaml`](nis2check/data/controls.yaml)) and threat pattern taxonomy ([`nis2check/data/patterns.yaml`](nis2check/data/patterns.yaml)) are plain files you can review and adapt, for example to add national requirements.
+DORA is a second question set. An assessment can use NIS2, DORA, or both.
+
+| Pillar | DORA reference | Topic |
+|---|---|---|
+| DIRM | Art. 5-16 | ICT risk management, including the simplified framework |
+| DIIM | Art. 17-23 | ICT incident management, major-incident reporting, payment-related incidents |
+| DDOT | Art. 24-27 | Resilience testing, including threat-led penetration testing where it applies |
+| DTPR | Art. 28-44 | ICT third-party strategy, register, contracts, exit, and critical providers |
+| DISH | Art. 45 | Cyber threat information sharing |
+
+DORA questions live in [`nis2check/data/dora.yaml`](nis2check/data/dora.yaml). The text is original; the article number on each question says which duty it is about. Articles 31 to 44 are the oversight regime for critical ICT third-party providers. The question set covers what a financial entity has to do on that side (know a designation, answer the authority, follow findings), not the lead overseer's job.
+
+For a financial entity, DORA is lex specialis to NIS2 (DORA Art. 1(2); NIS2 Art. 4). Where DORA covers ICT risk management and incident reporting, those NIS2 provisions do not apply to that entity. Other NIS2 duties can still apply. The organisation page, the assessment and the report say this in one paragraph. It is a pointer, not a legal opinion. The size and sector check remains the NIS2 test and does not decide whether DORA applies.
+
+The NIS2 catalogue ([`nis2check/data/controls.yaml`](nis2check/data/controls.yaml)) and threat pattern taxonomy ([`nis2check/data/patterns.yaml`](nis2check/data/patterns.yaml)) are plain files you can review and adapt, for example to add national requirements.
+
+## CISO Assistant export
+
+An assessment can be downloaded as a zip for [CISO Assistant](https://github.com/intuitem/ciso-assistant-community) (community edition). The zip holds, for each selected framework:
+
+- a **library YAML** in the format the library screen loads (`urn:intuitem:risk:library:nis2check-nis2` or `nis2check-dora`)
+- a **compliance-assessment CSV** with one row per question
+
+The CSV columns are the ones the CISO Assistant data wizard reads: `ref_id`, `urn`, `assessable`, `compliance_result`, `score`, `requirement_progress` and `observations`. Answers map as yes = compliant / 100, partial = partially_compliant / 50, no = non_compliant / 0, not applicable = not_applicable, and unanswered = not_assessed. Evidence notes and evidence problems go in `observations`.
+
+Load each YAML under Catalog, Libraries. Then import the matching CSV. On the community edition that import is the [`clica`](https://github.com/intuitem/ciso-assistant-community/blob/main/cli/README.md) command `import-compliance-assessments` (it needs a folder and a perimeter). The Pro data wizard takes the same file. `IMPORT.txt` in the zip has the exact framework name to pass as `--framework`, for example `DORA (nis2check gap assessment)`.
+
+```bash
+uv run clica.py import-compliance-assessments \
+  --file dora-compliance-assessment.csv \
+  --framework "DORA (nis2check gap assessment)" \
+  --perimeter "Your perimeter"
+```
+
+From the command line, the same zip is `nis2check report assessment.yaml --ciso ciso-assistant.zip`.
+
+This export is nis2check's own question set plus this assessment's answers. CISO Assistant also ships its own DORA library (and a NOREA DORA-in-Control framework). Those use different requirement ids, so this zip does not fill an audit opened on them. CISO Assistant then averages requirement scores in its own way; the weighted score in the nis2check report can differ. Pushing the result through the CISO Assistant API is not implemented: the files above are what you can import without giving this app a token.
 
 ## Security
 
@@ -188,6 +225,7 @@ The same engine runs without the web app, for automation or CI:
 pip install ".[pdf]"
 nis2check init --name "Your Company s.r.o."            # creates assessment.yaml
 nis2check report assessment.yaml --pdf report.pdf --csv gap-register.csv
+nis2check init --frameworks dora -o dora.yaml   # or: nis2,dora
 nis2check report assessment.yaml --fail-under 70 --evidence-backed   # exit code 2 below threshold
 nis2check update-threat-data --change-report change.md   # refresh the bundled threat data
 ```
@@ -206,8 +244,9 @@ nis2check web serve --data-dir ./data      # development server on http://127.0.
 
 - This is a self-assessment aid, not a certification or legal advice.
 - Threat weights reflect public incident data, which over-represents incidents that become news and US organisations. Effort ratings are estimates.
-- The scope check covers the size-cap rule and Annex I and II sectors only. National transposition laws, designations by the competent authority and sector-specific rules (such as DORA for financial entities) can change the outcome.
-- Questions reflect the directive text. Implementing acts and national guidance may set more detailed requirements for some entity types.
+- The scope check covers the NIS2 size-cap rule and Annex I and II sectors only. It does not decide whether DORA applies. National transposition, designations by the competent authority and the financial-entity list in DORA Article 2 can change the outcome.
+- The DORA question set is a practical gap assessment of the five pillars, not the full text of the regulatory technical standards. Threat-led penetration testing and the simplified ICT risk framework are questions you can mark not applicable.
+- Questions are original prompts keyed to article numbers. Implementing acts and national guidance may set more detailed requirements for some entity types.
 
 ## License
 

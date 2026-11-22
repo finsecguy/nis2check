@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Organisation{% endblock %}
 {% block content %}
-<div class="page-head"><div><h1>Organisation</h1><div class="sub">These details decide whether NIS2 likely applies to you, and appear on the report cover. The result uses the same rules as the scope wizard.</div></div></div>
+<div class="page-head"><div><h1>Organisation</h1><div class="sub">These details appear on the report. Size and sector use the same NIS2 scope rules as the scope wizard. The framework choice decides which questions you answer.</div></div></div>
 
 <div class="grid2">
 <div>
@@ -34,6 +34,13 @@
       <label class="check"><input type="checkbox" name="special" value="{{ case.id }}" {{ 'checked' if case.id in org.special_case_ids }} {{ 'disabled' if ro }}>
         {{ case.label }}</label>
     {% endfor %}
+    <h2>Frameworks in this assessment</h2>
+    <p class="small muted">Choose NIS2, DORA, or both. Answers you have already saved are kept if you turn a framework off, and come back when you turn it on.</p>
+    <label class="check"><input type="checkbox" name="frameworks" value="nis2" {{ 'checked' if 'nis2' in org.framework_ids }} {{ 'disabled' if ro }}>
+      NIS2, Directive (EU) 2022/2555: governance, risk management and incident reporting</label>
+    <label class="check"><input type="checkbox" name="frameworks" value="dora" {{ 'checked' if 'dora' in org.framework_ids }} {{ 'disabled' if ro }}>
+      DORA, Regulation (EU) 2022/2554: ICT risk, incidents, testing, third parties and information sharing</label>
+    <div class="note">{{ lex_specialis }}</div>
     {% if not ro %}<div class="actions"><button class="btn" type="submit">Save</button></div>
     {% else %}<p class="small muted">Only administrators can change these details.</p>{% endif %}
   </form>
@@ -52,6 +59,7 @@
   {% for reason in scope.reasons %}<div class="note">{{ reason.text }}</div>{% endfor %}
   {% for note in scope.size_notes %}<p class="small muted">{{ note }}</p>{% endfor %}
   <p class="small muted">{{ scope.disclaimer }}</p>
+  {% if 'dora' in org.framework_ids %}<div class="note">{{ dora_scope_note }}</div>{% endif %}
 </div>
 </div>
 {% endblock %}

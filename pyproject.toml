@@ -4,14 +4,14 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "nis2check"
-version = "0.2.1"
-description = "Self-hosted NIS2 gap assessment: questionnaire, evidence, threat-informed priorities and audit-ready reports"
+version = "0.3.0"
+description = "Self-hosted NIS2 and DORA gap assessment: questionnaire, evidence, threat-informed priorities and audit-ready reports"
 readme = "README.md"
 license = { text = "MIT" }
 authors = [{ name = "Herman Kaufman" }]
 requires-python = ">=3.10"
 dependencies = ["PyYAML>=6.0", "Jinja2>=3.1"]
-keywords = ["nis2", "grc", "compliance", "cybersecurity", "gap-analysis", "risk"]
+keywords = ["nis2", "dora", "grc", "compliance", "cybersecurity", "gap-analysis", "risk"]
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",

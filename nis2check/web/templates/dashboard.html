@@ -18,6 +18,9 @@
 {% if pending %}
 <div class="note">New threat data is waiting for your approval. <a href="{{ url_for('admin.threat_data') }}">Review it</a></div>
 {% endif %}
+{% if 'dora' in framework_ids %}
+<div class="note">{{ lex_specialis }}</div>
+{% endif %}
 
 {% if answered == 0 %}
 <div class="headline">
@@ -27,7 +30,7 @@
 {% else %}
 <div class="headline">
   <div class="figure">{{ "%.0f" | format(result.score_pct or 0) }}<sup>%</sup></div>
-  <p class="lede">of the NIS2 measures are in place. {{ result.verified_pct | pct }} can be shown with evidence today.</p>
+  <p class="lede">of the {{ framework_label }} measures are in place. {{ result.verified_pct | pct }} can be shown with evidence today.</p>
 </div>
 {% endif %}
 <ul class="facts">
@@ -41,7 +44,7 @@
   <section>
     <h2>Where you stand</h2>
     <table>
-      <thead><tr><th>Requirement</th><th class="nowrap">NIS2</th><th style="width: 22%;"></th><th class="num">Score</th></tr></thead>
+      <thead><tr><th>Requirement</th><th class="nowrap">Article</th><th style="width: 22%;"></th><th class="num">Score</th></tr></thead>
       <tbody>
       {% for d in result.domains %}
         <tr>

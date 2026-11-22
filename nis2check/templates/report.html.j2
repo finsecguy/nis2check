@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>NIS2 Gap Assessment - {{ assessment.entity.name or "Organisation" }}</title>
+<title>{{ kicker }} - {{ assessment.entity.name or "Organisation" }}</title>
 {% if font_css %}<link rel="stylesheet" href="{{ font_css }}">{% endif %}
 <style>
   /* White, black and one navy accent; red, amber and green only for status. */
   @page {
     size: A4;
     margin: 20mm 18mm 20mm 18mm;
-    @bottom-left { content: "NIS2 gap assessment, confidential"; font: 7.5pt "Public Sans", Arial, sans-serif; color: rgba(0,0,0,.55); }
+    @bottom-left { content: "{{ kicker }}, confidential"; font: 7.5pt "Public Sans", Arial, sans-serif; color: rgba(0,0,0,.55); }
     @bottom-right { content: counter(page) " of " counter(pages); font: 7.5pt "Public Sans", Arial, sans-serif; color: rgba(0,0,0,.55); }
   }
   :root {
@@ -101,9 +101,9 @@
 
 <div class="page">
 
-  <div class="kicker">NIS2 gap assessment</div>
+  <div class="kicker">{{ kicker }}</div>
   <h1>{{ assessment.entity.name or "Unnamed organisation" }}</h1>
-  <p class="muted" style="margin-bottom: 14pt;">A self-assessment against Articles 20, 21 and 23 of Directive (EU) 2022/2555.</p>
+  <p class="muted" style="margin-bottom: 14pt;">A self-assessment against {{ cover_line }}.</p>
 
   <table class="control">
     <tbody>
@@ -124,7 +124,7 @@
   <table class="headline">
     <tbody><tr>
       <td class="figure">{{ "%.0f" | format(result.score_pct or 0) }}<sup>%</sup></td>
-      <td class="lede">of the NIS2 measures are in place. {{ result.verified_pct | pct }} can be shown with evidence today.</td>
+      <td class="lede">of the {{ measures }} are in place. {{ result.verified_pct | pct }} can be shown with evidence today.</td>
     </tr></tbody>
   </table>
   <table class="facts">
@@ -148,12 +148,16 @@
   {% if result.applicability.notes %}
   <div class="note">{% for n in result.applicability.notes %}{{ n }}{% if not loop.last %}<br>{% endif %}{% endfor %}</div>
   {% endif %}
+  {% if show_lex %}
+  <div class="note">{{ dora_scope_note }}</div>
+  <div class="note">{{ lex_specialis }}</div>
+  {% endif %}
 
   <h2>3. Compliance overview</h2>
-  <h3>3.1 Status by NIS2 requirement</h3>
+  <h3>3.1 Status by requirement</h3>
   <table>
     <thead><tr>
-      <th class="c">RAG</th><th>Ref</th><th>Requirement</th><th class="nowrap">NIS2 ref.</th>
+      <th class="c">RAG</th><th>Ref</th><th>Requirement</th><th class="nowrap">Article</th>
       <th class="c">Met</th><th style="width: 22%;">Coverage</th><th class="num">Score</th><th class="num">Evidenced</th>
     </tr></thead>
     <tbody>
@@ -224,7 +228,7 @@
     {% for f in top_gaps %}
       <tr>
         <td>{{ loop.index }}</td>
-        <td class="nowrap"><strong>{{ f.question.id }}</strong><br><span class="small muted">{{ result.domains | selectattr("domain.id", "equalto", f.question.domain_id) | map(attribute="domain.article") | first }}</span></td>
+        <td class="nowrap"><strong>{{ f.question.id }}</strong><br><span class="small muted">{{ f.question.article or (result.domains | selectattr("domain.id", "equalto", f.question.domain_id) | map(attribute="domain.article") | first) }}</span></td>
         <td>{{ f.question.text }}</td>
         <td class="nowrap"><span class="rag rag-{{ finding_rag(f) }}"></span>{{ priority_label[f.question.priority] }}</td>
         <td class="nowrap">{{ status_label[f.status] }}</td>
@@ -268,7 +272,7 @@
       <tbody>
       {% for f in d.findings %}
         <tr>
-          <td class="nowrap">{{ f.question.id }}</td>
+          <td class="nowrap">{{ f.question.id }}{% if f.question.article %}<br><span class="small muted">{{ f.question.article }}</span>{% endif %}</td>
           <td>{{ f.question.text }}</td>
           <td class="nowrap">{{ priority_label[f.question.priority] }}</td>
           <td class="nowrap"><span class="rag rag-{{ finding_rag(f) }}"></span>{{ status_label[f.status] }}</td>
@@ -281,7 +285,7 @@
     {% endfor %}
 
     <h2>Appendix B. Methodology</h2>
-    <p>Each NIS2 requirement is broken down into practical controls, and each control is given a regulatory priority: critical (weight 3), high (weight 2) or medium (weight 1). {% if threat %}This baseline is then raised by up to 50% for controls that counter threats common in recent incident data: the uplift is proportional to the combined prevalence of the threat patterns the control counters, relative to the most exposed control. Threat data can raise a weight but never lower it below the regulatory baseline, because every control is a legal requirement. Sources and links are listed in Appendix C. {% endif %}Answers are scored as met = 1, partially met = 0.5, not met = 0 and not assessed = 0. Controls marked not applicable are excluded.</p>
+    <p>Each requirement is broken down into practical controls, and each control is given a regulatory priority: critical (weight 3), high (weight 2) or medium (weight 1). {% if threat %}This baseline is then raised by up to 50% for controls that counter threats common in recent incident data: the uplift is proportional to the combined prevalence of the threat patterns the control counters, relative to the most exposed control. Threat data can raise a weight but never lower it below the regulatory baseline, because every control is a legal requirement. Sources and links are listed in Appendix C. {% endif %}Answers are scored as met = 1, partially met = 0.5, not met = 0 and not assessed = 0. Controls marked not applicable are excluded.</p>
     <p>The overall and per-requirement scores are weighted averages of the applicable controls. The evidence-backed score applies the same calculation but counts a control only when every evidence item recorded for it exists. Open items are ranked by control weight multiplied by missing coverage, so an unaddressed critical control ranks above a partially met medium one.</p>
     <p>Effort is an estimate (low, medium, high) of the work needed for an SME to implement the control. Risk reduction per unit of effort divides the risk reduction by 1, 2 or 3 respectively and drives the impact vs effort matrix.</p>
     <p>Maturity bands: strong (90% and above), substantial (70 to 89%), partial (40 to 69%), low (below 40%).</p>

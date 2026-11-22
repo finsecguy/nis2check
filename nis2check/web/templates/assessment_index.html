@@ -2,10 +2,11 @@
 {% block title %}Assessment{% endblock %}
 {% block content %}
 <div class="page-head">
-  <div><h1>Assessment</h1><div class="sub">Forty questions across the twelve NIS2 requirements. Each answer is saved on its own, so you can stop at any point and pick up later.</div></div>
+  <div><h1>Assessment</h1><div class="sub">{{ result.findings | length }} questions in {{ framework_label }}, grouped into {{ result.domains | length }} areas. Each answer is saved on its own, so you can stop at any point and pick up later.</div></div>
 </div>
+{% if 'dora' in framework_ids %}<div class="note">{{ lex_specialis }}</div>{% endif %}
 <table>
-  <thead><tr><th>Requirement</th><th class="nowrap">NIS2</th><th>Answered</th><th style="width: 20%;"></th><th class="num">Score</th><th class="num">Need evidence</th></tr></thead>
+  <thead><tr><th>Requirement</th><th class="nowrap">Article</th><th>Answered</th><th style="width: 20%;"></th><th class="num">Score</th><th class="num">Need evidence</th></tr></thead>
   <tbody>
   {% for d in result.domains %}
     {% set dc = d.counts %}

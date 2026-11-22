@@ -1,0 +1,259 @@
+# DORA question set for an indicative gap assessment.
+#
+# Source: Regulation (EU) 2022/2554 (DORA), the five pillars in Articles 5-16,
+# 17-23, 24-27, 28-44 and 45. Question text is original. Article numbers say
+# which duty the question is about; they are not a copy of the regulation.
+#
+# The same fields as nis2check/data/controls.yaml apply. `article` on a
+# question is the specific provision; the domain article is the pillar range.
+# `framework` keeps these questions out of a NIS2-only assessment.
+
+version: "1.0"
+source: "Regulation (EU) 2022/2554 (DORA)"
+framework: dora
+
+domains:
+  - id: DIRM
+    article: "Art. 5-16"
+    title: "ICT risk management"
+    summary: >
+      The management body owns ICT risk. The entity documents a framework
+      that identifies the systems supporting critical functions, protects and
+      monitors them, and can respond, recover and learn.
+    questions:
+      - id: DIRM-01
+        article: "Art. 5"
+        text: "Has the management body approved the ICT risk management framework and named who is accountable for it?"
+        priority: critical
+        effort: low
+        evidence_hint: "Management minutes and the named accountable role"
+        remediation: "Record management approval of the ICT risk framework and name the accountable role."
+      - id: DIRM-02
+        article: "Art. 5"
+        text: "Does the management body receive ICT risk reports, and have its members been trained to understand them?"
+        priority: high
+        effort: low
+        attack_mitigations: [M1017]
+        evidence_hint: "Training records and a recent ICT risk report to management"
+        remediation: "Give the management body ICT risk training and a recurring risk report."
+      - id: DIRM-03
+        article: "Art. 6"
+        text: "Is the ICT risk management framework documented, reviewed, and covering identification through to recovery?"
+        priority: critical
+        effort: medium
+        evidence_hint: "ICT risk framework with a review date"
+        remediation: "Write the framework so it covers identification, protection, detection, response and recovery, and set a review cycle."
+      - id: DIRM-04
+        article: "Art. 7-8"
+        text: "Are the ICT systems, protocols and tools that support critical or important functions identified, with an owner and the dependencies of each?"
+        priority: high
+        effort: medium
+        evidence_hint: "Inventory of systems, tools and dependencies, with owners"
+        remediation: "Keep an inventory of the systems and tools that support critical functions, including what each one depends on."
+      - id: DIRM-05
+        article: "Art. 9-10"
+        text: "Are the systems that support critical functions protected against common attacks and monitored so that anomalous activity is detected?"
+        priority: high
+        effort: high
+        attack_mitigations: [M1047, M1049]
+        evidence_hint: "Protection standard and monitoring or alert records"
+        remediation: "Apply a protection baseline and monitoring on the systems that support critical functions."
+      - id: DIRM-06
+        article: "Art. 11-12"
+        text: "Are response and recovery procedures in place, including backups of critical data and a tested restore?"
+        priority: critical
+        effort: medium
+        attack_mitigations: [M1053]
+        evidence_hint: "Response and recovery procedure, backup report, restore test record"
+        remediation: "Document response and recovery, keep protected backups of critical data, and test a restore."
+      - id: DIRM-07
+        article: "Art. 13"
+        text: "Are lessons from ICT incidents and from tests used to update the risk framework?"
+        priority: medium
+        effort: low
+        evidence_hint: "Lessons log and a framework change that followed one"
+        remediation: "After a significant incident or test, record what will change in the framework and make the change."
+      - id: DIRM-08
+        article: "Art. 14"
+        text: "Is there a plan for who is told, inside and outside the entity, during a major ICT disruption?"
+        priority: medium
+        effort: medium
+        attack_mitigations: [M1060]
+        evidence_hint: "Communication plan and an out-of-band contact list"
+        remediation: "Write who communicates during a major disruption, including a channel that still works if the usual tools are down."
+      - id: DIRM-09
+        article: "Art. 15-16"
+        text: "Is it recorded whether the full ICT risk framework or the simplified framework applies, and which detailed rules follow from that choice?"
+        priority: medium
+        effort: low
+        evidence_hint: "A short note of the framework applied and the rules that go with it"
+        remediation: "Record which framework you apply and the detailed rules that come with it, and review the choice when the entity changes."
+
+  - id: DIIM
+    article: "Art. 17-23"
+    title: "ICT incident management and reporting"
+    summary: >
+      ICT incidents are detected, classified and handled. Major incidents
+      are reported to the competent authority, and feedback from that
+      authority is tracked.
+    questions:
+      - id: DIIM-01
+        article: "Art. 17"
+        text: "Is there an ICT incident process with roles, a log, and the steps from detection through to recovery?"
+        priority: critical
+        effort: medium
+        evidence_hint: "Incident process and an incident log"
+        remediation: "Adopt an incident process with named roles, a log, and the steps from detection to recovery."
+      - id: DIIM-02
+        article: "Art. 18"
+        text: "Are ICT incidents and cyber threats classified, including what makes an incident a major ICT-related incident?"
+        priority: high
+        effort: low
+        evidence_hint: "Classification criteria, including the major-incident threshold"
+        remediation: "Write classification criteria and the threshold at which an incident is major."
+      - id: DIIM-03
+        article: "Art. 19"
+        text: "Is there a procedure to send the initial, intermediate and final reports of a major ICT-related incident to the competent authority on time?"
+        priority: critical
+        effort: low
+        evidence_hint: "Reporting procedure, authority contact and report templates"
+        remediation: "Name who reports, to which authority, and how the initial, intermediate and final reports are produced on time."
+      - id: DIIM-04
+        article: "Art. 19-20"
+        text: "Do major-incident reports follow the content the authority expects, and can a significant cyber threat be notified on a voluntary basis?"
+        priority: medium
+        effort: low
+        evidence_hint: "Report template mapped to the expected content, and a note on voluntary threat notification"
+        remediation: "Align the report templates with the expected content, and record how a significant cyber threat can be notified voluntarily."
+      - id: DIIM-05
+        article: "Art. 21-22"
+        text: "Is it clear which authority receives major-incident reports, and is feedback from that authority tracked until it is acted on?"
+        priority: medium
+        effort: low
+        evidence_hint: "Authority contact and a log of feedback and the response to it"
+        remediation: "Record the authority that receives reports, including where reporting is centralised, and log supervisory feedback until it is closed."
+      - id: DIIM-06
+        article: "Art. 23"
+        text: "Where the entity provides payment services, can an operational or security payment incident be reported to the competent authority?"
+        priority: high
+        effort: medium
+        evidence_hint: "Payment-incident reporting procedure, or a note that payment services are not provided"
+        remediation: "Add a path for payment-related operational or security incidents, or mark this not applicable if you do not provide those services."
+
+  - id: DDOT
+    article: "Art. 24-27"
+    title: "Digital operational resilience testing"
+    summary: >
+      The entity tests the ICT systems that support critical functions, in
+      proportion to its size and risk, and uses testers who are independent
+      of the teams they test.
+    questions:
+      - id: DDOT-01
+        article: "Art. 24"
+        text: "Is there a digital operational resilience testing programme proportionate to the entity's size, risk and the criticality of its functions?"
+        priority: critical
+        effort: medium
+        evidence_hint: "Testing programme with scope and frequency"
+        remediation: "Write a testing programme that says what is tested, how often, and why that matches your risk."
+      - id: DDOT-02
+        article: "Art. 25"
+        text: "Have the ICT tools and systems that support critical functions been tested in the last year, for example with vulnerability assessments or scenario tests?"
+        priority: high
+        effort: medium
+        attack_mitigations: [M1016]
+        evidence_hint: "Test reports from the last 12 months"
+        remediation: "Run and record at least an annual test of the systems that support critical functions."
+      - id: DDOT-03
+        article: "Art. 26"
+        text: "Where threat-led penetration testing applies, is a test planned or completed on the required cycle, with the scope agreed beforehand?"
+        priority: high
+        effort: high
+        evidence_hint: "Threat-led test plan or report and the agreed scope, or a note that it does not apply"
+        remediation: "Confirm whether threat-led penetration testing applies. If it does, agree the scope and schedule the test; if it does not, mark this not applicable."
+      - id: DDOT-04
+        article: "Art. 27"
+        text: "Are external testers independent of the teams whose systems they test, and are findings fixed and then retested?"
+        priority: medium
+        effort: medium
+        evidence_hint: "Tester independence record and retest evidence"
+        remediation: "Use testers who are independent of the system owner, and track each finding through to a retest."
+
+  - id: DTPR
+    article: "Art. 28-44"
+    title: "ICT third-party risk"
+    summary: >
+      ICT providers sit under a strategy, a register, a concentration check,
+      contract clauses and an exit plan. Where a provider is designated as
+      critical, the entity can answer the authority and follow the findings
+      that affect it.
+    questions:
+      - id: DTPR-01
+        article: "Art. 28"
+        text: "Is there a strategy for ICT third-party risk that states which functions may be supported by a provider?"
+        priority: critical
+        effort: medium
+        threat_patterns: [supply_chain]
+        evidence_hint: "ICT third-party risk strategy"
+        remediation: "Write the strategy, including which critical or important functions may rely on an ICT provider."
+      - id: DTPR-02
+        article: "Art. 28"
+        text: "Is the register of ICT contractual arrangements complete, including the function and data each arrangement supports?"
+        priority: critical
+        effort: low
+        threat_patterns: [supply_chain]
+        evidence_hint: "Register of ICT contractual arrangements"
+        remediation: "Keep a register of every ICT arrangement, with the function and the data it supports."
+      - id: DTPR-03
+        article: "Art. 28-29"
+        text: "Before a new ICT arrangement, is concentration risk assessed, including how hard that provider would be to replace?"
+        priority: high
+        effort: medium
+        threat_patterns: [supply_chain]
+        evidence_hint: "Concentration and substitutability assessment for a recent arrangement"
+        remediation: "Assess concentration and how easily the provider could be replaced before you sign, and keep the record."
+      - id: DTPR-04
+        article: "Art. 30"
+        text: "Do ICT contracts include the clauses you require for audit access, exit, service locations, incident help and subcontracting?"
+        priority: high
+        effort: medium
+        threat_patterns: [supply_chain]
+        evidence_hint: "Contract checklist and a signed contract checked against it"
+        remediation: "Check ICT contracts against those clauses and record any approved exception."
+      - id: DTPR-05
+        article: "Art. 28"
+        text: "Is there an exit plan for each ICT provider that supports a critical or important function, and has it been reviewed?"
+        priority: high
+        effort: medium
+        threat_patterns: [supply_chain]
+        evidence_hint: "Exit plans with a review date"
+        remediation: "Write an exit plan for each provider that supports a critical or important function, and review it when the service changes."
+      - id: DTPR-06
+        article: "Art. 31-44"
+        text: "Where a provider is designated as critical, can the entity provide what the authority asks for and follow the oversight findings that affect it?"
+        priority: medium
+        effort: low
+        evidence_hint: "List of designated providers, or a note that none are designated, and a log of findings"
+        remediation: "Know which providers are designated as critical, keep the information the authority may request, and track oversight findings. Mark this not applicable if none of your providers is designated."
+
+  - id: DISH
+    article: "Art. 45"
+    title: "Information sharing"
+    summary: >
+      The entity decides whether to exchange cyber threat information with
+      others, and writes down the conditions before anything is shared.
+    questions:
+      - id: DISH-01
+        article: "Art. 45"
+        text: "Has the entity decided whether to join an arrangement for sharing cyber threat information, and is that decision recorded?"
+        priority: medium
+        effort: low
+        attack_mitigations: [M1019]
+        evidence_hint: "Recorded decision, and the arrangement name if you joined one"
+        remediation: "Decide whether to take part in a threat-information arrangement and record the decision."
+      - id: DISH-02
+        article: "Art. 45"
+        text: "Where threat information is shared, are the conditions written down, covering what may be shared, with whom, and how personal data is protected?"
+        priority: medium
+        effort: low
+        evidence_hint: "Written sharing conditions, or a note that nothing is shared"
+        remediation: "Write the sharing conditions before any information is exchanged. Mark this not applicable if you do not share."
