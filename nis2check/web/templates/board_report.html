@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}Board report{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <h1>Board report</h1>
+    <div class="sub">One page for the management body: the score, the five largest gaps, and the move since the previous assessment.</div>
+  </div>
+  <div class="actions" style="margin: 0;">
+    <a class="btn" href="{{ url_for('board.download') }}">Download one-page PDF</a>
+  </div>
+</div>
+
+<div class="headline">
+  <div class="figure">{{ "%.0f" | format(report.score or 0) if report.score is not none else "n/a" }}{% if report.score is not none %}<sup>%</sup>{% endif %}</div>
+  <div>
+    <p class="lede">{{ report.org_name }}. {{ report.trend }}</p>
+    <p class="muted">Evidence-backed score {{ "%.0f" | format(report.verified) if report.verified is not none else "n/a" }}{% if report.verified is not none %}%{% endif %}.</p>
+  </div>
+</div>
+
+<h2>Score by area</h2>
+<table>
+  <thead><tr><th>Area</th><th>Article</th><th class="num">Score</th></tr></thead>
+  <tbody>
+  {% for area in report.areas %}
+    <tr>
+      <td>{{ area.title }}</td>
+      <td class="nowrap">{{ area.article }}</td>
+      <td class="num">{{ area.score | pct }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+<h2>Top gaps</h2>
+{% if report.gaps %}
+<form method="post" action="{{ url_for('board.save_gaps') }}">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <table>
+    <thead><tr><th>Gap</th><th>Owner</th><th>Due</th></tr></thead>
+    <tbody>
+    {% for gap in report.gaps %}
+      <tr>
+        <td><strong>{{ gap.ref }}</strong> {{ gap.text }}
+          <input type="hidden" name="question_id" value="{{ gap.ref }}">
+        </td>
+        <td><input type="text" name="owner_{{ gap.ref }}" value="{{ gap.owner }}" maxlength="255" {{ 'disabled' if not editable }} aria-label="Owner for {{ gap.ref }}"></td>
+        <td><input type="date" name="due_{{ gap.ref }}" value="{{ gap.due.isoformat() if gap.due else '' }}" {{ 'disabled' if not editable }} aria-label="Due date for {{ gap.ref }}"></td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {% if editable %}
+    <div class="actions"><button class="btn" type="submit">Save owners</button></div>
+  {% else %}
+    <p class="small muted">You can read this page. An assessor can set the owner and the due date.</p>
+  {% endif %}
+</form>
+{% else %}
+<p class="muted">No open gaps.</p>
+{% endif %}
+
+<h2>Management accountability</h2>
+<div class="note">{{ accountability }}</div>
+{% endblock %}
