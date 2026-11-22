@@ -125,3 +125,47 @@ def test_signed_in_nav_links_to_scope(app):
     client = app.test_client()
     _setup(client)
     assert b"Scope" in client.get("/").data
+
+
+@pytest.mark.parametrize(
+    "payload, label",
+    [
+        ({"subsector_id": "dns", "employees": "80"}, "Essential entity"),
+        ({"subsector_id": "electricity", "employees": "300"}, "Essential entity"),
+        ({"subsector_id": "food_business", "employees": "1000"}, "Important entity"),
+        ({"subsector_id": "healthcare_providers", "employees": "12"}, "Out of scope"),
+        ({"subsector_id": "public_communications_networks", "employees": "80"}, "Essential entity"),
+        ({"subsector_id": "trust_services", "employees": "4"}, "Important entity"),
+    ],
+)
+def test_organisation_page_agrees_with_the_wizard(app, payload, label):
+    client = app.test_client()
+    _setup(client)
+    wizard = client.post("/scope", data=payload).data.decode()
+    assert label in wizard
+    started = client.post("/scope/apply", follow_redirects=True)
+    assert started.status_code == 200
+    assert b"shorter" not in started.data
+    organisation = client.get("/organisation").data.decode()
+    assert label in organisation
+    assert label in client.get("/scope").data.decode()
+    assert "shorter size-cap" not in organisation
+
+
+def test_organisation_form_uses_the_wizard_rules(app):
+    client = app.test_client()
+    _setup(client)
+    saved = client.post("/organisation", data={"name": "Acme", "subsector_id": "dns", "employees": "80"})
+    assert saved.status_code == 302
+    organisation = client.get("/organisation").data.decode()
+    wizard = client.post("/scope", data={"subsector_id": "dns", "employees": "80"}).data.decode()
+    assert "Essential entity" in organisation
+    assert "Essential entity" in wizard
+    org = organisation_db(app)
+    assert org.subsector_id == "dns"
+    assert org.sector == "digital_infrastructure"
+
+
+def organisation_db(app):
+    from nis2check.web.services import organisation
+    return organisation(app.extensions["nis2_db"]())

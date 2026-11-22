@@ -67,7 +67,15 @@ class Organisation(Base):
     annual_turnover_eur: Mapped[float | None] = mapped_column(Float, nullable=True)
     balance_sheet_eur: Mapped[float | None] = mapped_column(Float, nullable=True)
     size_exempt: Mapped[bool] = mapped_column(Boolean, default=False)
+    # The scope wizard's subsector and ticked cases. The organisation page
+    # re-runs that same check from these, rather than the coarse sector alone.
+    subsector_id: Mapped[str | None] = mapped_column(String(64), nullable=True)
+    special_cases: Mapped[str] = mapped_column(Text, default="")
     updated_at: Mapped[dt.datetime] = mapped_column(DateTime, default=utcnow, onupdate=utcnow)
+
+    @property
+    def special_case_ids(self) -> list[str]:
+        return [part for part in (self.special_cases or "").split(",") if part]
 
 
 class Response(Base):

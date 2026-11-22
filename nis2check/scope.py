@@ -518,3 +518,38 @@ def assess_scope(
         source=rules.source,
         recommendation=rules.recommendation,
     )
+
+
+def implied_subsector(rules: ScopeRules, sector: str | None) -> str | None:
+    """A coarse sector from an older record, when every subsector is the size-cap.
+
+    Digital infrastructure and public administration are not guessed: their
+    subsectors are classified differently (a DNS provider is essential at any
+    size; a cloud provider is not).
+    """
+    if not sector:
+        return None
+    matches = [item for item in rules.sectors if item.organisation_sector == sector]
+    if len(matches) != 1:
+        return None
+    chosen = matches[0]
+    if any(sub.special_case for sub in chosen.subsectors):
+        return None
+    return chosen.subsectors[0].id
+
+
+def scope_for_organisation(
+    subsector_id: str | None,
+    employees: int | None,
+    annual_turnover_eur: float | None,
+    balance_sheet_eur: float | None,
+    special_case_ids: list[str] | None,
+    sector: str | None = None,
+    rules: ScopeRules | None = None,
+) -> ScopeResult:
+    """The organisation page's result. Same engine as the wizard."""
+    rules = rules or cached_scope_rules()
+    chosen = subsector_id or implied_subsector(rules, sector)
+    return assess_scope(
+        chosen, employees, annual_turnover_eur, balance_sheet_eur, special_case_ids, rules,
+    )

@@ -7,7 +7,9 @@ The titles and ceilings are checked against Directive (EU) 2022/2555
 
 import pytest
 
-from nis2check.scope import assess_scope, cached_scope_rules, enterprise_size, load_scope_rules
+from nis2check.scope import (
+    assess_scope, cached_scope_rules, enterprise_size, load_scope_rules, scope_for_organisation,
+)
 
 # Annex headings, in the order printed in the directive.
 ANNEX_I = [
@@ -222,6 +224,17 @@ def test_domain_registration_is_important_at_any_size():
 def test_domain_registration_does_not_hide_a_large_annex_i_activity():
     result = assess_scope("electricity", employees=300, special_case_ids=["domain_registration"])
     assert result.outcome == "essential"
+
+
+def test_organisation_record_uses_the_wizard_engine():
+    rules = cached_scope_rules()
+    medium_dns = scope_for_organisation("dns", 80, None, None, [], rules=rules)
+    assert medium_dns.outcome == assess_scope("dns", employees=80, rules=rules).outcome == "essential"
+    large_energy = scope_for_organisation(None, 300, None, None, [], sector="energy", rules=rules)
+    assert large_energy.outcome == assess_scope("electricity", employees=300, rules=rules).outcome == "essential"
+    # A coarse "digital infrastructure" sector is not assumed to be a DNS provider.
+    plain = scope_for_organisation(None, 80, None, None, [], sector="digital_infrastructure", rules=rules)
+    assert plain.outcome == assess_scope(employees=80, rules=rules).outcome == "out_of_scope"
 
 
 def test_banking_mentions_dora():

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Organisation{% endblock %}
 {% block content %}
-<div class="page-head"><div><h1>Organisation</h1><div class="sub">These details decide whether NIS2 likely applies to you, and appear on the report cover.</div></div></div>
+<div class="page-head"><div><h1>Organisation</h1><div class="sub">These details decide whether NIS2 likely applies to you, and appear on the report cover. The result uses the same rules as the scope wizard.</div></div></div>
 
 <div class="grid2">
 <div>
@@ -10,13 +10,16 @@
     {% set ro = not current_user.can('admin') %}
     <label for="name">Organisation name</label>
     <input type="text" id="name" name="name" value="{{ org.name }}" {{ 'disabled' if ro }}>
-    <label for="sector">Sector</label>
-    <select id="sector" name="sector" {{ 'disabled' if ro }}>
-      <option value="">Select a sector</option>
-      {% for key, label in sectors.items() | sort(attribute="1") %}
-        <option value="{{ key }}" {{ 'selected' if org.sector == key }}>{{ label }}</option>
+    <label for="subsector_id">Sector and subsector</label>
+    <select id="subsector_id" name="subsector_id" {{ 'disabled' if ro }}>
+      <option value="">Not listed in Annex I or Annex II</option>
+      {% for sector in rules.sectors %}
+        <optgroup label="Annex {{ sector.annex }}: {{ sector.title }}">
+          {% for sub in sector.subsectors %}
+            <option value="{{ sub.id }}" {{ 'selected' if selected_subsector == sub.id }}>{{ sub.title }}</option>
+          {% endfor %}
+        </optgroup>
       {% endfor %}
-      <option value="other" {{ 'selected' if org.sector == 'other' }}>Other (not listed in NIS2 Annex I or II)</option>
     </select>
     <div class="row">
       <div><label for="employees">Employees</label>
@@ -26,8 +29,11 @@
       <div><label for="b">Balance sheet total (EUR)</label>
         <input type="number" min="0" step="any" id="b" name="balance_sheet_eur" value="{{ '%.0f' % org.balance_sheet_eur if org.balance_sheet_eur is not none }}" {{ 'disabled' if ro }}></div>
     </div>
-    <label class="check"><input type="checkbox" name="size_exempt" {{ 'checked' if org.size_exempt }} {{ 'disabled' if ro }}>
-      We are a DNS provider, TLD registry or trust service provider (in scope regardless of size)</label>
+    <h2>In scope regardless of size</h2>
+    {% for case in rules.special_cases %}
+      <label class="check"><input type="checkbox" name="special" value="{{ case.id }}" {{ 'checked' if case.id in org.special_case_ids }} {{ 'disabled' if ro }}>
+        {{ case.label }}</label>
+    {% endfor %}
     {% if not ro %}<div class="actions"><button class="btn" type="submit">Save</button></div>
     {% else %}<p class="small muted">Only administrators can change these details.</p>{% endif %}
   </form>
@@ -36,11 +42,16 @@
   <h2 style="margin-top: 0;">Does NIS2 apply?</h2>
   <table class="kv">
     <tr><th>Outcome</th><td><strong>{{ scope.label }}</strong></td></tr>
-    <tr><th>Enterprise size</th><td>{{ scope.size | capitalize }}</td></tr>
+    <tr><th>Enterprise size</th><td>{{ scope.size_label }}</td></tr>
     <tr><th>NIS2 annex</th><td>{{ "Annex " ~ scope.annex if scope.annex else "Not listed" }}</td></tr>
+    {% if scope.sector_title %}
+      <tr><th>Sector</th><td>{{ scope.sector_title }}</td></tr>
+      <tr><th>Subsector</th><td>{{ scope.subsector_title }}</td></tr>
+    {% endif %}
   </table>
-  {% for n in scope.notes %}<div class="note">{{ n }}</div>{% endfor %}
-  <p class="small muted">Based on the size-cap rule and the sectors in NIS2 Annexes I and II. National law and designations by the competent authority can change the outcome.</p>
+  {% for reason in scope.reasons %}<div class="note">{{ reason.text }}</div>{% endfor %}
+  {% for note in scope.size_notes %}<p class="small muted">{{ note }}</p>{% endfor %}
+  <p class="small muted">{{ scope.disclaimer }}</p>
 </div>
 </div>
 {% endblock %}

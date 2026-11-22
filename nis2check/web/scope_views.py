@@ -140,17 +140,14 @@ def apply_result():
     values = _restore_values(stored)
     db = current_app.extensions["nis2_db"]()
     org = organisation(db)
-    if result.organisation_sector:
-        org.sector = result.organisation_sector
+    org.subsector_id = stored.get("subsector_id") or None
+    org.special_cases = ",".join(stored.get("special") or [])
+    org.sector = result.organisation_sector
     org.employees = values["employees_value"]
     org.annual_turnover_eur = values["turnover_value"]
     org.balance_sheet_eur = values["balance_value"]
     org.size_exempt = result.size_exempt
     audit(db, "organisation.updated", org.name or result.sector_title, f"scope wizard: {result.outcome}")
     db.commit()
-    flash(
-        f"Assessment started from the scope wizard ({result.label.lower()}). "
-        "The organisation page keeps the shorter size-cap check; the full reasoning stays on the scope page.",
-        "ok",
-    )
+    flash(f"Assessment started from the scope wizard ({result.label.lower()}).", "ok")
     return redirect(url_for("main.assessment_index"))
