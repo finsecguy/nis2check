@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Incidents{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <h1>Incident reporting</h1>
+    <div class="sub">Article 23(4): an early warning within 24 hours of becoming aware, an incident notification within 72 hours, and a final report within one month of that notification. Times are stored in UTC and shown in your local time.</div>
+  </div>
+</div>
+<div class="note">{{ disclaimer }}</div>
+
+{% if current_user.can('edit') %}
+<h2>Record an incident</h2>
+<form method="post" action="{{ url_for('incidents.create') }}">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <input type="hidden" name="client_tz" value="">
+  <input type="hidden" name="time_is_utc" value="1">
+  <label for="title">Name</label>
+  <input type="text" id="title" name="title" required maxlength="255">
+  <label for="detected_at">When you became aware</label>
+  <input type="datetime-local" id="detected_at" name="detected_at" required>
+  <p class="small muted">Art. 23(4) starts the clock when you become aware of a significant incident, not when it began. With JavaScript on, this field is your local time.</p>
+  <label for="summary">Short description (optional)</label>
+  <textarea id="summary" name="summary"></textarea>
+  <div class="actions"><button class="btn" type="submit">Start the clocks</button></div>
+</form>
+{% endif %}
+
+<h2>Open incidents</h2>
+{% if items %}
+<table>
+  <thead><tr><th>Incident</th><th>Became aware</th><th>24 hours</th><th>72 hours</th><th>Final report</th></tr></thead>
+  <tbody>
+  {% for item in items %}
+    {% set incident = item.incident %}
+    <tr>
+      <td><a href="{{ url_for('incidents.detail', iid=incident.id) }}">{{ incident.title }}</a></td>
+      <td class="nowrap"><time data-utc="{{ incident.detected_at.strftime('%Y-%m-%dT%H:%M:%SZ') }}">{{ incident.detected_at.strftime('%Y-%m-%d %H:%M') }} UTC</time></td>
+      {% for clock in item.clocks %}
+        <td class="nowrap">{{ clock.status_label }}{% if clock.provisional %} <span class="muted">(provisional)</span>{% endif %}</td>
+      {% endfor %}
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p class="muted">No incidents recorded.</p>
+{% endif %}
+<script src="{{ url_for('static', filename='incident.js') }}" defer></script>
+{% endblock %}

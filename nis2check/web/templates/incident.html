@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+{% block title %}{{ incident.title }}{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <div class="small"><a href="{{ url_for('incidents.index') }}">Incidents</a></div>
+    <h1>{{ incident.title }}</h1>
+    <div class="sub">Became aware <time data-utc="{{ incident.detected_at.strftime('%Y-%m-%dT%H:%M:%SZ') }}">{{ incident.detected_at.strftime('%Y-%m-%d %H:%M') }} UTC</time>. Stored in UTC, shown in your local time.</div>
+  </div>
+</div>
+{% if incident.summary %}<p>{{ incident.summary }}</p>{% endif %}
+<div class="note">{{ disclaimer }} An incident is significant under Art. 23(3) when it has caused or is capable of causing severe operational disruption or financial loss, or considerable material or non-material damage to other people.</div>
+
+<h2>Deadlines</h2>
+<table>
+  <thead><tr><th>Report</th><th>Due</th><th>Status</th><th>Sent</th></tr></thead>
+  <tbody>
+  {% for clock in clocks %}
+    <tr id="clock-{{ clock.key }}">
+      <td>{{ clock.title }} <span class="small muted">{{ clock.article }}</span><div class="small muted">{{ clock.note }}</div></td>
+      <td class="nowrap">{% if clock.due_at %}<time data-utc="{{ clock.due_at.strftime('%Y-%m-%dT%H:%M:%SZ') }}">{{ clock.due_at.strftime('%Y-%m-%d %H:%M') }} UTC</time>{% if clock.provisional %} <span class="muted">(provisional)</span>{% endif %}{% else %}<span class="muted">Not set</span>{% endif %}</td>
+      <td class="nowrap">{{ clock.status_label }}</td>
+      <td class="nowrap">{% if clock.submitted_at %}<time data-utc="{{ clock.submitted_at.strftime('%Y-%m-%dT%H:%M:%SZ') }}">{{ clock.submitted_at.strftime('%Y-%m-%d %H:%M') }} UTC</time>{% else %}<span class="muted">Not yet</span>{% endif %}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+{% macro choice_field(prefix, name, label, current, editable) %}
+  <label for="{{ prefix }}-{{ name }}">{{ label }}</label>
+  <select id="{{ prefix }}-{{ name }}" name="{{ name }}" {{ 'disabled' if not editable }}>
+    <option value="">Not answered</option>
+    <option value="yes" {{ 'selected' if current == 'yes' }}>Yes</option>
+    <option value="no" {{ 'selected' if current == 'no' }}>No</option>
+    <option value="unknown" {{ 'selected' if current == 'unknown' }}>Not yet known</option>
+  </select>
+{% endmacro %}
+
+{% macro sent_field(prefix, editable) %}
+  <label for="{{ prefix }}-sent">When this was sent to the CSIRT or competent authority</label>
+  <input type="datetime-local" id="{{ prefix }}-sent" name="submitted_at" {{ 'disabled' if not editable }}>
+  <p class="small muted">Leave this blank to keep a time you already saved, or to use the current time the first time you save. The final-report month runs from the notification's send time.</p>
+{% endmacro %}
+
+{% macro exports(incident, row) %}
+  {% if row %}
+    <p class="small"><a href="{{ url_for('incidents.export_report', iid=incident.id, rid=row.id, fmt='md') }}">Download Markdown</a>
+      · <a href="{{ url_for('incidents.export_report', iid=incident.id, rid=row.id, fmt='pdf') }}">Download PDF</a></p>
+  {% endif %}
+{% endmacro %}
+
+<section id="early_warning" class="question">
+  <h2>Early warning <span class="small muted">{{ articles.early_warning }}</span></h2>
+  <p class="small muted">Within 24 hours. Indicate whether the incident is suspected of being caused by unlawful or malicious acts, or could have a cross-border impact.</p>
+  {% set row = singles.early_warning %}
+  {{ exports(incident, row) }}
+  {% if editable %}
+  <form method="post" action="{{ url_for('incidents.save_report', iid=incident.id) }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <input type="hidden" name="stage" value="early_warning">
+    <input type="hidden" name="client_tz" value="">
+    <input type="hidden" name="time_is_utc" value="1">
+    {{ choice_field('early', 'suspected_unlawful', 'Suspected unlawful or malicious cause', row.suspected_unlawful if row else '', editable) }}
+    {{ choice_field('early', 'cross_border', 'Could have a cross-border impact', row.cross_border if row else '', editable) }}
+    {{ sent_field('early', editable) }}
+    <div class="actions"><button class="btn" type="submit">Save early warning</button></div>
+  </form>
+  {% endif %}
+</section>
+
+<section id="notification" class="question">
+  <h2>Incident notification <span class="small muted">{{ articles.notification }}</span></h2>
+  <p class="small muted">Within 72 hours. Update the early warning, and give an initial assessment of severity and impact, plus indicators of compromise where you have them.</p>
+  {% set row = singles.notification %}
+  {{ exports(incident, row) }}
+  {% if editable %}
+  <form method="post" action="{{ url_for('incidents.save_report', iid=incident.id) }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <input type="hidden" name="stage" value="notification">
+    <input type="hidden" name="client_tz" value="">
+    <input type="hidden" name="time_is_utc" value="1">
+    {{ choice_field('notify', 'suspected_unlawful', 'Suspected unlawful or malicious cause', row.suspected_unlawful if row else '', editable) }}
+    {{ choice_field('notify', 'cross_border', 'Cross-border impact', row.cross_border if row else '', editable) }}
+    <label for="severity_impact">Initial assessment of severity and impact</label>
+    <textarea id="severity_impact" name="severity_impact">{{ row.severity_impact if row else '' }}</textarea>
+    <label for="indicators">Indicators of compromise</label>
+    <textarea id="indicators" name="indicators">{{ row.indicators if row else '' }}</textarea>
+    {{ sent_field('notify', editable) }}
+    <div class="actions"><button class="btn" type="submit">Save incident notification</button></div>
+  </form>
+  {% endif %}
+</section>
+
+<section id="intermediate" class="question">
+  <h2>Intermediate report <span class="small muted">{{ articles.intermediate }}</span></h2>
+  <p class="small muted">On request of the CSIRT or the competent authority: a status update. There is no fixed clock. You can record more than one.</p>
+  {% if intermediates %}
+    <ul>
+    {% for row in intermediates %}
+      <li>Recorded <time data-utc="{{ row.submitted_at.strftime('%Y-%m-%dT%H:%M:%SZ') }}">{{ row.submitted_at.strftime('%Y-%m-%d %H:%M') }} UTC</time>.
+        {{ exports(incident, row) }}</li>
+    {% endfor %}
+    </ul>
+  {% else %}
+    <p class="small muted">No intermediate report yet.</p>
+  {% endif %}
+  {% if editable %}
+  <form method="post" action="{{ url_for('incidents.save_report', iid=incident.id) }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <input type="hidden" name="stage" value="intermediate">
+    <input type="hidden" name="client_tz" value="">
+    <input type="hidden" name="time_is_utc" value="1">
+    <label for="body">Status update</label>
+    <textarea id="body" name="body"></textarea>
+    {{ sent_field('mid', editable) }}
+    <div class="actions"><button class="btn" type="submit">Add intermediate report</button></div>
+  </form>
+  {% endif %}
+</section>
+
+<section id="final" class="question">
+  <h2>Final report <span class="small muted">{{ articles.final }}</span></h2>
+  <p class="small muted">Not later than one month after the incident notification. Include the description, severity and impact, the likely threat or root cause, the mitigation, and any cross-border impact.</p>
+  {% set row = singles.final %}
+  {{ exports(incident, row) }}
+  {% if editable %}
+  <form method="post" action="{{ url_for('incidents.save_report', iid=incident.id) }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <input type="hidden" name="stage" value="final">
+    <input type="hidden" name="client_tz" value="">
+    <input type="hidden" name="time_is_utc" value="1">
+    <label for="final_severity">Description, including severity and impact</label>
+    <textarea id="final_severity" name="severity_impact">{{ row.severity_impact if row else '' }}</textarea>
+    <label for="root_cause">Type of threat or root cause</label>
+    <textarea id="root_cause" name="root_cause">{{ row.root_cause if row else '' }}</textarea>
+    <label for="mitigation">Applied and ongoing mitigation</label>
+    <textarea id="mitigation" name="mitigation">{{ row.mitigation if row else '' }}</textarea>
+    {{ choice_field('final', 'cross_border', 'Cross-border impact', row.cross_border if row else '', editable) }}
+    <label class="check"><input type="checkbox" name="ongoing" {{ 'checked' if row and row.ongoing }}> The incident is still ongoing, so a progress report is needed</label>
+    {{ sent_field('final', editable) }}
+    <div class="actions"><button class="btn" type="submit">Save final report</button></div>
+  </form>
+  {% endif %}
+</section>
+
+<section id="progress" class="question">
+  <h2>Progress report <span class="small muted">{{ articles.progress }}</span></h2>
+  <p class="small muted">If the incident is still ongoing when the final report is due, send a progress report then, and a further final report within one month of handling the incident.</p>
+  {% set row = singles.progress %}
+  {{ exports(incident, row) }}
+  {% if editable %}
+  <form method="post" action="{{ url_for('incidents.save_report', iid=incident.id) }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <input type="hidden" name="stage" value="progress">
+    <input type="hidden" name="client_tz" value="">
+    <input type="hidden" name="time_is_utc" value="1">
+    <label for="progress_body">Progress</label>
+    <textarea id="progress_body" name="body">{{ row.body if row else '' }}</textarea>
+    <label for="handling_completed_at">Handling completed (leave blank if it has not)</label>
+    <input type="datetime-local" id="handling_completed_at" name="handling_completed_at" {% if row and row.handling_completed_at %}data-utc="{{ row.handling_completed_at.strftime('%Y-%m-%dT%H:%M:%SZ') }}"{% endif %} {{ 'disabled' if not editable }}>
+    {{ sent_field('progress', editable) }}
+    <div class="actions"><button class="btn" type="submit">Save progress report</button></div>
+  </form>
+  {% endif %}
+</section>
+<script src="{{ url_for('static', filename='incident.js') }}" defer></script>
+{% endblock %}
