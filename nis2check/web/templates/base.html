@@ -36,6 +36,7 @@
     <a href="{{ url_for('main.dashboard') }}" class="{{ 'on' if ep == 'main.dashboard' }}">Overview</a>
     <a href="{{ url_for('main.assessment_index') }}" class="{{ 'on' if ep.startswith('main.assessment') }}">Assessment</a>
     <a href="{{ url_for('main.report_page') }}" class="{{ 'on' if ep == 'main.report_page' }}">Report</a>
+    <a href="{{ url_for('board.page') }}" class="{{ 'on' if ep.startswith('board.') }}">Board report</a>
     <a href="{{ url_for('main.organisation_page') }}" class="{{ 'on' if ep == 'main.organisation_page' }}">Organisation</a>
     {% if current_user.can('admin') %}
     <div class="group">Administration</div>

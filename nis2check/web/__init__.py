@@ -42,6 +42,8 @@ def create_app(**overrides) -> Flask:
         from werkzeug.middleware.proxy_fix import ProxyFix
         app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1)
 
+    # Registers the gap-owner table before create_all runs inside make_session.
+    from . import board_models as _board_models  # noqa: F401
     db = make_session(settings.db_url)
     app.extensions["nis2_db"] = db
     app.extensions["nis2_settings"] = settings
@@ -98,6 +100,9 @@ def create_app(**overrides) -> Flask:
         if settings.secure_cookies:
             resp.headers.setdefault("Strict-Transport-Security", "max-age=31536000")
         return resp
+
+    from . import board_views
+    app.register_blueprint(board_views.bp)
 
     from ..report import _pct, rag
     app.jinja_env.filters["pct"] = _pct
