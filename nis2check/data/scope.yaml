@@ -1,0 +1,448 @@
+# Indicative NIS2 scope rules.
+#
+# Verified against the Official Journal text of Directive (EU) 2022/2555
+# (OJ L 333, 27.12.2022, p. 80), Articles 2 and 3 and Annexes I and II, and
+# against Commission Recommendation 2003/361/EC (OJ L 124, 20.5.2003, p. 36),
+# Annex, Article 2.
+#
+# Article 2(1) applies the directive to Annex I and II entities that qualify as
+# medium-sized enterprises under Article 2 of the Recommendation's Annex, or
+# that exceed the ceilings for medium-sized enterprises. Article 2(1), second
+# sentence, disapplies Article 3(4) of that Annex, so ownership by a public
+# body does not by itself take an entity outside the size test.
+#
+# "Above" on a financial ceiling means strictly greater than the figure in the
+# Recommendation. "Not exceeding EUR 10 million" is still at or under the ceiling.
+#
+# This is not legal advice. National transposition and a designation by the
+# competent authority can reach a different result.
+
+version: "1"
+source: "Directive (EU) 2022/2555 (OJ L 333, 27.12.2022, p. 80)"
+recommendation: "Commission Recommendation 2003/361/EC (OJ L 124, 20.5.2003, p. 36)"
+
+disclaimer: >
+  National transposition can differ, and a competent authority can register
+  an entity as essential or important, or leave it outside the size-cap rule.
+  This screen is an indicative reading of the directive and Recommendation
+  2003/361/EC. It is not legal advice.
+
+# Recommendation 2003/361/EC, Annex, Article 2. An entity meets a band when
+# the staff figure is reached OR both financial ceilings are passed.
+size:
+  # Large: 250 or more employees, or turnover above EUR 50 million AND
+  # balance sheet above EUR 43 million. Recommendation, Annex, Art. 2(1):
+  # an SME employs fewer than 250 persons and has turnover not exceeding
+  # EUR 50 million and/or a balance sheet not exceeding EUR 43 million.
+  large:
+    employees_at_least: 250
+    turnover_eur_above: 50000000
+    balance_sheet_eur_above: 43000000
+  # Medium: 50 or more employees, or turnover above EUR 10 million AND
+  # balance sheet above EUR 10 million. Recommendation, Annex, Art. 2(2):
+  # a small enterprise employs fewer than 50 persons and its turnover and/or
+  # balance sheet does not exceed EUR 10 million.
+  medium:
+    employees_at_least: 50
+    turnover_eur_above: 10000000
+    balance_sheet_eur_above: 10000000
+  # Below this, the entity is a microenterprise. Recommendation, Annex,
+  # Art. 2(3): fewer than 10 persons and turnover and/or balance sheet not
+  # exceeding EUR 2 million. Micro and small are both under the NIS2 size-cap.
+  micro:
+    employees_at_least: 10
+    turnover_eur_above: 2000000
+    balance_sheet_eur_above: 2000000
+
+size_notes:
+  - >
+    Headcount in the Recommendation is annual work units, not a raw
+    headcount (Annex, Art. 5). Crossing a ceiling changes the category only
+    after two consecutive accounting periods (Art. 4(2)). Partner and linked
+    enterprises may have to be counted in (Art. 6); Member States can take
+    account of how independent the entity's systems are (NIS2 recital 9).
+  - >
+    NIS2 Art. 2(1) disapplies Art. 3(4) of the Recommendation's Annex, so
+    control by a public body does not by itself decide the size category.
+
+# effect:
+#   essential_any_size       in scope at any size, essential (Art. 3(1))
+#   important_any_size       in scope at any size, important unless a stronger rule applies
+#   important_if_annex       in scope at any size only when the entity is an Annex I or II type
+#   telecom                  in scope at any size; essential only when medium or large
+#   local_public_admin       not in scope unless the Member State extends the directive
+special_cases:
+  - id: dns_provider
+    label: "DNS service provider, other than an operator of a root name server"
+    articles: ["Art. 2(2)(a)(iii)", "Art. 3(1)(b)", "Annex I, point 8"]
+    effect: essential_any_size
+    organisation_sector: digital_infrastructure
+    reason: >
+      DNS service providers are in scope regardless of size and are essential
+      entities. Operators of root name servers are not in this category.
+
+  - id: tld_registry
+    label: "Top-level domain name registry"
+    articles: ["Art. 2(2)(a)(iii)", "Art. 3(1)(b)", "Annex I, point 8"]
+    effect: essential_any_size
+    organisation_sector: digital_infrastructure
+    reason: >
+      Top-level domain name registries are in scope regardless of size and
+      are essential entities.
+
+  - id: qualified_trust
+    label: "Qualified trust service provider"
+    articles: ["Art. 2(2)(a)(ii)", "Art. 3(1)(b)", "Annex I, point 8"]
+    effect: essential_any_size
+    organisation_sector: digital_infrastructure
+    reason: >
+      Qualified trust service providers are in scope regardless of size and
+      are essential entities.
+
+  - id: public_electronic_communications
+    label: "Provider of public electronic communications networks or of publicly available electronic communications services"
+    articles: ["Art. 2(2)(a)(i)", "Art. 3(1)(c)", "Art. 3(2)", "Annex I, point 8"]
+    effect: telecom
+    organisation_sector: digital_infrastructure
+    reason: >
+      Providers of public electronic communications networks or of publicly
+      available electronic communications services are in scope regardless of
+      size. They are essential when they are medium-sized (Art. 3(1)(c)) or
+      large (Art. 3(1)(a), because the activity sits in Annex I). Below the
+      medium ceiling they are important entities (Art. 3(2)).
+
+  - id: sole_provider
+    label: "Sole provider in a Member State of a service essential for critical societal or economic activities"
+    articles: ["Art. 2(2)(b)", "Art. 3(1)(e)", "Art. 3(2)"]
+    effect: important_if_annex
+    reason: >
+      The sole provider in a Member State of a service that is essential for
+      critical societal or economic activities is in scope regardless of size,
+      but only where the entity is of a type listed in Annex I or II. Being
+      the sole provider does not by itself make the entity essential: that
+      needs a Member State identification (Art. 3(1)(e)). Until then it is
+      an important entity (Art. 3(2)).
+
+  - id: public_admin_central
+    label: "Public administration entity of central government"
+    articles: ["Art. 2(2)(f)(i)", "Art. 3(1)(d)", "Annex I, point 10"]
+    effect: essential_any_size
+    organisation_sector: public_administration
+    reason: >
+      A public administration entity of central government, as the Member
+      State defines it, is in scope regardless of size and is an essential
+      entity. What counts as central government is set by national law.
+
+  - id: public_admin_regional
+    label: "Public administration entity at regional level, where disruption could have a significant impact"
+    articles: ["Art. 2(2)(f)(ii)", "Art. 3(2)", "Annex I, point 10"]
+    effect: important_any_size
+    organisation_sector: public_administration
+    reason: >
+      A regional public administration entity is in scope regardless of size
+      where, after a risk-based assessment, disruption of its services could
+      have a significant impact on critical societal or economic activities.
+      Central government is the category Art. 3(1)(d) names as essential, so
+      a regional entity is an important entity unless the Member State
+      identifies it as essential. The Member State defines the regional level.
+
+  - id: public_admin_local
+    label: "Public administration entity at local level"
+    articles: ["Art. 2(5)(a)"]
+    effect: local_public_admin
+    organisation_sector: public_administration
+    reason: >
+      Local public administration is outside the directive unless the Member
+      State decides to apply it. National law decides whether this entity is
+      local, regional or central.
+
+  - id: trust_unqualified
+    label: "Trust service provider that is not a qualified trust service provider"
+    articles: ["Art. 2(2)(a)(ii)", "Art. 3(1)(b)", "Art. 3(2)", "Annex I, point 8"]
+    effect: important_any_size
+    organisation_sector: digital_infrastructure
+    reason: >
+      Trust service providers are in scope regardless of size. Art. 3(1)(b)
+      reserves the automatic essential category for qualified trust service
+      providers, so a provider that is not qualified is an important entity.
+
+  - id: domain_registration
+    label: "Provider of domain name registration services"
+    articles: ["Art. 2(4)", "Art. 3(2)", "Art. 3(3)"]
+    effect: important_any_size
+    organisation_sector: digital_infrastructure
+    reason: >
+      Entities that provide domain name registration services are in scope
+      regardless of size. They are listed separately from top-level domain
+      registries and are not named in Art. 3(1)(b), so they are important
+      entities unless a Member State identifies them as essential.
+
+  - id: critical_entity
+    label: "Identified as a critical entity under Directive (EU) 2022/2557"
+    articles: ["Art. 2(3)", "Art. 3(1)(f)"]
+    effect: essential_any_size
+    reason: >
+      An entity identified as a critical entity under Directive (EU) 2022/2557
+      is in scope regardless of size and is an essential entity.
+
+# Annex I, sectors of high criticality, and Annex II, other critical sectors.
+# organisation_sector is the id the rest of the app already stores.
+# special_case, when set, is implied by choosing that subsector.
+sectors:
+  - id: energy
+    annex: "I"
+    title: "Energy"
+    organisation_sector: energy
+    subsectors:
+      - id: electricity
+        title: "Electricity"
+        detail: "Electricity undertakings that supply, distribution and transmission system operators, producers, nominated electricity market operators, market participants providing aggregation, demand response or energy storage, and operators of recharging points that serve end users."
+      - id: district_heating
+        title: "District heating and cooling"
+        detail: "Operators of district heating or district cooling."
+      - id: oil
+        title: "Oil"
+        detail: "Operators of oil transmission pipelines, of oil production, refining, treatment, storage and transmission, and central stockholding entities."
+      - id: gas
+        title: "Gas"
+        detail: "Gas supply undertakings, distribution and transmission system operators, storage and LNG system operators, natural gas undertakings, and operators of natural gas refining and treatment facilities."
+      - id: hydrogen
+        title: "Hydrogen"
+        detail: "Operators of hydrogen production, storage and transmission."
+
+  - id: transport
+    annex: "I"
+    title: "Transport"
+    organisation_sector: transport
+    subsectors:
+      - id: air
+        title: "Air"
+        detail: "Commercial air carriers, airport managing bodies, airports and entities operating ancillary installations in airports, and air traffic control operators."
+      - id: rail
+        title: "Rail"
+        detail: "Infrastructure managers and railway undertakings, including operators of service facilities."
+      - id: water
+        title: "Water"
+        detail: "Inland, sea and coastal passenger and freight water transport companies (not the individual vessels), managing bodies of ports and entities operating works and equipment in ports, and operators of vessel traffic services."
+      - id: road
+        title: "Road"
+        detail: "Road authorities responsible for traffic management control, excluding public entities for which that activity is non-essential, and operators of Intelligent Transport Systems."
+
+  - id: banking
+    annex: "I"
+    title: "Banking"
+    organisation_sector: banking
+    note: "Credit institutions are also covered by DORA, Regulation (EU) 2022/2554. Where DORA's requirements are at least equivalent, NIS2 Art. 4 sets those NIS2 provisions aside for the entities DORA covers."
+    subsectors:
+      - id: credit_institutions
+        title: "Credit institutions"
+        detail: "Credit institutions as defined in Article 4, point (1), of Regulation (EU) No 575/2013."
+
+  - id: financial_market
+    annex: "I"
+    title: "Financial market infrastructures"
+    organisation_sector: financial_market_infrastructure
+    note: "Operators of trading venues and central counterparties are also covered by DORA, Regulation (EU) 2022/2554. Where DORA's requirements are at least equivalent, NIS2 Art. 4 sets those NIS2 provisions aside for the entities DORA covers."
+    subsectors:
+      - id: trading_venues
+        title: "Operators of trading venues"
+        detail: "Operators of trading venues as defined in Article 4, point (24), of Directive 2014/65/EU."
+      - id: central_counterparties
+        title: "Central counterparties (CCPs)"
+        detail: "Central counterparties as defined in Article 2, point (1), of Regulation (EU) No 648/2012."
+
+  - id: health
+    annex: "I"
+    title: "Health"
+    organisation_sector: health
+    subsectors:
+      - id: healthcare_providers
+        title: "Healthcare providers"
+        detail: "Healthcare providers as defined in Article 3, point (g), of Directive 2011/24/EU."
+      - id: eu_reference_labs
+        title: "EU reference laboratories"
+        detail: "EU reference laboratories referred to in Article 15 of Regulation (EU) 2022/2371."
+      - id: medicines_rd
+        title: "Research and development of medicinal products"
+        detail: "Entities carrying out research and development of medicinal products as defined in Article 1, point (2), of Directive 2001/83/EC."
+      - id: pharmaceutical_manufacturing
+        title: "Manufacture of basic pharmaceutical products and preparations"
+        detail: "Entities manufacturing basic pharmaceutical products and pharmaceutical preparations referred to in section C division 21 of NACE Rev. 2."
+      - id: critical_devices
+        title: "Medical devices critical during a public health emergency"
+        detail: "Entities manufacturing medical devices on the public health emergency critical devices list within the meaning of Article 22 of Regulation (EU) 2022/123."
+
+  - id: drinking_water
+    annex: "I"
+    title: "Drinking water"
+    organisation_sector: drinking_water
+    subsectors:
+      - id: drinking_water_supply
+        title: "Suppliers and distributors of water for human consumption"
+        detail: "Suppliers and distributors of water intended for human consumption, excluding distributors for whom that supply is a non-essential part of distributing other commodities and goods."
+
+  - id: waste_water
+    annex: "I"
+    title: "Waste water"
+    organisation_sector: waste_water
+    subsectors:
+      - id: waste_water_treatment
+        title: "Collection, disposal or treatment of waste water"
+        detail: "Undertakings collecting, disposing of or treating urban, domestic or industrial waste water, excluding undertakings for which that activity is a non-essential part of their general activity."
+
+  - id: digital_infrastructure
+    annex: "I"
+    title: "Digital infrastructure"
+    organisation_sector: digital_infrastructure
+    subsectors:
+      - id: ixp
+        title: "Internet Exchange Point providers"
+        detail: "Internet Exchange Point providers."
+      - id: dns
+        title: "DNS service providers, excluding operators of root name servers"
+        detail: "DNS service providers. Operators of root name servers are excluded."
+        special_case: dns_provider
+      - id: tld
+        title: "TLD name registries"
+        detail: "Top-level domain name registries."
+        special_case: tld_registry
+      - id: cloud
+        title: "Cloud computing service providers"
+        detail: "Cloud computing service providers."
+      - id: data_centre
+        title: "Data centre service providers"
+        detail: "Data centre service providers."
+      - id: cdn
+        title: "Content delivery network providers"
+        detail: "Content delivery network providers."
+      - id: trust_services
+        title: "Trust service providers"
+        detail: "Trust service providers. Qualified trust service providers are essential at any size; tick that case if it applies."
+        special_case: trust_unqualified
+      - id: public_communications_networks
+        title: "Providers of public electronic communications networks"
+        detail: "Providers of public electronic communications networks."
+        special_case: public_electronic_communications
+      - id: public_communications_services
+        title: "Providers of publicly available electronic communications services"
+        detail: "Providers of publicly available electronic communications services."
+        special_case: public_electronic_communications
+
+  - id: ict_service_management
+    annex: "I"
+    title: "ICT service management (business-to-business)"
+    organisation_sector: ict_service_management
+    subsectors:
+      - id: managed_service_providers
+        title: "Managed service providers"
+        detail: "Managed service providers."
+      - id: managed_security_service_providers
+        title: "Managed security service providers"
+        detail: "Managed security service providers."
+
+  - id: public_administration
+    annex: "I"
+    title: "Public administration"
+    organisation_sector: public_administration
+    subsectors:
+      - id: central_government
+        title: "Public administration entities of central government"
+        detail: "Public administration entities of central government as defined by a Member State in accordance with national law."
+        special_case: public_admin_central
+      - id: regional_administration
+        title: "Public administration entities at regional level"
+        detail: "Public administration entities at regional level as defined by a Member State in accordance with national law."
+        special_case: public_admin_regional
+
+  - id: space
+    annex: "I"
+    title: "Space"
+    organisation_sector: space
+    subsectors:
+      - id: ground_infrastructure
+        title: "Operators of ground-based infrastructure supporting space-based services"
+        detail: "Operators of ground-based infrastructure, owned and operated by Member States or private parties, that support space-based services, excluding providers of public electronic communications networks."
+
+  - id: postal
+    annex: "II"
+    title: "Postal and courier services"
+    organisation_sector: postal_courier
+    subsectors:
+      - id: postal_services
+        title: "Postal and courier service providers"
+        detail: "Postal service providers as defined in Article 2, point (1a), of Directive 97/67/EC, including providers of courier services."
+
+  - id: waste_management
+    annex: "II"
+    title: "Waste management"
+    organisation_sector: waste_management
+    subsectors:
+      - id: waste_management_activity
+        title: "Waste management as a principal activity"
+        detail: "Undertakings carrying out waste management, excluding undertakings for whom waste management is not their principal economic activity."
+
+  - id: chemicals
+    annex: "II"
+    title: "Manufacture, production and distribution of chemicals"
+    organisation_sector: chemicals
+    subsectors:
+      - id: chemicals_activity
+        title: "Manufacture and distribution of substances, mixtures or articles"
+        detail: "Undertakings manufacturing or distributing substances or mixtures, and undertakings producing articles from substances or mixtures."
+
+  - id: food
+    annex: "II"
+    title: "Production, processing and distribution of food"
+    organisation_sector: food
+    subsectors:
+      - id: food_business
+        title: "Wholesale distribution and industrial production and processing of food"
+        detail: "Food businesses engaged in wholesale distribution and industrial production and processing."
+
+  - id: manufacturing
+    annex: "II"
+    title: "Manufacturing"
+    organisation_sector: manufacturing
+    subsectors:
+      - id: medical_devices
+        title: "Manufacture of medical devices and in vitro diagnostic medical devices"
+        detail: "Manufacturers of medical devices and in vitro diagnostic medical devices, except entities manufacturing the public-health-emergency critical devices listed in Annex I, point 5."
+      - id: computers_electronics
+        title: "Manufacture of computer, electronic and optical products"
+        detail: "Economic activities in section C division 26 of NACE Rev. 2."
+      - id: electrical_equipment
+        title: "Manufacture of electrical equipment"
+        detail: "Economic activities in section C division 27 of NACE Rev. 2."
+      - id: machinery
+        title: "Manufacture of machinery and equipment n.e.c."
+        detail: "Economic activities in section C division 28 of NACE Rev. 2."
+      - id: motor_vehicles
+        title: "Manufacture of motor vehicles, trailers and semi-trailers"
+        detail: "Economic activities in section C division 29 of NACE Rev. 2."
+      - id: other_transport_equipment
+        title: "Manufacture of other transport equipment"
+        detail: "Economic activities in section C division 30 of NACE Rev. 2."
+
+  - id: digital_providers
+    annex: "II"
+    title: "Digital providers"
+    organisation_sector: digital_providers
+    subsectors:
+      - id: online_marketplaces
+        title: "Providers of online marketplaces"
+        detail: "Providers of online marketplaces."
+      - id: online_search
+        title: "Providers of online search engines"
+        detail: "Providers of online search engines."
+      - id: social_networks
+        title: "Providers of social networking services platforms"
+        detail: "Providers of social networking services platforms."
+
+  - id: research
+    annex: "II"
+    title: "Research"
+    organisation_sector: research
+    subsectors:
+      - id: research_organisations
+        title: "Research organisations"
+        detail: "Research organisations. Education institutions are not in this category; a Member State may choose to apply the directive to them, in particular where they carry out critical research (Art. 2(5)(b))."

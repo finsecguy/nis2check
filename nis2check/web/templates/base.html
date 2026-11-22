@@ -14,7 +14,7 @@
 </head>
 <body>
 <header class="topbar">
-  <a class="brand" href="{{ url_for('main.dashboard') }}">
+  <a class="brand" href="{{ url_for('main.dashboard') if current_user else url_for('scope.wizard') }}">
     <img class="brand-mark" src="{{ url_for('static', filename='logo-mark.svg') }}" alt="" width="26" height="26">
     <span>NIS2 Gap Assessment</span>
   </a>
@@ -27,6 +27,8 @@
       <button class="linkbtn" type="submit">Sign out</button>
     </form>
   </div>
+  {% else %}
+  <div class="who"><a href="{{ url_for('auth.login', next=request.full_path) }}">Sign in</a></div>
   {% endif %}
 </header>
 <div class="shell">
@@ -37,6 +39,7 @@
     <a href="{{ url_for('main.assessment_index') }}" class="{{ 'on' if ep.startswith('main.assessment') }}">Assessment</a>
     <a href="{{ url_for('main.report_page') }}" class="{{ 'on' if ep == 'main.report_page' }}">Report</a>
     <a href="{{ url_for('main.organisation_page') }}" class="{{ 'on' if ep == 'main.organisation_page' }}">Organisation</a>
+    <a href="{{ url_for('scope.wizard') }}" class="{{ 'on' if ep.startswith('scope.') }}">Scope</a>
     {% if current_user.can('admin') %}
     <div class="group">Administration</div>
     <a href="{{ url_for('admin.users') }}" class="{{ 'on' if ep.startswith('admin.users') or ep == 'admin.update_user' }}">People and access</a>
