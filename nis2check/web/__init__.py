@@ -22,6 +22,8 @@ mimetypes.add_type("application/manifest+json", ".webmanifest")
 
 
 def create_app(**overrides) -> Flask:
+    # Import before create_all so an existing database gains the incident tables.
+    from . import incident_models as _incident_models  # noqa: F401
     start_scheduler = overrides.pop("start_scheduler", os.environ.get("NIS2_DISABLE_SCHEDULER") != "1")
     settings = load_settings(**overrides)
 
@@ -149,5 +151,8 @@ def create_app(**overrides) -> Flask:
     if start_scheduler:
         from .services import scheduler
         threading.Thread(target=scheduler, args=(app,), name="nis2-scheduler", daemon=True).start()
+
+    from . import incident_views
+    app.register_blueprint(incident_views.bp)
 
     return app
