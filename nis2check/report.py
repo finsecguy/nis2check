@@ -15,6 +15,7 @@ from . import __version__
 from .applicability import SECTORS
 from .assessment import Assessment
 from .controls import Catalogue
+from .frameworks import DORA_SCOPE_NOTE, LEX_SPECIALIS, framework_label
 from .scoring import Finding, Result
 
 STATUS_LABELS = {
@@ -28,7 +29,7 @@ STATUS_LABELS = {
 PRIORITY_LABELS = {"critical": "Critical", "high": "High", "medium": "Medium"}
 
 CSV_COLUMNS = [
-    "Rank", "Ref", "NIS2 reference", "Domain", "Control", "Priority", "Status", "RAG",
+    "Rank", "Ref", "Legal reference", "Domain", "Control", "Priority", "Status", "RAG",
     "Effort", "Weight", "Risk reduction", "Risk reduction per effort", "Quadrant",
     "Recommended action", "Evidence issue", "Owner", "Target date", "Weight rationale",
     "Assessor notes",
@@ -120,8 +121,20 @@ def _lower_first(text: str) -> str:
     return text
 
 
+def _framework_ids(result: Result) -> tuple[str, ...]:
+    ids: list[str] = []
+    for domain in result.domains:
+        if domain.domain.framework not in ids:
+            ids.append(domain.domain.framework)
+    return tuple(ids) or ("nis2",)
+
+
 def _domain_article(result: Result, domain_id: str) -> str:
     return next(d.domain.article for d in result.domains if d.domain.id == domain_id)
+
+
+def _legal_reference(result: Result, finding: Finding) -> str:
+    return finding.question.article or _domain_article(result, finding.question.domain_id)
 
 
 def _domain_title(result: Result, domain_id: str) -> str:
@@ -157,11 +170,27 @@ def _summary_text(result: Result, assessment: Assessment) -> list[str]:
     else:
         scope = "could not be conclusively classified; scope requires further review"
 
-    paras = [
-        f"{name} was assessed against the cybersecurity risk-management, governance and "
-        f"incident reporting requirements of Directive (EU) 2022/2555 (NIS2), Articles 20, 21 "
-        f"and 23. Based on the information provided, the organisation {scope}."
-    ]
+    ids = _framework_ids(result)
+    if ids == ("dora",):
+        opening = (
+            f"{name} was assessed against Regulation (EU) 2022/2554 (DORA), Articles 5 to 45, "
+            f"covering ICT risk management, incident reporting, resilience testing, ICT third-party "
+            f"risk and information sharing. Based on the information provided, the organisation {scope}. "
+            f"That scope check is the NIS2 test and does not decide whether DORA applies."
+        )
+    elif "dora" in ids and "nis2" in ids:
+        opening = (
+            f"{name} was assessed against Directive (EU) 2022/2555 (NIS2), Articles 20, 21 and 23, "
+            f"and against Regulation (EU) 2022/2554 (DORA), Articles 5 to 45. "
+            f"Based on the information provided, the organisation {scope}."
+        )
+    else:
+        opening = (
+            f"{name} was assessed against the cybersecurity risk-management, governance and "
+            f"incident reporting requirements of Directive (EU) 2022/2555 (NIS2), Articles 20, 21 "
+            f"and 23. Based on the information provided, the organisation {scope}."
+        )
+    paras = [opening]
 
     overall = (
         f"Overall compliance is assessed at <b>{_pct(result.score_pct)}</b> "
@@ -215,7 +244,7 @@ def gap_rows(result: Result, threat=None) -> list[dict]:
         rows.append({
             "Rank": i,
             "Ref": f.question.id,
-            "NIS2 reference": _domain_article(result, f.question.domain_id),
+            "Legal reference": _legal_reference(result, f),
             "Domain": _domain_title(result, f.question.domain_id),
             "Control": f.question.text,
             "Priority": PRIORITY_LABELS[f.question.priority],
@@ -276,6 +305,15 @@ def render_html(
         priority_label=PRIORITY_LABELS,
     )
     slug = "".join(ch if ch.isalnum() else "-" for ch in (assessment.entity.name or "nis2")).strip("-")
+    ids = _framework_ids(result)
+    label = framework_label(ids)
+    cover = {
+        ("dora",): "Articles 5 to 45 of Regulation (EU) 2022/2554 (DORA)",
+    }.get(ids)
+    if cover is None and "dora" in ids and "nis2" in ids:
+        cover = "Directive (EU) 2022/2555 (NIS2) and Regulation (EU) 2022/2554 (DORA)"
+    elif cover is None:
+        cover = "Articles 20, 21 and 23 of Directive (EU) 2022/2555"
     return env.get_template("report.html.j2").render(
         result=result,
         assessment=assessment,
@@ -292,7 +330,13 @@ def render_html(
         csv_data=render_csv(result, threat),
         embedded=embedded,
         font_css=font_css,
-        file_slug=f"NIS2-gap-register-{slug[:40]}",
+        file_slug=f"{label.replace(' ', '-')}-gap-register-{slug[:40]}",
+        kicker=f"{label} gap assessment",
+        measures=f"{label} measures",
+        cover_line=cover,
+        show_lex="dora" in ids,
+        lex_specialis=LEX_SPECIALIS,
+        dora_scope_note=DORA_SCOPE_NOTE,
         sector_label=SECTORS.get(assessment.entity.sector or "", assessment.entity.sector),
         report_date=assessment.assessed_on or dt.date.today().isoformat(),
         generated=dt.datetime.now().strftime("%d %b %Y"),
@@ -360,7 +404,7 @@ def to_dict(result: Result, assessment: Assessment, catalogue: Catalogue, threat
         "gaps": [
             {
                 "id": f.question.id,
-                "article": _domain_article(result, f.question.domain_id),
+                "article": f.question.article or _domain_article(result, f.question.domain_id),
                 "question": f.question.text,
                 "priority": f.question.priority,
                 "status": f.status,
@@ -388,7 +432,7 @@ def render_summary(result: Result, assessment: Assessment, top: int = 5) -> str:
     c = result.counts
     name = assessment.entity.name or "Unnamed organisation"
     lines = [
-        f"NIS2 gap report: {name}",
+        f"{framework_label(_framework_ids(result))} gap report: {name}",
         f"Scope:          {result.applicability.label}",
         f"Score:          {_pct(result.score_pct)} ({result.maturity})",
         f"Evidence-backed:{_pct(result.verified_pct):>5}",

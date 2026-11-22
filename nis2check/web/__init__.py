@@ -11,7 +11,7 @@ from flask import Flask, g, render_template, session
 from flask_wtf.csrf import CSRFError, CSRFProtect
 
 from .. import __version__
-from ..controls import load_catalogue
+from ..frameworks import FRAMEWORK_IDS, LEX_SPECIALIS, framework_label, load_bundled_catalogue
 from .config import load_settings
 from .models import ROLE_LABELS, User, make_session
 
@@ -49,7 +49,7 @@ def create_app(**overrides) -> Flask:
     db = make_session(settings.db_url)
     app.extensions["nis2_db"] = db
     app.extensions["nis2_settings"] = settings
-    app.extensions["nis2_catalogue"] = load_catalogue()
+    app.extensions["nis2_catalogue"] = load_bundled_catalogue(FRAMEWORK_IDS)
     csrf.init_app(app)
 
     if settings.oidc_providers:
@@ -126,11 +126,15 @@ def create_app(**overrides) -> Flask:
     @app.context_processor
     def globals_():
         org_name = ""
+        framework_ids = ("nis2",)
         if g.get("user"):
             from .services import organisation
-            org_name = organisation(db()).name
+            org = organisation(db())
+            org_name = org.name
+            framework_ids = org.framework_ids
         return {"current_user": g.get("user"), "role_labels": ROLE_LABELS, "app_version": __version__,
-                "org_name": org_name}
+                "org_name": org_name, "framework_ids": framework_ids,
+                "framework_label": framework_label(framework_ids), "lex_specialis": LEX_SPECIALIS}
 
     @app.errorhandler(403)
     def forbidden(_e):

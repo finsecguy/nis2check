@@ -15,6 +15,7 @@ from ..applicability import Entity
 from ..assessment import Assessment
 from ..assessment import Response as EngineResponse
 from ..controls import Catalogue
+from ..frameworks import narrow_catalogue
 from ..scoring import Result, evaluate
 from ..threat.data import ThreatData, load_threat_data
 from ..threat.sources import SourceError
@@ -108,6 +109,7 @@ def build_assessment(db, catalogue: Catalogue, evidence_dir: Path, today: dt.dat
         base_dir=evidence_dir,
         assessed_on=(last_update or utcnow()).date().isoformat(),
         assessor="",
+        frameworks=org.framework_ids,
     )
 
 
@@ -124,6 +126,9 @@ def active_threat_data(db) -> ThreatData:
 
 
 def evaluate_current(db, catalogue: Catalogue, evidence_dir: Path) -> tuple[Result, Assessment, ThreatData | None]:
+    # The app keeps every framework loaded so a YAML import can store either
+    # set of answers. Scoring uses only the frameworks the organisation picked.
+    catalogue = narrow_catalogue(catalogue, organisation(db).framework_ids)
     assessment = build_assessment(db, catalogue, evidence_dir)
     mode = get_setting(db, "weighting", "threat")
     rank_by = get_setting(db, "rank_by", "risk")
@@ -256,5 +261,12 @@ def scheduler(app) -> None:
 
 
 def current_app_parts():
+    """Database, the frameworks selected for this organisation, and settings.
+
+    The extension holds every bundled framework so an import can store NIS2 or
+    DORA answers. Screens only see the selection.
+    """
     ext = current_app.extensions
-    return ext["nis2_db"], ext["nis2_catalogue"], ext["nis2_settings"]
+    db = ext["nis2_db"]
+    catalogue = narrow_catalogue(ext["nis2_catalogue"], organisation(db).framework_ids)
+    return db, catalogue, ext["nis2_settings"]

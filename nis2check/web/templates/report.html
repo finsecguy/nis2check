@@ -8,7 +8,9 @@
     <a class="btn secondary" href="{{ url_for('main.report_download', fmt='csv') }}">Gap register for Excel</a>
     <a class="btn secondary" href="{{ url_for('main.report_download', fmt='html') }}">HTML</a>
     <a class="btn secondary" href="{{ url_for('main.report_download', fmt='json') }}">JSON</a>
+    <a class="btn secondary" href="{{ url_for('main.report_download', fmt='ciso') }}">CISO Assistant</a>
   </div>
 </div>
-<iframe class="report" src="{{ url_for('main.report_view') }}" title="NIS2 gap assessment report"></iframe>
+{% if 'dora' in framework_ids %}<div class="note">{{ lex_specialis }}</div>{% endif %}
+<iframe class="report" src="{{ url_for('main.report_view') }}" title="Gap assessment report"></iframe>
 {% endblock %}

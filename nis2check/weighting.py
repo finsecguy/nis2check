@@ -13,8 +13,8 @@ threat
         weight            = baseline x multiplier
 
     Threat data can only raise a weight, never lower it below the regulatory
-    baseline, because every NIS2 control is a legal requirement regardless of how
-    often the threat it addresses shows up in incident data.
+    baseline, because every control in the catalogue is a legal requirement
+    regardless of how often the threat it addresses shows up in incident data.
 """
 
 from __future__ import annotations

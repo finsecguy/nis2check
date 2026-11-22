@@ -21,7 +21,7 @@
   {% set r = responses.get(q.id) %}
   <div class="question{{ ' first' if loop.first }}" id="{{ q.id }}">
     <div class="qhead">
-      <div class="qtext"><span class="qid">{{ q.id }}</span>{{ q.text }}</div>
+      <div class="qtext"><span class="qid">{{ q.id }}</span>{% if q.article %}<span class="small muted">{{ q.article }}</span> {% endif %}{{ q.text }}</div>
       <div class="nowrap">
         <span class="tag {{ q.priority }}">{{ q.priority | capitalize }} priority</span>
         <span class="tag">{{ q.effort | capitalize }} effort</span>

@@ -1,6 +1,6 @@
-from sqlalchemy import create_engine, inspect, text
+from sqlalchemy import create_engine, inspect, select, text
 
-from nis2check.web.models import make_session
+from nis2check.web.models import Organisation, make_session
 
 
 def test_startup_adds_missing_columns(tmp_path):
@@ -18,6 +18,26 @@ def test_startup_adds_missing_columns(tmp_path):
     cols = {c["name"] for c in inspect(create_engine(url)).get_columns("users")}
     assert {"role", "active", "password_hash", "must_change_password",
             "sso_subject", "last_login", "created_at"} <= cols
+
+
+def test_startup_adds_frameworks_column_and_keeps_nis2(tmp_path):
+    # an install from before the DORA column: the organisation row has no frameworks
+    url = f"sqlite:///{tmp_path / 'old-org.db'}"
+    eng = create_engine(url)
+    with eng.begin() as c:
+        c.execute(text("CREATE TABLE organisation (id INTEGER PRIMARY KEY, name VARCHAR(255))"))
+        c.execute(text("INSERT INTO organisation (name) VALUES ('Old Co')"))
+    eng.dispose()
+
+    session = make_session(url)
+    org = session.execute(select(Organisation)).scalar_one()
+    assert org.name == "Old Co"
+    assert org.frameworks in (None, "")
+    assert org.framework_ids == ("nis2",)
+    session.remove()
+
+    cols = {c["name"] for c in inspect(create_engine(url)).get_columns("organisation")}
+    assert "frameworks" in cols
 
 
 def test_sync_is_idempotent_on_current_schema(tmp_path):
