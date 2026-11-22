@@ -15,8 +15,8 @@ from flask import (
 )
 from sqlalchemy import select
 
-from ..applicability import SECTORS
 from ..assessment import ANSWER_VALUES
+from ..scope import assess_scope, cached_scope_rules, implied_subsector, scope_for_organisation
 from ..report import STATUS_LABELS, effort_matrix, fonts_css_uri, render_csv, render_html, render_json, write_pdf
 from ..weighting import plain_reason
 from .auth import require
@@ -115,29 +115,49 @@ def organisation_page():
             except ValueError:
                 raise ValueError(field)
 
+        rules = cached_scope_rules()
         try:
             org.name = request.form.get("name", "").strip()
-            sector = request.form.get("sector", "")
-            org.sector = sector if sector in SECTORS or sector == "other" else None
+            subsector_id = request.form.get("subsector_id", "").strip()
+            special: list[str] = []
+            for case_id in request.form.getlist("special"):
+                if case_id and case_id not in special:
+                    rules.case(case_id)
+                    special.append(case_id)
+            if subsector_id:
+                rules.subsector(subsector_id)
+            org.subsector_id = subsector_id or None
+            org.special_cases = ",".join(special)
             org.employees = num("employees", int)
             org.annual_turnover_eur = num("annual_turnover_eur", float)
             org.balance_sheet_eur = num("balance_sheet_eur", float)
-            org.size_exempt = request.form.get("size_exempt") == "on"
+            result = assess_scope(
+                org.subsector_id, org.employees, org.annual_turnover_eur,
+                org.balance_sheet_eur, special, rules,
+            )
+            org.sector = result.organisation_sector
+            org.size_exempt = result.size_exempt
         except ValueError as exc:
             db.rollback()
             flash(f"Enter a number for {str(exc).replace('_', ' ')}.", "error")
+            return redirect(url_for("main.organisation_page"))
+        except KeyError:
+            db.rollback()
+            flash("Choose a sector from the list.", "error")
             return redirect(url_for("main.organisation_page"))
         audit(db, "organisation.updated", org.name)
         db.commit()
         flash("Organisation details saved.", "ok")
         return redirect(url_for("main.organisation_page"))
-    from ..applicability import Entity, assess_applicability
-    scope = assess_applicability(Entity(
-        name=org.name, sector=org.sector, employees=org.employees,
-        annual_turnover_eur=org.annual_turnover_eur, balance_sheet_eur=org.balance_sheet_eur,
-        size_exempt=org.size_exempt,
-    ))
-    return render_template("organisation.html", org=org, sectors=SECTORS, scope=scope)
+    rules = cached_scope_rules()
+    scope = scope_for_organisation(
+        org.subsector_id, org.employees, org.annual_turnover_eur, org.balance_sheet_eur,
+        org.special_case_ids, sector=org.sector, rules=rules,
+    )
+    return render_template(
+        "organisation.html", org=org, rules=rules, scope=scope,
+        selected_subsector=org.subsector_id or implied_subsector(rules, org.sector),
+    )
 
 
 # ------------------------------------------------------------------ assessment

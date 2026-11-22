@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% block title %}Scope{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <h1>Are you in scope of NIS2?</h1>
+    <div class="sub">An indicative check against Directive (EU) 2022/2555, Articles 2 and 3, and the size ceilings in Recommendation 2003/361/EC. {{ rules.disclaimer }}</div>
+  </div>
+</div>
+
+<div class="grid2">
+<div>
+  <form method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label for="subsector_id">Sector and subsector</label>
+    <select id="subsector_id" name="subsector_id">
+      <option value="">Not listed in Annex I or Annex II</option>
+      {% for sector in rules.sectors %}
+        <optgroup label="Annex {{ sector.annex }}: {{ sector.title }}">
+          {% for sub in sector.subsectors %}
+            <option value="{{ sub.id }}" {{ 'selected' if form.subsector_id == sub.id }}>{{ sub.title }}</option>
+          {% endfor %}
+        </optgroup>
+      {% endfor %}
+    </select>
+    <p class="small muted">Annex I is sectors of high criticality. Annex II is other critical sectors. The types of entity follow the annex, including the exclusions written into it.</p>
+
+    <div class="row">
+      <div>
+        <label for="employees">Employees</label>
+        <input type="number" min="0" step="1" id="employees" name="employees" value="{{ form.employees }}">
+      </div>
+      <div>
+        <label for="t">Annual turnover (EUR)</label>
+        <input type="number" min="0" step="any" id="t" name="annual_turnover_eur" value="{{ form.annual_turnover_eur }}">
+      </div>
+      <div>
+        <label for="b">Balance sheet total (EUR)</label>
+        <input type="number" min="0" step="any" id="b" name="balance_sheet_eur" value="{{ form.balance_sheet_eur }}">
+      </div>
+    </div>
+    <p class="small muted">Medium is 50 or more employees, or turnover and balance sheet both above EUR 10 million. Large is 250 or more employees, or turnover above EUR 50 million and a balance sheet above EUR 43 million. A figure that only meets one of the two financial ceilings stays in the lower band.</p>
+
+    <h2>In scope regardless of size</h2>
+    <p class="small muted">Tick any that apply. These come from Art. 2(2) to (5) and Art. 3. Choosing the matching subsector above counts as well.</p>
+    {% for case in rules.special_cases %}
+      <label class="check"><input type="checkbox" name="special" value="{{ case.id }}" {{ 'checked' if case.id in form.special }}>
+        {{ case.label }}</label>
+    {% endfor %}
+
+    <div class="actions"><button class="btn" type="submit">Check scope</button></div>
+  </form>
+
+  <details>
+    <summary>What each subsector covers</summary>
+    {% for sector in rules.sectors %}
+      <h3>Annex {{ sector.annex }}: {{ sector.title }}</h3>
+      {% for sub in sector.subsectors %}
+        <p class="small"><strong>{{ sub.title }}.</strong> {{ sub.detail }}</p>
+      {% endfor %}
+    {% endfor %}
+  </details>
+</div>
+
+<div>
+  {% if result %}
+    <h2 style="margin-top: 0;">{{ result.label }}</h2>
+    <table class="kv">
+      <tr><th>Outcome</th><td><strong>{{ result.label }}</strong></td></tr>
+      <tr><th>Enterprise size</th><td>{{ result.size_label }}</td></tr>
+      <tr><th>Annex</th><td>{{ "Annex " ~ result.annex if result.annex else "Not listed" }}</td></tr>
+      {% if result.sector_title %}
+        <tr><th>Sector</th><td>{{ result.sector_title }}</td></tr>
+        <tr><th>Subsector</th><td>{{ result.subsector_title }}</td></tr>
+      {% endif %}
+      {% if result.articles %}
+        <tr><th>Provisions</th><td>{{ result.articles | join(", ") }}</td></tr>
+      {% endif %}
+    </table>
+    {% for reason in result.reasons %}
+      <div class="note">{{ reason.text }}{% if reason.articles %} <span class="small muted">{{ reason.articles | join(", ") }}.</span>{% endif %}</div>
+    {% endfor %}
+    {% for note in result.size_notes %}<p class="small muted">{{ note }}</p>{% endfor %}
+    <p class="small muted">{{ result.disclaimer }} Read against {{ result.source }} and {{ result.recommendation }}.</p>
+
+    {% if current_user and current_user.can('admin') %}
+      <form method="post" action="{{ url_for('scope.apply_result') }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <div class="actions"><button class="btn" type="submit">Start the assessment with this result</button></div>
+      </form>
+      <p class="small muted">Copies the sector, staff and financial figures onto the organisation. The questions themselves are not pre-answered.</p>
+    {% elif current_user %}
+      <p class="small muted">An administrator can copy this result onto the organisation and open the assessment.</p>
+    {% else %}
+      <p><a href="{{ url_for('auth.login', next=url_for('scope.wizard')) }}">Sign in</a> to start an assessment from this result.</p>
+    {% endif %}
+  {% else %}
+    <h2 style="margin-top: 0;">The result</h2>
+    <p class="muted">The result is out of scope, an important entity, or an essential entity, with the article each step comes from. If the size figures are missing for a rule that depends on them, the page says what is still needed.</p>
+    <div class="note">{{ rules.disclaimer }}</div>
+  {% endif %}
+</div>
+</div>
+{% endblock %}

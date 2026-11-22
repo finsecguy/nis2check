@@ -62,8 +62,9 @@ def create_app(**overrides) -> Flask:
             )
         app.extensions["nis2_oauth"] = oauth
 
-    from . import admin, auth, views
+    from . import admin, auth, scope_views, views
     app.register_blueprint(auth.bp)
+    app.register_blueprint(scope_views.bp)
     app.register_blueprint(views.bp)
     app.register_blueprint(admin.bp)
 

@@ -127,8 +127,12 @@ def new_session_token() -> str:
 
 def login_user(user: User) -> None:
     # Always mint a new token. Reusing the stored one would keep a copied cookie
-    # valid across a later login.
+    # valid across a later login. The scope wizard is public and stores its
+    # last answers here so a sign-in can still copy them onto the organisation.
+    kept = session.get("scope_wizard")
     session.clear()
+    if kept is not None:
+        session["scope_wizard"] = kept
     user.session_token = new_session_token()
     session["uid"] = user.id
     session["sv"] = user.session_token
