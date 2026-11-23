@@ -269,6 +269,17 @@ nis2check web serve --data-dir ./data      # development server on http://127.0.
 - The DORA question set is a practical gap assessment of the five pillars, not the full text of the regulatory technical standards. Threat-led penetration testing and the simplified ICT risk framework are questions you can mark not applicable.
 - Questions are original prompts keyed to article numbers. Implementing acts and national guidance may set more detailed requirements for some entity types.
 
+## Your data
+
+The app does not send telemetry. Answers, evidence and reports stay in the database on the machine where you run it. The only outbound calls are these:
+
+- **Threat data.** When an administrator checks for an update, when the weekly check inside the app is due, or when you run `nis2check update-threat-data`, the app downloads public files from the VERIS Community Database, MITRE ATT&CK, CISA KEV and ENISA EUVD. Nothing is uploaded. Set `NIS2_THREAT_SOURCE_DIR` to read those files from disk instead, or `NIS2_THREAT_AUTO_CHECK=false` to stop the weekly check. The GitHub workflow that refreshes the bundled snapshot runs in GitHub, not on your server.
+- **Sign-in.** If you configure Microsoft Entra ID or Google, the browser and the app talk to that provider. With neither configured, sign-in stays on the server.
+
+The database is SQLite, not Postgres. In Docker it is `/data/nis2check.db` inside the `nis2check-data` volume, next to `evidence/` and `.secret_key`. A development server uses `./data` (or `NIS2_DATA_DIR`). Back up by copying that directory. The volume command is in [Backups and upgrades](#backups-and-upgrades). To delete everything, stop the app and remove the volume (`docker volume rm nis2check_nis2check-data`) or delete the data directory.
+
+nis2check supports a self-assessment and does not replace a certified auditor. National citations must be checked against the official text.
+
 ## License
 
 MIT

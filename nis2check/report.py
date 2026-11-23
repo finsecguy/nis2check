@@ -20,6 +20,12 @@ from .i18n import t
 from .jurisdictions import COUNTRY_LANGUAGE, format_citation, get_jurisdiction, question_text
 from .scoring import Finding, Result
 
+# Printed at the end of every report and of the Slovak working paper.
+NOT_LEGAL_ADVICE = (
+    "nis2check supports a self-assessment and does not replace a certified auditor. "
+    "National citations must be checked against the official text."
+)
+
 STATUS_LABELS = {
     "met": "Met",
     "partial": "Partially met",
@@ -400,6 +406,7 @@ def render_html(
         report_date=assessment.assessed_on or dt.date.today().isoformat(),
         generated=dt.datetime.now().strftime("%d %b %Y"),
         version=__version__,
+        not_legal_advice=NOT_LEGAL_ADVICE,
     )
 
 

@@ -7,9 +7,11 @@ import pytest
 from nis2check.assessment import load_assessment, parse_assessment
 from nis2check.cli import main
 from nis2check.controls import load_catalogue
+from nis2check.jurisdictions import get_jurisdiction, with_national
 from nis2check.report import (
-    CSV_COLUMNS, executive_summary, heat_map, render_csv, render_html,
+    CSV_COLUMNS, NOT_LEGAL_ADVICE, executive_summary, heat_map, render_csv, render_html,
 )
+from nis2check.sk_export import render_sk_self_assessment
 from nis2check.scoring import evaluate
 
 CATALOGUE = load_catalogue()
@@ -63,6 +65,15 @@ def test_html_has_download_controls_and_sections(example):
                  "3.2 Control heat map", "4. Remediation plan", "Appendix B. Methodology",
                  "Transport"):
         assert text in html
+    assert f'<footer class="report-foot">{NOT_LEGAL_ADVICE}</footer>' in html
+
+
+def test_sk_self_assessment_repeats_the_footer(example):
+    result, assessment = example
+    assessment.country = "sk"
+    catalogue = with_national(CATALOGUE, get_jurisdiction("sk"))
+    html = render_sk_self_assessment(result, assessment, catalogue, get_jurisdiction("sk"))
+    assert f"<footer>{NOT_LEGAL_ADVICE}</footer>" in html
 
 
 def test_cli_writes_csv(tmp_path):
@@ -76,3 +87,5 @@ def test_cli_writes_pdf(tmp_path):
     out = tmp_path / "r.pdf"
     assert main(["report", str(EXAMPLE), "-o", str(tmp_path / "r.html"), "--pdf", str(out), "-q"]) == 0
     assert out.read_bytes().startswith(b"%PDF")
+    html = (tmp_path / "r.html").read_text(encoding="utf-8")
+    assert NOT_LEGAL_ADVICE in html

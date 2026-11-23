@@ -10,7 +10,7 @@ from jinja2 import Environment, PackageLoader, select_autoescape
 from .assessment import Assessment
 from .controls import Catalogue
 from .jurisdictions import Jurisdiction, question_text
-from .report import STATUS_LABELS
+from .report import NOT_LEGAL_ADVICE, STATUS_LABELS
 from .scoring import Result
 
 
@@ -46,4 +46,5 @@ def render_sk_self_assessment(
         law=jurisdiction.law,
         rows=rows,
         gaps=gaps,
+        not_legal_advice=NOT_LEGAL_ADVICE,
     )

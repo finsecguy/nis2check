@@ -76,6 +76,7 @@
   table.matrix td.q-quick { border: 1.25pt solid var(--navy); }
   .q-quick .q-title { color: var(--navy); }
   .note { border-left: 2pt solid var(--navy); padding: 2pt 0 2pt 10pt; margin: 8pt 0 10pt; font-size: 8.5pt; }
+  footer.report-foot { margin-top: 18pt; padding-top: 8pt; border-top: 0.5pt solid var(--line); font-size: 8pt; color: var(--text-2); }
   .appendix, .new-page { page-break-before: always; break-before: page; }
 
   .toolbar { max-width: 210mm; margin: 0 auto; padding: 16px 18mm 0; text-align: right; }
@@ -360,6 +361,8 @@
     <p class="small muted">Caveats: VCDB contains publicly reported incidents, mostly from the United States and weighted toward breaches that reach the news; it is not the full Verizon DBIR dataset. CISA KEV is US-centric; ENISA EUVD gives an EU view but is newer.</p>
     {% endif %}
   </div>
+
+  <footer class="report-foot">{{ not_legal_advice }}</footer>
 
 </div>
 
