@@ -36,6 +36,8 @@ class Question:
     source_url: str = ""
     verified: bool | None = None
     note: str = ""
+    evidence_quote: str = ""
+    checked_against: str = ""
 
     @property
     def effort_cost(self) -> int:
@@ -54,6 +56,9 @@ class Domain:
     summary: str
     questions: tuple[Question, ...]
     framework: str = "nis2"
+    evidence_quote: str = ""
+    checked_against: str = ""
+    verified: bool | None = None
 
 
 @dataclass(frozen=True)
@@ -81,6 +86,18 @@ class Catalogue:
     @property
     def question_ids(self) -> list[str]:
         return [q.id for q in self.questions()]
+
+
+def _evidence(mapping: dict, where: str) -> tuple[str, str, bool | None]:
+    """Read a citation check. ``verified: true`` needs a quote and the text it was read in."""
+    verified = mapping.get("verified", None)
+    if verified is not None and not isinstance(verified, bool):
+        raise CatalogueError(f"{where}: verified must be true or false")
+    quote = " ".join(str(mapping.get("evidence_quote") or "").split())
+    checked = " ".join(str(mapping.get("checked_against") or "").split())
+    if verified is True and (not quote or not checked):
+        raise CatalogueError(f"{where}: verified true needs evidence_quote and checked_against")
+    return quote, checked, verified
 
 
 def _require(mapping: dict, key: str, where: str):
@@ -123,9 +140,7 @@ def parse_catalogue(data: dict) -> Catalogue:
             raw_translations = q.get("translations") or {}
             if raw_translations and not isinstance(raw_translations, dict):
                 raise CatalogueError(f"question {qid}: translations must be a mapping")
-            verified = q.get("verified", None)
-            if verified is not None and not isinstance(verified, bool):
-                raise CatalogueError(f"question {qid}: verified must be true or false")
+            quote, checked, verified = _evidence(q, f"question {qid}")
             questions.append(
                 Question(
                     id=qid,
@@ -147,11 +162,14 @@ def parse_catalogue(data: dict) -> Catalogue:
                     source_url=str(q.get("source_url") or "").strip(),
                     verified=verified,
                     note=" ".join(str(q.get("note") or "").split()),
+                    evidence_quote=quote,
+                    checked_against=checked,
                 )
             )
         if not questions:
             raise CatalogueError(f"{where}: has no questions")
 
+        d_quote, d_checked, d_verified = _evidence(d, where)
         domains.append(
             Domain(
                 id=domain_id,
@@ -160,6 +178,9 @@ def parse_catalogue(data: dict) -> Catalogue:
                 summary=" ".join(str(d.get("summary", "")).split()),
                 questions=tuple(questions),
                 framework=domain_framework,
+                evidence_quote=d_quote,
+                checked_against=d_checked,
+                verified=d_verified,
             )
         )
 

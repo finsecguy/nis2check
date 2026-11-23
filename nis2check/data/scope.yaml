@@ -30,6 +30,9 @@ disclaimer: >
 # Recommendation 2003/361/EC, Annex, Article 2. An entity meets a band when
 # the staff figure is reached OR both financial ceilings are passed.
 size:
+  verified: true
+  checked_against: "Commission Recommendation 2003/361/EC, OJ L 124, 20.5.2003, p. 36, Annex Article 2, read 2026-11-23"
+  evidence_quote: "enterprises which employ fewer than 250 persons and which have an annual turnover not exceeding EUR 50 million, and/or an annual balance sheet total not exceeding EUR 43 million"
   # Large: 250 or more employees, or turnover above EUR 50 million AND
   # balance sheet above EUR 43 million. Recommendation, Annex, Art. 2(1):
   # an SME employs fewer than 250 persons and has turnover not exceeding
@@ -57,10 +60,12 @@ size:
 size_notes:
   - >
     Headcount in the Recommendation is annual work units, not a raw
-    headcount (Annex, Art. 5). Crossing a ceiling changes the category only
+    headcount (Annex, Art. 5).     Crossing a ceiling changes the category only
     after two consecutive accounting periods (Art. 4(2)). Partner and linked
-    enterprises may have to be counted in (Art. 6); Member States can take
-    account of how independent the entity's systems are (NIS2 recital 9).
+    enterprises are counted in under Art. 6(2). Member States can take account
+    of how independent the entity is from its partner or linked enterprises in
+    terms of the network and information systems it uses and the services it
+    provides (NIS2 recital 16).
   - >
     NIS2 Art. 2(1) disapplies Art. 3(4) of the Recommendation's Annex, so
     control by a public body does not by itself decide the size category.
@@ -76,6 +81,9 @@ special_cases:
     label: "DNS service provider, other than an operator of a root name server"
     articles: ["Art. 2(2)(a)(iii)", "Art. 3(1)(b)", "Annex I, point 8"]
     effect: essential_any_size
+    verified: true
+    checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+    evidence_quote: "DNS service providers, regardless of their size"
     organisation_sector: digital_infrastructure
     reason: >
       DNS service providers are in scope regardless of size and are essential
@@ -85,6 +93,9 @@ special_cases:
     label: "Top-level domain name registry"
     articles: ["Art. 2(2)(a)(iii)", "Art. 3(1)(b)", "Annex I, point 8"]
     effect: essential_any_size
+    verified: true
+    checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+    evidence_quote: "top-level domain name registries as well as DNS service providers, regardless of their size"
     organisation_sector: digital_infrastructure
     reason: >
       Top-level domain name registries are in scope regardless of size and
@@ -94,6 +105,9 @@ special_cases:
     label: "Qualified trust service provider"
     articles: ["Art. 2(2)(a)(ii)", "Art. 3(1)(b)", "Annex I, point 8"]
     effect: essential_any_size
+    verified: true
+    checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+    evidence_quote: "qualified trust service providers and top-level domain name registries as well as DNS service providers, regardless of their size"
     organisation_sector: digital_infrastructure
     reason: >
       Qualified trust service providers are in scope regardless of size and
@@ -103,6 +117,9 @@ special_cases:
     label: "Provider of public electronic communications networks or of publicly available electronic communications services"
     articles: ["Art. 2(2)(a)(i)", "Art. 3(1)(c)", "Art. 3(2)", "Annex I, point 8"]
     effect: telecom
+    verified: true
+    checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+    evidence_quote: "Regardless of their size, this Directive also applies to providers of public electronic communications networks or of publicly available electronic communications services"
     organisation_sector: digital_infrastructure
     reason: >
       Providers of public electronic communications networks or of publicly
@@ -115,6 +132,9 @@ special_cases:
     label: "Sole provider in a Member State of a service essential for critical societal or economic activities"
     articles: ["Art. 2(2)(b)", "Art. 3(1)(e)", "Art. 3(2)"]
     effect: important_if_annex
+    verified: true
+    checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+    evidence_quote: "the entity is the sole provider in a Member State of a service which is essential for the maintenance of critical societal or economic activities"
     reason: >
       The sole provider in a Member State of a service that is essential for
       critical societal or economic activities is in scope regardless of size,
@@ -127,6 +147,9 @@ special_cases:
     label: "Public administration entity of central government"
     articles: ["Art. 2(2)(f)(i)", "Art. 3(1)(d)", "Annex I, point 10"]
     effect: essential_any_size
+    verified: true
+    checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+    evidence_quote: "public administration entities referred to in Article 2(2), point (f)(i)"
     organisation_sector: public_administration
     reason: >
       A public administration entity of central government, as the Member
@@ -137,6 +160,9 @@ special_cases:
     label: "Public administration entity at regional level, where disruption could have a significant impact"
     articles: ["Art. 2(2)(f)(ii)", "Art. 3(2)", "Annex I, point 10"]
     effect: important_any_size
+    verified: true
+    checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+    evidence_quote: "at regional level as defined by a Member State in accordance with national law that, following a risk-based assessment, provides services the disruption of which could have a significant impact"
     organisation_sector: public_administration
     reason: >
       A regional public administration entity is in scope regardless of size
@@ -150,6 +176,9 @@ special_cases:
     label: "Public administration entity at local level"
     articles: ["Art. 2(5)(a)"]
     effect: local_public_admin
+    verified: true
+    checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+    evidence_quote: "Member States may provide for this Directive to apply to public administration entities at local level"
     organisation_sector: public_administration
     reason: >
       Local public administration is outside the directive unless the Member
@@ -160,6 +189,9 @@ special_cases:
     label: "Trust service provider that is not a qualified trust service provider"
     articles: ["Art. 2(2)(a)(ii)", "Art. 3(1)(b)", "Art. 3(2)", "Annex I, point 8"]
     effect: important_any_size
+    verified: true
+    checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+    evidence_quote: "entities of a type referred to in Annex I or II which do not qualify as essential entities pursuant to paragraph 1 of this Article shall be considered to be important entities"
     organisation_sector: digital_infrastructure
     reason: >
       Trust service providers are in scope regardless of size. Art. 3(1)(b)
@@ -167,20 +199,30 @@ special_cases:
       providers, so a provider that is not qualified is an important entity.
 
   - id: domain_registration
-    label: "Provider of domain name registration services"
-    articles: ["Art. 2(4)", "Art. 3(2)", "Art. 3(3)"]
-    effect: important_any_size
+    label: "Entity providing domain name registration services"
+    articles: ["Art. 2(4)", "Art. 3(3)"]
+    effect: in_scope_unclassified
+    verified: true
+    checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+    evidence_quote: "Regardless of their size, this Directive applies to entities providing domain name registration services"
     organisation_sector: digital_infrastructure
     reason: >
-      Entities that provide domain name registration services are in scope
-      regardless of size. They are listed separately from top-level domain
-      registries and are not named in Art. 3(1)(b), so they are important
-      entities unless a Member State identifies them as essential.
+      Entities providing domain name registration services are in scope
+      regardless of size (Art. 2(4)). Article 3(3) requires a list of essential
+      and important entities as well as entities providing domain name
+      registration services, so this category is not classified as essential
+      or important by Article 3. Article 28 requires them, with TLD name
+      registries, to keep a database of domain name registration data. A
+      registrar that is also an Annex I or II type is still classified by
+      that type.
 
   - id: critical_entity
     label: "Identified as a critical entity under Directive (EU) 2022/2557"
     articles: ["Art. 2(3)", "Art. 3(1)(f)"]
     effect: essential_any_size
+    verified: true
+    checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+    evidence_quote: "Regardless of their size, this Directive applies to entities identified as critical entities under Directive (EU) 2022/2557"
     reason: >
       An entity identified as a critical entity under Directive (EU) 2022/2557
       is in scope regardless of size and is an essential entity.
@@ -191,258 +233,453 @@ special_cases:
 sectors:
   - id: energy
     annex: "I"
+    verified: true
+    checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+    evidence_quote: "Energy"
     title: "Energy"
     organisation_sector: energy
     subsectors:
       - id: electricity
         title: "Electricity"
-        detail: "Electricity undertakings that supply, distribution and transmission system operators, producers, nominated electricity market operators, market participants providing aggregation, demand response or energy storage, and operators of recharging points that serve end users."
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "Electricity"
+        detail: "Electricity undertakings which carry out the function of supply, distribution system operators, transmission system operators, producers, nominated electricity market operators, market participants providing aggregation, demand response or energy storage services, and operators of a recharging point who are responsible for the management and operation of a recharging point which provides a recharging service to end users, including in the name and on behalf of a mobility service provider."
       - id: district_heating
         title: "District heating and cooling"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "District heating and cooling"
         detail: "Operators of district heating or district cooling."
       - id: oil
         title: "Oil"
-        detail: "Operators of oil transmission pipelines, of oil production, refining, treatment, storage and transmission, and central stockholding entities."
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "Oil"
+        detail: "Operators of oil transmission pipelines; operators of oil production, refining and treatment facilities, storage and transmission; and central stockholding entities as defined in Article 2, point (f), of Council Directive 2009/119/EC."
       - id: gas
         title: "Gas"
-        detail: "Gas supply undertakings, distribution and transmission system operators, storage and LNG system operators, natural gas undertakings, and operators of natural gas refining and treatment facilities."
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "Gas"
+        detail: "Supply undertakings, distribution system operators, transmission system operators, storage system operators, LNG system operators, natural gas undertakings, and operators of natural gas refining and treatment facilities, as those terms are used in Directive 2009/73/EC."
       - id: hydrogen
         title: "Hydrogen"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "Hydrogen"
         detail: "Operators of hydrogen production, storage and transmission."
 
   - id: transport
     annex: "I"
+    verified: true
+    checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+    evidence_quote: "Transport"
     title: "Transport"
     organisation_sector: transport
     subsectors:
       - id: air
         title: "Air"
-        detail: "Commercial air carriers, airport managing bodies, airports and entities operating ancillary installations in airports, and air traffic control operators."
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "Air"
+        detail: "Air carriers used for commercial purposes; airport managing bodies, airports, including the core airports listed in Section 2 of Annex II to Regulation (EU) No 1315/2013, and entities operating ancillary installations contained within airports; and traffic management control operators providing air traffic control (ATC) services."
       - id: rail
         title: "Rail"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "Rail"
         detail: "Infrastructure managers and railway undertakings, including operators of service facilities."
       - id: water
         title: "Water"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "Water"
         detail: "Inland, sea and coastal passenger and freight water transport companies (not the individual vessels), managing bodies of ports and entities operating works and equipment in ports, and operators of vessel traffic services."
       - id: road
         title: "Road"
-        detail: "Road authorities responsible for traffic management control, excluding public entities for which that activity is non-essential, and operators of Intelligent Transport Systems."
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "Road"
+        detail: "Road authorities responsible for traffic management control, excluding public entities for which traffic management or the operation of intelligent transport systems is a non-essential part of their general activity, and operators of Intelligent Transport Systems."
 
   - id: banking
     annex: "I"
+    verified: true
+    checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+    evidence_quote: "Banking"
     title: "Banking"
     organisation_sector: banking
-    note: "Credit institutions are also covered by DORA, Regulation (EU) 2022/2554. Where DORA's requirements are at least equivalent, NIS2 Art. 4 sets those NIS2 provisions aside for the entities DORA covers."
+    note: "Credit institutions are also financial entities under DORA, Regulation (EU) 2022/2554, Article 2(1), point (a). For a credit institution identified as essential or important, DORA is a sector-specific Union legal act (DORA Article 1(2)). Where its requirements are at least equivalent in effect, NIS2 Article 4 sets the relevant NIS2 provisions, including supervision and enforcement, aside. NIS2 recital 28 states that DORA's ICT risk management, incident management and major-incident reporting, testing, information-sharing and ICT third-party risk rules apply instead."
     subsectors:
       - id: credit_institutions
         title: "Credit institutions"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "Credit institutions"
         detail: "Credit institutions as defined in Article 4, point (1), of Regulation (EU) No 575/2013."
 
   - id: financial_market
     annex: "I"
+    verified: true
+    checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+    evidence_quote: "Financial market infrastructures"
     title: "Financial market infrastructures"
     organisation_sector: financial_market_infrastructure
-    note: "Operators of trading venues and central counterparties are also covered by DORA, Regulation (EU) 2022/2554. Where DORA's requirements are at least equivalent, NIS2 Art. 4 sets those NIS2 provisions aside for the entities DORA covers."
+    note: "Operators of trading venues and central counterparties are financial entities under DORA, Regulation (EU) 2022/2554, Article 2(1), points (h) and (i). For one identified as essential or important, DORA is a sector-specific Union legal act (DORA Article 1(2)). Where its requirements are at least equivalent in effect, NIS2 Article 4 sets the relevant NIS2 provisions, including supervision and enforcement, aside."
     subsectors:
       - id: trading_venues
         title: "Operators of trading venues"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "Operators of trading venues"
         detail: "Operators of trading venues as defined in Article 4, point (24), of Directive 2014/65/EU."
       - id: central_counterparties
         title: "Central counterparties (CCPs)"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "Central counterparties (CCPs)"
         detail: "Central counterparties as defined in Article 2, point (1), of Regulation (EU) No 648/2012."
 
   - id: health
     annex: "I"
+    verified: true
+    checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+    evidence_quote: "Health"
     title: "Health"
     organisation_sector: health
     subsectors:
       - id: healthcare_providers
         title: "Healthcare providers"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "Healthcare providers"
         detail: "Healthcare providers as defined in Article 3, point (g), of Directive 2011/24/EU."
       - id: eu_reference_labs
         title: "EU reference laboratories"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "EU reference laboratories"
         detail: "EU reference laboratories referred to in Article 15 of Regulation (EU) 2022/2371."
       - id: medicines_rd
         title: "Research and development of medicinal products"
-        detail: "Entities carrying out research and development of medicinal products as defined in Article 1, point (2), of Directive 2001/83/EC."
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "Research and development of medicinal products"
+        detail: "Entities carrying out research and development activities of medicinal products as defined in Article 1, point (2), of Directive 2001/83/EC."
       - id: pharmaceutical_manufacturing
         title: "Manufacture of basic pharmaceutical products and preparations"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "Manufacture of basic pharmaceutical products and preparations"
         detail: "Entities manufacturing basic pharmaceutical products and pharmaceutical preparations referred to in section C division 21 of NACE Rev. 2."
       - id: critical_devices
         title: "Medical devices critical during a public health emergency"
-        detail: "Entities manufacturing medical devices on the public health emergency critical devices list within the meaning of Article 22 of Regulation (EU) 2022/123."
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "Medical devices critical during a public health emergency"
+        detail: "Entities manufacturing medical devices considered to be critical during a public health emergency (public health emergency critical devices list) within the meaning of Article 22 of Regulation (EU) 2022/123."
 
   - id: drinking_water
     annex: "I"
+    verified: true
+    checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+    evidence_quote: "Drinking water"
     title: "Drinking water"
     organisation_sector: drinking_water
     subsectors:
       - id: drinking_water_supply
         title: "Suppliers and distributors of water for human consumption"
-        detail: "Suppliers and distributors of water intended for human consumption, excluding distributors for whom that supply is a non-essential part of distributing other commodities and goods."
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "Suppliers and distributors of water for human consumption"
+        detail: "Suppliers and distributors of water intended for human consumption as defined in Article 2, point (1)(a), of Directive (EU) 2020/2184, excluding distributors for which distribution of water for human consumption is a non-essential part of their general activity of distributing other commodities and goods."
 
   - id: waste_water
     annex: "I"
+    verified: true
+    checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+    evidence_quote: "Waste water"
     title: "Waste water"
     organisation_sector: waste_water
     subsectors:
       - id: waste_water_treatment
         title: "Collection, disposal or treatment of waste water"
-        detail: "Undertakings collecting, disposing of or treating urban, domestic or industrial waste water, excluding undertakings for which that activity is a non-essential part of their general activity."
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "Collection, disposal or treatment of waste water"
+        detail: "Undertakings collecting, disposing of or treating urban waste water, domestic waste water or industrial waste water as defined in Article 2, points (1), (2) and (3), of Council Directive 91/271/EEC, excluding undertakings for which collecting, disposing of or treating urban waste water, domestic waste water or industrial waste water is a non-essential part of their general activity."
 
   - id: digital_infrastructure
     annex: "I"
+    verified: true
+    checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+    evidence_quote: "Digital infrastructure"
     title: "Digital infrastructure"
     organisation_sector: digital_infrastructure
     subsectors:
       - id: ixp
         title: "Internet Exchange Point providers"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "Internet Exchange Point providers"
         detail: "Internet Exchange Point providers."
       - id: dns
         title: "DNS service providers, excluding operators of root name servers"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "DNS service providers, excluding operators of root name servers"
         detail: "DNS service providers. Operators of root name servers are excluded."
         special_case: dns_provider
       - id: tld
         title: "TLD name registries"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "TLD name registries"
         detail: "Top-level domain name registries."
         special_case: tld_registry
       - id: cloud
         title: "Cloud computing service providers"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "Cloud computing service providers"
         detail: "Cloud computing service providers."
       - id: data_centre
         title: "Data centre service providers"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "Data centre service providers"
         detail: "Data centre service providers."
       - id: cdn
         title: "Content delivery network providers"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "Content delivery network providers"
         detail: "Content delivery network providers."
       - id: trust_services
         title: "Trust service providers"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "Trust service providers"
         detail: "Trust service providers. Qualified trust service providers are essential at any size; tick that case if it applies."
         special_case: trust_unqualified
       - id: public_communications_networks
         title: "Providers of public electronic communications networks"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "Providers of public electronic communications networks"
         detail: "Providers of public electronic communications networks."
         special_case: public_electronic_communications
       - id: public_communications_services
         title: "Providers of publicly available electronic communications services"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "Providers of publicly available electronic communications services"
         detail: "Providers of publicly available electronic communications services."
         special_case: public_electronic_communications
 
   - id: ict_service_management
     annex: "I"
+    verified: true
+    checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+    evidence_quote: "ICT service management (business-to-business)"
     title: "ICT service management (business-to-business)"
     organisation_sector: ict_service_management
     subsectors:
       - id: managed_service_providers
         title: "Managed service providers"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "Managed service providers"
         detail: "Managed service providers."
       - id: managed_security_service_providers
         title: "Managed security service providers"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "Managed security service providers"
         detail: "Managed security service providers."
 
   - id: public_administration
     annex: "I"
+    verified: true
+    checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+    evidence_quote: "Public administration"
     title: "Public administration"
     organisation_sector: public_administration
     subsectors:
       - id: central_government
-        title: "Public administration entities of central government"
+        title: "Public administration entities of central governments"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "Public administration entities of central governments"
         detail: "Public administration entities of central government as defined by a Member State in accordance with national law."
         special_case: public_admin_central
       - id: regional_administration
         title: "Public administration entities at regional level"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "Public administration entities at regional level"
         detail: "Public administration entities at regional level as defined by a Member State in accordance with national law."
         special_case: public_admin_regional
 
   - id: space
     annex: "I"
+    verified: true
+    checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+    evidence_quote: "Space"
     title: "Space"
     organisation_sector: space
     subsectors:
       - id: ground_infrastructure
         title: "Operators of ground-based infrastructure supporting space-based services"
-        detail: "Operators of ground-based infrastructure, owned and operated by Member States or private parties, that support space-based services, excluding providers of public electronic communications networks."
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "Operators of ground-based infrastructure supporting space-based services"
+        detail: "Operators of ground-based infrastructure, owned, managed and operated by Member States or by private parties, that support the provision of space-based services, excluding providers of public electronic communications networks."
 
   - id: postal
     annex: "II"
+    verified: true
+    checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+    evidence_quote: "Postal and courier services"
     title: "Postal and courier services"
     organisation_sector: postal_courier
     subsectors:
       - id: postal_services
         title: "Postal and courier service providers"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "Postal and courier service providers"
         detail: "Postal service providers as defined in Article 2, point (1a), of Directive 97/67/EC, including providers of courier services."
 
   - id: waste_management
     annex: "II"
+    verified: true
+    checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+    evidence_quote: "Waste management"
     title: "Waste management"
     organisation_sector: waste_management
     subsectors:
       - id: waste_management_activity
         title: "Waste management as a principal activity"
-        detail: "Undertakings carrying out waste management, excluding undertakings for whom waste management is not their principal economic activity."
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "Waste management as a principal activity"
+        detail: "Undertakings carrying out waste management as defined in Article 3, point (9), of Directive 2008/98/EC, excluding undertakings for whom waste management is not their principal economic activity."
 
   - id: chemicals
     annex: "II"
+    verified: true
+    checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+    evidence_quote: "Manufacture, production and distribution of chemicals"
     title: "Manufacture, production and distribution of chemicals"
     organisation_sector: chemicals
     subsectors:
       - id: chemicals_activity
         title: "Manufacture and distribution of substances, mixtures or articles"
-        detail: "Undertakings manufacturing or distributing substances or mixtures, and undertakings producing articles from substances or mixtures."
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "Manufacture and distribution of substances, mixtures or articles"
+        detail: "Undertakings carrying out the manufacture of substances and the distribution of substances or mixtures, as referred to in Article 3, points (9) and (14), of Regulation (EC) No 1907/2006, and undertakings carrying out the production of articles, as defined in Article 3, point (3), of that Regulation, from substances or mixtures."
 
   - id: food
     annex: "II"
+    verified: true
+    checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+    evidence_quote: "Production, processing and distribution of food"
     title: "Production, processing and distribution of food"
     organisation_sector: food
     subsectors:
       - id: food_business
         title: "Wholesale distribution and industrial production and processing of food"
-        detail: "Food businesses engaged in wholesale distribution and industrial production and processing."
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "Wholesale distribution and industrial production and processing of food"
+        detail: "Food businesses as defined in Article 3, point (2), of Regulation (EC) No 178/2002 which are engaged in wholesale distribution and industrial production and processing."
 
   - id: manufacturing
     annex: "II"
+    verified: true
+    checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+    evidence_quote: "Manufacturing"
     title: "Manufacturing"
     organisation_sector: manufacturing
     subsectors:
       - id: medical_devices
         title: "Manufacture of medical devices and in vitro diagnostic medical devices"
-        detail: "Manufacturers of medical devices and in vitro diagnostic medical devices, except entities manufacturing the public-health-emergency critical devices listed in Annex I, point 5."
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "Manufacture of medical devices and in vitro diagnostic medical devices"
+        detail: "Entities manufacturing medical devices as defined in Article 2, point (1), of Regulation (EU) 2017/745, and entities manufacturing in vitro diagnostic medical devices as defined in Article 2, point (2), of Regulation (EU) 2017/746, with the exception of entities manufacturing medical devices referred to in Annex I, point 5, fifth indent, of this Directive."
       - id: computers_electronics
         title: "Manufacture of computer, electronic and optical products"
-        detail: "Economic activities in section C division 26 of NACE Rev. 2."
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "Manufacture of computer, electronic and optical products"
+        detail: "Undertakings carrying out any of the economic activities referred to in section C division 26 of NACE Rev. 2."
       - id: electrical_equipment
         title: "Manufacture of electrical equipment"
-        detail: "Economic activities in section C division 27 of NACE Rev. 2."
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "Manufacture of electrical equipment"
+        detail: "Undertakings carrying out any of the economic activities referred to in section C division 27 of NACE Rev. 2."
       - id: machinery
         title: "Manufacture of machinery and equipment n.e.c."
-        detail: "Economic activities in section C division 28 of NACE Rev. 2."
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "Manufacture of machinery and equipment n.e.c."
+        detail: "Undertakings carrying out any of the economic activities referred to in section C division 28 of NACE Rev. 2."
       - id: motor_vehicles
         title: "Manufacture of motor vehicles, trailers and semi-trailers"
-        detail: "Economic activities in section C division 29 of NACE Rev. 2."
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "Manufacture of motor vehicles, trailers and semi-trailers"
+        detail: "Undertakings carrying out any of the economic activities referred to in section C division 29 of NACE Rev. 2."
       - id: other_transport_equipment
         title: "Manufacture of other transport equipment"
-        detail: "Economic activities in section C division 30 of NACE Rev. 2."
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "Manufacture of other transport equipment"
+        detail: "Undertakings carrying out any of the economic activities referred to in section C division 30 of NACE Rev. 2."
 
   - id: digital_providers
     annex: "II"
+    verified: true
+    checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+    evidence_quote: "Digital providers"
     title: "Digital providers"
     organisation_sector: digital_providers
     subsectors:
       - id: online_marketplaces
         title: "Providers of online marketplaces"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "Providers of online marketplaces"
         detail: "Providers of online marketplaces."
       - id: online_search
         title: "Providers of online search engines"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "Providers of online search engines"
         detail: "Providers of online search engines."
       - id: social_networks
         title: "Providers of social networking services platforms"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "Providers of social networking services platforms"
         detail: "Providers of social networking services platforms."
 
   - id: research
     annex: "II"
+    verified: true
+    checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+    evidence_quote: "Research"
     title: "Research"
     organisation_sector: research
     subsectors:
       - id: research_organisations
         title: "Research organisations"
-        detail: "Research organisations. Education institutions are not in this category; a Member State may choose to apply the directive to them, in particular where they carry out critical research (Art. 2(5)(b))."
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "Research organisations"
+        detail: "Research organisations. Education institutions are not this category. A Member State may provide for the directive to apply to education institutions, in particular where they carry out critical research activities (Art. 2(5)(b))."

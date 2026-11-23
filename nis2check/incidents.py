@@ -6,11 +6,12 @@ Directive (EU) 2022/2555, Article 23(4) (OJ L 333, 27.12.2022, p. 80):
 * an incident notification within 72 hours of becoming aware;
 * a final report not later than one month after the incident notification was submitted.
 
-"One month" is the same civil time on the same day of the next month. When that
-day does not exist (31 January, a 30-day month), the deadline is the last day
-of the month, at the same time. National rules on how periods are reckoned,
-including Regulation (EEC, Euratom) No 1182/71, can differ. This is an
-operational helper, not legal advice.
+Article 23(4) states the periods and does not set the hour at which a month ends.
+This helper counts 24 hours and 72 hours from the moment of awareness, and counts
+one month as the same clock time on the same date in the following month, or the
+last day of that month when that date does not exist. It does not move a deadline
+that falls on a Saturday, Sunday or holiday. This is an operational helper, not
+legal advice.
 
 Times are naive UTC.
 """

@@ -32,10 +32,13 @@ from importlib import resources
 
 import yaml
 
-OUTCOMES = ("essential", "important", "out_of_scope", "insufficient")
+OUTCOMES = ("essential", "important", "in_scope", "out_of_scope", "insufficient")
 OUTCOME_LABELS = {
     "essential": "Essential entity",
     "important": "Important entity",
+    # Art. 2(4) brings domain name registration services into the directive, and
+    # Art. 3(3) lists them separately from essential and important entities.
+    "in_scope": "In scope, not classified as essential or important",
     "out_of_scope": "Out of scope",
     "insufficient": "Not enough information",
 }
@@ -66,6 +69,9 @@ class SpecialCase:
     effect: str
     reason: str
     organisation_sector: str | None = None
+    evidence_quote: str = ""
+    checked_against: str = ""
+    verified: bool = False
 
 
 @dataclass(frozen=True)
@@ -79,6 +85,9 @@ class Subsector:
     organisation_sector: str
     special_case: str | None = None
     note: str = ""
+    evidence_quote: str = ""
+    checked_against: str = ""
+    verified: bool = False
 
 
 @dataclass(frozen=True)
@@ -89,6 +98,9 @@ class Sector:
     organisation_sector: str
     note: str
     subsectors: tuple[Subsector, ...]
+    evidence_quote: str = ""
+    checked_against: str = ""
+    verified: bool = False
 
 
 @dataclass(frozen=True)
@@ -101,6 +113,9 @@ class ScopeRules:
     size_notes: tuple[str, ...]
     special_cases: tuple[SpecialCase, ...]
     sectors: tuple[Sector, ...]
+    size_evidence_quote: str = ""
+    size_checked_against: str = ""
+    size_verified: bool = False
 
     def case(self, case_id: str) -> SpecialCase:
         for item in self.special_cases:
@@ -155,6 +170,20 @@ def _text(value) -> str:
     return " ".join(str(value or "").split())
 
 
+def _evidence(raw: dict, where: str) -> tuple[str, str, bool]:
+    """A scope citation. verified true is allowed only with a quote and the text read."""
+    if "verified" not in raw:
+        raise ScopeRulesError(f"{where}: missing verified")
+    verified = raw.get("verified")
+    if not isinstance(verified, bool):
+        raise ScopeRulesError(f"{where}: verified must be true or false")
+    quote = _text(raw.get("evidence_quote"))
+    checked = _text(raw.get("checked_against"))
+    if verified and (not quote or not checked):
+        raise ScopeRulesError(f"{where}: verified true needs evidence_quote and checked_against")
+    return quote, checked, verified
+
+
 def _articles(value) -> tuple[str, ...]:
     if not value:
         return ()
@@ -195,12 +224,13 @@ def parse_scope_rules(data: dict) -> ScopeRules:
         raise ScopeRulesError("scope rules must be a mapping")
     effects = {
         "essential_any_size", "important_any_size", "important_if_annex",
-        "telecom", "local_public_admin",
+        "telecom", "local_public_admin", "in_scope_unclassified",
     }
     size = data.get("size") or {}
     if not isinstance(size, dict):
         raise ScopeRulesError("size must be a mapping")
     bands = {name: _band(size, name) for name in ("large", "medium", "micro")}
+    size_quote, size_checked, size_verified = _evidence(size, "size")
 
     cases: list[SpecialCase] = []
     seen: set[str] = set()
@@ -212,6 +242,7 @@ def parse_scope_rules(data: dict) -> ScopeRules:
         effect = str(raw.get("effect") or "")
         if effect not in effects:
             raise ScopeRulesError(f"special case {case_id}: unknown effect {effect!r}")
+        quote, checked, verified = _evidence(raw, f"special case {case_id}")
         cases.append(SpecialCase(
             id=case_id,
             label=_text(raw.get("label")),
@@ -219,6 +250,9 @@ def parse_scope_rules(data: dict) -> ScopeRules:
             effect=effect,
             reason=_text(raw.get("reason")),
             organisation_sector=(str(raw["organisation_sector"]) if raw.get("organisation_sector") else None),
+            evidence_quote=quote,
+            checked_against=checked,
+            verified=verified,
         ))
     by_id = {case.id: case for case in cases}
 
@@ -233,6 +267,7 @@ def parse_scope_rules(data: dict) -> ScopeRules:
         if not sector_id or not org_sector:
             raise ScopeRulesError("each sector needs an id and an organisation_sector")
         note = _text(raw.get("note"))
+        sector_quote, sector_checked, sector_verified = _evidence(raw, f"sector {sector_id}")
         subs: list[Subsector] = []
         for sub in raw.get("subsectors") or []:
             sub_id = str(sub.get("id") or "")
@@ -242,6 +277,7 @@ def parse_scope_rules(data: dict) -> ScopeRules:
             linked = sub.get("special_case")
             if linked is not None and linked not in by_id:
                 raise ScopeRulesError(f"subsector {sub_id}: unknown special case {linked!r}")
+            sub_quote, sub_checked, sub_verified = _evidence(sub, f"subsector {sub_id}")
             subs.append(Subsector(
                 id=sub_id,
                 title=_text(sub.get("title")),
@@ -252,6 +288,9 @@ def parse_scope_rules(data: dict) -> ScopeRules:
                 organisation_sector=org_sector,
                 special_case=(str(linked) if linked else None),
                 note=note,
+                evidence_quote=sub_quote,
+                checked_against=sub_checked,
+                verified=sub_verified,
             ))
         if not subs:
             raise ScopeRulesError(f"sector {sector_id}: has no subsectors")
@@ -262,6 +301,9 @@ def parse_scope_rules(data: dict) -> ScopeRules:
             organisation_sector=org_sector,
             note=note,
             subsectors=tuple(subs),
+            evidence_quote=sector_quote,
+            checked_against=sector_checked,
+            verified=sector_verified,
         ))
 
     notes = tuple(_text(item) for item in (data.get("size_notes") or []) if _text(item))
@@ -271,6 +313,9 @@ def parse_scope_rules(data: dict) -> ScopeRules:
         recommendation=_text(data.get("recommendation")),
         disclaimer=_text(data.get("disclaimer")),
         size=bands,
+        size_evidence_quote=size_quote,
+        size_checked_against=size_checked,
+        size_verified=size_verified,
         size_notes=notes,
         special_cases=tuple(cases),
         sectors=tuple(sectors),
@@ -424,6 +469,7 @@ def assess_scope(
 
     forced_essential = False
     forced_in_scope = False
+    registration_in_scope = False
     telecom_needs_size = False
     for case in chosen:
         articles = case.articles
@@ -477,6 +523,12 @@ def assess_scope(
                 ))
         elif case.effect == "local_public_admin":
             reasons.append(Reason(case.reason, articles))
+        elif case.effect == "in_scope_unclassified":
+            # Art. 2(4) applies the directive. Art. 3(3) lists these entities
+            # separately from essential and important entities, so Art. 3(2)
+            # does not classify them as important.
+            registration_in_scope = True
+            reasons.append(Reason(case.reason, articles))
         else:  # pragma: no cover - parse_scope_rules rejects unknown effects
             raise ScopeRulesError(f"unknown effect {case.effect}")
 
@@ -494,9 +546,11 @@ def assess_scope(
         outcome = "insufficient"
     elif cap_in_scope or forced_in_scope:
         outcome = "important"
+    elif registration_in_scope:
+        outcome = "in_scope"
     else:
         outcome = "out_of_scope"
-    regardless = forced_in_scope
+    regardless = forced_in_scope or registration_in_scope
 
     org_sector = None
     if sub is not None:

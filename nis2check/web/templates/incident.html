@@ -16,7 +16,7 @@
   <div><strong>{{ tr('incident.channel') }}:</strong> <a href="{{ jurisdiction.law.reporting_channel_url }}">{{ jurisdiction.law.reporting_channel_url }}</a></div>
 </div>
 {% endif %}
-<div class="note">{{ disclaimer }} An incident is significant under Art. 23(3) when it has caused or is capable of causing severe operational disruption or financial loss, or considerable material or non-material damage to other people.</div>
+<div class="note">{{ disclaimer }} An incident is significant under Art. 23(3) where it has caused or is capable of causing severe operational disruption of the services or financial loss for the entity, or it has affected or is capable of affecting other natural or legal persons by causing considerable material or non-material damage.</div>
 
 <h2>Deadlines</h2>
 <table>
@@ -58,7 +58,7 @@
 
 <section id="early_warning" class="question">
   <h2>Early warning <span class="small muted">{{ articles.early_warning }}</span></h2>
-  <p class="small muted">Within 24 hours. Indicate whether the incident is suspected of being caused by unlawful or malicious acts, or could have a cross-border impact.</p>
+  <p class="small muted">Without undue delay and in any event within 24 hours of becoming aware. Where applicable, indicate whether the incident is suspected of being caused by unlawful or malicious acts or could have a cross-border impact. Send it to the CSIRT or, where applicable, the competent authority.</p>
   {% set row = singles.early_warning %}
   {{ exports(incident, row) }}
   {% if editable %}
@@ -77,7 +77,7 @@
 
 <section id="notification" class="question">
   <h2>Incident notification <span class="small muted">{{ articles.notification }}</span></h2>
-  <p class="small muted">Within 72 hours. Update the early warning, and give an initial assessment of severity and impact, plus indicators of compromise where you have them.</p>
+  <p class="small muted">Without undue delay and in any event within 72 hours of becoming aware. Where applicable, update the early warning, and give an initial assessment of the incident, including its severity and impact, and, where available, the indicators of compromise.</p>
   {% set row = singles.notification %}
   {{ exports(incident, row) }}
   {% if editable %}
@@ -127,7 +127,7 @@
 
 <section id="final" class="question">
   <h2>Final report <span class="small muted">{{ articles.final }}</span></h2>
-  <p class="small muted">Not later than one month after the incident notification. Include the description, severity and impact, the likely threat or root cause, the mitigation, and any cross-border impact.</p>
+  <p class="small muted">Not later than one month after the incident notification under Art. 23(4)(b) was submitted. Include a detailed description, including severity and impact, the type of threat or root cause that is likely to have triggered the incident, applied and ongoing mitigation, and, where applicable, the cross-border impact.</p>
   {% set row = singles.final %}
   {{ exports(incident, row) }}
   {% if editable %}
@@ -152,7 +152,7 @@
 
 <section id="progress" class="question">
   <h2>Progress report <span class="small muted">{{ articles.progress }}</span></h2>
-  <p class="small muted">If the incident is still ongoing when the final report is due, send a progress report then, and a further final report within one month of handling the incident.</p>
+  <p class="small muted">If the incident is still ongoing when the final report under Art. 23(4)(d) is submitted, provide a progress report at that time and a final report within one month of handling the incident.</p>
   {% set row = singles.progress %}
   {{ exports(incident, row) }}
   {% if editable %}

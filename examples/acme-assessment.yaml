@@ -21,26 +21,26 @@ responses:
 
   # GOV | Art. 20 | Governance and management accountability
   GOV-01:
-    # [critical] Has the management body formally approved the cybersecurity risk-management measures?
+    # [critical] Has the management body approved the cybersecurity risk-management measures taken in order to comply with Article 21?
     # Evidence: Board or management meeting minutes, signed policy approval
     answer: "yes"
     evidence:
       - "evidence/board-minutes-2026-03.md"
     notes: ""
   GOV-02:
-    # [high] Does management receive regular reporting on cybersecurity risks and the status of measures?
+    # [high] Does the management body oversee the implementation of those cybersecurity risk-management measures?
     # Evidence: Quarterly security report, risk dashboard, meeting agendas
     answer: "partial"
     evidence: []
     notes: "Ad hoc updates only, no fixed schedule"
   GOV-03:
-    # [high] Have members of the management body completed cybersecurity training?
+    # [high] Are members of the management body required to follow training, and do they follow it, so that they gain sufficient knowledge and skills to identify risks and assess cybersecurity risk-management practices and their impact on the services provided?
     # Evidence: Training certificates or attendance records for each manager
     answer: "no"
     evidence: []
     notes: "Planned for Q1 2027"
   GOV-04:
-    # [medium] Is there a named person responsible for cybersecurity (e.g. CISO or security officer)?
+    # [medium] Can the management body be held liable for infringements of Article 21, without prejudice to national law on the liability of public institutions, public servants and elected or appointed officials?
     # Evidence: Org chart, role description, appointment letter
     answer: "yes"
     evidence:
@@ -49,21 +49,21 @@ responses:
 
   # RISK | Art. 21(2)(a) | Risk analysis and information system security policies
   RISK-01:
-    # [critical] Is there a documented, approved information security policy?
+    # [critical] Are there policies on risk analysis and information system security?
     # Evidence: Information security policy with version and approval date
     answer: "yes"
     evidence:
       - "evidence/infosec-policy.md"
     notes: ""
   RISK-02:
-    # [critical] Is a cybersecurity risk assessment performed at least annually and documented?
+    # [critical] Do the measures include policies on risk analysis of the risks posed to the security of the network and information systems used for operations or for the provision of services?
     # Evidence: Risk register, risk assessment report
     answer: "yes"
     evidence:
       - "evidence/risk-register.csv"
     notes: ""
   RISK-03:
-    # [high] Do identified risks have owners and treatment decisions (mitigate, accept, transfer, avoid)?
+    # [high] Do the measures include policies on information system security?
     # Evidence: Risk register with owner and treatment columns
     answer: "partial"
     evidence:
@@ -72,20 +72,20 @@ responses:
 
   # INC | Art. 21(2)(b) | Incident handling
   INC-01:
-    # [critical] Is there a documented incident response plan with roles and escalation paths?
+    # [critical] Do the measures include incident handling?
     # Evidence: Incident response plan, contact list
     answer: "yes"
     evidence:
       - "evidence/incident-response-plan.md"
     notes: ""
   INC-02:
-    # [high] Are security events logged and monitored so incidents can be detected?
+    # [high] Is incident handling part of the measures taken to prevent or minimise the impact of incidents on recipients of the services and on other services?
     # Evidence: Logging configuration, SIEM or alerting screenshots
     answer: "partial"
     evidence: []
     notes: "M365 alerts only, servers not monitored"
   INC-03:
-    # [medium] Are incidents recorded and reviewed afterwards (lessons learned)?
+    # [medium] Is incident handling included among the measures based on an all-hazards approach?
     # Evidence: Incident log, post-incident review notes
     answer: "no"
     evidence: []
@@ -93,26 +93,26 @@ responses:
 
   # BCM | Art. 21(2)(c) | Business continuity and crisis management
   BCM-01:
-    # [critical] Are backups of critical data taken regularly and stored separately (offline or immutable)?
+    # [critical] Does business continuity include backup management?
     # Evidence: Backup policy, backup job reports
     answer: "yes"
     evidence:
       - "evidence/backup-report-2026-10.md"
     notes: ""
   BCM-02:
-    # [high] Has restoring from backup been tested in the last 12 months?
+    # [high] Does business continuity include disaster recovery?
     # Evidence: Restore test record with date and result
     answer: "no"
     evidence: []
     notes: "Never tested"
   BCM-03:
-    # [high] Is there a business continuity or disaster recovery plan for critical services?
+    # [high] Do the measures include business continuity, such as backup management and disaster recovery?
     # Evidence: BCP/DRP document with recovery time objectives
     answer: "no"
     evidence: []
     notes: ""
   BCM-04:
-    # [medium] Is there a crisis management procedure, including how to communicate during a major incident?
+    # [medium] Do the measures include crisis management?
     # Evidence: Crisis communication plan, out-of-band contact list
     answer: "no"
     evidence: []
@@ -120,20 +120,20 @@ responses:
 
   # SUP | Art. 21(2)(d) | Supply chain security
   SUP-01:
-    # [high] Is there an inventory of suppliers and service providers with access to systems or data?
+    # [high] Does supply chain security include security-related aspects of the relationships with direct suppliers or service providers?
     # Evidence: Supplier register
     answer: "yes"
     evidence:
       - "evidence/supplier-register.csv"
     notes: ""
   SUP-02:
-    # [high] Are critical suppliers assessed for security before onboarding and periodically?
+    # [high] When supply-chain measures are considered, are the vulnerabilities specific to each direct supplier and service provider taken into account, and the overall quality of their products and cybersecurity practices, including their secure development procedures?
     # Evidence: Supplier security questionnaires, assessment records
     answer: "no"
     evidence: []
     notes: ""
   SUP-03:
-    # [medium] Do supplier contracts include security requirements (e.g. incident notification, data protection)?
+    # [medium] When supply-chain measures are considered, are the results of coordinated security risk assessments of critical supply chains carried out under Article 22(1) taken into account?
     # Evidence: Contract clauses, data processing agreements
     answer: "partial"
     evidence: []
@@ -141,25 +141,25 @@ responses:
 
   # SDLC | Art. 21(2)(e) | Secure acquisition, development and maintenance; vulnerability handling
   SDLC-01:
-    # [critical] Are security patches applied within a defined timeframe?
+    # [critical] Does security in network and information systems acquisition, development and maintenance include vulnerability handling?
     # Evidence: Patch management policy, patch status report
     answer: "partial"
     evidence: []
     notes: "Windows auto-updates, servers patched manually"
   SDLC-02:
-    # [high] Are systems scanned for vulnerabilities regularly?
+    # [high] Does that security include vulnerability disclosure?
     # Evidence: Vulnerability scan reports
     answer: "no"
     evidence: []
     notes: ""
   SDLC-03:
-    # [medium] Are security requirements considered when buying or developing systems?
+    # [medium] Do the measures include security in network and information systems acquisition, development and maintenance?
     # Evidence: Procurement checklist, secure development guidelines
     answer: "na"
     evidence: []
     notes: "No in-house development; purchasing covered by SUP"
   SDLC-04:
-    # [medium] Is there a way for outsiders to report vulnerabilities (e.g. security.txt, disclosure policy)?
+    # [medium] Are vulnerability handling and disclosure both included in acquisition, development and maintenance?
     # Evidence: Vulnerability disclosure policy, security.txt
     answer: "no"
     evidence: []
@@ -167,13 +167,13 @@ responses:
 
   # EFF | Art. 21(2)(f) | Assessing the effectiveness of measures
   EFF-01:
-    # [high] Are security controls tested or audited periodically (internal audit, penetration test, review)?
+    # [high] Are there policies and procedures to assess the effectiveness of cybersecurity risk-management measures?
     # Evidence: Audit reports, penetration test reports
     answer: "no"
     evidence: []
     notes: ""
   EFF-02:
-    # [medium] Are security metrics or KPIs tracked (e.g. patch compliance, training completion)?
+    # [medium] Do those policies and procedures assess the effectiveness of the cybersecurity risk-management measures?
     # Evidence: KPI dashboard or report
     answer: "no"
     evidence: []
@@ -181,20 +181,20 @@ responses:
 
   # HYG | Art. 21(2)(g) | Cyber hygiene and training
   HYG-01:
-    # [high] Do all employees receive security awareness training at least annually?
+    # [high] Do the measures include basic cyber hygiene practices?
     # Evidence: Training completion records
     answer: "partial"
     evidence: []
     notes: "Onboarding training only"
   HYG-02:
-    # [high] Are basic hygiene controls in place (endpoint protection, secure configuration, no shared accounts)?
+    # [high] Do the measures include cybersecurity training?
     # Evidence: Endpoint protection console, configuration baseline
     answer: "yes"
     evidence:
       - "https://example.com/acme/endpoint-console"
     notes: ""
   HYG-03:
-    # [medium] Are phishing simulations or similar exercises run?
+    # [medium] Do the measures include both basic cyber hygiene practices and cybersecurity training?
     # Evidence: Phishing simulation results
     answer: "no"
     evidence: []
@@ -202,19 +202,19 @@ responses:
 
   # CRY | Art. 21(2)(h) | Cryptography and encryption
   CRY-01:
-    # [medium] Is there a policy defining when and how encryption must be used?
+    # [medium] Are there policies and procedures regarding the use of cryptography and, where appropriate, encryption?
     # Evidence: Cryptography policy
     answer: "no"
     evidence: []
     notes: ""
   CRY-02:
-    # [high] Are data in transit and sensitive data at rest encrypted (TLS, disk encryption)?
+    # [high] Where appropriate, do those policies and procedures cover encryption?
     # Evidence: TLS configuration, disk encryption status report
     answer: "yes"
     evidence: []
     notes: "TLS everywhere, BitLocker on laptops"
   CRY-03:
-    # [high] Are encryption keys and secrets managed securely (not hardcoded, access-controlled)?
+    # [high] Do the policies and procedures address the use of cryptography?
     # Evidence: Secrets manager configuration, key management procedure
     answer: "partial"
     evidence: []
@@ -222,27 +222,27 @@ responses:
 
   # ACC | Art. 21(2)(i) | HR security, access control and asset management
   ACC-01:
-    # [high] Is there an up-to-date inventory of hardware, software and data assets?
+    # [high] Do the measures include asset management?
     # Evidence: Asset inventory
     answer: "partial"
     evidence: []
     notes: "Hardware only"
   ACC-02:
-    # [critical] Is access granted on a role basis and least-privilege principle?
+    # [critical] Do the measures include access control policies?
     # Evidence: Access control policy, role matrix
     answer: "yes"
     evidence:
       - "evidence/access-control-policy.md"
     notes: ""
   ACC-03:
-    # [high] Are joiner, mover and leaver processes defined so access is granted and removed on time?
+    # [high] Do the measures include human resources security?
     # Evidence: Onboarding and offboarding checklists
     answer: "yes"
     evidence:
       - "evidence/access-control-policy.md"
     notes: ""
   ACC-04:
-    # [medium] Are user access rights reviewed periodically?
+    # [medium] Are human resources security, access control policies and asset management all included in the measures?
     # Evidence: Access review records
     answer: "no"
     evidence: []
@@ -250,27 +250,27 @@ responses:
 
   # MFA | Art. 21(2)(j) | Multi-factor authentication and secure communications
   MFA-01:
-    # [critical] Is MFA enforced for all remote access and cloud services?
+    # [critical] Where appropriate, does the entity use multi-factor authentication or continuous authentication solutions?
     # Evidence: Identity provider MFA policy, coverage report
     answer: "partial"
     evidence:
       - "evidence/mfa-coverage.csv"
     notes: "ERP still without MFA"
   MFA-02:
-    # [critical] Is MFA enforced for all privileged and administrator accounts?
+    # [critical] Where appropriate, are voice, video and text communications secured?
     # Evidence: Admin account MFA report
     answer: "yes"
     evidence:
       - "evidence/mfa-coverage.csv"
     notes: ""
   MFA-03:
-    # [medium] Are internal voice, video and messaging tools secured (approved tools, encryption)?
+    # [medium] Where appropriate, are emergency communication systems within the entity secured?
     # Evidence: List of approved communication tools and their settings
     answer: "yes"
     evidence: []
     notes: "Teams only"
   MFA-04:
-    # [medium] Is there a secured emergency communication channel if primary systems are down?
+    # [medium] Where appropriate, do the measures include multi-factor or continuous authentication, secured voice, video and text communications, and secured emergency communication systems?
     # Evidence: Emergency communication procedure
     answer: "no"
     evidence: []
@@ -278,19 +278,19 @@ responses:
 
   # REP | Art. 23 | Incident reporting obligations
   REP-01:
-    # [high] Is it defined what counts as a 'significant incident' for your organisation?
+    # [high] Is an incident treated as significant where it has caused or is capable of causing severe operational disruption of the services or financial loss for the entity, or where it has affected or is capable of affecting other natural or legal persons by causing considerable material or non-material damage?
     # Evidence: Incident classification criteria
     answer: "no"
     evidence: []
     notes: ""
   REP-02:
-    # [critical] Is there a procedure to send an early warning to the CSIRT within 24 hours?
+    # [critical] Is there a procedure to submit an early warning to the CSIRT or, where applicable, the competent authority, without undue delay and in any event within 24 hours of becoming aware, indicating, where applicable, a suspected unlawful or malicious act or a possible cross-border impact?
     # Evidence: Reporting procedure with CSIRT contact details
     answer: 
     evidence: []
     notes: ""
   REP-03:
-    # [high] Does the procedure cover the 72-hour notification and the one-month final report?
+    # [high] Does the procedure cover an incident notification within 72 hours of becoming aware, a final report not later than one month after that notification was submitted, an intermediate report on request, and, where the incident is still ongoing at that final report, a progress report and a further final report within one month of handling the incident?
     # Evidence: Reporting procedure, report templates
     answer: 
     evidence: []

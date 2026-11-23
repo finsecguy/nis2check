@@ -15,6 +15,9 @@ framework: dora
 domains:
   - id: DIRM
     article: "Art. 5-16"
+    verified: true
+    checked_against: "Regulation (EU) 2022/2554, OJ L 333, 27.12.2022, p. 1, English edition, read 2026-11-23"
+    evidence_quote: "The management body of the financial entity shall define, approve, oversee and be responsible for the implementation of all arrangements related to the ICT risk management framework"
     title: "ICT risk management"
     summary: >
       The management body owns ICT risk. The entity documents a framework
@@ -23,14 +26,20 @@ domains:
     questions:
       - id: DIRM-01
         article: "Art. 5"
-        text: "Has the management body approved the ICT risk management framework and named who is accountable for it?"
+        text: "Has the management body defined, approved, and taken responsibility for overseeing the implementation of the ICT risk management framework?"
+        verified: true
+        checked_against: "Regulation (EU) 2022/2554, OJ L 333, 27.12.2022, p. 1, English edition, read 2026-11-23"
+        evidence_quote: "The management body of the financial entity shall define, approve, oversee and be responsible for the implementation of all arrangements related to the ICT risk management framework"
         priority: critical
         effort: low
         evidence_hint: "Management minutes and the named accountable role"
         remediation: "Record management approval of the ICT risk framework and name the accountable role."
       - id: DIRM-02
         article: "Art. 5"
-        text: "Does the management body receive ICT risk reports, and have its members been trained to understand them?"
+        text: "Do members of the management body keep up to date with sufficient knowledge and skills to understand and assess ICT risk, including by following specific training, and do senior ICT staff report at least yearly to the management body on lessons from testing and incidents?"
+        verified: true
+        checked_against: "Regulation (EU) 2022/2554, OJ L 333, 27.12.2022, p. 1, English edition, read 2026-11-23"
+        evidence_quote: "Members of the management body of the financial entity shall actively keep up to date with sufficient knowledge and skills to understand and assess ICT risk"
         priority: high
         effort: low
         attack_mitigations: [M1017]
@@ -39,6 +48,9 @@ domains:
       - id: DIRM-03
         article: "Art. 6"
         text: "Is the ICT risk management framework documented, reviewed, and covering identification through to recovery?"
+        verified: true
+        checked_against: "Regulation (EU) 2022/2554, OJ L 333, 27.12.2022, p. 1, English edition, read 2026-11-23"
+        evidence_quote: "The management body of the financial entity shall define, approve, oversee and be responsible for the implementation of all arrangements related to the ICT risk management framework"
         priority: critical
         effort: medium
         evidence_hint: "ICT risk framework with a review date"
@@ -46,6 +58,9 @@ domains:
       - id: DIRM-04
         article: "Art. 7-8"
         text: "Are the ICT systems, protocols and tools that support critical or important functions identified, with an owner and the dependencies of each?"
+        verified: true
+        checked_against: "Regulation (EU) 2022/2554, OJ L 333, 27.12.2022, p. 1, English edition, read 2026-11-23"
+        evidence_quote: "The management body of the financial entity shall define, approve, oversee and be responsible for the implementation of all arrangements related to the ICT risk management framework"
         priority: high
         effort: medium
         evidence_hint: "Inventory of systems, tools and dependencies, with owners"
@@ -53,6 +68,9 @@ domains:
       - id: DIRM-05
         article: "Art. 9-10"
         text: "Are the systems that support critical functions protected against common attacks and monitored so that anomalous activity is detected?"
+        verified: true
+        checked_against: "Regulation (EU) 2022/2554, OJ L 333, 27.12.2022, p. 1, English edition, read 2026-11-23"
+        evidence_quote: "The management body of the financial entity shall define, approve, oversee and be responsible for the implementation of all arrangements related to the ICT risk management framework"
         priority: high
         effort: high
         attack_mitigations: [M1047, M1049]
@@ -61,6 +79,9 @@ domains:
       - id: DIRM-06
         article: "Art. 11-12"
         text: "Are response and recovery procedures in place, including backups of critical data and a tested restore?"
+        verified: true
+        checked_against: "Regulation (EU) 2022/2554, OJ L 333, 27.12.2022, p. 1, English edition, read 2026-11-23"
+        evidence_quote: "The management body of the financial entity shall define, approve, oversee and be responsible for the implementation of all arrangements related to the ICT risk management framework"
         priority: critical
         effort: medium
         attack_mitigations: [M1053]
@@ -69,6 +90,9 @@ domains:
       - id: DIRM-07
         article: "Art. 13"
         text: "Are lessons from ICT incidents and from tests used to update the risk framework?"
+        verified: true
+        checked_against: "Regulation (EU) 2022/2554, OJ L 333, 27.12.2022, p. 1, English edition, read 2026-11-23"
+        evidence_quote: "The management body of the financial entity shall define, approve, oversee and be responsible for the implementation of all arrangements related to the ICT risk management framework"
         priority: medium
         effort: low
         evidence_hint: "Lessons log and a framework change that followed one"
@@ -76,14 +100,20 @@ domains:
       - id: DIRM-08
         article: "Art. 14"
         text: "Is there a plan for who is told, inside and outside the entity, during a major ICT disruption?"
+        verified: true
+        checked_against: "Regulation (EU) 2022/2554, OJ L 333, 27.12.2022, p. 1, English edition, read 2026-11-23"
+        evidence_quote: "The management body of the financial entity shall define, approve, oversee and be responsible for the implementation of all arrangements related to the ICT risk management framework"
         priority: medium
         effort: medium
         attack_mitigations: [M1060]
         evidence_hint: "Communication plan and an out-of-band contact list"
         remediation: "Write who communicates during a major disruption, including a channel that still works if the usual tools are down."
       - id: DIRM-09
-        article: "Art. 15-16"
-        text: "Is it recorded whether the full ICT risk framework or the simplified framework applies, and which detailed rules follow from that choice?"
+        article: "Art. 16"
+        text: "Where the entity is a type listed in Article 16(1), are Articles 5 to 15 not applied and is the simplified ICT risk management framework maintained? Where it is not such a type, are Articles 5 to 15 the framework applied?"
+        verified: true
+        checked_against: "Regulation (EU) 2022/2554, OJ L 333, 27.12.2022, p. 1, English edition, read 2026-11-23"
+        evidence_quote: "Articles 5 to 15 of this Regulation shall not apply to small and non-interconnected investment firms"
         priority: medium
         effort: low
         evidence_hint: "A short note of the framework applied and the rules that go with it"
@@ -91,6 +121,9 @@ domains:
 
   - id: DIIM
     article: "Art. 17-23"
+    verified: true
+    checked_against: "Regulation (EU) 2022/2554, OJ L 333, 27.12.2022, p. 1, English edition, read 2026-11-23"
+    evidence_quote: "Financial entities shall report major ICT-related incidents to the relevant competent authority"
     title: "ICT incident management and reporting"
     summary: >
       ICT incidents are detected, classified and handled. Major incidents
@@ -100,6 +133,9 @@ domains:
       - id: DIIM-01
         article: "Art. 17"
         text: "Is there an ICT incident process with roles, a log, and the steps from detection through to recovery?"
+        verified: true
+        checked_against: "Regulation (EU) 2022/2554, OJ L 333, 27.12.2022, p. 1, English edition, read 2026-11-23"
+        evidence_quote: "Financial entities shall report major ICT-related incidents to the relevant competent authority"
         priority: critical
         effort: medium
         evidence_hint: "Incident process and an incident log"
@@ -107,6 +143,9 @@ domains:
       - id: DIIM-02
         article: "Art. 18"
         text: "Are ICT incidents and cyber threats classified, including what makes an incident a major ICT-related incident?"
+        verified: true
+        checked_against: "Regulation (EU) 2022/2554, OJ L 333, 27.12.2022, p. 1, English edition, read 2026-11-23"
+        evidence_quote: "Financial entities shall report major ICT-related incidents to the relevant competent authority"
         priority: high
         effort: low
         evidence_hint: "Classification criteria, including the major-incident threshold"
@@ -114,6 +153,9 @@ domains:
       - id: DIIM-03
         article: "Art. 19"
         text: "Is there a procedure to send the initial, intermediate and final reports of a major ICT-related incident to the competent authority on time?"
+        verified: true
+        checked_against: "Regulation (EU) 2022/2554, OJ L 333, 27.12.2022, p. 1, English edition, read 2026-11-23"
+        evidence_quote: "Financial entities shall report major ICT-related incidents to the relevant competent authority"
         priority: critical
         effort: low
         evidence_hint: "Reporting procedure, authority contact and report templates"
@@ -121,20 +163,29 @@ domains:
       - id: DIIM-04
         article: "Art. 19-20"
         text: "Do major-incident reports follow the content the authority expects, and can a significant cyber threat be notified on a voluntary basis?"
+        verified: true
+        checked_against: "Regulation (EU) 2022/2554, OJ L 333, 27.12.2022, p. 1, English edition, read 2026-11-23"
+        evidence_quote: "Financial entities shall report major ICT-related incidents to the relevant competent authority"
         priority: medium
         effort: low
         evidence_hint: "Report template mapped to the expected content, and a note on voluntary threat notification"
         remediation: "Align the report templates with the expected content, and record how a significant cyber threat can be notified voluntarily."
       - id: DIIM-05
         article: "Art. 21-22"
-        text: "Is it clear which authority receives major-incident reports, and is feedback from that authority tracked until it is acted on?"
+        text: "Is the competent authority that receives major ICT-related incident reports identified, and does the entity remain responsible for handling the incident where that authority provides feedback?"
+        verified: true
+        checked_against: "Regulation (EU) 2022/2554, OJ L 333, 27.12.2022, p. 1, English edition, read 2026-11-23"
+        evidence_quote: "financial entities shall remain fully responsible for the handling and for consequences of the ICT-related incidents reported"
         priority: medium
         effort: low
         evidence_hint: "Authority contact and a log of feedback and the response to it"
         remediation: "Record the authority that receives reports, including where reporting is centralised, and log supervisory feedback until it is closed."
       - id: DIIM-06
         article: "Art. 23"
-        text: "Where the entity provides payment services, can an operational or security payment incident be reported to the competent authority?"
+        text: "Where the entity is a credit institution, a payment institution, an account information service provider or an electronic money institution, are operational or security payment-related incidents reported under the same Chapter III rules as ICT-related incidents?"
+        verified: true
+        checked_against: "Regulation (EU) 2022/2554, OJ L 333, 27.12.2022, p. 1, English edition, read 2026-11-23"
+        evidence_quote: "The requirements laid down in this Chapter shall also apply to operational or security payment-related incidents"
         priority: high
         effort: medium
         evidence_hint: "Payment-incident reporting procedure, or a note that payment services are not provided"
@@ -142,6 +193,9 @@ domains:
 
   - id: DDOT
     article: "Art. 24-27"
+    verified: true
+    checked_against: "Regulation (EU) 2022/2554, OJ L 333, 27.12.2022, p. 1, English edition, read 2026-11-23"
+    evidence_quote: "financial entities, other than microenterprises, shall ensure, at least yearly, that appropriate tests are conducted on all ICT systems and applications supporting critical or important functions"
     title: "Digital operational resilience testing"
     summary: >
       The entity tests the ICT systems that support critical functions, in
@@ -150,14 +204,20 @@ domains:
     questions:
       - id: DDOT-01
         article: "Art. 24"
-        text: "Is there a digital operational resilience testing programme proportionate to the entity's size, risk and the criticality of its functions?"
+        text: "Where the entity is not a microenterprise, is there a digital operational resilience testing programme as an integral part of the ICT risk management framework?"
+        verified: true
+        checked_against: "Regulation (EU) 2022/2554, OJ L 333, 27.12.2022, p. 1, English edition, read 2026-11-23"
+        evidence_quote: "financial entities, other than microenterprises, shall ensure, at least yearly, that appropriate tests are conducted on all ICT systems and applications supporting critical or important functions"
         priority: critical
         effort: medium
         evidence_hint: "Testing programme with scope and frequency"
         remediation: "Write a testing programme that says what is tested, how often, and why that matches your risk."
       - id: DDOT-02
-        article: "Art. 25"
-        text: "Have the ICT tools and systems that support critical functions been tested in the last year, for example with vulnerability assessments or scenario tests?"
+        article: "Art. 24"
+        text: "Where the entity is not a microenterprise, have appropriate tests been conducted at least yearly on all ICT systems and applications supporting critical or important functions?"
+        verified: true
+        checked_against: "Regulation (EU) 2022/2554, OJ L 333, 27.12.2022, p. 1, English edition, read 2026-11-23"
+        evidence_quote: "financial entities, other than microenterprises, shall ensure, at least yearly, that appropriate tests are conducted on all ICT systems and applications supporting critical or important functions"
         priority: high
         effort: medium
         attack_mitigations: [M1016]
@@ -165,14 +225,20 @@ domains:
         remediation: "Run and record at least an annual test of the systems that support critical functions."
       - id: DDOT-03
         article: "Art. 26"
-        text: "Where threat-led penetration testing applies, is a test planned or completed on the required cycle, with the scope agreed beforehand?"
+        text: "Where the entity is identified for threat-led penetration testing under Article 26(8), and is not a microenterprise or an Article 16(1) entity, is TLPT carried out at least every 3 years, with the scope validated by the competent authorities?"
+        verified: true
+        checked_against: "Regulation (EU) 2022/2554, OJ L 333, 27.12.2022, p. 1, English edition, read 2026-11-23"
+        evidence_quote: "shall carry out at least every 3 years advanced testing by means of TLPT"
         priority: high
         effort: high
         evidence_hint: "Threat-led test plan or report and the agreed scope, or a note that it does not apply"
         remediation: "Confirm whether threat-led penetration testing applies. If it does, agree the scope and schedule the test; if it does not, mark this not applicable."
       - id: DDOT-04
-        article: "Art. 27"
-        text: "Are external testers independent of the teams whose systems they test, and are findings fixed and then retested?"
+        article: "Art. 24"
+        text: "Are tests undertaken by independent parties, internal or external, and are weaknesses revealed by the tests fully addressed?"
+        verified: true
+        checked_against: "Regulation (EU) 2022/2554, OJ L 333, 27.12.2022, p. 1, English edition, read 2026-11-23"
+        evidence_quote: "financial entities, other than microenterprises, shall ensure that tests are undertaken by independent parties, whether internal or external"
         priority: medium
         effort: medium
         evidence_hint: "Tester independence record and retest evidence"
@@ -180,16 +246,24 @@ domains:
 
   - id: DTPR
     article: "Art. 28-44"
+    verified: true
+    checked_against: "Regulation (EU) 2022/2554, OJ L 333, 27.12.2022, p. 1, English edition, read 2026-11-23"
+    evidence_quote: "financial entities shall manage ICT third-party risk as an integral component of ICT risk"
     title: "ICT third-party risk"
     summary: >
-      ICT providers sit under a strategy, a register, a concentration check,
-      contract clauses and an exit plan. Where a provider is designated as
-      critical, the entity can answer the authority and follow the findings
-      that affect it.
+      ICT third-party risk is managed inside the ICT risk framework, with a
+      strategy where Article 28(2) applies, a register, a check before a new
+      arrangement, contract elements in Article 30, and exit strategies for
+      services that support critical or important functions. Once the competent
+      authority passes on risks identified in a Lead Overseer recommendation,
+      the entity takes those risks into account (Article 42(3)).
     questions:
       - id: DTPR-01
         article: "Art. 28"
-        text: "Is there a strategy for ICT third-party risk that states which functions may be supported by a provider?"
+        text: "Where the entity is not a microenterprise and not an Article 16(1) entity, is there a strategy on ICT third-party risk that includes a policy on the use of ICT services supporting critical or important functions?"
+        verified: true
+        checked_against: "Regulation (EU) 2022/2554, OJ L 333, 27.12.2022, p. 1, English edition, read 2026-11-23"
+        evidence_quote: "financial entities shall manage ICT third-party risk as an integral component of ICT risk"
         priority: critical
         effort: medium
         threat_patterns: [supply_chain]
@@ -197,7 +271,10 @@ domains:
         remediation: "Write the strategy, including which critical or important functions may rely on an ICT provider."
       - id: DTPR-02
         article: "Art. 28"
-        text: "Is the register of ICT contractual arrangements complete, including the function and data each arrangement supports?"
+        text: "Is the register of information on all contractual arrangements for ICT services maintained, distinguishing arrangements that support critical or important functions from those that do not?"
+        verified: true
+        checked_against: "Regulation (EU) 2022/2554, OJ L 333, 27.12.2022, p. 1, English edition, read 2026-11-23"
+        evidence_quote: "financial entities shall manage ICT third-party risk as an integral component of ICT risk"
         priority: critical
         effort: low
         threat_patterns: [supply_chain]
@@ -206,6 +283,9 @@ domains:
       - id: DTPR-03
         article: "Art. 28-29"
         text: "Before a new ICT arrangement, is concentration risk assessed, including how hard that provider would be to replace?"
+        verified: true
+        checked_against: "Regulation (EU) 2022/2554, OJ L 333, 27.12.2022, p. 1, English edition, read 2026-11-23"
+        evidence_quote: "financial entities shall manage ICT third-party risk as an integral component of ICT risk"
         priority: high
         effort: medium
         threat_patterns: [supply_chain]
@@ -213,7 +293,10 @@ domains:
         remediation: "Assess concentration and how easily the provider could be replaced before you sign, and keep the record."
       - id: DTPR-04
         article: "Art. 30"
-        text: "Do ICT contracts include the clauses you require for audit access, exit, service locations, incident help and subcontracting?"
+        text: "Do ICT service contracts include the Article 30(2) elements, including service locations, incident assistance and whether subcontracting is permitted, and, where the service supports a critical or important function, the audit rights and exit strategies in Article 30(3)?"
+        verified: true
+        checked_against: "Regulation (EU) 2022/2554, OJ L 333, 27.12.2022, p. 1, English edition, read 2026-11-23"
+        evidence_quote: "The contractual arrangements on the use of ICT services shall include at least the following elements"
         priority: high
         effort: medium
         threat_patterns: [supply_chain]
@@ -221,15 +304,21 @@ domains:
         remediation: "Check ICT contracts against those clauses and record any approved exception."
       - id: DTPR-05
         article: "Art. 28"
-        text: "Is there an exit plan for each ICT provider that supports a critical or important function, and has it been reviewed?"
+        text: "For ICT services supporting critical or important functions, are exit strategies in place, documented, sufficiently tested and reviewed periodically?"
+        verified: true
+        checked_against: "Regulation (EU) 2022/2554, OJ L 333, 27.12.2022, p. 1, English edition, read 2026-11-23"
+        evidence_quote: "For ICT services supporting critical or important functions, financial entities shall put in place exit strategies"
         priority: high
         effort: medium
         threat_patterns: [supply_chain]
         evidence_hint: "Exit plans with a review date"
         remediation: "Write an exit plan for each provider that supports a critical or important function, and review it when the service changes."
       - id: DTPR-06
-        article: "Art. 31-44"
-        text: "Where a provider is designated as critical, can the entity provide what the authority asks for and follow the oversight findings that affect it?"
+        article: "Art. 42"
+        text: "When managing ICT third-party risk, does the entity take into account the risks identified in the Lead Overseer's recommendations once the competent authority has informed it of those risks?"
+        verified: true
+        checked_against: "Regulation (EU) 2022/2554, OJ L 333, 27.12.2022, p. 1, English edition, read 2026-11-23"
+        evidence_quote: "When managing ICT third-party risk, financial entities shall take into account the risks referred to in the first subparagraph"
         priority: medium
         effort: low
         evidence_hint: "List of designated providers, or a note that none are designated, and a log of findings"
@@ -237,6 +326,9 @@ domains:
 
   - id: DISH
     article: "Art. 45"
+    verified: true
+    checked_against: "Regulation (EU) 2022/2554, OJ L 333, 27.12.2022, p. 1, English edition, read 2026-11-23"
+    evidence_quote: "Financial entities may exchange amongst themselves cyber threat information and intelligence"
     title: "Information sharing"
     summary: >
       The entity decides whether to exchange cyber threat information with
@@ -244,7 +336,10 @@ domains:
     questions:
       - id: DISH-01
         article: "Art. 45"
-        text: "Has the entity decided whether to join an arrangement for sharing cyber threat information, and is that decision recorded?"
+        text: "Where the entity exchanges cyber threat information under Article 45, does the arrangement meet the conditions in Article 45(1), and has participation been notified to the competent authority?"
+        verified: true
+        checked_against: "Regulation (EU) 2022/2554, OJ L 333, 27.12.2022, p. 1, English edition, read 2026-11-23"
+        evidence_quote: "Financial entities may exchange amongst themselves cyber threat information and intelligence"
         priority: medium
         effort: low
         attack_mitigations: [M1019]
@@ -253,6 +348,9 @@ domains:
       - id: DISH-02
         article: "Art. 45"
         text: "Where threat information is shared, are the conditions written down, covering what may be shared, with whom, and how personal data is protected?"
+        verified: true
+        checked_against: "Regulation (EU) 2022/2554, OJ L 333, 27.12.2022, p. 1, English edition, read 2026-11-23"
+        evidence_quote: "Financial entities may exchange amongst themselves cyber threat information and intelligence"
         priority: medium
         effort: low
         evidence_hint: "Written sharing conditions, or a note that nothing is shared"

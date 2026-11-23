@@ -18,7 +18,7 @@ ANNEX_I = {
     "drinking_water": "Drinking water",
     "waste_water": "Waste water",
     "digital_infrastructure": "Digital infrastructure",
-    "ict_service_management": "ICT service management (B2B)",
+    "ict_service_management": "ICT service management (business-to-business)",
     "public_administration": "Public administration",
     "space": "Space",
 }
@@ -29,9 +29,9 @@ ANNEX_II = {
     "waste_management": "Waste management",
     "chemicals": "Manufacture, production and distribution of chemicals",
     "food": "Production, processing and distribution of food",
-    "manufacturing": "Manufacturing (medical devices, electronics, machinery, vehicles, etc.)",
-    "digital_providers": "Digital providers (marketplaces, search engines, social networks)",
-    "research": "Research organisations",
+    "manufacturing": "Manufacturing",
+    "digital_providers": "Digital providers",
+    "research": "Research",
 }
 
 SECTORS = {**ANNEX_I, **ANNEX_II}
@@ -101,7 +101,12 @@ def assess_applicability(entity: Entity) -> Applicability:
 
     if sector == "public_administration":
         notes.append(
-            "Public administration scope is set by national law, not by company size."
+            "Annex I includes public administration entities of central governments and, "
+            "at regional level, entities whose disruption could have a significant impact. "
+            "Both are in scope regardless of size. Central government is an essential entity. "
+            "Local level applies only where the Member State so provides. Which bodies are "
+            "central, regional or local is defined by national law, and this screen does not "
+            "make that choice."
         )
         return Applicability(size, annex, None, None, notes)
 
@@ -148,7 +153,9 @@ def assess_applicability(entity: Entity) -> Applicability:
         notes.append("Member States may still designate it as essential.")
     if sector in ("banking", "financial_market_infrastructure"):
         notes.append(
-            "Financial entities: DORA (Regulation (EU) 2022/2554) applies as sector-"
-            "specific law for ICT risk management and incident reporting (NIS2 Art. 4)."
+            "Financial entities identified as essential or important may have DORA "
+            "(Regulation (EU) 2022/2554) as a sector-specific Union legal act. Where its "
+            "requirements are at least equivalent, the relevant NIS2 provisions do not apply "
+            "(NIS2 Art. 4 and recital 28; DORA Art. 1(2) and recital 16)."
         )
     return Applicability(size, annex, True, classification, notes)

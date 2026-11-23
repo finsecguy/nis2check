@@ -215,10 +215,12 @@ def test_public_administration_levels():
     assert "Art. 2(5)(a)" in local.articles
 
 
-def test_domain_registration_is_important_at_any_size():
+def test_domain_registration_is_in_scope_but_not_classified_by_article_3():
     result = assess_scope(employees=2, special_case_ids=["domain_registration"])
-    assert result.outcome == "important"
+    assert result.outcome == "in_scope"
+    assert result.size_exempt is True
     assert "Art. 2(4)" in result.articles
+    assert "Art. 3(2)" not in result.articles
 
 
 def test_domain_registration_does_not_hide_a_large_annex_i_activity():

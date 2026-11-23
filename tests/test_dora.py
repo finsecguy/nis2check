@@ -29,9 +29,16 @@ BOTH = load_bundled_catalogue(("nis2", "dora"))
 
 
 def _articles(catalogue):
+    """Article numbers named on a pillar or on a question.
+
+    A question cites the provision that imposes the duty. The pillar range still
+    has to cover Articles 5 to 45, including articles that give tasks to the ESAs
+    rather than to the financial entity.
+    """
     mentioned = set()
-    for question in catalogue.questions():
-        for start, end in re.findall(r"(\d+)(?:-(\d+))?", question.article):
+    nodes = list(catalogue.domains) + [question for question in catalogue.questions()]
+    for node in nodes:
+        for start, end in re.findall(r"(\d+)(?:-(\d+))?", node.article):
             mentioned.update(range(int(start), int(end or start) + 1))
     return mentioned
 

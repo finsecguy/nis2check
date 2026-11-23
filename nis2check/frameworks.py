@@ -22,18 +22,33 @@ _FILES = {
 _LABELS = {"nis2": "NIS2", "dora": "DORA"}
 
 # Shown wherever someone could treat the two regimes as the same duty.
+# DORA recital 16: this Regulation constitutes lex specialis with regard to Directive
+# (EU) 2022/2555. Art. 1(2) limits that to financial entities identified as essential
+# or important under national rules transposing NIS2 Art. 3. NIS2 Art. 4 then sets
+# the relevant provisions aside where the sector-specific requirements are at least
+# equivalent. NIS2 recital 28 names which DORA rules apply instead.
 LEX_SPECIALIS = (
-    "For financial entities, DORA is lex specialis to NIS2. Where DORA covers ICT risk "
-    "management and incident reporting, the corresponding NIS2 provisions do not apply "
-    "to that entity (DORA Art. 1(2); NIS2 Art. 4). Other NIS2 duties can still apply. "
+    "For a financial entity identified as essential or important under national rules "
+    "transposing Article 3 of Directive (EU) 2022/2555, Regulation (EU) 2022/2554 is a "
+    "sector-specific Union legal act for the purposes of Article 4 of that Directive "
+    "(DORA Article 1(2)) and constitutes lex specialis with regard to the Directive "
+    "(DORA recital 16). Where those requirements are at least equivalent in effect, the "
+    "relevant provisions of the Directive, including supervision and enforcement, do not "
+    "apply (NIS2 Article 4). Recital 28 of the Directive states that the DORA rules on ICT "
+    "risk management, management of ICT-related incidents and major ICT-related incident "
+    "reporting, digital operational resilience testing, information-sharing arrangements "
+    "and ICT third-party risk apply instead, and that Member States should not apply the "
+    "cybersecurity risk-management and reporting obligations of the Directive, or its "
+    "supervision and enforcement, to financial entities covered by DORA. "
     "This note is indicative and is not legal advice."
 )
 
 # The size and sector check in this app implements the NIS2 rules only.
 DORA_SCOPE_NOTE = (
     "The size and sector outcome is the NIS2 applicability check. It does not decide "
-    "whether DORA applies. DORA applies to the financial entities listed in Article 2 "
-    "of Regulation (EU) 2022/2554."
+    "whether DORA applies. DORA applies to the financial entities referred to in "
+    "Article 2(1), points (a) to (t), of Regulation (EU) 2022/2554, subject to the "
+    "exclusions in Article 2(3) and (4)."
 )
 
 _cache: dict[str, Catalogue] = {}

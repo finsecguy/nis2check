@@ -18,6 +18,9 @@ source: "Directive (EU) 2022/2555 (NIS2)"
 domains:
   - id: GOV
     article: "Art. 20"
+    verified: true
+    checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+    evidence_quote: "the management bodies of essential and important entities approve the cybersecurity risk-management measures taken by those entities in order to comply with Article 21, oversee its implementation"
     title: "Governance and management accountability"
     summary: >
       Management bodies must approve the cybersecurity risk-management
@@ -25,51 +28,75 @@ domains:
       infringements, and must follow cybersecurity training.
     questions:
       - id: GOV-01
-        text: "Has the management body formally approved the cybersecurity risk-management measures?"
+        text: "Has the management body approved the cybersecurity risk-management measures taken in order to comply with Article 21?"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "approve the cybersecurity risk-management measures taken by those entities in order to comply with Article 21"
         priority: critical
         effort: low
         evidence_hint: "Board or management meeting minutes, signed policy approval"
         remediation: "Present the security policy set to management and record formal approval in minutes."
       - id: GOV-02
-        text: "Does management receive regular reporting on cybersecurity risks and the status of measures?"
+        text: "Does the management body oversee the implementation of those cybersecurity risk-management measures?"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "oversee its implementation"
         priority: high
         effort: low
         evidence_hint: "Quarterly security report, risk dashboard, meeting agendas"
-        remediation: "Set up a recurring (at least quarterly) security status report to management."
+        remediation: "Record how the management body oversees implementation of the measures."
       - id: GOV-03
-        text: "Have members of the management body completed cybersecurity training?"
+        text: "Are members of the management body required to follow training, and do they follow it, so that they gain sufficient knowledge and skills to identify risks and assess cybersecurity risk-management practices and their impact on the services provided?"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "members of the management bodies of essential and important entities are required to follow training"
         priority: high
         effort: low
         attack_mitigations: [M1017]
         evidence_hint: "Training certificates or attendance records for each manager"
         remediation: "Book cybersecurity awareness training for all management body members and keep attendance records."
       - id: GOV-04
-        text: "Is there a named person responsible for cybersecurity (e.g. CISO or security officer)?"
+        text: "Can the management body be held liable for infringements of Article 21, without prejudice to national law on the liability of public institutions, public servants and elected or appointed officials?"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "can be held liable for infringements by the entities of that Article"
         priority: medium
         effort: low
         evidence_hint: "Org chart, role description, appointment letter"
-        remediation: "Appoint a security owner and document the role's responsibilities."
+        remediation: "Record the basis on which the management body can be held liable for an infringement of Article 21, including any national rule on public bodies."
 
   - id: RISK
     article: "Art. 21(2)(a)"
+    verified: true
+    checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+    evidence_quote: "policies on risk analysis and information system security"
     title: "Risk analysis and information system security policies"
     summary: >
       Policies on risk analysis and information system security.
     questions:
       - id: RISK-01
-        text: "Is there a documented, approved information security policy?"
+        text: "Are there policies on risk analysis and information system security?"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "policies on risk analysis and information system security"
         priority: critical
         effort: medium
         evidence_hint: "Information security policy with version and approval date"
         remediation: "Write a top-level information security policy and have it approved by management."
       - id: RISK-02
-        text: "Is a cybersecurity risk assessment performed at least annually and documented?"
+        text: "Do the measures include policies on risk analysis of the risks posed to the security of the network and information systems used for operations or for the provision of services?"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "manage the risks posed to the security of network and information systems which those entities use for their operations or for the provision of their services"
         priority: critical
         effort: medium
         evidence_hint: "Risk register, risk assessment report"
         remediation: "Run a risk assessment covering assets, threats and impact; record results in a risk register."
       - id: RISK-03
-        text: "Do identified risks have owners and treatment decisions (mitigate, accept, transfer, avoid)?"
+        text: "Do the measures include policies on information system security?"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "policies on risk analysis and information system security"
         priority: high
         effort: medium
         evidence_hint: "Risk register with owner and treatment columns"
@@ -77,25 +104,37 @@ domains:
 
   - id: INC
     article: "Art. 21(2)(b)"
+    verified: true
+    checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+    evidence_quote: "incident handling"
     title: "Incident handling"
     summary: >
-      Procedures to prevent, detect, respond to and recover from incidents.
+      Incident handling.
     questions:
       - id: INC-01
-        text: "Is there a documented incident response plan with roles and escalation paths?"
+        text: "Do the measures include incident handling?"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "incident handling"
         priority: critical
         effort: medium
         evidence_hint: "Incident response plan, contact list"
         remediation: "Document an incident response plan: roles, severity levels, escalation contacts, communication."
       - id: INC-02
-        text: "Are security events logged and monitored so incidents can be detected?"
+        text: "Is incident handling part of the measures taken to prevent or minimise the impact of incidents on recipients of the services and on other services?"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "incident handling"
         priority: high
         effort: high
         attack_mitigations: [M1047]
         evidence_hint: "Logging configuration, SIEM or alerting screenshots"
         remediation: "Centralise logs from key systems and set alerts for suspicious activity."
       - id: INC-03
-        text: "Are incidents recorded and reviewed afterwards (lessons learned)?"
+        text: "Is incident handling included among the measures based on an all-hazards approach?"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "incident handling"
         priority: medium
         effort: low
         evidence_hint: "Incident log, post-incident review notes"
@@ -103,35 +142,50 @@ domains:
 
   - id: BCM
     article: "Art. 21(2)(c)"
+    verified: true
+    checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+    evidence_quote: "business continuity, such as backup management and disaster recovery, and crisis management"
     title: "Business continuity and crisis management"
     summary: >
       Business continuity, such as backup management and disaster recovery,
       and crisis management.
     questions:
       - id: BCM-01
-        text: "Are backups of critical data taken regularly and stored separately (offline or immutable)?"
+        text: "Does business continuity include backup management?"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "business continuity, such as backup management and disaster recovery, and crisis management"
         priority: critical
         effort: medium
         attack_mitigations: [M1053, M1029]
         threat_patterns: [error, physical]
         evidence_hint: "Backup policy, backup job reports"
-        remediation: "Schedule automated backups of critical data with at least one offline or immutable copy."
+        remediation: "Include backup management in business continuity."
       - id: BCM-02
-        text: "Has restoring from backup been tested in the last 12 months?"
+        text: "Does business continuity include disaster recovery?"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "business continuity, such as backup management and disaster recovery, and crisis management"
         priority: high
         effort: low
         attack_mitigations: [M1053]
         evidence_hint: "Restore test record with date and result"
-        remediation: "Run and document a restore test at least once a year."
+        remediation: "Include disaster recovery in business continuity."
       - id: BCM-03
-        text: "Is there a business continuity or disaster recovery plan for critical services?"
+        text: "Do the measures include business continuity, such as backup management and disaster recovery?"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "business continuity, such as backup management and disaster recovery, and crisis management"
         priority: high
         effort: high
         threat_patterns: [denial_of_service]
         evidence_hint: "BCP/DRP document with recovery time objectives"
         remediation: "Write a continuity plan listing critical services, recovery targets and recovery steps."
       - id: BCM-04
-        text: "Is there a crisis management procedure, including how to communicate during a major incident?"
+        text: "Do the measures include crisis management?"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "business continuity, such as backup management and disaster recovery, and crisis management"
         priority: medium
         effort: medium
         evidence_hint: "Crisis communication plan, out-of-band contact list"
@@ -139,26 +193,39 @@ domains:
 
   - id: SUP
     article: "Art. 21(2)(d)"
+    verified: true
+    checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+    evidence_quote: "supply chain security, including security-related aspects concerning the relationships between each entity and its direct suppliers or service providers"
     title: "Supply chain security"
     summary: >
-      Security of the relationships with direct suppliers and service providers.
+      Supply chain security, including security-related aspects concerning the
+      relationships between the entity and its direct suppliers or service providers.
     questions:
       - id: SUP-01
-        text: "Is there an inventory of suppliers and service providers with access to systems or data?"
+        text: "Does supply chain security include security-related aspects of the relationships with direct suppliers or service providers?"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "supply chain security, including security-related aspects concerning the relationships between each entity and its direct suppliers or service providers"
         priority: high
         effort: low
         threat_patterns: [supply_chain]
         evidence_hint: "Supplier register"
         remediation: "List all suppliers with access to your systems or data, with the access each one has."
       - id: SUP-02
-        text: "Are critical suppliers assessed for security before onboarding and periodically?"
+        text: "When supply-chain measures are considered, are the vulnerabilities specific to each direct supplier and service provider taken into account, and the overall quality of their products and cybersecurity practices, including their secure development procedures?"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "take into account the vulnerabilities specific to each direct supplier and service provider and the overall quality of products and cybersecurity practices of their suppliers and service providers, including their"
         priority: high
         effort: medium
         threat_patterns: [supply_chain]
         evidence_hint: "Supplier security questionnaires, assessment records"
         remediation: "Send a security questionnaire to critical suppliers and record the outcome."
       - id: SUP-03
-        text: "Do supplier contracts include security requirements (e.g. incident notification, data protection)?"
+        text: "When supply-chain measures are considered, are the results of coordinated security risk assessments of critical supply chains carried out under Article 22(1) taken into account?"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "take into account the results of the coordinated security risk assessments of critical supply chains carried out in accordance with Article 22(1)"
         priority: medium
         effort: medium
         threat_patterns: [supply_chain]
@@ -167,55 +234,79 @@ domains:
 
   - id: SDLC
     article: "Art. 21(2)(e)"
+    verified: true
+    checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+    evidence_quote: "security in network and information systems acquisition, development and maintenance, including vulnerability handling and disclosure"
     title: "Secure acquisition, development and maintenance; vulnerability handling"
     summary: >
       Security in network and information systems acquisition, development
       and maintenance, including vulnerability handling and disclosure.
     questions:
       - id: SDLC-01
-        text: "Are security patches applied within a defined timeframe?"
+        text: "Does security in network and information systems acquisition, development and maintenance include vulnerability handling?"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "security in network and information systems acquisition, development and maintenance, including vulnerability handling and disclosure"
         priority: critical
         effort: medium
         attack_mitigations: [M1051]
         evidence_hint: "Patch management policy, patch status report"
-        remediation: "Define patch timeframes (e.g. critical within 14 days) and track compliance."
+        remediation: "Include vulnerability handling in acquisition, development and maintenance."
       - id: SDLC-02
-        text: "Are systems scanned for vulnerabilities regularly?"
+        text: "Does that security include vulnerability disclosure?"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "security in network and information systems acquisition, development and maintenance, including vulnerability handling and disclosure"
         priority: high
         effort: medium
         attack_mitigations: [M1016]
         evidence_hint: "Vulnerability scan reports"
         remediation: "Run regular vulnerability scans on internet-facing and critical systems."
       - id: SDLC-03
-        text: "Are security requirements considered when buying or developing systems?"
+        text: "Do the measures include security in network and information systems acquisition, development and maintenance?"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "security in network and information systems acquisition, development and maintenance, including vulnerability handling and disclosure"
         priority: medium
         effort: medium
         attack_mitigations: [M1013]
         evidence_hint: "Procurement checklist, secure development guidelines"
         remediation: "Add security requirements to procurement and development checklists."
       - id: SDLC-04
-        text: "Is there a way for outsiders to report vulnerabilities (e.g. security.txt, disclosure policy)?"
+        text: "Are vulnerability handling and disclosure both included in acquisition, development and maintenance?"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "security in network and information systems acquisition, development and maintenance, including vulnerability handling and disclosure"
         priority: medium
         effort: low
         threat_patterns: [vuln_exploitation]
         evidence_hint: "Vulnerability disclosure policy, security.txt"
-        remediation: "Publish a vulnerability disclosure policy and a security.txt file."
+        remediation: "Include vulnerability disclosure in acquisition, development and maintenance."
 
   - id: EFF
     article: "Art. 21(2)(f)"
+    verified: true
+    checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+    evidence_quote: "policies and procedures to assess the effectiveness of cybersecurity risk-management measures"
     title: "Assessing the effectiveness of measures"
     summary: >
       Policies and procedures to assess the effectiveness of cybersecurity
       risk-management measures.
     questions:
       - id: EFF-01
-        text: "Are security controls tested or audited periodically (internal audit, penetration test, review)?"
+        text: "Are there policies and procedures to assess the effectiveness of cybersecurity risk-management measures?"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "policies and procedures to assess the effectiveness of cybersecurity risk-management measures"
         priority: high
         effort: high
         evidence_hint: "Audit reports, penetration test reports"
         remediation: "Plan an annual internal review or external test of key controls."
       - id: EFF-02
-        text: "Are security metrics or KPIs tracked (e.g. patch compliance, training completion)?"
+        text: "Do those policies and procedures assess the effectiveness of the cybersecurity risk-management measures?"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "policies and procedures to assess the effectiveness of cybersecurity risk-management measures"
         priority: medium
         effort: low
         evidence_hint: "KPI dashboard or report"
@@ -223,12 +314,18 @@ domains:
 
   - id: HYG
     article: "Art. 21(2)(g)"
+    verified: true
+    checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+    evidence_quote: "basic cyber hygiene practices and cybersecurity training"
     title: "Cyber hygiene and training"
     summary: >
       Basic cyber hygiene practices and cybersecurity training.
     questions:
       - id: HYG-01
-        text: "Do all employees receive security awareness training at least annually?"
+        text: "Do the measures include basic cyber hygiene practices?"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "basic cyber hygiene practices and cybersecurity training"
         priority: high
         effort: low
         attack_mitigations: [M1017]
@@ -236,35 +333,50 @@ domains:
         evidence_hint: "Training completion records"
         remediation: "Roll out annual awareness training and track completion per employee."
       - id: HYG-02
-        text: "Are basic hygiene controls in place (endpoint protection, secure configuration, no shared accounts)?"
+        text: "Do the measures include cybersecurity training?"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "basic cyber hygiene practices and cybersecurity training"
         priority: high
         effort: medium
         attack_mitigations: [M1049, M1040, M1028, M1018]
         evidence_hint: "Endpoint protection console, configuration baseline"
         remediation: "Deploy endpoint protection, apply secure baselines and remove shared accounts."
       - id: HYG-03
-        text: "Are phishing simulations or similar exercises run?"
+        text: "Do the measures include both basic cyber hygiene practices and cybersecurity training?"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "basic cyber hygiene practices and cybersecurity training"
         priority: medium
         effort: low
         attack_mitigations: [M1017]
         evidence_hint: "Phishing simulation results"
-        remediation: "Run periodic phishing simulations and follow up with targeted training."
+        remediation: "Include basic cyber hygiene practices and cybersecurity training in the measures."
 
   - id: CRY
     article: "Art. 21(2)(h)"
+    verified: true
+    checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+    evidence_quote: "policies and procedures regarding the use of cryptography and, where appropriate, encryption"
     title: "Cryptography and encryption"
     summary: >
       Policies and procedures regarding the use of cryptography and,
       where appropriate, encryption.
     questions:
       - id: CRY-01
-        text: "Is there a policy defining when and how encryption must be used?"
+        text: "Are there policies and procedures regarding the use of cryptography and, where appropriate, encryption?"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "policies and procedures regarding the use of cryptography and, where appropriate, encryption"
         priority: medium
         effort: low
         evidence_hint: "Cryptography policy"
         remediation: "Write a short cryptography policy covering data at rest, in transit and key management."
       - id: CRY-02
-        text: "Are data in transit and sensitive data at rest encrypted (TLS, disk encryption)?"
+        text: "Where appropriate, do those policies and procedures cover encryption?"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "policies and procedures regarding the use of cryptography and, where appropriate, encryption"
         priority: high
         effort: medium
         attack_mitigations: [M1041]
@@ -272,29 +384,41 @@ domains:
         evidence_hint: "TLS configuration, disk encryption status report"
         remediation: "Enforce TLS on all services and enable full-disk encryption on laptops and servers."
       - id: CRY-03
-        text: "Are encryption keys and secrets managed securely (not hardcoded, access-controlled)?"
+        text: "Do the policies and procedures address the use of cryptography?"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "policies and procedures regarding the use of cryptography and, where appropriate, encryption"
         priority: high
         effort: medium
         attack_mitigations: [M1041]
         threat_patterns: [credential_abuse]
         evidence_hint: "Secrets manager configuration, key management procedure"
-        remediation: "Move secrets into a secrets manager and restrict who can read them."
+        remediation: "Adopt policies and procedures on the use of cryptography and, where appropriate, encryption."
 
   - id: ACC
     article: "Art. 21(2)(i)"
+    verified: true
+    checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+    evidence_quote: "human resources security, access control policies and asset management"
     title: "HR security, access control and asset management"
     summary: >
       Human resources security, access control policies and asset management.
     questions:
       - id: ACC-01
-        text: "Is there an up-to-date inventory of hardware, software and data assets?"
+        text: "Do the measures include asset management?"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "human resources security, access control policies and asset management"
         priority: high
         effort: medium
         threat_patterns: [physical]
         evidence_hint: "Asset inventory"
         remediation: "Build and maintain an asset inventory with owners."
       - id: ACC-02
-        text: "Is access granted on a role basis and least-privilege principle?"
+        text: "Do the measures include access control policies?"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "human resources security, access control policies and asset management"
         priority: critical
         effort: medium
         attack_mitigations: [M1026, M1018]
@@ -302,7 +426,10 @@ domains:
         evidence_hint: "Access control policy, role matrix"
         remediation: "Define roles and grant only the access each role needs."
       - id: ACC-03
-        text: "Are joiner, mover and leaver processes defined so access is granted and removed on time?"
+        text: "Do the measures include human resources security?"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "human resources security, access control policies and asset management"
         priority: high
         effort: low
         attack_mitigations: [M1018]
@@ -310,16 +437,22 @@ domains:
         evidence_hint: "Onboarding and offboarding checklists"
         remediation: "Create onboarding and offboarding checklists that include access changes."
       - id: ACC-04
-        text: "Are user access rights reviewed periodically?"
+        text: "Are human resources security, access control policies and asset management all included in the measures?"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "human resources security, access control policies and asset management"
         priority: medium
         effort: low
         attack_mitigations: [M1018]
         threat_patterns: [misuse]
         evidence_hint: "Access review records"
-        remediation: "Review access rights at least twice a year and record the result."
+        remediation: "Include human resources security, access control policies and asset management in the measures."
 
   - id: MFA
     article: "Art. 21(2)(j)"
+    verified: true
+    checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+    evidence_quote: "the use of multi-factor authentication or continuous authentication solutions, secured voice, video and text communications and secured emergency communication systems within the entity, where appropriate"
     title: "Multi-factor authentication and secure communications"
     summary: >
       Multi-factor or continuous authentication, secured voice, video and
@@ -327,27 +460,39 @@ domains:
       where appropriate.
     questions:
       - id: MFA-01
-        text: "Is MFA enforced for all remote access and cloud services?"
+        text: "Where appropriate, does the entity use multi-factor authentication or continuous authentication solutions?"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "the use of multi-factor authentication or continuous authentication solutions, secured voice, video and text communications and secured emergency communication systems within the entity, where appropriate"
         priority: critical
         effort: low
         attack_mitigations: [M1032]
         evidence_hint: "Identity provider MFA policy, coverage report"
-        remediation: "Enforce MFA in the identity provider for all users and remote access."
+        remediation: "Where appropriate, use multi-factor authentication or continuous authentication."
       - id: MFA-02
-        text: "Is MFA enforced for all privileged and administrator accounts?"
+        text: "Where appropriate, are voice, video and text communications secured?"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "the use of multi-factor authentication or continuous authentication solutions, secured voice, video and text communications and secured emergency communication systems within the entity, where appropriate"
         priority: critical
         effort: low
         attack_mitigations: [M1032, M1026]
         evidence_hint: "Admin account MFA report"
-        remediation: "Require phishing-resistant MFA for every admin account."
+        remediation: "Where appropriate, secure voice, video and text communications."
       - id: MFA-03
-        text: "Are internal voice, video and messaging tools secured (approved tools, encryption)?"
+        text: "Where appropriate, are emergency communication systems within the entity secured?"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "the use of multi-factor authentication or continuous authentication solutions, secured voice, video and text communications and secured emergency communication systems within the entity, where appropriate"
         priority: medium
         effort: low
         evidence_hint: "List of approved communication tools and their settings"
         remediation: "Approve a set of secure communication tools and disable unapproved ones."
       - id: MFA-04
-        text: "Is there a secured emergency communication channel if primary systems are down?"
+        text: "Where appropriate, do the measures include multi-factor or continuous authentication, secured voice, video and text communications, and secured emergency communication systems?"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "the use of multi-factor authentication or continuous authentication solutions, secured voice, video and text communications and secured emergency communication systems within the entity, where appropriate"
         priority: medium
         effort: low
         attack_mitigations: [M1060]
@@ -356,26 +501,42 @@ domains:
 
   - id: REP
     article: "Art. 23"
+    verified: true
+    checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+    evidence_quote: "within 24 hours of becoming aware of the significant incident, an early warning"
     title: "Incident reporting obligations"
     summary: >
-      Significant incidents must be reported to the CSIRT or competent
-      authority: early warning within 24 hours, incident notification within
-      72 hours, final report within one month.
+      A significant incident is notified to the CSIRT or, where applicable, the
+      competent authority. An early warning is due within 24 hours of becoming
+      aware, an incident notification within 72 hours of becoming aware, and a
+      final report not later than one month after that notification was submitted.
+      An intermediate report is due on request. If the incident is still ongoing
+      when the final report is submitted, a progress report is due then and a
+      further final report within one month of handling the incident.
     questions:
       - id: REP-01
-        text: "Is it defined what counts as a 'significant incident' for your organisation?"
+        text: "Is an incident treated as significant where it has caused or is capable of causing severe operational disruption of the services or financial loss for the entity, or where it has affected or is capable of affecting other natural or legal persons by causing considerable material or non-material damage?"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "it has caused or is capable of causing severe operational disruption of the services or financial loss for the entity concerned"
         priority: high
         effort: low
         evidence_hint: "Incident classification criteria"
         remediation: "Define significance criteria (impact on service, financial loss, affected users)."
       - id: REP-02
-        text: "Is there a procedure to send an early warning to the CSIRT within 24 hours?"
+        text: "Is there a procedure to submit an early warning to the CSIRT or, where applicable, the competent authority, without undue delay and in any event within 24 hours of becoming aware, indicating, where applicable, a suspected unlawful or malicious act or a possible cross-border impact?"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "within 24 hours of becoming aware of the significant incident, an early warning, which, where applicable, shall indicate whether the significant incident is suspected of being caused by unlawful or"
         priority: critical
         effort: low
         evidence_hint: "Reporting procedure with CSIRT contact details"
         remediation: "Document who reports to the national CSIRT, how, and within 24 hours."
       - id: REP-03
-        text: "Does the procedure cover the 72-hour notification and the one-month final report?"
+        text: "Does the procedure cover an incident notification within 72 hours of becoming aware, a final report not later than one month after that notification was submitted, an intermediate report on request, and, where the incident is still ongoing at that final report, a progress report and a further final report within one month of handling the incident?"
+        verified: true
+        checked_against: "Directive (EU) 2022/2555, OJ L 333, 27.12.2022, p. 80, English edition, read 2026-11-23"
+        evidence_quote: "a final report not later than one month after the submission of the incident notification under point (b)"
         priority: high
         effort: low
         evidence_hint: "Reporting procedure, report templates"
