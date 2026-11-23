@@ -1,7 +1,3 @@
-# National overlay for cz. verified is true only when the official consolidated
-# text was opened and the paragraph number and title were confirmed.
-# Hungary and Poland are unverified throughout.
-
 code: cz
 language: cs
 domain_title: National requirements (CZ)
@@ -10,399 +6,440 @@ law:
   number: 264/2025 Sb.
   in_force: '2025-11-01'
   competent_authority: Národní úřad pro kybernetickou a informační bezpečnost (NÚKIB)
-  csirt: NÚKIB (vyšší režim); Národní CERT (nižší režim)
+  csirt: Úřad (vyšší režim); Národní CERT (nižší režim)
   reporting_channel_url: https://portal.nukib.gov.cz/
-  source_url: https://www.e-sbirka.cz/sb/2025/264
+  source_url: https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/2025/264/2025-11-01
   citation_label: Act 264/2025 Coll.
-  note: 'Act number and the 1 November 2025 in-force date are stated by the Ministry of Foreign Affairs (mzv.gov.cz) and by
-    NÚKIB. The Collection entry is částka 264/2025 Sb., published 4 August 2025. e-Sbírka did not return the consolidated
-    wording in this session (the public site is a script shell), so every paragraph below is unverified. The CSIRT split is
-    the secondary reading of § 15: the higher regime reports to the Authority and the lower regime to Národní CERT.'
+  note: § 1 odst. 1 names Národní úřad pro kybernetickou a informační bezpečnost as the Úřad. The open-data
+    version is the consolidated wording effective 1 November 2025. Sectors are listed in § 4 odst. 1 písm.
+    a). The service list inside each sector is in a decree the Act requires; that decree was not opened,
+    so its number is not stated here.
 entity_terms:
   essential:
     national: poskytovatel regulované služby v režimu vyšších povinností
-    note: § 8 on the secondary reading. NÚKIB calls this the higher regime. Not confirmed in e-Sbírka.
+    note: § 8 odst. 1, first sentence. The Act uses režim vyšších povinností.
   important:
     national: poskytovatel regulované služby v režimu nižších povinností
-    note: § 8 on the secondary reading. NÚKIB calls this the lower regime. Not confirmed in e-Sbírka.
+    note: § 8 odst. 1, second sentence. The Act uses režim nižších povinností.
 article_map:
   Art. 2:
-    ref: § 4 a § 5
+    ref: § 4
     title: Podmínky pro registraci regulované služby
-    source_url: https://www.e-sbirka.cz/sb/2025/264
-    verified: false
-    note: Best reading. e-Sbírka returned only the application shell in this session, so the paragraph was not confirmed against
-      the official consolidated text. The reading follows a secondary consolidation that agrees with NÚKIB's public citations
-      of § 4, § 5 and § 6.
+    source_url: https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/2025/264/2025-11-01
+    verified: true
+    note: The Act does not copy this directive letter as its own numbered point. Registration is § 4 and
+      § 5, and the regime is § 8.
+    evidence_quote: Podmínky pro registraci regulované služby jsou splněny
+    checked_against: Zákon č. 264/2025 Sb., znění účinné od 1. 11. 2025, e-Sbírka open data, read 2026-11-23
   Art. 3:
     ref: § 8
     title: Režim poskytovatele regulované služby
-    source_url: https://www.e-sbirka.cz/sb/2025/264
-    verified: false
-    note: Higher regime (režim vyšších povinností) and lower regime (režim nižších povinností). The split of services is in
-      the decree cited by NÚKIB as č. 408/2025 Sb. Best reading. e-Sbírka returned only the application shell in this session,
-      so the paragraph was not confirmed against the official consolidated text. The reading follows a secondary consolidation
-      that agrees with NÚKIB's public citations of § 4, § 5 and § 6.
+    source_url: https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/2025/264/2025-11-01
+    verified: true
+    note: The Act does not copy this directive letter as its own numbered point. Registration is § 4 and
+      § 5, and the regime is § 8.
+    evidence_quote: V režimu vyšších povinností je poskytovatel regulované služby
+    checked_against: Zákon č. 264/2025 Sb., znění účinné od 1. 11. 2025, e-Sbírka open data, read 2026-11-23
   Art. 2(1):
-    ref: § 4 odst. 1 a § 7
+    ref: § 4 odst. 1 písm. b) a § 7 písm. a)
     title: Podmínky pro registraci regulované služby
-    source_url: https://www.e-sbirka.cz/sb/2025/264
-    verified: false
-    note: § 7 is the reading for the size rules, including that Art. 3(4) of the SME recommendation does not apply. Best reading.
-      e-Sbírka returned only the application shell in this session, so the paragraph was not confirmed against the official
-      consolidated text. The reading follows a secondary consolidation that agrees with NÚKIB's public citations of § 4, §
-      5 and § 6.
+    source_url: https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/2025/264/2025-11-01
+    verified: true
+    note: § 7 písm. a) says Article 3(4) of Recommendation 2003/361/EC does not apply. § 7 písm. c) excludes
+      a partner or linked person whose technical assets are fully separate.
+    evidence_quote: poskytovatel služby je středním nebo velkým podnikem
+    checked_against: Zákon č. 264/2025 Sb., znění účinné od 1. 11. 2025, e-Sbírka open data, read 2026-11-23
   Art. 3(1)(a):
     ref: § 8
     title: Režim poskytovatele regulované služby
-    source_url: https://www.e-sbirka.cz/sb/2025/264
-    verified: false
-    note: Best reading. e-Sbírka returned only the application shell in this session, so the paragraph was not confirmed against
-      the official consolidated text. The reading follows a secondary consolidation that agrees with NÚKIB's public citations
-      of § 4, § 5 and § 6.
+    source_url: https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/2025/264/2025-11-01
+    verified: true
+    note: The higher regime is not defined as every large Annex I entity. § 8 odst. 2 leaves the split
+      of services to a decree.
+    evidence_quote: Rozdělení poskytovatelů podle poskytovaných regulovaných služeb do režimů
+    checked_against: Zákon č. 264/2025 Sb., znění účinné od 1. 11. 2025, e-Sbírka open data, read 2026-11-23
   Art. 4:
     ref: ''
     title: ''
-    source_url: https://www.e-sbirka.cz/sb/2025/264
-    verified: false
-    note: No DORA lex-specialis paragraph was confirmed. Best reading. e-Sbírka returned only the application shell in this
-      session, so the paragraph was not confirmed against the official consolidated text. The reading follows a secondary
-      consolidation that agrees with NÚKIB's public citations of § 4, § 5 and § 6.
+    source_url: https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/2025/264/2025-11-01
+    verified: true
+    note: § 13 odst. 2 states the measures duty without a DORA exception in § 4 to § 16. No lex-specialis
+      paragraph was found there.
+    evidence_quote: Poskytovatel regulované služby je povinen v rámci stanoveného rozsahu zavádět a provádět
+      bezpečnostní opatření
+    checked_against: Zákon č. 264/2025 Sb., znění účinné od 1. 11. 2025, e-Sbírka open data, read 2026-11-23
   Art. 2(5)(b):
-    ref: ''
-    title: ''
-    source_url: https://www.e-sbirka.cz/sb/2025/264
-    verified: false
-    note: No separate education-institution paragraph was confirmed. Best reading. e-Sbírka returned only the application
-      shell in this session, so the paragraph was not confirmed against the official consolidated text. The reading follows
-      a secondary consolidation that agrees with NÚKIB's public citations of § 4, § 5 and § 6.
+    ref: § 4 odst. 1 písm. a) bod 12
+    title: věda, výzkum a vzdělávání
+    source_url: https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/2025/264/2025-11-01
+    verified: true
+    note: Education is not only a Member State option. § 4 odst. 1 písm. a) bod 12 names věda, výzkum
+      a vzdělávání as a sector. The services inside it are in the decree.
+    evidence_quote: věda, výzkum a vzdělávání
+    checked_against: Zákon č. 264/2025 Sb., znění účinné od 1. 11. 2025, e-Sbírka open data, read 2026-11-23
   Annex I:
-    ref: ''
-    title: ''
-    source_url: https://www.e-sbirka.cz/sb/2025/264
-    verified: false
-    note: Sectors are in the decree NÚKIB cites as č. 408/2025 Sb. The decree text was not opened, so no annex point is given.
-      Best reading. e-Sbírka returned only the application shell in this session, so the paragraph was not confirmed against
-      the official consolidated text. The reading follows a secondary consolidation that agrees with NÚKIB's public citations
-      of § 4, § 5 and § 6.
+    ref: § 4 odst. 1 písm. a)
+    title: odvětví
+    source_url: https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/2025/264/2025-11-01
+    verified: true
+    note: The Act lists sectors in § 4, including ones the directive annexes do not use those names for,
+      such as obranný průmysl and věda, výzkum a vzdělávání. The service list is in the decree.
+    evidence_quote: jde o službu, která je významná pro zabezpečení důležitých společenských nebo ekonomických
+      činností
+    checked_against: Zákon č. 264/2025 Sb., znění účinné od 1. 11. 2025, e-Sbírka open data, read 2026-11-23
   Annex II:
-    ref: ''
-    title: ''
-    source_url: https://www.e-sbirka.cz/sb/2025/264
-    verified: false
-    note: 'Same as Annex I: the sector list is in the implementing decree, which was not opened. Best reading. e-Sbírka returned
-      only the application shell in this session, so the paragraph was not confirmed against the official consolidated text.
-      The reading follows a secondary consolidation that agrees with NÚKIB''s public citations of § 4, § 5 and § 6.'
+    ref: § 4 odst. 1 písm. a)
+    title: odvětví
+    source_url: https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/2025/264/2025-11-01
+    verified: true
+    note: Same sector list as Annex I. The Act does not keep two annexes with the directive point numbers.
+    evidence_quote: jde o službu, která je významná pro zabezpečení důležitých společenských nebo ekonomických
+      činností
+    checked_against: Zákon č. 264/2025 Sb., znění účinné od 1. 11. 2025, e-Sbírka open data, read 2026-11-23
   Art. 20:
     ref: § 14 odst. 1 písm. a) bod 2
-    title: Seznam bezpečnostních opatření
-    source_url: https://www.e-sbirka.cz/sb/2025/264
-    verified: false
-    note: Higher-regime organisational measure 'požadavky na vrcholné vedení'. The lower regime has the same heading at §
-      14 odst. 2 písm. b). Best reading. e-Sbírka returned only the application shell in this session, so the paragraph was
-      not confirmed against the official consolidated text. The reading follows a secondary consolidation that agrees with
-      NÚKIB's public citations of § 4, § 5 and § 6.
+    title: požadavky na vrcholné vedení
+    source_url: https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/2025/264/2025-11-01
+    verified: true
+    note: The Act does not copy this directive letter as its own numbered point. Registration is § 4 and
+      § 5, and the regime is § 8.
+    evidence_quote: požadavky na vrcholné vedení
+    checked_against: Zákon č. 264/2025 Sb., znění účinné od 1. 11. 2025, e-Sbírka open data, read 2026-11-23
   Art. 21(2)(a):
     ref: § 14 odst. 1 písm. a) body 1, 4 a 6
     title: Seznam bezpečnostních opatření
-    source_url: https://www.e-sbirka.cz/sb/2025/264
-    verified: false
-    note: Best reading. e-Sbírka returned only the application shell in this session, so the paragraph was not confirmed against
-      the official consolidated text. The reading follows a secondary consolidation that agrees with NÚKIB's public citations
-      of § 4, § 5 and § 6.
-  Art. 21(2)(b):
-    ref: § 14 odst. 1 písm. a) bod 12
-    title: Seznam bezpečnostních opatření
-    source_url: https://www.e-sbirka.cz/sb/2025/264
-    verified: false
-    note: Best reading. e-Sbírka returned only the application shell in this session, so the paragraph was not confirmed against
-      the official consolidated text. The reading follows a secondary consolidation that agrees with NÚKIB's public citations
-      of § 4, § 5 and § 6.
-  Art. 21(2)(c):
-    ref: § 14 odst. 1 písm. a) bod 13
-    title: Seznam bezpečnostních opatření
     source_url: https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/2025/264/2025-11-01
     verified: true
-    note: Confirmed in the e-Sbírka open data for Act 264/2025 Sb. Point 13 is řízení kontinuity činností, which covers business
-      continuity only, not backup, disaster recovery or crisis management.
+    note: The Act does not copy this directive letter as its own numbered point. Registration is § 4 and
+      § 5, and the regime is § 8.
+    evidence_quote: systém řízení bezpečnosti informací
+    checked_against: Zákon č. 264/2025 Sb., znění účinné od 1. 11. 2025, e-Sbírka open data, read 2026-11-23
+  Art. 21(2)(b):
+    ref: § 14 odst. 1 písm. a) bod 12
+    title: zvládání kybernetických bezpečnostních událostí a incidentů
+    source_url: https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/2025/264/2025-11-01
+    verified: true
+    note: The Act does not copy this directive letter as its own numbered point. Registration is § 4 and
+      § 5, and the regime is § 8.
+    evidence_quote: zvládání kybernetických bezpečnostních událostí a incidentů
+    checked_against: Zákon č. 264/2025 Sb., znění účinné od 1. 11. 2025, e-Sbírka open data, read 2026-11-23
+  Art. 21(2)(c):
+    ref: § 14 odst. 1 písm. a) bod 13
+    title: řízení kontinuity činností
+    source_url: https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/2025/264/2025-11-01
+    verified: true
+    note: Point 13 is řízení kontinuity činností only. It does not name backup, disaster recovery or crisis
+      management. The lower-regime list has the same heading at § 14 odst. 2 písm. f).
+    evidence_quote: řízení kontinuity činností
+    checked_against: Zákon č. 264/2025 Sb., znění účinné od 1. 11. 2025, e-Sbírka open data, read 2026-11-23
   Art. 21(2)(d):
     ref: § 14 odst. 1 písm. a) bod 7 a § 13 odst. 5
-    title: Seznam bezpečnostních opatření
-    source_url: https://www.e-sbirka.cz/sb/2025/264
-    verified: false
-    note: Best reading. e-Sbírka returned only the application shell in this session, so the paragraph was not confirmed against
-      the official consolidated text. The reading follows a secondary consolidation that agrees with NÚKIB's public citations
-      of § 4, § 5 and § 6.
+    title: řízení dodavatelů
+    source_url: https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/2025/264/2025-11-01
+    verified: true
+    note: The Act does not copy this directive letter as its own numbered point. Registration is § 4 and
+      § 5, and the regime is § 8.
+    evidence_quote: řízení dodavatelů
+    checked_against: Zákon č. 264/2025 Sb., znění účinné od 1. 11. 2025, e-Sbírka open data, read 2026-11-23
   Art. 21(2)(e):
     ref: § 14 odst. 1 písm. a) bod 10
-    title: Seznam bezpečnostních opatření
-    source_url: https://www.e-sbirka.cz/sb/2025/264
-    verified: false
-    note: Best reading. e-Sbírka returned only the application shell in this session, so the paragraph was not confirmed against
-      the official consolidated text. The reading follows a secondary consolidation that agrees with NÚKIB's public citations
-      of § 4, § 5 and § 6.
+    title: akvizice, vývoj a údržba
+    source_url: https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/2025/264/2025-11-01
+    verified: true
+    note: The Act does not copy this directive letter as its own numbered point. Registration is § 4 and
+      § 5, and the regime is § 8.
+    evidence_quote: akvizice, vývoj a údržba
+    checked_against: Zákon č. 264/2025 Sb., znění účinné od 1. 11. 2025, e-Sbírka open data, read 2026-11-23
   Art. 21(2)(f):
     ref: § 14 odst. 1 písm. a) bod 14
-    title: Seznam bezpečnostních opatření
-    source_url: https://www.e-sbirka.cz/sb/2025/264
-    verified: false
-    note: Higher regime lists an audit. The lower-regime list that was read does not use that heading. Best reading. e-Sbírka
-      returned only the application shell in this session, so the paragraph was not confirmed against the official consolidated
-      text. The reading follows a secondary consolidation that agrees with NÚKIB's public citations of § 4, § 5 and § 6.
+    title: provádění auditu kybernetické bezpečnosti
+    source_url: https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/2025/264/2025-11-01
+    verified: true
+    note: The higher-regime list has an audit at point 14. The lower-regime list in § 14 odst. 2 does
+      not.
+    evidence_quote: provádění auditu kybernetické bezpečnosti
+    checked_against: Zákon č. 264/2025 Sb., znění účinné od 1. 11. 2025, e-Sbírka open data, read 2026-11-23
   Art. 21(2)(g):
     ref: § 14 odst. 1 písm. a) bod 8
-    title: Seznam bezpečnostních opatření
-    source_url: https://www.e-sbirka.cz/sb/2025/264
-    verified: false
-    note: Best reading. e-Sbírka returned only the application shell in this session, so the paragraph was not confirmed against
-      the official consolidated text. The reading follows a secondary consolidation that agrees with NÚKIB's public citations
-      of § 4, § 5 and § 6.
+    title: bezpečnost lidských zdrojů
+    source_url: https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/2025/264/2025-11-01
+    verified: true
+    note: Point 8 is bezpečnost lidských zdrojů. The Act does not use the words základní kybernetická
+      hygiena.
+    evidence_quote: bezpečnost lidských zdrojů
+    checked_against: Zákon č. 264/2025 Sb., znění účinné od 1. 11. 2025, e-Sbírka open data, read 2026-11-23
   Art. 21(2)(h):
     ref: § 14 odst. 1 písm. b) bod 9
-    title: Seznam bezpečnostních opatření
-    source_url: https://www.e-sbirka.cz/sb/2025/264
-    verified: false
-    note: Kryptografické algoritmy. The lower-regime list ends with the same heading. Best reading. e-Sbírka returned only
-      the application shell in this session, so the paragraph was not confirmed against the official consolidated text. The
-      reading follows a secondary consolidation that agrees with NÚKIB's public citations of § 4, § 5 and § 6.
+    title: kryptografické algoritmy
+    source_url: https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/2025/264/2025-11-01
+    verified: true
+    note: The Act does not copy this directive letter as its own numbered point. Registration is § 4 and
+      § 5, and the regime is § 8.
+    evidence_quote: kryptografické algoritmy
+    checked_against: Zákon č. 264/2025 Sb., znění účinné od 1. 11. 2025, e-Sbírka open data, read 2026-11-23
   Art. 21(2)(i):
     ref: § 14 odst. 1 písm. a) body 5, 8 a 11
-    title: Seznam bezpečnostních opatření
-    source_url: https://www.e-sbirka.cz/sb/2025/264
-    verified: false
-    note: Best reading. e-Sbírka returned only the application shell in this session, so the paragraph was not confirmed against
-      the official consolidated text. The reading follows a secondary consolidation that agrees with NÚKIB's public citations
-      of § 4, § 5 and § 6.
+    title: řízení aktiv; bezpečnost lidských zdrojů; řízení přístupu
+    source_url: https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/2025/264/2025-11-01
+    verified: true
+    note: The Act does not copy this directive letter as its own numbered point. Registration is § 4 and
+      § 5, and the regime is § 8.
+    evidence_quote: řízení aktiv
+    checked_against: Zákon č. 264/2025 Sb., znění účinné od 1. 11. 2025, e-Sbírka open data, read 2026-11-23
   Art. 21(2)(j):
-    ref: § 14 odst. 1 písm. b) body 3 a 4
-    title: Seznam bezpečnostních opatření
-    source_url: https://www.e-sbirka.cz/sb/2025/264
-    verified: false
-    note: Identity and access rights. Multi-factor authentication was not named in the list that was read. Best reading. e-Sbírka
-      returned only the application shell in this session, so the paragraph was not confirmed against the official consolidated
-      text. The reading follows a secondary consolidation that agrees with NÚKIB's public citations of § 4, § 5 and § 6.
+    ref: § 14 odst. 1 písm. b)
+    title: technická opatření
+    source_url: https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/2025/264/2025-11-01
+    verified: true
+    note: Multi-factor authentication is not named in § 14. The lower regime has řízení identit a jejich
+      oprávnění and bezpečnost komunikačních sítí.
+    evidence_quote: kryptografické algoritmy
+    checked_against: Zákon č. 264/2025 Sb., znění účinné od 1. 11. 2025, e-Sbírka open data, read 2026-11-23
   Art. 23:
     ref: § 15 a § 16
     title: Hlášení kybernetických bezpečnostních incidentů
     source_url: https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/2025/264/2025-11-01
     verified: true
-    note: Confirmed in the e-Sbírka open data for Act 264/2025 Sb. Reporting is 24 hours, 72 hours and 30 days. The incident
-      screen still uses the Directive one-month final report, because that clock override is a separate unverified field.
+    note: § 16 odst. 1 is a 24-hour initial report. The 72-hour notice and the 30-day final report in
+      § 16 odst. 3 apply when the incident has a significant impact. A trust service provider sends that
+      notice within 24 hours. The final report is 30 days from the notice, not one month.
+    evidence_quote: předloží prvotní hlášení
+    checked_against: Zákon č. 264/2025 Sb., znění účinné od 1. 11. 2025, e-Sbírka open data, read 2026-11-23
   Art. 2(2)(a)(i):
-    ref: § 4
-    title: Podmínky pro registraci regulované služby
-    source_url: https://www.e-sbirka.cz/sb/2025/264
-    verified: false
-    note: The Act does not copy this Directive sub-paragraph as its own numbered point. The regime is set by § 4, § 5 and
-      the decree on regulated services. Best reading. e-Sbírka returned only the application shell in this session, so the
-      paragraph was not confirmed against the official consolidated text. The reading follows a secondary consolidation that
-      agrees with NÚKIB's public citations of § 4, § 5 and § 6.
+    ref: § 4 odst. 1 písm. b)
+    title: nebo je významný pro zabezpečení důležitých společenských nebo ekonomických činn
+    source_url: https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/2025/264/2025-11-01
+    verified: true
+    note: The Act does not copy this directive letter as its own point. Size or significance is § 4 odst.
+      1 písm. b). A sole provider, a critical-infrastructure entity and the other § 5 cases are registered
+      by the Office under § 6 odst. 3. The regime is § 8 and the decree.
+    evidence_quote: nebo je významný pro zabezpečení důležitých společenských nebo ekonomických činností
+    checked_against: Zákon č. 264/2025 Sb., znění účinné od 1. 11. 2025, e-Sbírka open data, read 2026-11-23
   Art. 2(2)(a)(ii):
-    ref: § 4
-    title: Podmínky pro registraci regulované služby
-    source_url: https://www.e-sbirka.cz/sb/2025/264
-    verified: false
-    note: The Act does not copy this Directive sub-paragraph as its own numbered point. The regime is set by § 4, § 5 and
-      the decree on regulated services. Best reading. e-Sbírka returned only the application shell in this session, so the
-      paragraph was not confirmed against the official consolidated text. The reading follows a secondary consolidation that
-      agrees with NÚKIB's public citations of § 4, § 5 and § 6.
+    ref: § 4 odst. 1 písm. b)
+    title: nebo je významný pro zabezpečení důležitých společenských nebo ekonomických činn
+    source_url: https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/2025/264/2025-11-01
+    verified: true
+    note: The Act does not copy this directive letter as its own point. Size or significance is § 4 odst.
+      1 písm. b). A sole provider, a critical-infrastructure entity and the other § 5 cases are registered
+      by the Office under § 6 odst. 3. The regime is § 8 and the decree.
+    evidence_quote: nebo je významný pro zabezpečení důležitých společenských nebo ekonomických činností
+    checked_against: Zákon č. 264/2025 Sb., znění účinné od 1. 11. 2025, e-Sbírka open data, read 2026-11-23
   Art. 2(2)(a)(iii):
-    ref: § 4
-    title: Podmínky pro registraci regulované služby
-    source_url: https://www.e-sbirka.cz/sb/2025/264
-    verified: false
-    note: The Act does not copy this Directive sub-paragraph as its own numbered point. The regime is set by § 4, § 5 and
-      the decree on regulated services. Best reading. e-Sbírka returned only the application shell in this session, so the
-      paragraph was not confirmed against the official consolidated text. The reading follows a secondary consolidation that
-      agrees with NÚKIB's public citations of § 4, § 5 and § 6.
+    ref: § 4 odst. 1 písm. b)
+    title: nebo je významný pro zabezpečení důležitých společenských nebo ekonomických činn
+    source_url: https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/2025/264/2025-11-01
+    verified: true
+    note: The Act does not copy this directive letter as its own point. Size or significance is § 4 odst.
+      1 písm. b). A sole provider, a critical-infrastructure entity and the other § 5 cases are registered
+      by the Office under § 6 odst. 3. The regime is § 8 and the decree.
+    evidence_quote: nebo je významný pro zabezpečení důležitých společenských nebo ekonomických činností
+    checked_against: Zákon č. 264/2025 Sb., znění účinné od 1. 11. 2025, e-Sbírka open data, read 2026-11-23
   Art. 2(2)(b):
-    ref: § 5
-    title: Podmínky pro registraci regulované služby
-    source_url: https://www.e-sbirka.cz/sb/2025/264
-    verified: false
-    note: The Act does not copy this Directive sub-paragraph as its own numbered point. The regime is set by § 4, § 5 and
-      the decree on regulated services. Best reading. e-Sbírka returned only the application shell in this session, so the
-      paragraph was not confirmed against the official consolidated text. The reading follows a secondary consolidation that
-      agrees with NÚKIB's public citations of § 4, § 5 and § 6.
+    ref: § 5 písm. a) bod 1
+    title: její poskytovatel je jediným poskytovatelem této služby v České republice
+    source_url: https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/2025/264/2025-11-01
+    verified: true
+    note: This is a higher-regime case started by the Office, not a size-cap exemption the provider notifies
+      under § 6 odst. 1.
+    evidence_quote: její poskytovatel je jediným poskytovatelem této služby v České republice
+    checked_against: Zákon č. 264/2025 Sb., znění účinné od 1. 11. 2025, e-Sbírka open data, read 2026-11-23
   Art. 2(2)(f)(i):
-    ref: § 4
-    title: Podmínky pro registraci regulované služby
-    source_url: https://www.e-sbirka.cz/sb/2025/264
-    verified: false
-    note: The Act does not copy this Directive sub-paragraph as its own numbered point. The regime is set by § 4, § 5 and
-      the decree on regulated services. Best reading. e-Sbírka returned only the application shell in this session, so the
-      paragraph was not confirmed against the official consolidated text. The reading follows a secondary consolidation that
-      agrees with NÚKIB's public citations of § 4, § 5 and § 6.
+    ref: § 4 odst. 1 písm. a) bod 1
+    title: veřejná správa
+    source_url: https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/2025/264/2025-11-01
+    verified: true
+    note: Central government is not defined in § 4. The sector is veřejná správa and the services are
+      in the decree.
+    evidence_quote: veřejná správa
+    checked_against: Zákon č. 264/2025 Sb., znění účinné od 1. 11. 2025, e-Sbírka open data, read 2026-11-23
   Art. 2(2)(f)(ii):
-    ref: § 4
-    title: Podmínky pro registraci regulované služby
-    source_url: https://www.e-sbirka.cz/sb/2025/264
-    verified: false
-    note: The Act does not copy this Directive sub-paragraph as its own numbered point. The regime is set by § 4, § 5 and
-      the decree on regulated services. Best reading. e-Sbírka returned only the application shell in this session, so the
-      paragraph was not confirmed against the official consolidated text. The reading follows a secondary consolidation that
-      agrees with NÚKIB's public citations of § 4, § 5 and § 6.
+    ref: § 4 odst. 1 písm. a) bod 1
+    title: veřejná správa
+    source_url: https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/2025/264/2025-11-01
+    verified: true
+    note: The Act does not separate regional administration as Article 2(2)(f)(ii) does.
+    evidence_quote: veřejná správa
+    checked_against: Zákon č. 264/2025 Sb., znění účinné od 1. 11. 2025, e-Sbírka open data, read 2026-11-23
   Art. 2(3):
     ref: § 5 písm. d)
-    title: Podmínky pro registraci regulované služby
-    source_url: https://www.e-sbirka.cz/sb/2025/264
-    verified: false
-    note: The Act does not copy this Directive sub-paragraph as its own numbered point. The regime is set by § 4, § 5 and
-      the decree on regulated services. Best reading. e-Sbírka returned only the application shell in this session, so the
-      paragraph was not confirmed against the official consolidated text. The reading follows a secondary consolidation that
-      agrees with NÚKIB's public citations of § 4, § 5 and § 6.
+    title: jde o službu, jejíž poskytovatel je subjektem kritické infrastruktury
+    source_url: https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/2025/264/2025-11-01
+    verified: true
+    note: Critical infrastructure, not the wording of Directive (EU) 2022/2557.
+    evidence_quote: jde o službu, jejíž poskytovatel je subjektem kritické infrastruktury
+    checked_against: Zákon č. 264/2025 Sb., znění účinné od 1. 11. 2025, e-Sbírka open data, read 2026-11-23
   Art. 2(4):
-    ref: § 4
-    title: Podmínky pro registraci regulované služby
-    source_url: https://www.e-sbirka.cz/sb/2025/264
-    verified: false
-    note: The Act does not copy this Directive sub-paragraph as its own numbered point. The regime is set by § 4, § 5 and
-      the decree on regulated services. Best reading. e-Sbírka returned only the application shell in this session, so the
-      paragraph was not confirmed against the official consolidated text. The reading follows a secondary consolidation that
-      agrees with NÚKIB's public citations of § 4, § 5 and § 6.
+    ref: § 34 a § 35
+    title: Osoba poskytující služby registrace doménových jmen
+    source_url: https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/2025/264/2025-11-01
+    verified: true
+    note: § 60 odst. 3 restates duties in § 34 and § 35. These providers are not, by that fact, higher-regime
+      or lower-regime providers.
+    evidence_quote: Osoba poskytující služby registrace doménových jmen
+    checked_against: Zákon č. 264/2025 Sb., znění účinné od 1. 11. 2025, e-Sbírka open data, read 2026-11-23
   Art. 2(5)(a):
-    ref: § 4
-    title: Podmínky pro registraci regulované služby
-    source_url: https://www.e-sbirka.cz/sb/2025/264
-    verified: false
-    note: The Act does not copy this Directive sub-paragraph as its own numbered point. The regime is set by § 4, § 5 and
-      the decree on regulated services. Best reading. e-Sbírka returned only the application shell in this session, so the
-      paragraph was not confirmed against the official consolidated text. The reading follows a secondary consolidation that
-      agrees with NÚKIB's public citations of § 4, § 5 and § 6.
+    ref: § 4 odst. 1 písm. a) bod 1
+    title: veřejná správa
+    source_url: https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/2025/264/2025-11-01
+    verified: true
+    note: Local administration is not an opt-in of its own. It sits in the veřejná správa sector if the
+      decree lists the service.
+    evidence_quote: veřejná správa
+    checked_against: Zákon č. 264/2025 Sb., znění účinné od 1. 11. 2025, e-Sbírka open data, read 2026-11-23
   Art. 3(1)(b):
     ref: § 8
-    title: Režim poskytovatele regulované služby
-    source_url: https://www.e-sbirka.cz/sb/2025/264
-    verified: false
-    note: Best reading. e-Sbírka returned only the application shell in this session, so the paragraph was not confirmed against
-      the official consolidated text. The reading follows a secondary consolidation that agrees with NÚKIB's public citations
-      of § 4, § 5 and § 6.
+    title: V režimu vyšších povinností je poskytovatel regulované služby
+    source_url: https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/2025/264/2025-11-01
+    verified: true
+    note: Qualified trust services, TLD registries and DNS providers are not named as automatically higher-regime.
+      The decree splits services.
+    evidence_quote: V režimu vyšších povinností je poskytovatel regulované služby
+    checked_against: Zákon č. 264/2025 Sb., znění účinné od 1. 11. 2025, e-Sbírka open data, read 2026-11-23
   Art. 3(1)(c):
     ref: § 8
-    title: Režim poskytovatele regulované služby
-    source_url: https://www.e-sbirka.cz/sb/2025/264
-    verified: false
-    note: Best reading. e-Sbírka returned only the application shell in this session, so the paragraph was not confirmed against
-      the official consolidated text. The reading follows a secondary consolidation that agrees with NÚKIB's public citations
-      of § 4, § 5 and § 6.
+    title: V režimu vyšších povinností je poskytovatel regulované služby
+    source_url: https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/2025/264/2025-11-01
+    verified: true
+    note: A medium-sized communications provider is not named as automatically higher-regime.
+    evidence_quote: V režimu vyšších povinností je poskytovatel regulované služby
+    checked_against: Zákon č. 264/2025 Sb., znění účinné od 1. 11. 2025, e-Sbírka open data, read 2026-11-23
   Art. 3(1)(d):
-    ref: § 8
-    title: Režim poskytovatele regulované služby
-    source_url: https://www.e-sbirka.cz/sb/2025/264
-    verified: false
-    note: Best reading. e-Sbírka returned only the application shell in this session, so the paragraph was not confirmed against
-      the official consolidated text. The reading follows a secondary consolidation that agrees with NÚKIB's public citations
-      of § 4, § 5 and § 6.
+    ref: § 4 odst. 1 písm. a) bod 1
+    title: veřejná správa
+    source_url: https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/2025/264/2025-11-01
+    verified: true
+    note: Central government is not named as automatically higher-regime.
+    evidence_quote: veřejná správa
+    checked_against: Zákon č. 264/2025 Sb., znění účinné od 1. 11. 2025, e-Sbírka open data, read 2026-11-23
   Art. 3(1)(e):
-    ref: § 5
-    title: Podmínky pro registraci regulované služby
-    source_url: https://www.e-sbirka.cz/sb/2025/264
-    verified: false
-    note: § 5 is the reading for identification by the authority, including a sole provider and a critical-infrastructure
-      entity. Best reading. e-Sbírka returned only the application shell in this session, so the paragraph was not confirmed
-      against the official consolidated text. The reading follows a secondary consolidation that agrees with NÚKIB's public
-      citations of § 4, § 5 and § 6.
+    ref: § 5 a § 6 odst. 3
+    title: 'Řízení o registraci regulované služby splňující podmínky pro registraci podle § '
+    source_url: https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/2025/264/2025-11-01
+    verified: true
+    note: Identification is an Office procedure under § 5, and § 8 odst. 3 puts that provider in the higher
+      regime.
+    evidence_quote: Řízení o registraci regulované služby splňující podmínky pro registraci podle § 5
+      lze zahájit pouze z moci úřední
+    checked_against: Zákon č. 264/2025 Sb., znění účinné od 1. 11. 2025, e-Sbírka open data, read 2026-11-23
   Art. 3(1)(f):
-    ref: § 5 písm. d)
-    title: Podmínky pro registraci regulované služby
-    source_url: https://www.e-sbirka.cz/sb/2025/264
-    verified: false
-    note: Best reading. e-Sbírka returned only the application shell in this session, so the paragraph was not confirmed against
-      the official consolidated text. The reading follows a secondary consolidation that agrees with NÚKIB's public citations
-      of § 4, § 5 and § 6.
+    ref: § 5 písm. d) a § 8 odst. 3
+    title: její poskytovatel je v režimu vyšších povinností
+    source_url: https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/2025/264/2025-11-01
+    verified: true
+    note: A section 5 registration, including a critical-infrastructure provider, is higher-regime.
+    evidence_quote: její poskytovatel je v režimu vyšších povinností
+    checked_against: Zákon č. 264/2025 Sb., znění účinné od 1. 11. 2025, e-Sbírka open data, read 2026-11-23
   Art. 3(2):
-    ref: § 8 odst. 1 věta druhá
-    title: Režim poskytovatele regulované služby
-    source_url: https://www.e-sbirka.cz/sb/2025/264
-    verified: false
-    note: The lower regime is whoever is not in the higher regime. Best reading. e-Sbírka returned only the application shell
-      in this session, so the paragraph was not confirmed against the official consolidated text. The reading follows a secondary
-      consolidation that agrees with NÚKIB's public citations of § 4, § 5 and § 6.
+    ref: § 8 odst. 1
+    title: V režimu nižších povinností je poskytovatel regulované služby, který není v reži
+    source_url: https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/2025/264/2025-11-01
+    verified: true
+    note: The residual category is the lower regime, not the directive word important.
+    evidence_quote: V režimu nižších povinností je poskytovatel regulované služby, který není v režimu
+      vyšších povinností
+    checked_against: Zákon č. 264/2025 Sb., znění účinné od 1. 11. 2025, e-Sbírka open data, read 2026-11-23
   Art. 3(3):
-    ref: § 5 a § 8 odst. 3
-    title: Režim poskytovatele regulované služby
-    source_url: https://www.e-sbirka.cz/sb/2025/264
-    verified: false
-    note: A service registered under § 5 is in the higher regime on this reading. Best reading. e-Sbírka returned only the
-      application shell in this session, so the paragraph was not confirmed against the official consolidated text. The reading
-      follows a secondary consolidation that agrees with NÚKIB's public citations of § 4, § 5 and § 6.
+    ref: § 6
+    title: Úřad rozhodne o registraci regulované služby
+    source_url: https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/2025/264/2025-11-01
+    verified: true
+    note: The Act uses a registration decision, not the directive list deadline of 17 April 2025.
+    evidence_quote: Úřad rozhodne o registraci regulované služby
+    checked_against: Zákon č. 264/2025 Sb., znění účinné od 1. 11. 2025, e-Sbírka open data, read 2026-11-23
   Annex I, point 8:
-    ref: ''
-    title: ''
-    source_url: https://www.e-sbirka.cz/sb/2025/264
-    verified: false
-    note: Point-level correspondence was not read. Best reading. e-Sbírka returned only the application shell in this session,
-      so the paragraph was not confirmed against the official consolidated text. The reading follows a secondary consolidation
-      that agrees with NÚKIB's public citations of § 4, § 5 and § 6.
+    ref: § 4 odst. 1 písm. a) bod 9
+    title: digitální infrastruktura a služby
+    source_url: https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/2025/264/2025-11-01
+    verified: true
+    note: One sector covers digital infrastructure and digital services. It is point 9, not Annex I point
+      8.
+    evidence_quote: digitální infrastruktura a služby
+    checked_against: Zákon č. 264/2025 Sb., znění účinné od 1. 11. 2025, e-Sbírka open data, read 2026-11-23
   Annex I, point 10:
-    ref: ''
-    title: ''
-    source_url: https://www.e-sbirka.cz/sb/2025/264
-    verified: false
-    note: Point-level correspondence was not read. Best reading. e-Sbírka returned only the application shell in this session,
-      so the paragraph was not confirmed against the official consolidated text. The reading follows a secondary consolidation
-      that agrees with NÚKIB's public citations of § 4, § 5 and § 6.
+    ref: § 4 odst. 1 písm. a) bod 1
+    title: veřejná správa
+    source_url: https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/2025/264/2025-11-01
+    verified: true
+    note: Public administration is point 1 of the sector list, not Annex I point 10.
+    evidence_quote: veřejná správa
+    checked_against: Zákon č. 264/2025 Sb., znění účinné od 1. 11. 2025, e-Sbírka open data, read 2026-11-23
 national_extras:
 - id: cz-reg-01
-  text: Ohlásila organizace regulovanou službu NÚKIB ve lhůtě 60 dnů ode dne, kdy splnila podmínky pro registraci?
-  text_en: Has the organisation notified the regulated service to NÚKIB within 60 days of meeting the conditions for registration?
+  text: Ohlásil poskytovatel služby splňující podmínky podle § 4 odst. 1 tuto službu Úřadu nejpozději
+    do 60 dnů ode dne, kdy ke splnění podmínek došlo?
+  text_en: Has a provider who meets the conditions in section 4(1) notified that service to the Office
+    within 60 days of meeting them?
   priority: critical
   effort: low
   evidence_hint: Podání na Portálu NÚKIB, rozhodnutí o registraci
   remediation: Podejte ohlášení na Portálu NÚKIB a uložte rozhodnutí o registraci.
   article: § 6 odst. 1
-  source_url: https://portal.nukib.gov.cz/informacni-servis/podpurne-materialy/69d8ccc9af66639c2b0c3843
-  verified: false
-  note: NÚKIB's own guide cites § 6 and the 60-day period. The consolidated statute text was not opened.
+  source_url: https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/2025/264/2025-11-01
+  verified: true
+  note: '§ 6 odst. 3: a section 5 registration is started by the Office, not by this 60-day notice.'
+  checked_against: Zákon č. 264/2025 Sb., znění účinné od 1. 11. 2025, e-Sbírka open data, read 2026-11-23
+  evidence_quote: povinen ohlásit tuto službu Úřadu nejpozději do 60 dnů ode dne, kdy ke splnění podmínek
+    došlo
 - id: cz-measures-01
-  text: 'Zavádí organizace bezpečnostní opatření podle vyhlášky pro svůj režim (vyšší režim: vyhláška č. 409/2025 Sb., nižší
-    režim: vyhláška č. 410/2025 Sb.)?'
-  text_en: 'Does the organisation apply the security measures in the decree for its regime (higher regime: Decree No. 409/2025
-    Coll., lower regime: Decree No. 410/2025 Coll.)?'
+  text: 'Zavádí organizace bezpečnostní opatření podle vyhlášky pro svůj režim (vyšší režim: vyhláška
+    č. 409/2025 Sb., nižší režim: vyhláška č. 410/2025 Sb.)?'
+  text_en: 'Does the organisation apply the security measures in the decree for its regime (higher regime:
+    Decree No. 409/2025 Coll., lower regime: Decree No. 410/2025 Coll.)?'
   priority: critical
   effort: high
   evidence_hint: Rozhodnutí o režimu, přehled opatření podle příslušné vyhlášky
-  remediation: Zjistěte režim a veďte opatření podle vyhlášky, která se na něj vztahuje. Lhůta k zavedení je podle průvodce
-    NÚKIB jeden rok od doručení rozhodnutí o registraci.
-  article: § 13 a § 14
-  source_url: https://portal.nukib.gov.cz/pruvodce-novym-zakonem-o-kyberneticke-bezpecnosti
-  verified: false
-  note: Decree numbers are those published by NÚKIB. The decree texts were not opened, and § 13 and § 14 were not confirmed
-    in e-Sbírka.
+  remediation: Zjistěte režim a veďte opatření podle vyhlášky, která se na něj vztahuje. Lhůta k zavedení
+    je podle průvodce NÚKIB jeden rok od doručení rozhodnutí o registraci.
+  article: § 13 odst. 4 a § 15 odst. 4
+  source_url: https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/2025/264/2025-11-01
+  verified: true
+  note: § 13 odst. 4 for measures and § 15 odst. 4 for incident reporting. Decree numbers are not stated
+    because the decrees were not opened.
+  checked_against: Zákon č. 264/2025 Sb., znění účinné od 1. 11. 2025, e-Sbírka open data, read 2026-11-23
+  evidence_quote: nejpozději do 1 roku ode dne doručení rozhodnutí o registraci regulované služby
 - id: cz-manager-01
-  text: Má organizace v režimu vyšších povinností manažera kybernetické bezpečnosti, který je pro tuto roli vyškolen a má
-    nejméně tříletou praxi s řízením kybernetické bezpečnosti nebo bezpečnosti informací?
-  text_en: If the organisation is in the higher regime, does it have a cybersecurity manager who is trained for the role and
-    has at least three years of practice managing cybersecurity or information security?
+  text: Stanovil poskytovatel v režimu vyšších povinností bezpečnostní role?
+  text_en: Has a higher-regime provider determined the security roles?
   priority: high
   effort: medium
   evidence_hint: Jmenování, doklad o praxi a školení
-  remediation: Jmenujte manažera kybernetické bezpečnosti a uložte doklad o praxi. Podle NÚKIB vyhláška č. 409/2025 Sb. bližší
-    požadavky nestanoví.
-  article: ''
-  source_url: https://portal.nukib.gov.cz/manazer-kyberneticke-bezpecnosti
-  verified: false
-  note: The role and the three-year practice are described on the NÚKIB portal. No statute paragraph number is given here
-    because the consolidated Act was not opened and the portal page that was read did not cite one.
+  remediation: Stanovte bezpečnostní role podle § 14 odst. 1 písm. a) bodu 3.
+  article: § 14 odst. 1 písm. a) bod 3
+  source_url: https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/2025/264/2025-11-01
+  verified: true
+  note: The three-year practice and decree No. 409/2025 Sb. were not in § 14. That practice claim is removed.
+  checked_against: Zákon č. 264/2025 Sb., znění účinné od 1. 11. 2025, e-Sbírka open data, read 2026-11-23
+  evidence_quote: stanovení bezpečnostních rolí
 incident_clocks:
-  source_url: https://portal.nukib.gov.cz/informacni-servis/podpurne-materialy/68f623fab8929270020d7f68
-  verified: false
-  note: Clocks stay at the Directive's 24 hours, 72 hours and one month. The article map for Art. 23 records a confirmed 30-day
-    final report, but this clock field is left unverified and is not applied. NÚKIB says every incident is reported first through
-    Portál NÚKIB, and that the reporting duty starts at the latest one year after the registration decision is delivered.
+  final_days: 30
+  further_days: 30
+  source_url: https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/2025/264/2025-11-01
+  verified: true
+  evidence_quote: nejpozději do 30 dnů ode dne předložení oznámení podle písmene a) závěrečnou zprávu
+  checked_against: Zákon č. 264/2025 Sb., znění účinné od 1. 11. 2025, e-Sbírka open data, read 2026-11-23
+  note: § 16 odst. 3 písm. c). The 72-hour notice and the 30-day final report apply when the incident
+    has a significant impact. If it is still ongoing, a progress report follows the deadline and a final
+    report is due within 30 days of resolution. The 24-hour initial report in § 16 odst. 1 is wider.
 deadlines:
 - id: cz-notify
   description: Ohlášení regulované služby do 60 dnů od splnění podmínek.
   description_en: Notify the regulated service within 60 days of meeting the conditions.
   relative: 60 days from meeting the registration conditions
-  source_url: https://portal.nukib.gov.cz/pruvodce-novym-zakonem-o-kyberneticke-bezpecnosti
-  verified: false
-  note: Stated by NÚKIB. The statute paragraph was not confirmed in e-Sbírka.
+  source_url: https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/2025/264/2025-11-01
+  verified: true
+  note: § 6 odst. 1. Applies to conditions under § 4 odst. 1.
+  checked_against: Zákon č. 264/2025 Sb., znění účinné od 1. 11. 2025, e-Sbírka open data, read 2026-11-23
+  evidence_quote: povinen ohlásit tuto službu Úřadu nejpozději do 60 dnů
 - id: cz-measures
-  description: Bezpečnostní opatření a hlášení incidentů nejpozději do 1 roku od doručení rozhodnutí o registraci.
-  description_en: Security measures and incident reporting at the latest one year after the registration decision is delivered.
+  description: Bezpečnostní opatření a hlášení incidentů nejpozději do 1 roku od doručení rozhodnutí o
+    registraci.
+  description_en: Security measures and incident reporting at the latest one year after the registration
+    decision is delivered.
   relative: 1 year from delivery of the registration decision
-  source_url: https://portal.nukib.gov.cz/pruvodce-novym-zakonem-o-kyberneticke-bezpecnosti
-  verified: false
-  note: Stated by NÚKIB. Not confirmed in e-Sbírka.
+  source_url: https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/2025/264/2025-11-01
+  verified: true
+  note: § 13 odst. 4 and § 15 odst. 4.
+  checked_against: Zákon č. 264/2025 Sb., znění účinné od 1. 11. 2025, e-Sbírka open data, read 2026-11-23
+  evidence_quote: nejpozději do 1 roku ode dne doručení rozhodnutí o registraci regulované služby
 notices: []

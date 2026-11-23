@@ -106,14 +106,15 @@ def test_slovakia_keeps_verified_paragraphs_it_confirmed():
     assert "§ 19" not in governance.ref
     czechia = load_jurisdiction("cz")
     assert czechia.law.number.startswith("264/2025")
-    verified = sorted(key for key, ref in czechia.article_map.items() if ref.verified)
-    assert verified == ["Art. 21(2)(c)", "Art. 23"]
+    assert all(ref.verified and ref.evidence_quote for ref in czechia.article_map.values())
     continuity = czechia.article("Art. 21(2)(c)")
     assert continuity.ref == "§ 14 odst. 1 písm. a) bod 13"
-    assert "continuity only" in continuity.note
+    assert "kontinuity činností only" in continuity.note
     reporting_cz = czechia.article("Art. 23")
     assert reporting_cz.ref == "§ 15 a § 16"
     assert reporting_cz.verified is True
+    assert czechia.clocks.final_days == 30
+    assert czechia.clocks.further_days == 30
 
 
 def test_national_domain_is_appended_once():

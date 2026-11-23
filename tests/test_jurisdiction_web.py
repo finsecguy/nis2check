@@ -52,7 +52,10 @@ def test_report_shows_dual_citation_and_unverified_marker(client):
     assert "Assessed against:" in html
     assert "264/2025" in html
     assert "NIS2 Art. 21(2)(a)" in html
-    assert "unverified" in html
+    assert "unverified" not in html.lower()
+    _country(client, "hu")
+    hungary = client.get("/report/view").data.decode()
+    assert "unverified" in hungary
 
 
 def test_incident_page_names_the_national_authority(client):
