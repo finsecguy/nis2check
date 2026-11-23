@@ -217,6 +217,27 @@ This export is nis2check's own question set plus this assessment's answers. CISO
 - Evidence files are stored under random names, type-checked on upload and always downloaded as attachments.
 - The container runs as an unprivileged user. Found a problem? Please open a private security advisory on GitHub.
 
+## Country support
+
+Pick a country on the organisation page, or pass `--country sk|cz|hu|pl` to `init`, `interview`, `report` and `controls`. `eu` keeps the Directive text and changes nothing else. The language of the screen and of the report headings follows that country (Slovak, Czech, Hungarian or Polish) unless a user sets another language.
+
+Each finding then shows the Directive article and the national provision, for example `NIS2 Art. 21(2)(a)` and `§ 20 ods. 2 písm. a) a c) a § 20 ods. 5 Act 69/2018`. A citation that was not confirmed against the official consolidated text is marked **unverified**. Do not file an unverified citation as if it had been checked. Hungary and Poland are unverified on purpose: the refs are a best reading, and the paragraph numbers still need a human check.
+
+Slovakia can download a self-assessment summary (Report, or `nis2check report assessment.yaml --country sk --self-assessment summary.html`). It is a working paper for an NBU filing, not an official form. Hungary's report says an SZTFH-registered auditor has to perform the audit, and that this tool's output is only preparation.
+
+| | Authority | Registration | Audit or self-assessment | A date to watch |
+|---|---|---|---|---|
+| Slovakia | NBÚ, reports through JISKB, CSIRT SK-CERT | Notify within 60 days of starting the activity | Audit within 2 years, or self-assessment for an operator who is not running a critical essential service, with an audit within 5 years | 12 months from entry in the register for the measures |
+| Czechia | NÚKIB, reports through Portál NÚKIB | Notify within 60 days of meeting the conditions | Measures follow the higher-regime or lower-regime decree. No self-assessment shortcut is recorded here | 1 year from the registration decision for measures and incident reporting |
+| Hungary | SZTFH for the NIS2 organisations it supervises | 30 days from starting operations or coming into scope | External audit by an SZTFH-registered auditor. No self-assessment alternative | Contract the auditor within 120 days of registration; first audit within 2 years |
+| Poland | Sector authorities, coordinated by the minister for informatisation. CSIRT NASK, CSIRT GOV and CSIRT MON | Entry in the wykaz. The ministry page puts the first filing window's end at 3 October 2026 | Information-security management system. The high-risk vendor rules are noted as under review and are not scored | 3 April 2027 for the management system, for entities that already met the criteria on 3 April 2026 |
+
+Czech, Hungarian and Polish rows above are best readings. Where the table states a Slovak period, it was read in the Slov-Lex consolidation in force from 30 April 2026. The NIS2 amendment of the Slovak act (Act No. 366/2024 Coll.) took effect on 1 January 2025. The Czech act is No. 264/2025 Coll., in force 1 November 2025, as stated by the Ministry of Foreign Affairs and by NÚKIB. The Czech paragraph text was not retrieved from e-Sbírka in this project, so those citations stay unverified.
+
+### Adding a country
+
+Add `nis2check/data/jurisdictions/<code>.yaml`. The file needs the law, the two entity names, an `article_map` entry for every Directive citation in `controls.yaml` and `scope.yaml` (a ref may be empty), `source_url` on every entry, and `national_extras` whose ids start with the country code. Set `verified: true` only after reading the paragraph and its title in the official consolidated text. `docs/jurisdictions/README.md` is the schema. The loader rejects an unknown article key, a duplicate question id, and a missing `source_url`.
+
 ## Command-line use
 
 The same engine runs without the web app, for automation or CI:

@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.0
+
+- A country on the organisation (EU, Slovakia, Czechia, Hungary or Poland) shows the national provision next to each NIS2 article. EU leaves the Directive text as it was.
+- Slovakia and Czechia use Act No. 69/2018 Coll. and Act No. 264/2025 Coll. A citation is marked unverified unless the paragraph was read in the official consolidated text. Hungary and Poland are unverified throughout.
+- National obligations that the Directive does not state as their own article are extra questions. Slovakia can export a working self-assessment for an NBU filing. That export is not an official form.
+- Incident pages use the national reporting channel. A national deadline that is still ahead is listed on the dashboard and in the report.
+- Screen labels and report headings are available in English, Slovak, Czech, Hungarian and Polish. The language follows the country unless a user picks another one.
+
 ## 0.3.0
 
 - Add a DORA question set for the five pillars of Regulation (EU) 2022/2554 (ICT risk management, incident management and reporting, resilience testing, ICT third-party risk, information sharing). Each question cites the article it is about. The wording is original.
