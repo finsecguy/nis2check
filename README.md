@@ -35,7 +35,7 @@ NIS2 (Directive (EU) 2022/2555) requires medium and large organisations in criti
 
 ## Install
 
-You need a server or VM with [Docker](https://docs.docker.com/engine/install/). Then:
+You need [Docker](https://docs.docker.com/engine/install/). Then:
 
 ```bash
 git clone https://github.com/finsecguy/nis2check.git
@@ -43,12 +43,13 @@ cd nis2check
 docker compose up -d
 ```
 
-Open `http://<your-server>:8080/setup?token=<setup-token>` to create the administrator account. On a fresh install the app prints a one-time setup token to stdout (`docker logs nis2check`, the line `nis2check setup token`). The token is required on `/setup` (query string or form field) and works once. A restart does not print it again; if that line is no longer in the logs, set `NIS2CHECK_SETUP_TOKEN` and start again. Set `NIS2CHECK_SETUP_TOKEN` before the first start to choose the token yourself; a token you supply is not printed. Everything else is optional.
+Docker Compose binds the app to localhost by default. No compose override is needed. Open `http://127.0.0.1:8080/setup?token=<setup-token>` to create the administrator account. On a fresh install the app prints a one-time setup token to stdout (`docker logs nis2check`, the line `nis2check setup token`). The token is required on `/setup` (query string or form field) and works once. A restart does not print it again; if that line is no longer in the logs, set `NIS2CHECK_SETUP_TOKEN` and start again. Set `NIS2CHECK_SETUP_TOKEN` before the first start to choose the token yourself; a token you supply is not printed. Everything else is optional.
 
 ### Recommended for production
 
-1. Put the app behind HTTPS (your existing reverse proxy, load balancer or a tool such as Caddy).
+1. Put a reverse proxy with HTTPS in front of the app (your existing proxy, a load balancer, or a tool such as Caddy). See [Running on a server](docs/operations.md#running-on-a-server).
 2. Copy `.env.example` to `.env` and set:
+   - `NIS2_BIND` if the proxy is not on this machine (the default is `127.0.0.1`)
    - `NIS2_BASE_URL=https://nis2.yourcompany.com`
    - `NIS2_SECURE_COOKIES=true`
    - `NIS2_BEHIND_PROXY=true` (only if a reverse proxy sits in front of the app)

@@ -4,7 +4,7 @@ services:
     image: nis2check:latest
     container_name: nis2check
     ports:
-      - "8080:8080"
+      - "${NIS2_BIND:-127.0.0.1}:8080:8080"
     env_file:
       - path: .env
         required: false

@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Security: Docker Compose now binds to localhost by default. Set NIS2_BIND to expose it.
+
 ## 0.4.1
 
 - Security fix. Before this release, anyone who could reach `/setup` on a fresh install with no administrator could create the first admin account and take over the instance. Installs from v0.4.0 and earlier should update before `/setup` is reachable by anyone else.
