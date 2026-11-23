@@ -15,6 +15,9 @@ assessment.html
 # local secrets, database and runtime data directory
 .env
 /data/
+
+# unpublished drafts (release notes, posts). Not part of the product.
+drafts/
 *.db
 *.sqlite3
 .secret_key
