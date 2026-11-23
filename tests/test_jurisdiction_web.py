@@ -7,10 +7,12 @@ pytest.importorskip("flask")
 from nis2check.web import create_app  # noqa: E402
 
 PASSWORD = "CorrectHorse12"
+SETUP_TOKEN = "test-setup-token"
 
 
 @pytest.fixture
-def app(tmp_path):
+def app(tmp_path, monkeypatch):
+    monkeypatch.setenv("NIS2CHECK_SETUP_TOKEN", SETUP_TOKEN)
     app = create_app(data_dir=tmp_path / "data", start_scheduler=False)
     app.config.update(WTF_CSRF_ENABLED=False, TESTING=True)
     return app
@@ -24,6 +26,7 @@ def client(app):
 def _admin(client):
     client.post("/setup", data=dict(
         org_name="Acme", name="Admin", email="admin@acme.sk", password=PASSWORD, password2=PASSWORD,
+        token=SETUP_TOKEN,
     ))
 
 
