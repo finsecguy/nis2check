@@ -1,0 +1,1432 @@
+# Translations of English UI text, keyed by the English sentence.
+# Use {name} placeholders exactly as in the English text.
+# A key "context|Text" separates words that look the same in English, for example
+# "size|Medium" (enterprise size) and "Medium" (priority or effort).
+# Legal terms follow the official language versions of Directive (EU) 2022/2555:
+# kľúčový / dôležitý subjekt (sk), základní / důležitý subjekt (cs),
+# alapvető / fontos szervezet (hu), podmiot kluczowy / ważny (pl).
+A progress line appears once answers have been saved on two different days.:
+  sk: Krivka vývoja sa zobrazí, keď budú odpovede uložené aspoň v dvoch rôznych dňoch.
+  cs: Křivka vývoje se zobrazí, jakmile budou odpovědi uloženy alespoň ve dvou různých dnech.
+  hu: A fejlődési görbe akkor jelenik meg, ha legalább két különböző napon mentettek válaszokat.
+  pl: Linia postępu pojawi się, gdy odpowiedzi zostaną zapisane w co najmniej dwóch różnych dniach.
+A self-assessment against {what}.:
+  sk: 'Samohodnotenie podľa: {what}.'
+  cs: 'Sebehodnocení podle: {what}.'
+  hu: 'Önértékelés a következő alapján: {what}.'
+  pl: 'Samoocena według: {what}.'
+Added by:
+  sk: Pridal
+  cs: Přidal
+  hu: Hozzáadta
+  pl: Dodał(a)
+Administrator:
+  sk: Administrátor
+  cs: Administrátor
+  hu: Adminisztrátor
+  pl: Administrator
+All controls reported as met or partially met are supported by existing evidence.:
+  sk: Všetky opatrenia označené ako splnené alebo čiastočne splnené sú podložené existujúcimi dôkazmi.
+  cs: Všechna opatření označená jako splněná nebo částečně splněná jsou podložena existujícími důkazy.
+  hu: Minden teljesítettnek vagy részben teljesítettnek jelölt intézkedést meglévő bizonyíték támaszt alá.
+  pl: Wszystkie środki oznaczone jako spełnione lub częściowo spełnione są poparte istniejącymi dowodami.
+Annex {n}:
+  sk: Príloha {n}
+  cs: Příloha {n}
+  hu: '{n}. melléklet'
+  pl: Załącznik {n}
+Annual turnover (EUR):
+  sk: Ročný obrat (EUR)
+  cs: Roční obrat (EUR)
+  hu: Éves árbevétel (EUR)
+  pl: Roczny obrót (EUR)
+annual turnover eur:
+  sk: ročný obrat (EUR)
+  cs: roční obrat (EUR)
+  hu: éves árbevétel (EUR)
+  pl: roczny obrót (EUR)
+Answer for {id}:
+  sk: Odpoveď na {id}
+  cs: Odpověď na {id}
+  hu: 'Válasz: {id}'
+  pl: Odpowiedź na {id}
+Answer saved:
+  sk: Odpoveď uložená
+  cs: Odpověď uložena
+  hu: Válasz mentve
+  pl: Zapisano odpowiedź
+Answered:
+  sk: Zodpovedané
+  cs: Zodpovězeno
+  hu: Megválaszolva
+  pl: Odpowiedziano
+Answered as in place, but not yet backed by evidence:
+  sk: Označené ako zavedené, ale zatiaľ bez dôkazov
+  cs: Označeno jako zavedené, ale zatím bez důkazů
+  hu: Bevezetettként jelölve, de még bizonyíték nélkül
+  pl: Oznaczone jako wdrożone, ale jeszcze bez dowodów
+? Answers are scored as met = 1, partially met = 0.5, not met = 0 and not assessed = 0. Controls marked not applicable are excluded.
+: sk: 'Odpovede sa hodnotia takto: splnené = 1, čiastočne splnené = 0,5, nesplnené = 0, neposúdené = 0. Opatrenia označené ako neuplatniteľné sa nezapočítavajú.'
+  cs: 'Odpovědi se hodnotí takto: splněno = 1, částečně splněno = 0,5, nesplněno = 0, neposouzeno = 0. Opatření označená jako nepoužitelná se nezapočítávají.'
+  hu: 'A válaszok pontozása: teljesítve = 1, részben teljesítve = 0,5, nem teljesítve = 0, nem értékelt = 0. A nem alkalmazandónak jelölt intézkedések kimaradnak.'
+  pl: 'Odpowiedzi są punktowane: spełnione = 1, częściowo spełnione = 0,5, niespełnione = 0, nieocenione = 0. Środki oznaczone jako nie dotyczy są pomijane.'
+Answers without evidence:
+  sk: Odpovede bez dôkazov
+  cs: Odpovědi bez důkazů
+  hu: Bizonyíték nélküli válaszok
+  pl: Odpowiedzi bez dowodów
+Appendix A. Detailed control results:
+  sk: Príloha A. Podrobné výsledky opatrení
+  cs: Příloha A. Podrobné výsledky opatření
+  hu: A. melléklet. Az intézkedések részletes eredményei
+  pl: Załącznik A. Szczegółowe wyniki środków
+Appendix B. Methodology:
+  sk: Príloha B. Metodika
+  cs: Příloha B. Metodika
+  hu: B. melléklet. Módszertan
+  pl: Załącznik B. Metodyka
+Appendix C. Threat data and weighting:
+  sk: Príloha C. Údaje o hrozbách a váženie
+  cs: Příloha C. Data o hrozbách a vážení
+  hu: C. melléklet. Fenyegetési adatok és súlyozás
+  pl: Załącznik C. Dane o zagrożeniach i ważenie
+'Applicable controls: {n}. Met: {met}, partially met: {partial}, not met: {gap}, not yet assessed: {unanswered}.':
+  sk: 'Uplatniteľné opatrenia: {n}. Splnené: {met}, čiastočne splnené: {partial}, nesplnené: {gap}, zatiaľ neposúdené: {unanswered}.'
+  cs: 'Použitelná opatření: {n}. Splněno: {met}, částečně splněno: {partial}, nesplněno: {gap}, zatím neposouzeno: {unanswered}.'
+  hu: 'Alkalmazandó intézkedések: {n}. Teljesítve: {met}, részben teljesítve: {partial}, nem teljesítve: {gap}, még nem értékelt: {unanswered}.'
+  pl: 'Środki mające zastosowanie: {n}. Spełnione: {met}, częściowo spełnione: {partial}, niespełnione: {gap}, jeszcze nieocenione: {unanswered}.'
+Applied to the vulnerability exploitation pattern only, within the range 0.8 to 1.25.:
+  sk: Uplatňuje sa len na vzorec zneužívania zraniteľností, v rozsahu 0,8 až 1,25.
+  cs: Uplatňuje se jen na vzorec zneužívání zranitelností, v rozsahu 0,8 až 1,25.
+  hu: Csak a sérülékenységkihasználási mintára vonatkozik, 0,8 és 1,25 között.
+  pl: Stosowany tylko do wzorca wykorzystania podatności, w zakresie od 0,8 do 1,25.
+Article:
+  sk: Článok
+  cs: Článek
+  hu: Cikk
+  pl: Artykuł
+Articles 20, 21 and 23 of Directive (EU) 2022/2555:
+  sk: články 20, 21 a 23 smernice (EÚ) 2022/2555
+  cs: články 20, 21 a 23 směrnice (EU) 2022/2555
+  hu: az (EU) 2022/2555 irányelv 20., 21. és 23. cikke
+  pl: art. 20, 21 i 23 dyrektywy (UE) 2022/2555
+Articles 5 to 45 of Regulation (EU) 2022/2554 (DORA):
+  sk: články 5 až 45 nariadenia (EÚ) 2022/2554 (DORA)
+  cs: články 5 až 45 nařízení (EU) 2022/2554 (DORA)
+  hu: az (EU) 2022/2554 rendelet (DORA) 5–45. cikke
+  pl: art. 5–45 rozporządzenia (UE) 2022/2554 (DORA)
+assessment:
+  sk: posúdenie
+  cs: posouzení
+  hu: az értékelést
+  pl: ocenę
+Assessment date:
+  sk: Dátum posúdenia
+  cs: Datum posouzení
+  hu: Az értékelés dátuma
+  pl: Data oceny
+Assessment imported:
+  sk: Posúdenie importované
+  cs: Posouzení importováno
+  hu: Értékelés importálva
+  pl: Zaimportowano ocenę
+Assessor:
+  sk: Hodnotiteľ
+  cs: Hodnotitel
+  hu: Értékelő
+  pl: Oceniający
+ATT&CK mitigations linked:
+  sk: Prepojené mitigácie ATT&CK
+  cs: Propojené mitigace ATT&CK
+  hu: Kapcsolt ATT&CK-mitigációk
+  pl: Powiązane mitygacje ATT&CK
+Attach evidence:
+  sk: Priložiť dôkaz
+  cs: Přiložit důkaz
+  hu: Bizonyíték csatolása
+  pl: Dołącz dowód
+balance sheet eur:
+  sk: celková súvaha (EUR)
+  cs: bilanční suma (EUR)
+  hu: mérlegfőösszeg (EUR)
+  pl: suma bilansowa (EUR)
+Balance sheet total (EUR):
+  sk: Celková súvaha (EUR)
+  cs: Bilanční suma (EUR)
+  hu: Mérlegfőösszeg (EUR)
+  pl: Suma bilansowa (EUR)
+? Based on the information provided, the organisation appears to fall outside the direct scope of NIS2. In-scope customers may still require NIS2-aligned controls through their supply chain obligations.
+: sk: Podľa poskytnutých údajov organizácia zrejme nepatrí do priamej pôsobnosti NIS2. Zákazníci, ktorí do pôsobnosti patria, však môžu požadovať opatrenia v súlade s NIS2 v rámci svojich povinností v dodávateľskom reťazci.
+  cs: Podle poskytnutých údajů organizace zřejmě nespadá do přímé působnosti NIS2. Zákazníci, kteří do působnosti spadají, však mohou požadovat opatření v souladu s NIS2 v rámci svých povinností v dodavatelském řetězci.
+  hu: A megadott adatok alapján a szervezet láthatóan nem tartozik a NIS2 közvetlen hatálya alá. A hatály alá tartozó ügyfelek azonban ellátásilánc-kötelezettségeik keretében NIS2-nek megfelelő intézkedéseket kérhetnek.
+  pl: Na podstawie podanych informacji organizacja wydaje się nie podlegać bezpośrednio NIS2. Klienci objęci NIS2 mogą jednak wymagać środków zgodnych z NIS2 w ramach obowiązków dotyczących łańcucha dostaw.
+Based on the information provided, the organisation is likely within the scope of NIS2 as an essential entity.:
+  sk: Podľa poskytnutých údajov organizácia pravdepodobne patrí do pôsobnosti NIS2 ako kľúčový subjekt.
+  cs: Podle poskytnutých údajů organizace pravděpodobně spadá do působnosti NIS2 jako základní subjekt.
+  hu: A megadott adatok alapján a szervezet valószínűleg alapvető szervezetként a NIS2 hatálya alá tartozik.
+  pl: Na podstawie podanych informacji organizacja prawdopodobnie podlega NIS2 jako podmiot kluczowy.
+Based on the information provided, the organisation is likely within the scope of NIS2 as an important entity.:
+  sk: Podľa poskytnutých údajov organizácia pravdepodobne patrí do pôsobnosti NIS2 ako dôležitý subjekt.
+  cs: Podle poskytnutých údajů organizace pravděpodobně spadá do působnosti NIS2 jako důležitý subjekt.
+  hu: A megadott adatok alapján a szervezet valószínűleg fontos szervezetként a NIS2 hatálya alá tartozik.
+  pl: Na podstawie podanych informacji organizacja prawdopodobnie podlega NIS2 jako podmiot ważny.
+Based on the information provided, the organisation is likely within the scope of NIS2.:
+  sk: Podľa poskytnutých údajov organizácia pravdepodobne patrí do pôsobnosti NIS2.
+  cs: Podle poskytnutých údajů organizace pravděpodobně spadá do působnosti NIS2.
+  hu: A megadott adatok alapján a szervezet valószínűleg a NIS2 hatálya alá tartozik.
+  pl: Na podstawie podanych informacji organizacja prawdopodobnie podlega NIS2.
+Baseline:
+  sk: Základ
+  cs: Základ
+  hu: Alapérték
+  pl: Wartość bazowa
+Board report downloaded:
+  sk: Správa pre vedenie stiahnutá
+  cs: Zpráva pro vedení stažena
+  hu: Vezetői jelentés letöltve
+  pl: Pobrano raport dla zarządu
+Board report gaps changed:
+  sk: Zmenené nedostatky v správe pre vedenie
+  cs: Změněny nedostatky ve zprávě pro vedení
+  hu: Módosultak a vezetői jelentés hiányosságai
+  pl: Zmieniono luki w raporcie dla zarządu
+'Campaigns counted once:':
+  sk: 'Kampane započítané raz:'
+  cs: 'Kampaně započtené jednou:'
+  hu: 'Egyszer számolt kampányok:'
+  pl: 'Kampanie liczone raz:'
+Catalogue links only:
+  sk: Len prepojenia z katalógu
+  cs: Jen propojení z katalogu
+  hu: Csak katalógusbeli kapcsolatok
+  pl: Tylko powiązania z katalogu
+? 'Caveats: VCDB contains publicly reported incidents, mostly from the United States and weighted toward breaches that reach the news; it is not the full Verizon DBIR dataset. CISA KEV is US-centric; ENISA EUVD gives an EU view but is newer.'
+: sk: 'Obmedzenia: VCDB obsahuje verejne nahlásené incidenty, prevažne z USA a s prevahou únikov, o ktorých písali médiá; nejde o úplný súbor údajov Verizon DBIR. CISA KEV je zameraný na USA; ENISA EUVD dáva pohľad EÚ, je však novší.'
+  cs: 'Omezení: VCDB obsahuje veřejně nahlášené incidenty, převážně z USA a s převahou úniků, o kterých psala média; nejde o úplnou sadu dat Verizon DBIR. CISA KEV je zaměřen na USA; ENISA EUVD dává pohled EU, je však novější.'
+  hu: 'Korlátok: a VCDB nyilvánosan bejelentett incidenseket tartalmaz, főként az Egyesült Államokból, és túlsúlyban vannak a sajtóba került adatszivárgások; nem a teljes Verizon DBIR-adatkészlet. A CISA KEV USA-központú; az ENISA EUVD uniós nézőpontot ad, de újabb.'
+  pl: 'Zastrzeżenia: VCDB zawiera publicznie zgłoszone incydenty, głównie z USA, z przewagą naruszeń opisanych w mediach; nie jest to pełny zbiór danych Verizon DBIR. CISA KEV koncentruje się na USA; ENISA EUVD daje perspektywę UE, ale jest nowsza.'
+Check your organisation details:
+  sk: Skontrolujte údaje o organizácii
+  cs: Zkontrolujte údaje o organizaci
+  hu: Ellenőrizze a szervezet adatait
+  pl: Sprawdź dane organizacji
+Choose a country from the list.:
+  sk: Vyberte krajinu zo zoznamu.
+  cs: Vyberte zemi ze seznamu.
+  hu: Válasszon országot a listából.
+  pl: Wybierz kraj z listy.
+Choose a sector from the list.:
+  sk: Vyberte sektor zo zoznamu.
+  cs: Vyberte odvětví ze seznamu.
+  hu: Válasszon ágazatot a listából.
+  pl: Wybierz sektor z listy.
+? Choose NIS2, DORA, or both. Answers you have already saved are kept if you turn a framework off, and come back when you turn it on.
+: sk: Vyberte NIS2, DORA alebo oboje. Uložené odpovede sa pri vypnutí rámca zachovajú a po jeho zapnutí sa vrátia.
+  cs: Vyberte NIS2, DORA nebo obojí. Uložené odpovědi se při vypnutí rámce zachovají a po jeho zapnutí se vrátí.
+  hu: Válassza a NIS2-t, a DORA-t vagy mindkettőt. A mentett válaszok megmaradnak, ha kikapcsol egy keretet, és visszatérnek, ha újra bekapcsolja.
+  pl: Wybierz NIS2, DORA lub oba. Zapisane odpowiedzi pozostają po wyłączeniu ram i wracają po ich ponownym włączeniu.
+Classification:
+  sk: Klasifikácia
+  cs: Klasifikace
+  hu: Minősítés
+  pl: Klauzula
+Compliance score over time:
+  sk: Vývoj skóre plnenia
+  cs: Vývoj skóre plnění
+  hu: A megfelelési pontszám alakulása
+  pl: Wynik zgodności w czasie
+Confidential:
+  sk: Dôverné
+  cs: Důvěrné
+  hu: Bizalmas
+  pl: Poufne
+Control:
+  sk: Opatrenie
+  cs: Opatření
+  hu: Intézkedés
+  pl: Środek
+control catalogue v{v}:
+  sk: katalóg opatrení v{v}
+  cs: katalog opatření v{v}
+  hu: intézkedéskatalógus v{v}
+  pl: katalog środków v{v}
+Control heat map (priority x status):
+  sk: Teplotná mapa opatrení (priorita x stav)
+  cs: Teplotní mapa opatření (priorita x stav)
+  hu: Intézkedések hőtérképe (prioritás x állapot)
+  pl: Mapa cieplna środków (priorytet x status)
+Control weighting:
+  sk: Váženie opatrení
+  cs: Vážení opatření
+  hu: Az intézkedések súlyozása
+  pl: Ważenie środków
+Control weights in this report use {label}.:
+  sk: 'Váhy opatrení v tejto správe vychádzajú z: {label}.'
+  cs: 'Váhy opatření v této zprávě vycházejí z: {label}.'
+  hu: 'A jelentés súlyai a következőn alapulnak: {label}.'
+  pl: 'Wagi środków w tym raporcie opierają się na: {label}.'
+Controls fully met:
+  sk: Plne splnené opatrenia
+  cs: Plně splněná opatření
+  hu: Teljesen teljesített intézkedések
+  pl: W pełni spełnione środki
+? 'Controls reported as met or partially met without usable evidence: {n}. Until evidence is provided, these controls are excluded from the evidence-backed score.'
+: sk: 'Opatrenia označené ako splnené alebo čiastočne splnené bez použiteľného dôkazu: {n}. Kým sa dôkaz nedoplní, nezapočítavajú sa do skóre podloženého dôkazmi.'
+  cs: 'Opatření označená jako splněná nebo částečně splněná bez použitelného důkazu: {n}. Dokud se důkaz nedoplní, nezapočítávají se do skóre podloženého důkazy.'
+  hu: 'Használható bizonyíték nélkül teljesítettnek vagy részben teljesítettnek jelölt intézkedések: {n}. Amíg nincs bizonyíték, ezek nem számítanak bele a bizonyítékkal alátámasztott pontszámba.'
+  pl: 'Środki oznaczone jako spełnione lub częściowo spełnione bez użytecznych dowodów: {n}. Do czasu dostarczenia dowodów nie są wliczane do wyniku popartego dowodami.'
+Controls with a threat-informed uplift:
+  sk: Opatrenia s navýšením podľa hrozieb
+  cs: Opatření s navýšením podle hrozeb
+  hu: Fenyegetések alapján megemelt súlyú intézkedések
+  pl: Środki z podwyższeniem wagi na podstawie zagrożeń
+Counters:
+  sk: Pôsobí proti
+  cs: Působí proti
+  hu: Ellensúlyozza
+  pl: Przeciwdziała
+Coverage:
+  sk: Pokrytie
+  cs: Pokrytí
+  hu: Lefedettség
+  pl: Pokrycie
+Critical:
+  sk: Kritická
+  cs: Kritická
+  hu: Kritikus
+  pl: Krytyczny
+Critical controls not met:
+  sk: Nesplnené kritické opatrenia
+  cs: Nesplněná kritická opatření
+  hu: Nem teljesített kritikus intézkedések
+  pl: Niespełnione środki krytyczne
+'Critical controls not met or not assessed: {n}. Address these first (see section 4).':
+  sk: 'Kritické opatrenia nesplnené alebo neposúdené: {n}. Riešte ich ako prvé (pozri časť 4).'
+  cs: 'Kritická opatření nesplněná nebo neposouzená: {n}. Řešte je jako první (viz oddíl 4).'
+  hu: 'Nem teljesített vagy nem értékelt kritikus intézkedések: {n}. Ezekkel kezdje (lásd a 4. fejezetet).'
+  pl: 'Środki krytyczne niespełnione lub nieocenione: {n}. Zajmij się nimi w pierwszej kolejności (zob. sekcja 4).'
+Critical measures not met:
+  sk: Nesplnené kritické opatrenia
+  cs: Nesplněná kritická opatření
+  hu: Nem teljesített kritikus intézkedések
+  pl: Niespełnione środki krytyczne
+Directive (EU) 2022/2555 (NIS2) and Regulation (EU) 2022/2554 (DORA):
+  sk: smernica (EÚ) 2022/2555 (NIS2) a nariadenie (EÚ) 2022/2554 (DORA)
+  cs: směrnice (EU) 2022/2555 (NIS2) a nařízení (EU) 2022/2554 (DORA)
+  hu: az (EU) 2022/2555 irányelv (NIS2) és az (EU) 2022/2554 rendelet (DORA)
+  pl: dyrektywa (UE) 2022/2555 (NIS2) i rozporządzenie (UE) 2022/2554 (DORA)
+Does NIS2 apply?:
+  sk: Vzťahuje sa na vás NIS2?
+  cs: Vztahuje se na vás NIS2?
+  hu: Vonatkozik Önökre a NIS2?
+  pl: Czy NIS2 ma zastosowanie?
+'DORA, Regulation (EU) 2022/2554: ICT risk, incidents, testing, third parties and information sharing':
+  sk: 'DORA, nariadenie (EÚ) 2022/2554: riziká IKT, incidenty, testovanie, tretie strany a výmena informácií'
+  cs: 'DORA, nařízení (EU) 2022/2554: rizika IKT, incidenty, testování, třetí strany a sdílení informací'
+  hu: 'DORA, (EU) 2022/2554 rendelet: IKT-kockázat, incidensek, tesztelés, harmadik felek és információmegosztás'
+  pl: 'DORA, rozporządzenie (UE) 2022/2554: ryzyko ICT, incydenty, testy, podmioty trzecie i wymiana informacji'
+Download gap register (CSV):
+  sk: Stiahnuť register nedostatkov (CSV)
+  cs: Stáhnout registr nedostatků (CSV)
+  hu: Hiányosságnyilvántartás letöltése (CSV)
+  pl: Pobierz rejestr luk (CSV)
+Download PDF:
+  sk: Stiahnuť PDF
+  cs: Stáhnout PDF
+  hu: PDF letöltése
+  pl: Pobierz PDF
+Download report:
+  sk: Stiahnuť správu
+  cs: Stáhnout zprávu
+  hu: Jelentés letöltése
+  pl: Pobierz raport
+Each answer is saved on its own, so you can stop at any point and pick up later.:
+  sk: Každá odpoveď sa ukladá samostatne, takže môžete kedykoľvek prestať a neskôr pokračovať.
+  cs: Každá odpověď se ukládá samostatně, takže můžete kdykoli přestat a později pokračovat.
+  hu: Minden válasz külön mentődik, így bármikor abbahagyhatja és később folytathatja.
+  pl: Każda odpowiedź zapisuje się osobno, więc możesz w dowolnym momencie przerwać i wrócić później.
+? 'Each requirement is broken down into practical controls, and each control is given a regulatory priority: critical (weight 3), high (weight 2) or medium (weight 1).'
+: sk: 'Každá požiadavka je rozdelená na praktické opatrenia a každé opatrenie má regulačnú prioritu: kritická (váha 3), vysoká (váha 2) alebo stredná (váha 1).'
+  cs: 'Každý požadavek je rozdělen na praktická opatření a každé opatření má regulatorní prioritu: kritická (váha 3), vysoká (váha 2) nebo střední (váha 1).'
+  hu: 'Minden követelmény gyakorlati intézkedésekre bomlik, és minden intézkedés szabályozási prioritást kap: kritikus (3-as súly), magas (2-es súly) vagy közepes (1-es súly).'
+  pl: 'Każde wymaganie jest podzielone na praktyczne środki, a każdy środek ma priorytet regulacyjny: krytyczny (waga 3), wysoki (waga 2) lub średni (waga 1).'
+Effort:
+  sk: Náročnosť
+  cs: Náročnost
+  hu: Ráfordítás
+  pl: Nakład
+? Effort is an estimate (low, medium, high) of the work needed for an SME to implement the control. Risk reduction per unit of effort divides the risk reduction by 1, 2 or 3 respectively and drives the impact vs effort matrix.
+: sk: Náročnosť je odhad (nízka, stredná, vysoká) práce, ktorú MSP potrebuje na zavedenie opatrenia. Zníženie rizika na jednotku náročnosti delí zníženie rizika číslom 1, 2 alebo 3 a určuje maticu prínos a náročnosť.
+  cs: Náročnost je odhad (nízká, střední, vysoká) práce, kterou MSP potřebuje k zavedení opatření. Snížení rizika na jednotku náročnosti dělí snížení rizika číslem 1, 2 nebo 3 a určuje matici přínos a náročnost.
+  hu: A ráfordítás becslés (alacsony, közepes, magas) arról, mennyi munka kell egy kkv-nak az intézkedés bevezetéséhez. Az egységnyi ráfordításra jutó kockázatcsökkentés a kockázatcsökkentést 1-gyel, 2-vel vagy 3-mal osztja, és ez adja a hatás–ráfordítás mátrixot.
+  pl: Nakład to szacunek (niski, średni, wysoki) pracy potrzebnej MŚP do wdrożenia środka. Redukcja ryzyka na jednostkę nakładu dzieli redukcję ryzyka przez 1, 2 lub 3 i wyznacza macierz wpływu i nakładu.
+Employees:
+  sk: Zamestnanci
+  cs: Zaměstnanci
+  hu: Munkavállalók
+  pl: Pracownicy
+employees:
+  sk: zamestnanci
+  cs: zaměstnanci
+  hu: munkavállalók
+  pl: pracownicy
+'employees: {n}':
+  sk: 'zamestnanci: {n}'
+  cs: 'zaměstnanci: {n}'
+  hu: 'munkavállalók: {n}'
+  pl: 'pracownicy: {n}'
+Enter a number for {field}.:
+  sk: Zadajte číslo do poľa {field}.
+  cs: Zadejte číslo do pole {field}.
+  hu: 'Adjon meg egy számot: {field}.'
+  pl: Wpisz liczbę w polu {field}.
+Enterprise size:
+  sk: Veľkosť podniku
+  cs: Velikost podniku
+  hu: Vállalkozásméret
+  pl: Wielkość przedsiębiorstwa
+Essential entity:
+  sk: Kľúčový subjekt
+  cs: Základní subjekt
+  hu: Alapvető szervezet
+  pl: Podmiot kluczowy
+Events:
+  sk: Udalosti
+  cs: Události
+  hu: Események
+  pl: Zdarzenia
+'events: {n}':
+  sk: 'udalosti: {n}'
+  cs: 'události: {n}'
+  hu: 'események: {n}'
+  pl: 'zdarzenia: {n}'
+Evidence:
+  sk: Dôkaz
+  cs: Důkaz
+  hu: Bizonyíték
+  pl: Dowód
+Evidence downloaded:
+  sk: Dôkaz stiahnutý
+  cs: Důkaz stažen
+  hu: Bizonyíték letöltve
+  pl: Pobrano dowód
+Evidence link added:
+  sk: Pridaný odkaz na dôkaz
+  cs: Přidán odkaz na důkaz
+  hu: Bizonyítéklink hozzáadva
+  pl: Dodano link do dowodu
+Evidence removed:
+  sk: Dôkaz odstránený
+  cs: Důkaz odstraněn
+  hu: Bizonyíték eltávolítva
+  pl: Usunięto dowód
+Evidence removed.:
+  sk: Dôkaz bol odstránený.
+  cs: Důkaz byl odstraněn.
+  hu: A bizonyíték eltávolítva.
+  pl: Dowód został usunięty.
+Evidence uploaded:
+  sk: Dôkaz nahraný
+  cs: Důkaz nahrán
+  hu: Bizonyíték feltöltve
+  pl: Przesłano dowód
+Evidenced:
+  sk: Podložené
+  cs: Podloženo
+  hu: Alátámasztva
+  pl: Poparte
+Expected evidence:
+  sk: Očakávaný dôkaz
+  cs: Očekávaný důkaz
+  hu: Várt bizonyíték
+  pl: Oczekiwany dowód
+Expired {date}:
+  sk: Platnosť skončila {date}
+  cs: Platnost skončila {date}
+  hu: 'Lejárt: {date}'
+  pl: Wygasło {date}
+'Exploitation trend factor: {f}.':
+  sk: 'Faktor trendu zneužívania: {f}.'
+  cs: 'Faktor trendu zneužívání: {f}.'
+  hu: 'Kihasználási trendtényező: {f}.'
+  pl: 'Współczynnik trendu wykorzystania: {f}.'
+Failed sign-in:
+  sk: Neúspešné prihlásenie
+  cs: Neúspěšné přihlášení
+  hu: Sikertelen bejelentkezés
+  pl: Nieudane logowanie
+File:
+  sk: Súbor
+  cs: Soubor
+  hu: Fájl
+  pl: Plik
+'Files of type .{ext} are not accepted. Allowed: {allowed}.':
+  sk: 'Súbory typu .{ext} nie sú povolené. Povolené: {allowed}.'
+  cs: 'Soubory typu .{ext} nejsou povoleny. Povoleno: {allowed}.'
+  hu: '.{ext} típusú fájl nem tölthető fel. Engedélyezett: {allowed}.'
+  pl: 'Pliki typu .{ext} nie są akceptowane. Dozwolone: {allowed}.'
+Fill-ins:
+  sk: Doplnkové úlohy
+  cs: Doplňkové úkoly
+  hu: Kiegészítő feladatok
+  pl: Zadania uzupełniające
+Finding:
+  sk: Zistenie
+  cs: Zjištění
+  hu: Megállapítás
+  pl: Ustalenie
+? For financial entities, DORA is lex specialis to NIS2. Where DORA covers ICT risk management and incident reporting, the corresponding NIS2 provisions do not apply to that entity (DORA Art. 1(2); NIS2 Art. 4). Other NIS2 duties can still apply. This note is indicative and is not legal advice.
+: sk: Pre finančné subjekty je DORA lex specialis k NIS2. Ak DORA upravuje riadenie rizík IKT a hlásenie incidentov, príslušné ustanovenia NIS2 sa na daný subjekt nevzťahujú (DORA čl. 1 ods. 2; NIS2 čl. 4). Ostatné povinnosti podľa NIS2 sa môžu uplatňovať naďalej. Táto poznámka je orientačná a nie je právnym poradenstvom.
+  cs: Pro finanční subjekty je DORA lex specialis k NIS2. Pokud DORA upravuje řízení rizik IKT a hlášení incidentů, příslušná ustanovení NIS2 se na daný subjekt nevztahují (DORA čl. 1 odst. 2; NIS2 čl. 4). Ostatní povinnosti podle NIS2 se mohou uplatňovat i nadále. Tato poznámka je orientační a není právním poradenstvím.
+  hu: A pénzügyi szervezetek esetében a DORA a NIS2-höz képest lex specialis. Ahol a DORA szabályozza az IKT-kockázatkezelést és az incidensbejelentést, ott a megfelelő NIS2-rendelkezések nem alkalmazandók az adott szervezetre (DORA 1. cikk (2) bekezdés; NIS2 4. cikk). A NIS2 egyéb kötelezettségei továbbra is vonatkozhatnak rá. Ez a megjegyzés tájékoztató jellegű, nem jogi tanácsadás.
+  pl: Dla podmiotów finansowych DORA jest lex specialis wobec NIS2. Tam, gdzie DORA reguluje zarządzanie ryzykiem ICT i zgłaszanie incydentów, odpowiednie przepisy NIS2 nie mają zastosowania do danego podmiotu (DORA art. 1 ust. 2; NIS2 art. 4). Inne obowiązki wynikające z NIS2 mogą nadal mieć zastosowanie. Ta uwaga ma charakter orientacyjny i nie stanowi porady prawnej.
+Framework:
+  sk: Rámec
+  cs: Rámec
+  hu: Keretrendszer
+  pl: Ramy
+Frameworks in this assessment:
+  sk: Rámce v tomto posúdení
+  cs: Rámce v tomto posouzení
+  hu: Az értékelés keretrendszerei
+  pl: Ramy w tej ocenie
+Gap register for Excel:
+  sk: Register nedostatkov pre Excel
+  cs: Registr nedostatků pro Excel
+  hu: Hiányosságnyilvántartás Excelhez
+  pl: Rejestr luk dla Excela
+'Good evidence:':
+  sk: 'Vhodný dôkaz:'
+  cs: 'Vhodný důkaz:'
+  hu: 'Megfelelő bizonyíték:'
+  pl: 'Dobry dowód:'
+High:
+  sk: Vysoká
+  cs: Vysoká
+  hu: Magas
+  pl: Wysoki
+High impact:
+  sk: Vysoký prínos
+  cs: Vysoký přínos
+  hu: Nagy hatás
+  pl: Duży wpływ
+High impact and little effort.:
+  sk: Vysoký prínos a malá náročnosť.
+  cs: Vysoký přínos a malá náročnost.
+  hu: Nagy hatás, kis ráfordítás.
+  pl: Duży wpływ i niewielki nakład.
+'Highest-priority open items: {shown} of {total}.':
+  sk: 'Otvorené položky s najvyššou prioritou: {shown} z {total}.'
+  cs: 'Otevřené položky s nejvyšší prioritou: {shown} z {total}.'
+  hu: 'Legmagasabb prioritású nyitott tételek: {shown} / {total}.'
+  pl: 'Otwarte pozycje o najwyższym priorytecie: {shown} z {total}.'
+? Impact is the risk reduction from closing the item (control weight x missing coverage); high means at or above the median of open items. Effort is an estimate for an SME. Quick wins are the natural first wave of remediation.
+: sk: Prínos je zníženie rizika po uzavretí položky (váha opatrenia x chýbajúce pokrytie); vysoký znamená na úrovni mediánu otvorených položiek alebo nad ním. Náročnosť je odhad pre MSP. Rýchle výhry sú prirodzenou prvou vlnou nápravy.
+  cs: Přínos je snížení rizika po uzavření položky (váha opatření x chybějící pokrytí); vysoký znamená na úrovni mediánu otevřených položek nebo nad ním. Náročnost je odhad pro MSP. Rychlá vítězství jsou přirozenou první vlnou nápravy.
+  hu: A hatás a tétel lezárásával elért kockázatcsökkentés (intézkedéssúly x hiányzó lefedettség); a nagy a nyitott tételek mediánja vagy afölött. A ráfordítás kkv-ra vonatkozó becslés. A gyors eredmények a javítás természetes első hulláma.
+  pl: Wpływ to redukcja ryzyka po zamknięciu pozycji (waga środka x brakujące pokrycie); duży oznacza medianę otwartych pozycji lub więcej. Nakład to szacunek dla MŚP. Szybkie zwycięstwa to naturalna pierwsza fala działań naprawczych.
+Impact vs effort:
+  sk: Prínos a náročnosť
+  cs: Přínos a náročnost
+  hu: Hatás és ráfordítás
+  pl: Wpływ a nakład
+Important entity:
+  sk: Dôležitý subjekt
+  cs: Důležitý subjekt
+  hu: Fontos szervezet
+  pl: Podmiot ważny
+In scope regardless of size:
+  sk: V pôsobnosti bez ohľadu na veľkosť
+  cs: V působnosti bez ohledu na velikost
+  hu: Mérettől függetlenül hatály alá tartozik
+  pl: Objęte niezależnie od wielkości
+Incident recorded:
+  sk: Incident zaznamenaný
+  cs: Incident zaznamenán
+  hu: Incidens rögzítve
+  pl: Zarejestrowano incydent
+Incident report exported:
+  sk: Hlásenie incidentu exportované
+  cs: Hlášení incidentu exportováno
+  hu: Incidensjelentés exportálva
+  pl: Wyeksportowano zgłoszenie incydentu
+Incident report updated:
+  sk: Hlásenie incidentu aktualizované
+  cs: Hlášení incidentu aktualizováno
+  hu: Incidensjelentés frissítve
+  pl: Zaktualizowano zgłoszenie incydentu
+Indicative outcome:
+  sk: Orientačný výsledok
+  cs: Orientační výsledek
+  hu: Tájékoztató eredmény
+  pl: Wynik orientacyjny
+Issue:
+  sk: Problém
+  cs: Problém
+  hu: Probléma
+  pl: Problem
+Item:
+  sk: Položka
+  cs: Položka
+  hu: Tétel
+  pl: Pozycja
+Items are ranked by risk reduction (control weight x missing coverage).:
+  sk: Položky sú zoradené podľa zníženia rizika (váha opatrenia x chýbajúce pokrytie).
+  cs: Položky jsou seřazeny podle snížení rizika (váha opatření x chybějící pokrytí).
+  hu: A tételek sorrendje a kockázatcsökkentésen alapul (intézkedéssúly x hiányzó lefedettség).
+  pl: Pozycje są uszeregowane według redukcji ryzyka (waga środka x brakujące pokrycie).
+Items are ranked by risk reduction per unit of effort.:
+  sk: Položky sú zoradené podľa zníženia rizika na jednotku náročnosti.
+  cs: Položky jsou seřazeny podle snížení rizika na jednotku náročnosti.
+  hu: A tételek sorrendje az egységnyi ráfordításra jutó kockázatcsökkentésen alapul.
+  pl: Pozycje są uszeregowane według redukcji ryzyka na jednostkę nakładu.
+Language changed:
+  sk: Jazyk zmenený
+  cs: Jazyk změněn
+  hu: Nyelv módosítva
+  pl: Zmieniono język
+Likely in scope:
+  sk: Pravdepodobne v pôsobnosti
+  cs: Pravděpodobně v působnosti
+  hu: Valószínűleg hatály alá tartozik
+  pl: Prawdopodobnie objęte
+Likely in scope (essential entity):
+  sk: Pravdepodobne v pôsobnosti (kľúčový subjekt)
+  cs: Pravděpodobně v působnosti (základní subjekt)
+  hu: Valószínűleg hatály alá tartozik (alapvető szervezet)
+  pl: Prawdopodobnie objęte (podmiot kluczowy)
+Likely in scope (important entity):
+  sk: Pravdepodobne v pôsobnosti (dôležitý subjekt)
+  cs: Pravděpodobně v působnosti (důležitý subjekt)
+  hu: Valószínűleg hatály alá tartozik (fontos szervezet)
+  pl: Prawdopodobnie objęte (podmiot ważny)
+Likely out of scope:
+  sk: Pravdepodobne mimo pôsobnosti
+  cs: Pravděpodobně mimo působnost
+  hu: Valószínűleg nem tartozik hatály alá
+  pl: Prawdopodobnie nieobjęte
+link:
+  sk: odkaz
+  cs: odkaz
+  hu: link
+  pl: link
+Links must start with https:// or http://:
+  sk: Odkazy musia začínať https:// alebo http://
+  cs: Odkazy musí začínat https:// nebo http://
+  hu: A linkeknek https:// vagy http:// előtaggal kell kezdődniük
+  pl: Linki muszą zaczynać się od https:// lub http://
+Low:
+  sk: Nízka
+  cs: Nízká
+  hu: Alacsony
+  pl: Niski
+Low effort:
+  sk: Nízka náročnosť
+  cs: Nízká náročnost
+  hu: Kis ráfordítás
+  pl: Mały nakład
+Lower impact:
+  sk: Nižší prínos
+  cs: Nižší přínos
+  hu: Kisebb hatás
+  pl: Mniejszy wpływ
+Main:
+  sk: Hlavná navigácia
+  cs: Hlavní navigace
+  hu: Fő navigáció
+  pl: Nawigacja główna
+Major projects:
+  sk: Veľké projekty
+  cs: Velké projekty
+  hu: Nagy projektek
+  pl: Duże projekty
+Maturity:
+  sk: Vyspelosť
+  cs: Vyspělost
+  hu: Érettség
+  pl: Dojrzałość
+'Maturity bands: strong (90% and above), substantial (70 to 89%), partial (40 to 69%), low (below 40%).':
+  sk: 'Pásma vyspelosti: silná (90 % a viac), značná (70 až 89 %), čiastočná (40 až 69 %), nízka (pod 40 %).'
+  cs: 'Pásma vyspělosti: silná (90 % a více), značná (70 až 89 %), částečná (40 až 69 %), nízká (pod 40 %).'
+  hu: 'Érettségi sávok: erős (90% és felette), jelentős (70–89%), részleges (40–69%), alacsony (40% alatt).'
+  pl: 'Przedziały dojrzałości: silna (90% i więcej), znaczna (70–89%), częściowa (40–69%), niska (poniżej 40%).'
+Medium:
+  sk: Stredná
+  cs: Střední
+  hu: Közepes
+  pl: Średni
+Medium or high effort:
+  sk: Stredná alebo vysoká náročnosť
+  cs: Střední nebo vysoká náročnost
+  hu: Közepes vagy nagy ráfordítás
+  pl: Średni lub duży nakład
+Met:
+  sk: Splnené
+  cs: Splněno
+  hu: Teljesítve
+  pl: Spełnione
+N/A:
+  sk: Neuplatňuje sa
+  cs: Nepoužije se
+  hu: Nem alkalmazandó
+  pl: Nie dotyczy
+n/a:
+  sk: neuvedené
+  cs: neuvedeno
+  hu: n. a.
+  pl: b.d.
+Needs review:
+  sk: Treba preveriť
+  cs: Je třeba prověřit
+  hu: Felülvizsgálatot igényel
+  pl: Wymaga weryfikacji
+'Neutral: no trend data available or no change.':
+  sk: 'Neutrálny: údaje o trende nie sú k dispozícii alebo bez zmeny.'
+  cs: 'Neutrální: data o trendu nejsou k dispozici nebo beze změny.'
+  hu: 'Semleges: nincs trendadat, vagy nincs változás.'
+  pl: 'Neutralny: brak danych o trendzie lub brak zmiany.'
+New threat data is waiting for your approval.:
+  sk: Nové údaje o hrozbách čakajú na vaše schválenie.
+  cs: Nová data o hrozbách čekají na vaše schválení.
+  hu: Új fenyegetési adatok várnak jóváhagyásra.
+  pl: Nowe dane o zagrożeniach czekają na zatwierdzenie.
+Next requirement:
+  sk: Ďalšia požiadavka
+  cs: Další požadavek
+  hu: Következő követelmény
+  pl: Następne wymaganie
+NIS2 annex:
+  sk: Príloha NIS2
+  cs: Příloha NIS2
+  hu: NIS2-melléklet
+  pl: Załącznik NIS2
+NIS2 Gap Assessment:
+  sk: Posúdenie medzier NIS2
+  cs: Posouzení mezer NIS2
+  hu: NIS2 hiányelemzés
+  pl: Ocena luk NIS2
+'NIS2, Directive (EU) 2022/2555: governance, risk management and incident reporting':
+  sk: 'NIS2, smernica (EÚ) 2022/2555: riadenie, riadenie rizík a hlásenie incidentov'
+  cs: 'NIS2, směrnice (EU) 2022/2555: správa, řízení rizik a hlášení incidentů'
+  hu: 'NIS2, (EU) 2022/2555 irányelv: irányítás, kockázatkezelés és incidensbejelentés'
+  pl: 'NIS2, dyrektywa (UE) 2022/2555: zarządzanie, zarządzanie ryzykiem i zgłaszanie incydentów'
+'No':
+  sk: Nie
+  cs: Ne
+  hu: Nem
+  pl: Nie
+No end date:
+  sk: Bez dátumu skončenia
+  cs: Bez data konce
+  hu: Nincs lejárati dátum
+  pl: Bez daty końcowej
+No evidence recorded:
+  sk: Žiadny dôkaz
+  cs: Žádný důkaz
+  hu: Nincs rögzített bizonyíték
+  pl: Brak dowodu
+'No evidence yet. Add it when you have it: until then this answer counts as not proven in the evidence-backed score.':
+  sk: 'Zatiaľ bez dôkazu. Doplňte ho, keď ho budete mať: dovtedy sa táto odpoveď v skóre podloženom dôkazmi počíta ako nepreukázaná.'
+  cs: 'Zatím bez důkazu. Doplňte ho, až ho budete mít: do té doby se tato odpověď ve skóre podloženém důkazy počítá jako neprokázaná.'
+  hu: 'Még nincs bizonyíték. Adja hozzá, amikor megvan: addig ez a válasz a bizonyítékkal alátámasztott pontszámban nem igazoltként számít.'
+  pl: 'Jeszcze bez dowodu. Dodaj go, gdy będzie dostępny: do tego czasu ta odpowiedź liczy się w wyniku popartym dowodami jako niepotwierdzona.'
+No open items.:
+  sk: Žiadne otvorené položky.
+  cs: Žádné otevřené položky.
+  hu: Nincs nyitott tétel.
+  pl: Brak otwartych pozycji.
+No open items. All applicable controls are reported as met.:
+  sk: Žiadne otvorené položky. Všetky uplatniteľné opatrenia sú označené ako splnené.
+  cs: Žádné otevřené položky. Všechna použitelná opatření jsou označena jako splněná.
+  hu: Nincs nyitott tétel. Minden alkalmazandó intézkedés teljesítettként van jelölve.
+  pl: Brak otwartych pozycji. Wszystkie środki mające zastosowanie oznaczono jako spełnione.
+No quick wins open right now.:
+  sk: Momentálne nie sú otvorené žiadne rýchle výhry.
+  cs: Momentálně nejsou otevřena žádná rychlá vítězství.
+  hu: Jelenleg nincs nyitott gyors eredmény.
+  pl: Obecnie brak otwartych szybkich zwycięstw.
+Not applicable:
+  sk: Neuplatňuje sa
+  cs: Nepoužije se
+  hu: Nem alkalmazandó
+  pl: Nie dotyczy
+Not assessed:
+  sk: Neposúdené
+  cs: Neposouzeno
+  hu: Nem értékelt
+  pl: Nieocenione
+Not assessed yet:
+  sk: Zatiaľ neposúdené
+  cs: Zatím neposouzeno
+  hu: Még nem értékelt
+  pl: Jeszcze nieocenione
+Not enough information:
+  sk: Nedostatok informácií
+  cs: Nedostatek informací
+  hu: Nincs elég információ
+  pl: Za mało informacji
+Not listed:
+  sk: Neuvedené
+  cs: Neuvedeno
+  hu: Nem szerepel
+  pl: Nie wymieniono
+Not listed in Annex I or Annex II:
+  sk: Neuvedené v prílohe I ani II
+  cs: Neuvedeno v příloze I ani II
+  hu: Sem az I., sem a II. mellékletben nem szerepel
+  pl: Nie wymieniono w załączniku I ani II
+Not met:
+  sk: Nesplnené
+  cs: Nesplněno
+  hu: Nem teljesítve
+  pl: Niespełnione
+Not provided:
+  sk: Neuvedené
+  cs: Neuvedeno
+  hu: Nincs megadva
+  pl: Nie podano
+Notes:
+  sk: Poznámky
+  cs: Poznámky
+  hu: Megjegyzések
+  pl: Uwagi
+Nothing assessed yet.:
+  sk: Zatiaľ nie je nič posúdené.
+  cs: Zatím není nic posouzeno.
+  hu: Még semmi sincs értékelve.
+  pl: Nic jeszcze nie oceniono.
+Nothing yet.:
+  sk: Zatiaľ nič.
+  cs: Zatím nic.
+  hu: Még semmi.
+  pl: Na razie nic.
+'Number of controls in each cell. Colour shows severity: control priority weighted by missing coverage.':
+  sk: 'Počet opatrení v každej bunke. Farba ukazuje závažnosť: prioritu opatrenia váženú chýbajúcim pokrytím.'
+  cs: 'Počet opatření v každé buňce. Barva ukazuje závažnost: prioritu opatření váženou chybějícím pokrytím.'
+  hu: 'Az intézkedések száma cellánként. A szín a súlyosságot mutatja: a hiányzó lefedettséggel súlyozott prioritást.'
+  pl: 'Liczba środków w każdej komórce. Kolor pokazuje wagę: priorytet środka ważony brakującym pokryciem.'
+of the {label} measures are in place.:
+  sk: opatrení {label} je zavedených.
+  cs: opatření {label} je zavedeno.
+  hu: a {label}-intézkedések közül teljesül.
+  pl: środków {label} jest wdrożonych.
+Only administrators can change these details.:
+  sk: Tieto údaje môžu meniť len administrátori.
+  cs: Tyto údaje mohou měnit jen administrátoři.
+  hu: Ezeket az adatokat csak adminisztrátorok módosíthatják.
+  pl: Tylko administratorzy mogą zmieniać te dane.
+? 'Only {pct} is supported by evidence, so treat the result as indicative until the missing evidence is added (controls without evidence: {n}).'
+: sk: 'Dôkazmi je podložených len {pct}, preto výsledok berte ako orientačný, kým nedoplníte chýbajúce dôkazy (opatrenia bez dôkazu: {n}).'
+  cs: 'Důkazy je podloženo jen {pct}, proto výsledek berte jako orientační, dokud nedoplníte chybějící důkazy (opatření bez důkazu: {n}).'
+  hu: 'Csak {pct} van bizonyítékkal alátámasztva, ezért az eredményt tekintse tájékoztatónak, amíg a hiányzó bizonyítékok nem kerülnek be (bizonyíték nélküli intézkedések: {n}).'
+  pl: 'Tylko {pct} jest poparte dowodami, więc traktuj wynik jako orientacyjny do czasu uzupełnienia brakujących dowodów (środki bez dowodów: {n}).'
+Or a link to it (SharePoint, Drive, wiki):
+  sk: Alebo odkaz naň (SharePoint, Drive, wiki)
+  cs: Nebo odkaz na něj (SharePoint, Drive, wiki)
+  hu: Vagy link hozzá (SharePoint, Drive, wiki)
+  pl: Lub link do niego (SharePoint, Drive, wiki)
+Organisation:
+  sk: Organizácia
+  cs: Organizace
+  hu: Szervezet
+  pl: Organizacja
+Organisation details saved.:
+  sk: Údaje o organizácii boli uložené.
+  cs: Údaje o organizaci byly uloženy.
+  hu: A szervezet adatai mentve.
+  pl: Zapisano dane organizacji.
+Organisation name:
+  sk: Názov organizácie
+  cs: Název organizace
+  hu: A szervezet neve
+  pl: Nazwa organizacji
+Organisation updated:
+  sk: Organizácia aktualizovaná
+  cs: Organizace aktualizována
+  hu: Szervezet frissítve
+  pl: Zaktualizowano organizację
+Out of scope:
+  sk: Mimo pôsobnosti
+  cs: Mimo působnost
+  hu: Hatályon kívül
+  pl: Poza zakresem
+'Overall compliance: {pct} (maturity: {maturity}).':
+  sk: 'Celkové plnenie: {pct} (vyspelosť: {maturity}).'
+  cs: 'Celkové plnění: {pct} (vyspělost: {maturity}).'
+  hu: 'Teljes megfelelés: {pct} (érettség: {maturity}).'
+  pl: 'Ogólna zgodność: {pct} (dojrzałość: {maturity}).'
+Overview:
+  sk: Prehľad
+  cs: Přehled
+  hu: Áttekintés
+  pl: Przegląd
+Owner:
+  sk: Vlastník
+  cs: Vlastník
+  hu: Felelős
+  pl: Właściciel
+Owners and target dates are left for the organisation to assign.:
+  sk: Vlastníkov a cieľové termíny určí organizácia.
+  cs: Vlastníky a cílové termíny určí organizace.
+  hu: A felelősöket és a határidőket a szervezet jelöli ki.
+  pl: Właścicieli i terminy wyznacza organizacja.
+Partial:
+  sk: Čiastočná
+  cs: Částečná
+  hu: Részleges
+  pl: Częściowa
+Partially:
+  sk: Čiastočne
+  cs: Částečně
+  hu: Részben
+  pl: Częściowo
+Partially met:
+  sk: Čiastočne splnené
+  cs: Částečně splněno
+  hu: Részben teljesítve
+  pl: Częściowo spełnione
+Password changed:
+  sk: Heslo zmenené
+  cs: Heslo změněno
+  hu: Jelszó módosítva
+  pl: Zmieniono hasło
+Password reset:
+  sk: Heslo obnovené
+  cs: Heslo obnoveno
+  hu: Jelszó visszaállítva
+  pl: Zresetowano hasło
+Pattern:
+  sk: Vzorec
+  cs: Vzorec
+  hu: Minta
+  pl: Wzorzec
+Planned remediation date:
+  sk: Plánovaný termín nápravy
+  cs: Plánovaný termín nápravy
+  hu: Tervezett javítási határidő
+  pl: Planowany termin naprawy
+Prepared by:
+  sk: Vypracoval
+  cs: Vypracoval
+  hu: Készítette
+  pl: Przygotował(a)
+Prevalence:
+  sk: Výskyt
+  cs: Výskyt
+  hu: Gyakoriság
+  pl: Częstość
+? Prevalence is the share of confirmed or suspected incident events in the VERIS Community Database (VCDB) matching each threat pattern, with mass campaigns counted once. Links between controls and threat patterns come from MITRE ATT&CK mitigation relationships, plus catalogue links for patterns ATT&CK does not cover (human error, insider misuse, physical loss, supplier involvement).
+: sk: Výskyt je podiel potvrdených alebo podozrivých incidentov vo VERIS Community Database (VCDB), ktoré zodpovedajú danému vzorcu hrozby; masové kampane sa počítajú raz. Prepojenia opatrení a vzorcov hrozieb pochádzajú z mitigačných vzťahov MITRE ATT&CK, doplnených o prepojenia z katalógu pre vzorce, ktoré ATT&CK nepokrýva (ľudská chyba, zneužitie zo strany zamestnanca, fyzická strata, účasť dodávateľa).
+  cs: Výskyt je podíl potvrzených nebo podezřelých incidentů ve VERIS Community Database (VCDB), které odpovídají danému vzorci hrozby; masové kampaně se počítají jednou. Propojení opatření a vzorců hrozeb pochází z mitigačních vztahů MITRE ATT&CK, doplněných o propojení z katalogu pro vzorce, které ATT&CK nepokrývá (lidská chyba, zneužití ze strany zaměstnance, fyzická ztráta, účast dodavatele).
+  hu: A gyakoriság a VERIS Community Database (VCDB) azon megerősített vagy gyanított incidenseinek aránya, amelyek az adott fenyegetési mintának felelnek meg; a tömeges kampányok egyszer számítanak. Az intézkedések és minták kapcsolata a MITRE ATT&CK mitigációs kapcsolataiból származik, kiegészítve katalógusbeli kapcsolatokkal azokra a mintákra, amelyeket az ATT&CK nem fed le (emberi hiba, belső visszaélés, fizikai elvesztés, beszállítói érintettség).
+  pl: Częstość to udział potwierdzonych lub podejrzewanych incydentów w VERIS Community Database (VCDB) pasujących do danego wzorca zagrożenia; kampanie masowe liczone są raz. Powiązania środków ze wzorcami zagrożeń pochodzą z relacji mitygacji MITRE ATT&CK, uzupełnionych o powiązania z katalogu dla wzorców, których ATT&CK nie obejmuje (błąd ludzki, nadużycie przez pracownika, fizyczna utrata, udział dostawcy).
+Previous requirement:
+  sk: Predchádzajúca požiadavka
+  cs: Předchozí požadavek
+  hu: Előző követelmény
+  pl: Poprzednie wymaganie
+Priority:
+  sk: Priorita
+  cs: Priorita
+  hu: Prioritás
+  pl: Priorytet
+Progress:
+  sk: Vývoj
+  cs: Vývoj
+  hu: Előrehaladás
+  pl: Postęp
+Questions answered:
+  sk: Zodpovedané otázky
+  cs: Zodpovězené otázky
+  hu: Megválaszolt kérdések
+  pl: Pytania z odpowiedzią
+'Questions: {n} ({label}), in {areas} areas.':
+  sk: 'Otázky: {n} ({label}), oblasti: {areas}.'
+  cs: 'Otázky: {n} ({label}), oblasti: {areas}.'
+  hu: 'Kérdések: {n} ({label}), területek: {areas}.'
+  pl: 'Pytania: {n} ({label}), obszary: {areas}.'
+Quick wins:
+  sk: Rýchle výhry
+  cs: Rychlá vítězství
+  hu: Gyors eredmények
+  pl: Szybkie zwycięstwa
+? 'Quick wins (high impact, low effort): {n}, for example {ids}. Closing these first gives the fastest reduction in risk (see section 3.3).'
+: sk: 'Rýchle výhry (vysoký prínos, nízka náročnosť): {n}, napríklad {ids}. Ich uzavretie ako prvých najrýchlejšie zníži riziko (pozri časť 3.3).'
+  cs: 'Rychlá vítězství (vysoký přínos, nízká náročnost): {n}, například {ids}. Jejich uzavření jako prvních nejrychleji sníží riziko (viz oddíl 3.3).'
+  hu: 'Gyors eredmények (nagy hatás, kis ráfordítás): {n}, például {ids}. Ezek lezárása csökkenti a leggyorsabban a kockázatot (lásd a 3.3. pontot).'
+  pl: 'Szybkie zwycięstwa (duży wpływ, mały nakład): {n}, na przykład {ids}. Ich zamknięcie w pierwszej kolejności najszybciej zmniejsza ryzyko (zob. sekcja 3.3).'
+? 'RAG: green 70% and above, amber 40 to 69%, red below 40%. Green needs evidence: a requirement answered as in place without evidence stays amber. Grey means not assessed yet. "Evidenced" counts only answers supported by existing evidence. In the bar, the solid part is backed by evidence and the light part is not yet.'
+: sk: 'Farby: zelená 70 % a viac, oranžová 40 až 69 %, červená pod 40 %. Zelená vyžaduje dôkazy: požiadavka označená ako zavedená bez dôkazov zostáva oranžová. Sivá znamená zatiaľ neposúdené. „Podložené“ započítava len odpovede podložené existujúcimi dôkazmi. V pruhu je plná časť podložená dôkazmi, svetlá zatiaľ nie.'
+  cs: 'Barvy: zelená 70 % a více, oranžová 40 až 69 %, červená pod 40 %. Zelená vyžaduje důkazy: požadavek označený jako zavedený bez důkazů zůstává oranžový. Šedá znamená zatím neposouzeno. „Podloženo“ započítává jen odpovědi podložené existujícími důkazy. V pruhu je plná část podložena důkazy, světlá zatím ne.'
+  hu: 'Színek: zöld 70% és felette, borostyán 40–69%, piros 40% alatt. A zöldhöz bizonyíték kell: a bizonyíték nélkül bevezetettnek jelölt követelmény borostyán marad. A szürke még nem értékeltet jelent. Az „Alátámasztva” csak a meglévő bizonyítékkal alátámasztott válaszokat számolja. A sávban a teli rész bizonyítékkal alátámasztott, a halvány rész még nem.'
+  pl: 'Kolory: zielony 70% i więcej, bursztynowy 40–69%, czerwony poniżej 40%. Zielony wymaga dowodów: wymaganie oznaczone jako wdrożone bez dowodów pozostaje bursztynowe. Szary oznacza jeszcze nieocenione. „Poparte” liczy tylko odpowiedzi poparte istniejącymi dowodami. Na pasku pełna część jest poparta dowodami, jasna jeszcze nie.'
+Recent activity:
+  sk: Posledná aktivita
+  cs: Poslední aktivita
+  hu: Legutóbbi tevékenység
+  pl: Ostatnia aktywność
+Recommended action:
+  sk: Odporúčané opatrenie
+  cs: Doporučené opatření
+  hu: Javasolt lépés
+  pl: Zalecane działanie
+'records: {n}':
+  sk: 'záznamy: {n}'
+  cs: 'záznamy: {n}'
+  hu: 'rekordok: {n}'
+  pl: 'rekordy: {n}'
+Ref:
+  sk: Ozn.
+  cs: Ozn.
+  hu: Azon.
+  pl: Ozn.
+Regulatory baseline (static):
+  sk: Regulačný základ (statický)
+  cs: Regulatorní základ (statický)
+  hu: Szabályozási alapérték (statikus)
+  pl: Bazowe wagi regulacyjne (statyczne)
+Remove:
+  sk: Odstrániť
+  cs: Odstranit
+  hu: Eltávolítás
+  pl: Usuń
+Remove this evidence?:
+  sk: Odstrániť tento dôkaz?
+  cs: Odstranit tento důkaz?
+  hu: Eltávolítja ezt a bizonyítékot?
+  pl: Usunąć ten dowód?
+Report downloaded:
+  sk: Správa stiahnutá
+  cs: Zpráva stažena
+  hu: Jelentés letöltve
+  pl: Pobrano raport
+Report generated:
+  sk: Správa vytvorená
+  cs: Zpráva vytvořena
+  hu: A jelentés készült
+  pl: Raport wygenerowano
+Reported status:
+  sk: Uvedený stav
+  cs: Uvedený stav
+  hu: Jelentett állapot
+  pl: Zgłoszony status
+Requirement:
+  sk: Požiadavka
+  cs: Požadavek
+  hu: Követelmény
+  pl: Wymaganie
+Retrieved:
+  sk: Získané
+  cs: Získáno
+  hu: Letöltve
+  pl: Pobrano
+Review it:
+  sk: Skontrolovať
+  cs: Zkontrolovat
+  hu: Áttekintés
+  pl: Przejrzyj
+Role changed:
+  sk: Rola zmenená
+  cs: Role změněna
+  hu: Szerepkör módosítva
+  pl: Zmieniono rolę
+Saved by {who} on {date}:
+  sk: Uložil(a) {who} dňa {date}
+  cs: Uložil(a) {who} dne {date}
+  hu: 'Mentette: {who}, {date}'
+  pl: Zapisał(a) {who}, {date}
+Schedule later:
+  sk: Naplánovať neskôr
+  cs: Naplánovat později
+  hu: Később ütemezendő
+  pl: Zaplanuj później
+Score:
+  sk: Skóre
+  cs: Skóre
+  hu: Pontszám
+  pl: Wynik
+Sector:
+  sk: Sektor
+  cs: Odvětví
+  hu: Ágazat
+  pl: Sektor
+Sector and subsector:
+  sk: Sektor a podsektor
+  cs: Odvětví a pododvětví
+  hu: Ágazat és alágazat
+  pl: Sektor i podsektor
+Select at least one framework (NIS2, DORA, or both).:
+  sk: Vyberte aspoň jeden rámec (NIS2, DORA alebo oboje).
+  cs: Vyberte alespoň jeden rámec (NIS2, DORA nebo obojí).
+  hu: Válasszon legalább egy keretet (NIS2, DORA vagy mindkettő).
+  pl: Wybierz co najmniej jedne ramy (NIS2, DORA lub oba).
+Setting changed:
+  sk: Nastavenie zmenené
+  cs: Nastavení změněno
+  hu: Beállítás módosítva
+  pl: Zmieniono ustawienie
+Setup completed:
+  sk: Úvodné nastavenie dokončené
+  cs: Úvodní nastavení dokončeno
+  hu: Kezdeti beállítás kész
+  pl: Zakończono konfigurację
+Signed in:
+  sk: Prihlásenie
+  cs: Přihlášení
+  hu: Bejelentkezés
+  pl: Zalogowano
+Signed out:
+  sk: Odhlásenie
+  cs: Odhlášení
+  hu: Kijelentkezés
+  pl: Wylogowano
+Single sign-on linked:
+  sk: Jednotné prihlásenie prepojené
+  cs: Jednotné přihlášení propojeno
+  hu: Egyszeri bejelentkezés összekapcsolva
+  pl: Połączono logowanie jednokrotne
+Single sign-on refused:
+  sk: Jednotné prihlásenie odmietnuté
+  cs: Jednotné přihlášení odmítnuto
+  hu: Egyszeri bejelentkezés elutasítva
+  pl: Odrzucono logowanie jednokrotne
+Single sign-on unlinked:
+  sk: Jednotné prihlásenie odpojené
+  cs: Jednotné přihlášení odpojeno
+  hu: Egyszeri bejelentkezés leválasztva
+  pl: Odłączono logowanie jednokrotne
+size|Large:
+  sk: Veľký
+  cs: Velký
+  hu: Nagy
+  pl: Duże
+size|Medium:
+  sk: Stredný
+  cs: Střední
+  hu: Közepes
+  pl: Średnie
+size|Micro:
+  sk: Mikropodnik
+  cs: Mikropodnik
+  hu: Mikro
+  pl: Mikro
+size|Small:
+  sk: Malý
+  cs: Malý
+  hu: Kis
+  pl: Małe
+size|Unknown:
+  sk: Neznáma
+  cs: Neznámá
+  hu: Ismeretlen
+  pl: Nieznana
+'Solid bar: backed by evidence. Light bar: answered yes, evidence still missing. Grey dot: not assessed yet.':
+  sk: 'Plný pruh: podložené dôkazmi. Svetlý pruh: odpoveď áno, dôkaz ešte chýba. Sivý bod: zatiaľ neposúdené.'
+  cs: 'Plný pruh: podloženo důkazy. Světlý pruh: odpověď ano, důkaz ještě chybí. Šedá tečka: zatím neposouzeno.'
+  hu: 'Teli sáv: bizonyítékkal alátámasztva. Halvány sáv: igen válasz, a bizonyíték még hiányzik. Szürke pont: még nem értékelt.'
+  pl: 'Pełny pasek: poparte dowodami. Jasny pasek: odpowiedź tak, brak jeszcze dowodu. Szara kropka: jeszcze nieocenione.'
+Source:
+  sk: Zdroj
+  cs: Zdroj
+  hu: Forrás
+  pl: Źródło
+Sources:
+  sk: Zdroje
+  cs: Zdroje
+  hu: Források
+  pl: Źródła
+Start here:
+  sk: Začnite tu
+  cs: Začněte zde
+  hu: Kezdje itt
+  pl: Zacznij tutaj
+Status:
+  sk: Stav
+  cs: Stav
+  hu: Állapot
+  pl: Status
+Strong:
+  sk: Silná
+  cs: Silná
+  hu: Erős
+  pl: Silna
+Subsector:
+  sk: Podsektor
+  cs: Pododvětví
+  hu: Alágazat
+  pl: Podsektor
+Substantial:
+  sk: Značná
+  cs: Značná
+  hu: Jelentős
+  pl: Znaczna
+Target:
+  sk: Termín
+  cs: Termín
+  hu: Határidő
+  pl: Termin
+That scope check is the NIS2 test and does not decide whether DORA applies.:
+  sk: Tento test pôsobnosti je test podľa NIS2 a nerozhoduje o tom, či sa uplatňuje DORA.
+  cs: Tento test působnosti je test podle NIS2 a nerozhoduje o tom, zda se uplatní DORA.
+  hu: Ez a hatályvizsgálat a NIS2-teszt, és nem dönti el, hogy a DORA alkalmazandó-e.
+  pl: Ta weryfikacja zakresu to test NIS2 i nie przesądza, czy DORA ma zastosowanie.
+The file is empty.:
+  sk: Súbor je prázdny.
+  cs: Soubor je prázdný.
+  hu: A fájl üres.
+  pl: Plik jest pusty.
+The full gap register is available as a CSV download.:
+  sk: Úplný register nedostatkov si môžete stiahnuť ako CSV.
+  cs: Úplný registr nedostatků si můžete stáhnout jako CSV.
+  hu: A teljes hiányosságnyilvántartás CSV-ként letölthető.
+  pl: Pełny rejestr luk można pobrać jako plik CSV.
+The organisation:
+  sk: Organizácia
+  cs: Organizace
+  hu: A szervezet
+  pl: Organizacja
+? The overall and per-requirement scores are weighted averages of the applicable controls. The evidence-backed score applies the same calculation but counts a control only when every evidence item recorded for it exists. Open items are ranked by control weight multiplied by missing coverage, so an unaddressed critical control ranks above a partially met medium one.
+: sk: Celkové skóre a skóre jednotlivých požiadaviek sú vážené priemery uplatniteľných opatrení. Skóre podložené dôkazmi používa rovnaký výpočet, ale opatrenie započíta, len ak existujú všetky k nemu zaznamenané dôkazy. Otvorené položky sú zoradené podľa váhy opatrenia vynásobenej chýbajúcim pokrytím, takže neriešené kritické opatrenie je vyššie ako čiastočne splnené stredné.
+  cs: Celkové skóre a skóre jednotlivých požadavků jsou vážené průměry použitelných opatření. Skóre podložené důkazy používá stejný výpočet, ale opatření započte, jen pokud existují všechny k němu zaznamenané důkazy. Otevřené položky jsou seřazeny podle váhy opatření vynásobené chybějícím pokrytím, takže neřešené kritické opatření je výše než částečně splněné střední.
+  hu: A teljes és a követelményenkénti pontszám az alkalmazandó intézkedések súlyozott átlaga. A bizonyítékkal alátámasztott pontszám ugyanígy számol, de egy intézkedést csak akkor vesz figyelembe, ha minden hozzá rögzített bizonyíték létezik. A nyitott tételek sorrendje az intézkedés súlyának és a hiányzó lefedettségnek a szorzata, így egy kezeletlen kritikus intézkedés megelőz egy részben teljesített közepeset.
+  pl: Wynik ogólny i wyniki dla wymagań to średnie ważone środków mających zastosowanie. Wynik poparty dowodami liczy się tak samo, ale uwzględnia środek tylko wtedy, gdy istnieją wszystkie zapisane dla niego dowody. Otwarte pozycje są szeregowane według wagi środka pomnożonej przez brakujące pokrycie, więc nieobsłużony środek krytyczny jest wyżej niż częściowo spełniony średni.
+The scope could not be conclusively classified and requires further review.:
+  sk: Pôsobnosť sa nepodarilo jednoznačne určiť a treba ju ďalej preveriť.
+  cs: Působnost se nepodařilo jednoznačně určit a je třeba ji dále prověřit.
+  hu: A hatályt nem lehetett egyértelműen megállapítani, további vizsgálat szükséges.
+  pl: Nie udało się jednoznacznie ustalić zakresu; wymaga to dalszej weryfikacji.
+? The size and sector outcome is the NIS2 applicability check. It does not decide whether DORA applies. DORA applies to the financial entities listed in Article 2 of Regulation (EU) 2022/2554.
+: sk: Výsledok podľa veľkosti a sektora je test uplatniteľnosti NIS2. Nerozhoduje o tom, či sa uplatňuje DORA. DORA sa vzťahuje na finančné subjekty uvedené v článku 2 nariadenia (EÚ) 2022/2554.
+  cs: Výsledek podle velikosti a odvětví je test použitelnosti NIS2. Nerozhoduje o tom, zda se uplatní DORA. DORA se vztahuje na finanční subjekty uvedené v článku 2 nařízení (EU) 2022/2554.
+  hu: A méret és ágazat szerinti eredmény a NIS2 alkalmazhatósági vizsgálata. Nem dönti el, hogy a DORA alkalmazandó-e. A DORA az (EU) 2022/2554 rendelet 2. cikkében felsorolt pénzügyi szervezetekre vonatkozik.
+  pl: Wynik według wielkości i sektora to test stosowania NIS2. Nie przesądza, czy DORA ma zastosowanie. DORA dotyczy podmiotów finansowych wymienionych w art. 2 rozporządzenia (UE) 2022/2554.
+The solid line is your overall score, the dashed line the part backed by evidence.:
+  sk: Plná čiara je celkové skóre, prerušovaná čiara časť podložená dôkazmi.
+  cs: Plná čára je celkové skóre, přerušovaná čára část podložená důkazy.
+  hu: A folytonos vonal a teljes pontszám, a szaggatott a bizonyítékkal alátámasztott rész.
+  pl: Linia ciągła to wynik ogólny, przerywana to część poparta dowodami.
+then start the:
+  sk: potom začnite
+  cs: potom začněte
+  hu: majd kezdje el
+  pl: potem rozpocznij
+? These details appear on the report. Size and sector use the same NIS2 scope rules as the scope wizard. The framework choice decides which questions you answer.
+: sk: Tieto údaje sa zobrazia v správe. Veľkosť a sektor používajú rovnaké pravidlá pôsobnosti NIS2 ako sprievodca pôsobnosťou. Výber rámca určuje, na ktoré otázky odpovedáte.
+  cs: Tyto údaje se zobrazí ve zprávě. Velikost a odvětví používají stejná pravidla působnosti NIS2 jako průvodce působností. Výběr rámce určuje, na které otázky odpovídáte.
+  hu: Ezek az adatok megjelennek a jelentésben. A méret és az ágazat ugyanazokat a NIS2-hatálysabályokat használja, mint a hatályvarázsló. A keret kiválasztása dönti el, mely kérdésekre válaszol.
+  pl: Te dane pojawią się w raporcie. Wielkość i sektor korzystają z tych samych zasad zakresu NIS2 co kreator zakresu. Wybór ram decyduje, na które pytania odpowiadasz.
+? 'This baseline is then raised by up to 50% for controls that counter threats common in recent incident data: the uplift is proportional to the combined prevalence of the threat patterns the control counters, relative to the most exposed control. Threat data can raise a weight but never lower it below the regulatory baseline, because every control is a legal requirement. Sources and links are listed in Appendix C.'
+: sk: 'Tento základ sa potom zvýši až o 50 % pri opatreniach, ktoré pôsobia proti hrozbám častým v aktuálnych údajoch o incidentoch: navýšenie je úmerné súhrnnému výskytu vzorcov hrozieb, proti ktorým opatrenie pôsobí, v pomere k najexponovanejšiemu opatreniu. Údaje o hrozbách môžu váhu zvýšiť, nikdy ju však neznížia pod regulačný základ, pretože každé opatrenie je zákonnou požiadavkou. Zdroje a prepojenia sú v prílohe C.'
+  cs: 'Tento základ se pak zvýší až o 50 % u opatření, která působí proti hrozbám častým v aktuálních datech o incidentech: navýšení je úměrné souhrnnému výskytu vzorců hrozeb, proti nimž opatření působí, v poměru k nejexponovanějšímu opatření. Data o hrozbách mohou váhu zvýšit, nikdy ji však nesníží pod regulatorní základ, protože každé opatření je zákonným požadavkem. Zdroje a propojení jsou v příloze C.'
+  hu: 'Ezt az alapértéket legfeljebb 50%-kal megemeljük azoknál az intézkedéseknél, amelyek a friss incidensadatokban gyakori fenyegetések ellen hatnak: az emelés arányos az intézkedés által ellensúlyozott minták együttes gyakoriságával, a leginkább kitett intézkedéshez viszonyítva. A fenyegetési adatok növelhetik a súlyt, de soha nem csökkenthetik a szabályozási alapérték alá, mert minden intézkedés jogi követelmény. A források és kapcsolatok a C. mellékletben vannak.'
+  pl: 'Ta wartość bazowa jest następnie podnoszona o maksymalnie 50% dla środków przeciwdziałających zagrożeniom częstym w aktualnych danych o incydentach: podwyższenie jest proporcjonalne do łącznej częstości wzorców zagrożeń, którym środek przeciwdziała, w stosunku do najbardziej narażonego środka. Dane o zagrożeniach mogą podnieść wagę, ale nigdy nie obniżą jej poniżej wartości bazowej, bo każdy środek jest wymogiem prawnym. Źródła i powiązania podano w załączniku C.'
+? This report is a self-assessment and does not constitute a certification, audit opinion or legal advice. National transposition laws, implementing acts and guidance from the competent authority may impose additional or more specific requirements.
+: sk: Táto správa je samohodnotením a nepredstavuje certifikáciu, výrok audítora ani právne poradenstvo. Vnútroštátne predpisy preberajúce smernicu, vykonávacie predpisy a usmernenia príslušného orgánu môžu ukladať ďalšie alebo konkrétnejšie požiadavky.
+  cs: Tato zpráva je sebehodnocením a nepředstavuje certifikaci, výrok auditora ani právní poradenství. Vnitrostátní předpisy provádějící směrnici, prováděcí předpisy a pokyny příslušného orgánu mohou ukládat další nebo konkrétnější požadavky.
+  hu: Ez a jelentés önértékelés, nem minősül tanúsításnak, auditori véleménynek vagy jogi tanácsadásnak. A nemzeti átültető jogszabályok, végrehajtási jogszabályok és az illetékes hatóság iránymutatásai további vagy konkrétabb követelményeket írhatnak elő.
+  pl: Ten raport jest samooceną i nie stanowi certyfikacji, opinii audytora ani porady prawnej. Krajowe przepisy wdrażające, akty wykonawcze i wytyczne właściwego organu mogą nakładać dodatkowe lub bardziej szczegółowe wymagania.
+Threat data check failed:
+  sk: Kontrola údajov o hrozbách zlyhala
+  cs: Kontrola dat o hrozbách selhala
+  hu: A fenyegetési adatok ellenőrzése sikertelen
+  pl: Sprawdzenie danych o zagrożeniach nie powiodło się
+Threat data check started:
+  sk: Kontrola údajov o hrozbách spustená
+  cs: Kontrola dat o hrozbách spuštěna
+  hu: A fenyegetési adatok ellenőrzése elindult
+  pl: Rozpoczęto sprawdzanie danych o zagrożeniach
+Threat data checked:
+  sk: Údaje o hrozbách skontrolované
+  cs: Data o hrozbách zkontrolována
+  hu: Fenyegetési adatok ellenőrizve
+  pl: Sprawdzono dane o zagrożeniach
+Threat patterns:
+  sk: Vzorce hrozieb
+  cs: Vzorce hrozeb
+  hu: Fenyegetési minták
+  pl: Wzorce zagrożeń
+Threat-informed:
+  sk: Podľa hrozieb
+  cs: Podle hrozeb
+  hu: Fenyegetésalapú
+  pl: Na podstawie zagrożeń
+Unavailable:
+  sk: Nedostupné
+  cs: Nedostupné
+  hu: Nem elérhető
+  pl: Niedostępne
+Unnamed organisation:
+  sk: Organizácia bez názvu
+  cs: Organizace bez názvu
+  hu: Névtelen szervezet
+  pl: Organizacja bez nazwy
+Used:
+  sk: Použité
+  cs: Použito
+  hu: Felhasználva
+  pl: Użyte
+User activated:
+  sk: Používateľ aktivovaný
+  cs: Uživatel aktivován
+  hu: Felhasználó aktiválva
+  pl: Aktywowano użytkownika
+User created:
+  sk: Používateľ vytvorený
+  cs: Uživatel vytvořen
+  hu: Felhasználó létrehozva
+  pl: Utworzono użytkownika
+User created by single sign-on:
+  sk: Používateľ vytvorený cez jednotné prihlásenie
+  cs: Uživatel vytvořen přes jednotné přihlášení
+  hu: Felhasználó létrehozva egyszeri bejelentkezéssel
+  pl: Utworzono użytkownika przez logowanie jednokrotne
+User deactivated:
+  sk: Používateľ deaktivovaný
+  cs: Uživatel deaktivován
+  hu: Felhasználó letiltva
+  pl: Dezaktywowano użytkownika
+Valid until:
+  sk: Platné do
+  cs: Platné do
+  hu: Érvényes
+  pl: Ważne do
+Valid until (optional, for example a yearly test):
+  sk: Platné do (nepovinné, napríklad pri ročnom teste)
+  cs: Platné do (nepovinné, například u ročního testu)
+  hu: Érvényes eddig (nem kötelező, például éves tesztnél)
+  pl: Ważne do (opcjonalnie, np. przy corocznym teście)
+Version:
+  sk: Verzia
+  cs: Verze
+  hu: Verzió
+  pl: Wersja
+Viewer:
+  sk: Čitateľ
+  cs: Čtenář
+  hu: Megtekintő
+  pl: Przeglądający
+'Weakest areas: {areas}.':
+  sk: 'Najslabšie oblasti: {areas}.'
+  cs: 'Nejslabší oblasti: {areas}.'
+  hu: 'A leggyengébb területek: {areas}.'
+  pl: 'Najsłabsze obszary: {areas}.'
+Weight:
+  sk: Váha
+  cs: Váha
+  hu: Súly
+  pl: Waga
+Weights are threat-informed.:
+  sk: Váhy zohľadňujú údaje o hrozbách.
+  cs: Váhy zohledňují data o hrozbách.
+  hu: A súlyok fenyegetési adatokon alapulnak.
+  pl: Wagi uwzględniają dane o zagrożeniach.
+What:
+  sk: Čo
+  cs: Co
+  hu: Mi
+  pl: Co
+What is in place, what is missing, who owns it:
+  sk: Čo je zavedené, čo chýba, kto za to zodpovedá
+  cs: Co je zavedeno, co chybí, kdo za to odpovídá
+  hu: Mi van bevezetve, mi hiányzik, ki a felelős
+  pl: Co jest wdrożone, czego brakuje, kto odpowiada
+What the file is (optional):
+  sk: Čo je to za súbor (nepovinné)
+  cs: Co je to za soubor (nepovinné)
+  hu: Mi ez a fájl (nem kötelező)
+  pl: Co to za plik (opcjonalnie)
+What the link is (optional):
+  sk: Čo je to za odkaz (nepovinné)
+  cs: Co je to za odkaz (nepovinné)
+  hu: Mi ez a link (nem kötelező)
+  pl: Co to za link (opcjonalnie)
+When (UTC):
+  sk: Kedy (UTC)
+  cs: Kdy (UTC)
+  hu: Mikor (UTC)
+  pl: Kiedy (UTC)
+Where you stand:
+  sk: Kde stojíte
+  cs: Kde stojíte
+  hu: Hol tartanak
+  pl: Gdzie jesteście
+Who:
+  sk: Kto
+  cs: Kdo
+  hu: Ki
+  pl: Kto
+Without evidence:
+  sk: Bez dôkazu
+  cs: Bez důkazu
+  hu: Bizonyíték nélkül
+  pl: Bez dowodu
+'Yes':
+  sk: Áno
+  cs: Ano
+  hu: Igen
+  pl: Tak
+You can read this page but not change it. Ask an administrator for the assessor role to answer questions.:
+  sk: Túto stránku môžete čítať, ale nie meniť. Ak chcete odpovedať na otázky, požiadajte administrátora o rolu hodnotiteľa.
+  cs: Tuto stránku můžete číst, ale ne měnit. Chcete-li odpovídat na otázky, požádejte administrátora o roli hodnotitele.
+  hu: Ezt az oldalt olvashatja, de nem módosíthatja. A kérdések megválaszolásához kérje az adminisztrátortól az értékelő szerepkört.
+  pl: Możesz czytać tę stronę, ale nie możesz jej zmieniać. Aby odpowiadać na pytania, poproś administratora o rolę oceniającego.
+Your organisation:
+  sk: Vaša organizácia
+  cs: Vaše organizace
+  hu: Az Ön szervezete
+  pl: Twoja organizacja
+'{a} of {t} assessed':
+  sk: 'posúdené: {a} z {t}'
+  cs: 'posouzeno: {a} z {t}'
+  hu: 'értékelve: {a} / {t}'
+  pl: 'ocenione: {a} z {t}'
+? '{name} was assessed against Directive (EU) 2022/2555 (NIS2), Articles 20, 21 and 23, and against Regulation (EU) 2022/2554 (DORA), Articles 5 to 45.'
+: sk: Organizácia {name} bola posúdená podľa smernice (EÚ) 2022/2555 (NIS2), články 20, 21 a 23, a podľa nariadenia (EÚ) 2022/2554 (DORA), články 5 až 45.
+  cs: Organizace {name} byla posouzena podle směrnice (EU) 2022/2555 (NIS2), články 20, 21 a 23, a podle nařízení (EU) 2022/2554 (DORA), články 5 až 45.
+  hu: A(z) {name} értékelése az (EU) 2022/2555 irányelv (NIS2) 20., 21. és 23. cikke, valamint az (EU) 2022/2554 rendelet (DORA) 5–45. cikke alapján történt.
+  pl: Organizację {name} oceniono według dyrektywy (UE) 2022/2555 (NIS2), art. 20, 21 i 23, oraz rozporządzenia (UE) 2022/2554 (DORA), art. 5–45.
+'{name} was assessed against Regulation (EU) 2022/2554 (DORA), Articles 5 to 45.':
+  sk: Organizácia {name} bola posúdená podľa nariadenia (EÚ) 2022/2554 (DORA), články 5 až 45.
+  cs: Organizace {name} byla posouzena podle nařízení (EU) 2022/2554 (DORA), články 5 až 45.
+  hu: A(z) {name} értékelése az (EU) 2022/2554 rendelet (DORA) 5–45. cikke alapján történt.
+  pl: Organizację {name} oceniono według rozporządzenia (UE) 2022/2554 (DORA), art. 5–45.
+? '{name} was assessed against the cybersecurity risk-management, governance and incident reporting requirements of Directive (EU) 2022/2555 (NIS2), Articles 20, 21 and 23.'
+: sk: Organizácia {name} bola posúdená podľa požiadaviek smernice (EÚ) 2022/2555 (NIS2) na riadenie, riadenie kybernetických rizík a hlásenie incidentov, články 20, 21 a 23.
+  cs: Organizace {name} byla posouzena podle požadavků směrnice (EU) 2022/2555 (NIS2) na správu, řízení kybernetických rizik a hlášení incidentů, články 20, 21 a 23.
+  hu: A(z) {name} értékelése az (EU) 2022/2555 irányelv (NIS2) irányításra, kiberbiztonsági kockázatkezelésre és incidensbejelentésre vonatkozó követelményei, 20., 21. és 23. cikk alapján történt.
+  pl: Organizację {name} oceniono według wymagań dyrektywy (UE) 2022/2555 (NIS2) dotyczących zarządzania, zarządzania ryzykiem cyberbezpieczeństwa i zgłaszania incydentów, art. 20, 21 i 23.
+'{n} more in the report.':
+  sk: 'Ďalšie v správe: {n}.'
+  cs: 'Další ve zprávě: {n}.'
+  hu: 'További tételek a jelentésben: {n}.'
+  pl: 'Więcej w raporcie: {n}.'
+'{n} of {total} questions are not assessed yet and count as not in place.':
+  sk: 'Neposúdené otázky: {n} z {total}. Kým ich neposúdite, počítajú sa ako nesplnené.'
+  cs: 'Neposouzené otázky: {n} z {total}. Dokud je neposoudíte, počítají se jako nesplněné.'
+  hu: 'Nem értékelt kérdések: {n} / {total}. Amíg nem értékeli őket, nem teljesítettként számítanak.'
+  pl: 'Nieocenione pytania: {n} z {total}. Do czasu oceny liczą się jako niespełnione.'
+'{pct} can be shown with evidence today.':
+  sk: Dôkazmi je dnes podložených {pct}.
+  cs: Důkazy je dnes podloženo {pct}.
+  hu: Ma {pct} igazolható bizonyítékkal.
+  pl: Dowodami można dziś potwierdzić {pct}.
+'{pct} with evidence':
+  sk: 's dôkazmi: {pct}'
+  cs: 's důkazy: {pct}'
+  hu: 'bizonyítékkal: {pct}'
+  pl: 'z dowodami: {pct}'
+'{qid}: answer saved. See the message above about the evidence.':
+  sk: '{qid}: odpoveď uložená. Pozrite si správu o dôkaze vyššie.'
+  cs: '{qid}: odpověď uložena. Podívejte se na zprávu o důkazu výše.'
+  hu: '{qid}: válasz mentve. Lásd fent a bizonyítékra vonatkozó üzenetet.'
+  pl: '{qid}: zapisano odpowiedź. Zobacz komunikat o dowodzie powyżej.'
+'{qid}: saved.':
+  sk: '{qid}: uložené.'
+  cs: '{qid}: uloženo.'
+  hu: '{qid}: mentve.'
+  pl: '{qid}: zapisano.'
+'{qid}: saved. Add evidence when you have it: answers without evidence count as not proven.':
+  sk: '{qid}: uložené. Dôkaz doplňte, keď ho budete mať: odpovede bez dôkazu sa počítajú ako nepreukázané.'
+  cs: '{qid}: uloženo. Důkaz doplňte, až ho budete mít: odpovědi bez důkazu se počítají jako neprokázané.'
+  hu: '{qid}: mentve. Adja hozzá a bizonyítékot, amikor megvan: a bizonyíték nélküli válaszok nem igazoltként számítanak.'
+  pl: '{qid}: zapisano. Dodaj dowód, gdy będzie dostępny: odpowiedzi bez dowodu liczą się jako niepotwierdzone.'

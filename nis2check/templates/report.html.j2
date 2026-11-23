@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ lang or 'en' }}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,8 +10,8 @@
   @page {
     size: A4;
     margin: 20mm 18mm 20mm 18mm;
-    @bottom-left { content: "{{ kicker }}, confidential"; font: 7.5pt "Public Sans", Arial, sans-serif; color: rgba(0,0,0,.55); }
-    @bottom-right { content: counter(page) " of " counter(pages); font: 7.5pt "Public Sans", Arial, sans-serif; color: rgba(0,0,0,.55); }
+    @bottom-left { content: "{{ kicker }}, {{ _('Confidential') | lower }}"; font: 7.5pt "Public Sans", Arial, sans-serif; color: rgba(0,0,0,.55); }
+    @bottom-right { content: counter(page) " / " counter(pages); font: 7.5pt "Public Sans", Arial, sans-serif; color: rgba(0,0,0,.55); }
   }
   :root {
     --navy: #16285a; --black: #000; --text-2: rgba(0,0,0,.62); --line: rgba(0,0,0,.16);
@@ -99,16 +99,16 @@
 
 {% if not embedded %}
 <div class="toolbar">
-  <button type="button" onclick="window.print()">Download PDF</button>
-  <button type="button" id="dl-csv">Download gap register (CSV)</button>
+  <button type="button" onclick="window.print()">{{ _("Download PDF") }}</button>
+  <button type="button" id="dl-csv">{{ _("Download gap register (CSV)") }}</button>
 </div>
 {% endif %}
 
 <div class="page">
 
   <div class="kicker">{{ kicker }}</div>
-  <h1>{{ assessment.entity.name or "Unnamed organisation" }}</h1>
-  <p class="muted" style="margin-bottom: 14pt;">A self-assessment against {{ cover_line }}.</p>
+  <h1>{{ assessment.entity.name or _("Unnamed organisation") }}</h1>
+  <p class="muted" style="margin-bottom: 14pt;">{{ _("A self-assessment against {what}.", what=_(cover_line)) }}</p>
   {% if labels.assessed_against %}<p>{{ labels.assessed_against }}</p>{% endif %}
   {% if jurisdiction %}
     {% for notice in jurisdiction.notices %}
@@ -118,39 +118,40 @@
   {% if deadlines %}
     <ul>
     {% for item in deadlines %}
-      <li>{% if item.date %}{{ item.date.strftime("%-d %b %Y") }}: {% endif %}{{ item.label(lang) }}</li>
+      <li>{% if item.date %}{{ local_date(item.date) }}: {% endif %}{{ item.label(lang) }}</li>
     {% endfor %}
     </ul>
   {% endif %}
 
   <table class="control">
     <tbody>
-      <tr><th>Organisation</th><td>{{ assessment.entity.name or "n/a" }}</td></tr>
-      <tr><th>Assessment date</th><td>{{ report_date }}</td></tr>
-      <tr><th>Prepared by</th><td>{{ assessment.assessor or "n/a" }}</td></tr>
-      <tr><th>Framework</th><td>{{ catalogue.source }} (control catalogue v{{ catalogue.version }})</td></tr>
-      <tr><th>Control weighting</th><td>{% if threat %}Threat-informed ({{ threat.version_label }}){% else %}Regulatory baseline (static){% endif %}</td></tr>
-      <tr><th>Report generated</th><td>{{ generated }} with nis2check {{ version }}</td></tr>
-      <tr><th>Classification</th><td>Confidential</td></tr>
+      <tr><th>{{ _("Organisation") }}</th><td>{{ assessment.entity.name or _("n/a") }}</td></tr>
+      <tr><th>{{ _("Assessment date") }}</th><td>{{ report_date }}</td></tr>
+      <tr><th>{{ _("Prepared by") }}</th><td>{{ assessment.assessor or _("n/a") }}</td></tr>
+      <tr><th>{{ _("Framework") }}</th><td>{{ catalogue.source }} ({{ _("control catalogue v{v}", v=catalogue.version) }})</td></tr>
+      <tr><th>{{ _("Control weighting") }}</th><td>{% if threat %}{{ _("Threat-informed") }} ({{ threat.version_label }}){% else %}{{ _("Regulatory baseline (static)") }}{% endif %}</td></tr>
+      <tr><th>{{ _("Report generated") }}</th><td>{{ generated }}, nis2check {{ version }}</td></tr>
+      <tr><th>{{ _("Classification") }}</th><td>{{ _("Confidential") }}</td></tr>
     </tbody>
   </table>
 
   <h2>{{ labels.h_summary }}</h2>
 
   {% set c = result.counts %}
-  {% set critical_open = result.gaps | selectattr("question.priority", "equalto", "critical") | rejectattr("status", "equalto", "partial") | list %}
+  {% set critical_open = result.gaps | selectattr("question.priority", "equalto", "critical") | selectattr("status", "equalto", "gap") | list %}
   <table class="headline">
     <tbody><tr>
       <td class="figure">{{ "%.0f" | format(result.score_pct or 0) }}<sup>%</sup></td>
-      <td class="lede">of the {{ measures }} are in place. {{ result.verified_pct | pct }} can be shown with evidence today.</td>
+      <td class="lede">{{ _("of the {label} measures are in place.", label=measures_label) }} {{ _("{pct} can be shown with evidence today.", pct=result.verified_pct | pct) }}</td>
     </tr></tbody>
   </table>
   <table class="facts">
     <tbody><tr>
-      <td><strong><span class="rag rag-{{ result.score_pct | rag }}"></span>{{ result.maturity }}</strong>maturity</td>
-      <td><strong>{{ c.met }} of {{ c.met + c.partial + c.gap + c.unanswered }}</strong>controls fully met</td>
-      <td><strong>{{ critical_open | length }}</strong>critical {{ "control" if critical_open | length == 1 else "controls" }} not met</td>
-      <td><strong>{{ result.evidence_issues | length }}</strong>{{ "answer needs" if result.evidence_issues | length == 1 else "answers need" }} evidence</td>
+      <td><strong><span class="rag rag-{{ result.score_pct | rag }}"></span>{{ _(result.maturity) }}</strong>{{ _("Maturity") }}</td>
+      <td><strong>{{ c.met }} / {{ c.met + c.partial + c.gap + c.unanswered }}</strong>{{ _("Controls fully met") }}</td>
+      <td><strong>{{ critical_open | length }}</strong>{{ _("Critical controls not met") }}</td>
+      <td><strong>{{ c.unanswered }}</strong>{{ _("Not assessed yet") }}</td>
+      <td><strong>{{ result.evidence_issues | length }}</strong>{{ _("Answers without evidence") }}</td>
     </tr></tbody>
   </table>
   {% for p in summary %}<p>{{ p }}</p>{% endfor %}
@@ -158,9 +159,9 @@
   <h2>{{ labels.h_scope }}</h2>
   <table class="control">
     <tbody>
-      <tr><th>Indicative outcome</th><td><strong>{{ result.applicability.label }}</strong></td></tr>
-      <tr><th>Sector</th><td>{{ sector_label or "Not provided" }}{% if result.applicability.annex %} (Annex {{ result.applicability.annex }}){% endif %}</td></tr>
-      <tr><th>Enterprise size</th><td>{{ result.applicability.size | capitalize }}{% if assessment.entity.employees %} ({{ assessment.entity.employees }} employees){% endif %}</td></tr>
+      <tr><th>{{ _("Indicative outcome") }}</th><td><strong>{{ _(result.applicability.label) }}</strong></td></tr>
+      <tr><th>{{ _("Sector") }}</th><td>{{ sector_label or _("Not provided") }}{% if result.applicability.annex %} ({{ _("Annex {n}", n=result.applicability.annex) }}){% endif %}</td></tr>
+      <tr><th>{{ _("Enterprise size") }}</th><td>{{ _("size|" ~ (result.applicability.size | capitalize)) }}{% if assessment.entity.employees %} ({{ _("employees: {n}", n=assessment.entity.employees) }}){% endif %}</td></tr>
     </tbody>
   </table>
   {% if result.applicability.notes %}
@@ -175,34 +176,41 @@
   <h3>{{ labels.h_status }}</h3>
   <table>
     <thead><tr>
-      <th class="c">RAG</th><th>Ref</th><th>Requirement</th><th class="nowrap">{{ labels.col_article }}</th>
-      <th class="c">Met</th><th style="width: 22%;">Coverage</th><th class="num">Score</th><th class="num">Evidenced</th>
+      <th class="c">RAG</th><th>{{ _("Ref") }}</th><th>{{ _("Requirement") }}</th><th class="nowrap">{{ labels.col_article }}</th>
+      <th class="c">{{ _("Met") }}</th><th style="width: 22%;">{{ _("Coverage") }}</th><th class="num">{{ _("Score") }}</th><th class="num">{{ _("Evidenced") }}</th>
     </tr></thead>
     <tbody>
     {% for d in result.domains %}
       {% set dc = d.counts %}
+      {% set st = domain_state(d) %}
       <tr>
-        <td class="c"><span class="rag rag-{{ d.score_pct | rag }}" style="margin:0"></span></td>
+        <td class="c"><span class="rag rag-{{ st.rag }}" style="margin:0"></span></td>
         <td><strong>{{ d.domain.id }}</strong></td>
         <td>{{ d.domain.title }}</td>
         <td class="nowrap">{{ cite(d.domain.article) }}</td>
         <td class="c nowrap">{{ dc.met }}/{{ dc.met + dc.partial + dc.gap + dc.unanswered }}</td>
-        <td style="vertical-align: middle;"><div class="bar"><span class="rag-{{ d.score_pct | rag }}" style="width: {{ d.score_pct or 0 }}%"></span></div></td>
+        {% if st.not_assessed %}
+        <td class="small muted" style="vertical-align: middle;">{{ _("Not assessed") }}</td>
+        <td class="num muted">-</td>
+        <td class="num muted">-</td>
+        {% else %}
+        <td style="vertical-align: middle;"><div class="bar two"><span class="rag-{{ st.rag }}" style="width: {{ st.proven }}%"></span><span class="claimed rag-{{ st.rag }}" style="width: {{ st.claimed }}%"></span></div></td>
         <td class="num"><strong>{{ d.score_pct | pct }}</strong></td>
         <td class="num">{{ d.verified_pct | pct }}</td>
+        {% endif %}
       </tr>
     {% endfor %}
     </tbody>
   </table>
-  <p class="small muted">RAG: green 70% and above, amber 40 to 69%, red below 40%. "Evidenced" counts only answers supported by existing evidence.</p>
+  <p class="small muted">{{ _("RAG: green 70% and above, amber 40 to 69%, red below 40%. Green needs evidence: a requirement answered as in place without evidence stays amber. Grey means not assessed yet. \"Evidenced\" counts only answers supported by existing evidence. In the bar, the solid part is backed by evidence and the light part is not yet.") }}</p>
 
-  <h3>3.2 Control heat map (priority x status)</h3>
+  <h3>3.2 {{ _("Control heat map (priority x status)") }}</h3>
   <table class="heat">
-    <thead><tr><th>Priority</th><th>Not met</th><th>Not assessed</th><th>Partially met</th><th>Met</th></tr></thead>
+    <thead><tr><th>{{ _("Priority") }}</th><th>{{ _("Not met") }}</th><th>{{ _("Not assessed") }}</th><th>{{ _("Partially met") }}</th><th>{{ _("Met") }}</th></tr></thead>
     <tbody>
     {% for row in heat %}
       <tr>
-        <th>{{ row.label }}</th>
+        <th>{{ _(row.label) }}</th>
         {% for cell in row.cells %}
         <td class="h-{{ cell.colour }}{% if cell.count == 0 %} h-empty{% endif %}">{{ cell.count }}</td>
         {% endfor %}
@@ -210,41 +218,41 @@
     {% endfor %}
     </tbody>
   </table>
-  <p class="small muted">Number of controls in each cell. Colour shows severity: control priority weighted by missing coverage.</p>
+  <p class="small muted">{{ _("Number of controls in each cell. Colour shows severity: control priority weighted by missing coverage.") }}</p>
 
-  <h3>3.3 Impact vs effort</h3>
+  <h3>3.3 {{ _("Impact vs effort") }}</h3>
   {% if result.gaps %}
   <table class="matrix">
-    <thead><tr><th></th><th>Low effort</th><th>Medium or high effort</th></tr></thead>
+    <thead><tr><th></th><th>{{ _("Low effort") }}</th><th>{{ _("Medium or high effort") }}</th></tr></thead>
     <tbody>
       {% for impact, cells in (("High impact", ("Quick win", "Major project")), ("Lower impact", ("Fill-in", "Schedule later"))) %}
       <tr>
-        <th>{{ impact }}</th>
+        <th>{{ _(impact) }}</th>
         {% for name in cells %}
         {% set cls = {"Quick win": "q-quick", "Major project": "q-major", "Fill-in": "q-fill", "Schedule later": "q-later"}[name] %}
-        <td class="{{ cls }}"><span class="q-title">{{ {"Quick win": "Quick wins", "Major project": "Major projects", "Fill-in": "Fill-ins", "Schedule later": "Schedule later"}[name] }} ({{ matrix[name] | length }})</span>
+        <td class="{{ cls }}"><span class="q-title">{{ _({"Quick win": "Quick wins", "Major project": "Major projects", "Fill-in": "Fill-ins", "Schedule later": "Schedule later"}[name]) }} ({{ matrix[name] | length }})</span>
           <span class="small">{% for f in matrix[name] %}{{ f.question.id }}{% if not loop.last %}, {% endif %}{% endfor %}</span></td>
         {% endfor %}
       </tr>
       {% endfor %}
     </tbody>
   </table>
-  <p class="small muted">Impact is the risk reduction from closing the item (control weight x missing coverage); high means at or above the median of open items. Effort is an estimate for an SME. Quick wins are the natural first wave of remediation.</p>
+  <p class="small muted">{{ _("Impact is the risk reduction from closing the item (control weight x missing coverage); high means at or above the median of open items. Effort is an estimate for an SME. Quick wins are the natural first wave of remediation.") }}</p>
   {% else %}
-  <p>No open items.</p>
+  <p>{{ _("No open items.") }}</p>
   {% endif %}
 
   <h2>{{ labels.h_plan }}</h2>
   {% if top_gaps %}
-  <p>The {{ top_gaps | length }} highest-priority open items are listed below{% if result.gaps | length > top_gaps | length %}, out of {{ result.gaps | length }} in total. The full gap register is available as a CSV download{% endif %}. Items are ranked by {% if result.rank_by == "value" %}risk reduction per unit of effort{% else %}risk reduction (control weight x missing coverage){% endif %}{% if threat %}, using threat-informed weights{% endif %}. Owners and target dates are left for the organisation to assign.</p>
+  <p>{{ _("Highest-priority open items: {shown} of {total}.", shown=top_gaps | length, total=result.gaps | length) }}{% if result.gaps | length > top_gaps | length %} {{ _("The full gap register is available as a CSV download.") }}{% endif %} {% if result.rank_by == "value" %}{{ _("Items are ranked by risk reduction per unit of effort.") }}{% else %}{{ _("Items are ranked by risk reduction (control weight x missing coverage).") }}{% endif %}{% if threat %} {{ _("Weights are threat-informed.") }}{% endif %} {{ _("Owners and target dates are left for the organisation to assign.") }}</p>
   <table class="plan">
     <colgroup>
       <col style="width: 3%;"><col style="width: 14%;"><col style="width: 22%;"><col style="width: 10%;"><col style="width: 9%;">
       <col style="width: 8%;"><col style="width: 20%;"><col style="width: 7%;"><col style="width: 7%;">
     </colgroup>
     <thead><tr>
-      <th>#</th><th>Ref</th><th>Finding</th><th>Priority</th><th>Status</th><th>Effort</th>
-      <th>Recommended action</th><th>Owner</th><th>Target</th>
+      <th>#</th><th>{{ _("Ref") }}</th><th>{{ _("Finding") }}</th><th>{{ _("Priority") }}</th><th>{{ _("Status") }}</th><th>{{ _("Effort") }}</th>
+      <th>{{ _("Recommended action") }}</th><th>{{ _("Owner") }}</th><th>{{ _("Target") }}</th>
     </tr></thead>
     <tbody>
     {% for f in top_gaps %}
@@ -252,9 +260,9 @@
         <td>{{ loop.index }}</td>
         <td class="ref"><strong class="nowrap">{{ f.question.id }}</strong><br><span class="small muted">{{ cite(f.question.article or (result.domains | selectattr("domain.id", "equalto", f.question.domain_id) | map(attribute="domain.article") | first), f.question) }}</span></td>
         <td class="long">{{ f.question | qtext }}</td>
-        <td class="nowrap"><span class="rag rag-{{ finding_rag(f) }}"></span>{{ priority_label[f.question.priority] }}</td>
-        <td>{{ status_label[f.status] }}</td>
-        <td>{{ f.question.effort | capitalize }}</td>
+        <td class="nowrap"><span class="rag rag-{{ finding_rag(f) }}"></span>{{ _(priority_label[f.question.priority]) }}</td>
+        <td>{{ _(status_label[f.status]) }}</td>
+        <td>{{ _(f.question.effort | capitalize) }}</td>
         <td class="long">{{ f.question.remediation }}</td>
         <td></td><td></td>
       </tr>
@@ -262,46 +270,46 @@
     </tbody>
   </table>
   {% else %}
-  <p>No open items. All applicable controls are reported as met.</p>
+  <p>{{ _("No open items. All applicable controls are reported as met.") }}</p>
   {% endif %}
 
   <h2>{{ labels.h_evidence }}</h2>
   {% if result.evidence_issues %}
-  <p>{{ result.evidence_issues | length }} control{{ "s are" if result.evidence_issues | length != 1 else " is" }} reported as met or partially met without usable evidence. Until evidence is provided, these controls are excluded from the evidence-backed score.</p>
+  <p>{{ _("Controls reported as met or partially met without usable evidence: {n}. Until evidence is provided, these controls are excluded from the evidence-backed score.", n=result.evidence_issues | length) }}</p>
   <table>
-    <thead><tr><th>Ref</th><th>Reported status</th><th>Expected evidence</th><th>Issue</th></tr></thead>
+    <thead><tr><th>{{ _("Ref") }}</th><th>{{ _("Reported status") }}</th><th>{{ _("Expected evidence") }}</th><th>{{ _("Issue") }}</th></tr></thead>
     <tbody>
     {% for f in result.evidence_issues %}
       <tr>
         <td class="nowrap"><strong>{{ f.question.id }}</strong></td>
-        <td class="nowrap">{{ status_label[f.status] }}</td>
+        <td class="nowrap">{{ _(status_label[f.status]) }}</td>
         <td>{{ f.question.evidence_hint }}</td>
-        <td>{{ f.evidence_issues | join("; ") }}</td>
+        <td>{% for i in f.evidence_issues %}{{ _(i) }}{% if not loop.last %}; {% endif %}{% endfor %}</td>
       </tr>
     {% endfor %}
     </tbody>
   </table>
   {% else %}
-  <p>All controls reported as met or partially met are supported by existing evidence.</p>
+  <p>{{ _("All controls reported as met or partially met are supported by existing evidence.") }}</p>
   {% endif %}
 
   <div class="appendix">
-    <h2>Appendix A. Detailed control results</h2>
+    <h2>{{ _("Appendix A. Detailed control results") }}</h2>
     {% for d in result.domains %}
     <h3>{{ d.domain.id }}. {{ d.domain.title }} ({{ cite(d.domain.article) }}): {{ d.score_pct | pct }}</h3>
     {% if jurisdiction and jurisdiction.article(d.domain.article) and jurisdiction.article(d.domain.article).note %}
     <p class="small">{{ jurisdiction.article(d.domain.article).note }}</p>
     {% endif %}
     <table class="plan">
-      <thead><tr><th style="width: 21%;">Ref</th><th style="width: 28%;">Control</th><th style="width: 9%;">Priority</th><th style="width: 12%;">Status</th><th style="width: 17%;">Evidence</th><th style="width: 13%;">Notes</th></tr></thead>
+      <thead><tr><th style="width: 21%;">{{ _("Ref") }}</th><th style="width: 28%;">{{ _("Control") }}</th><th style="width: 9%;">{{ _("Priority") }}</th><th style="width: 12%;">{{ _("Status") }}</th><th style="width: 17%;">{{ _("Evidence") }}</th><th style="width: 13%;">{{ _("Notes") }}</th></tr></thead>
       <tbody>
       {% for f in d.findings %}
         <tr>
           <td class="ref"><span class="nowrap">{{ f.question.id }}</span><br><span class="small muted">{{ cite(f.question.article or d.domain.article, f.question) }}</span></td>
           <td class="long">{{ f.question | qtext }}</td>
-          <td class="nowrap">{{ priority_label[f.question.priority] }}</td>
-          <td class="nowrap"><span class="rag rag-{{ finding_rag(f) }}"></span>{{ status_label[f.status] }}</td>
-          <td class="small">{% for e in f.response.evidence %}{{ e }}{% if not loop.last %}<br>{% endif %}{% endfor %}{% if f.evidence_issues %}<br><span style="color: var(--red);">{{ f.evidence_issues | join("; ") }}</span>{% endif %}</td>
+          <td class="nowrap">{{ _(priority_label[f.question.priority]) }}</td>
+          <td class="nowrap"><span class="rag rag-{{ finding_rag(f) }}"></span>{{ _(status_label[f.status]) }}</td>
+          <td class="small">{% for e in f.response.evidence %}{{ e }}{% if not loop.last %}<br>{% endif %}{% endfor %}{% if f.evidence_issues %}<br><span style="color: var(--red);">{% for i in f.evidence_issues %}{{ _(i) }}{% if not loop.last %}; {% endif %}{% endfor %}</span>{% endif %}</td>
           <td class="small">{{ f.response.notes }}</td>
         </tr>
       {% endfor %}
@@ -309,55 +317,55 @@
     </table>
     {% endfor %}
 
-    <h2>Appendix B. Methodology</h2>
-    <p>Each requirement is broken down into practical controls, and each control is given a regulatory priority: critical (weight 3), high (weight 2) or medium (weight 1). {% if threat %}This baseline is then raised by up to 50% for controls that counter threats common in recent incident data: the uplift is proportional to the combined prevalence of the threat patterns the control counters, relative to the most exposed control. Threat data can raise a weight but never lower it below the regulatory baseline, because every control is a legal requirement. Sources and links are listed in Appendix C. {% endif %}Answers are scored as met = 1, partially met = 0.5, not met = 0 and not assessed = 0. Controls marked not applicable are excluded.</p>
-    <p>The overall and per-requirement scores are weighted averages of the applicable controls. The evidence-backed score applies the same calculation but counts a control only when every evidence item recorded for it exists. Open items are ranked by control weight multiplied by missing coverage, so an unaddressed critical control ranks above a partially met medium one.</p>
-    <p>Effort is an estimate (low, medium, high) of the work needed for an SME to implement the control. Risk reduction per unit of effort divides the risk reduction by 1, 2 or 3 respectively and drives the impact vs effort matrix.</p>
-    <p>Maturity bands: strong (90% and above), substantial (70 to 89%), partial (40 to 69%), low (below 40%).</p>
-    <p class="small muted">This report is a self-assessment and does not constitute a certification, audit opinion or legal advice. National transposition laws, implementing acts and guidance from the competent authority may impose additional or more specific requirements.</p>
+    <h2>{{ _("Appendix B. Methodology") }}</h2>
+    <p>{{ _("Each requirement is broken down into practical controls, and each control is given a regulatory priority: critical (weight 3), high (weight 2) or medium (weight 1).") }} {% if threat %}{{ _("This baseline is then raised by up to 50% for controls that counter threats common in recent incident data: the uplift is proportional to the combined prevalence of the threat patterns the control counters, relative to the most exposed control. Threat data can raise a weight but never lower it below the regulatory baseline, because every control is a legal requirement. Sources and links are listed in Appendix C.") }} {% endif %}{{ _("Answers are scored as met = 1, partially met = 0.5, not met = 0 and not assessed = 0. Controls marked not applicable are excluded.") }}</p>
+    <p>{{ _("The overall and per-requirement scores are weighted averages of the applicable controls. The evidence-backed score applies the same calculation but counts a control only when every evidence item recorded for it exists. Open items are ranked by control weight multiplied by missing coverage, so an unaddressed critical control ranks above a partially met medium one.") }}</p>
+    <p>{{ _("Effort is an estimate (low, medium, high) of the work needed for an SME to implement the control. Risk reduction per unit of effort divides the risk reduction by 1, 2 or 3 respectively and drives the impact vs effort matrix.") }}</p>
+    <p>{{ _("Maturity bands: strong (90% and above), substantial (70 to 89%), partial (40 to 69%), low (below 40%).") }}</p>
+    <p class="small muted">{{ _("This report is a self-assessment and does not constitute a certification, audit opinion or legal advice. National transposition laws, implementing acts and guidance from the competent authority may impose additional or more specific requirements.") }}</p>
 
     {% if threat %}
-    <h2 class="new-page">Appendix C. Threat data and weighting</h2>
-    <p>Control weights in this report use {{ threat.version_label }}. Prevalence is the share of confirmed or suspected incident events in the VERIS Community Database (VCDB) matching each threat pattern, with mass campaigns counted once. Links between controls and threat patterns come from MITRE ATT&amp;CK mitigation relationships, plus catalogue links for patterns ATT&amp;CK does not cover (human error, insider misuse, physical loss, supplier involvement).</p>
+    <h2 class="new-page">{{ _("Appendix C. Threat data and weighting") }}</h2>
+    <p>{{ _("Control weights in this report use {label}.", label=threat.version_label) }} {{ _("Prevalence is the share of confirmed or suspected incident events in the VERIS Community Database (VCDB) matching each threat pattern, with mass campaigns counted once. Links between controls and threat patterns come from MITRE ATT&CK mitigation relationships, plus catalogue links for patterns ATT&CK does not cover (human error, insider misuse, physical loss, supplier involvement).") }}</p>
 
-    <h3>C.1 Sources</h3>
+    <h3>C.1 {{ _("Sources") }}</h3>
     <table>
-      <thead><tr><th>Source</th><th>Version</th><th>Retrieved</th><th>Status</th></tr></thead>
+      <thead><tr><th>{{ _("Source") }}</th><th>{{ _("Version") }}</th><th>{{ _("Retrieved") }}</th><th>{{ _("Status") }}</th></tr></thead>
       <tbody>
       {% for key, label in (("vcdb", "VERIS Community Database (VCDB)"), ("mitre_attack", "MITRE ATT&CK Enterprise"), ("cisa_kev", "CISA Known Exploited Vulnerabilities"), ("enisa_euvd", "ENISA EU Vulnerability Database")) %}
         {% set s = threat.sources.get(key, {}) %}
         <tr>
           <td>{{ label }}</td>
-          <td class="small">{% if key == "vcdb" %}{{ threat.vcdb.window.from_year }}-{{ threat.vcdb.window.to_year }}, {{ threat.vcdb.sample_size }} events{% elif s.version %}{{ s.version }}{% else %}n/a{% endif %}</td>
+          <td class="small">{% if key == "vcdb" %}{{ threat.vcdb.window.from_year }}-{{ threat.vcdb.window.to_year }}, {{ _("events: {n}", n=threat.vcdb.sample_size) }}{% elif s.version %}{{ s.version }}{% else %}{{ _("n/a") }}{% endif %}</td>
           <td class="small nowrap">{{ (s.retrieved or "n/a")[:10] }}</td>
-          <td class="nowrap">{% if s.status == "ok" %}<span class="rag rag-green"></span>Used{% else %}<span class="rag rag-amber"></span>Unavailable{% endif %}</td>
+          <td class="nowrap">{% if s.status == "ok" %}<span class="rag rag-green"></span>{{ _("Used") }}{% else %}<span class="rag rag-amber"></span>{{ _("Unavailable") }}{% endif %}</td>
         </tr>
       {% endfor %}
       </tbody>
     </table>
-    <p class="small muted">Exploitation trend factor: {{ threat.trend.factor }}{% if threat.trend.factor == 1.0 %} (neutral; no trend data available or no change){% endif %}. Applied to the vulnerability exploitation pattern only, within the range 0.8 to 1.25.</p>
+    <p class="small muted">{{ _("Exploitation trend factor: {f}.", f=threat.trend.factor) }}{% if threat.trend.factor == 1.0 %} {{ _("Neutral: no trend data available or no change.") }}{% endif %} {{ _("Applied to the vulnerability exploitation pattern only, within the range 0.8 to 1.25.") }}</p>
 
-    <h3>C.2 Threat patterns</h3>
+    <h3>C.2 {{ _("Threat patterns") }}</h3>
     <table>
-      <thead><tr><th>Pattern</th><th class="num">Events</th><th class="num">Prevalence</th><th>ATT&amp;CK mitigations linked</th></tr></thead>
+      <thead><tr><th>{{ _("Pattern") }}</th><th class="num">{{ _("Events") }}</th><th class="num">{{ _("Prevalence") }}</th><th>{{ _("ATT&CK mitigations linked") }}</th></tr></thead>
       <tbody>
       {% for pid, p in threat.patterns.items() | sort(attribute="1.adjusted_prevalence", reverse=True) %}
         <tr>
           <td>{{ p.name }}</td>
           <td class="num">{{ p.incidents }}</td>
           <td class="num">{{ "%.1f" | format(p.adjusted_prevalence * 100) }}%</td>
-          <td class="small">{{ p.attack_mitigations | join(", ") or "Catalogue links only" }}</td>
+          <td class="small">{{ p.attack_mitigations | join(", ") or _("Catalogue links only") }}</td>
         </tr>
       {% endfor %}
       </tbody>
     </table>
     {% if threat.vcdb.campaigns_collapsed %}
-    <p class="small muted">Campaigns counted once: {% for c in threat.vcdb.campaigns_collapsed[:3] %}{{ c.label }} ({{ c.records }} records){% if not loop.last %}; {% endif %}{% endfor %}.</p>
+    <p class="small muted">{{ _("Campaigns counted once:") }} {% for c in threat.vcdb.campaigns_collapsed[:3] %}{{ c.label }} ({{ _("records: {n}", n=c.records) }}){% if not loop.last %}; {% endif %}{% endfor %}.</p>
     {% endif %}
 
-    <h3>C.3 Controls with a threat-informed uplift</h3>
+    <h3>C.3 {{ _("Controls with a threat-informed uplift") }}</h3>
     <table>
-      <thead><tr><th>Ref</th><th class="num">Baseline</th><th class="num">Weight</th><th>Counters</th></tr></thead>
+      <thead><tr><th>{{ _("Ref") }}</th><th class="num">{{ _("Baseline") }}</th><th class="num">{{ _("Weight") }}</th><th>{{ _("Counters") }}</th></tr></thead>
       <tbody>
       {% for f in uplifted %}
         <tr>
@@ -369,7 +377,7 @@
       {% endfor %}
       </tbody>
     </table>
-    <p class="small muted">Caveats: VCDB contains publicly reported incidents, mostly from the United States and weighted toward breaches that reach the news; it is not the full Verizon DBIR dataset. CISA KEV is US-centric; ENISA EUVD gives an EU view but is newer.</p>
+    <p class="small muted">{{ _("Caveats: VCDB contains publicly reported incidents, mostly from the United States and weighted toward breaches that reach the news; it is not the full Verizon DBIR dataset. CISA KEV is US-centric; ENISA EUVD gives an EU view but is newer.") }}</p>
     {% endif %}
   </div>
 

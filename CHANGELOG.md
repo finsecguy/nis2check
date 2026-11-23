@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+- Requirements nobody has answered yet show as grey "not assessed" instead of a red 0%, and no longer count as critical measures not met. The overview says how many questions are still open.
+- A requirement answered as in place without evidence stays amber instead of green. Score bars show the part backed by evidence as solid and the rest as light.
+- Saving an answer without evidence shows a neutral note instead of a red error.
+- The language menu moved to the header, lists languages by their own names (Slovenčina, Čeština, Magyar, Polski) and saves on change. It was removed from the organisation page.
+- Screens, flash messages, the activity log and the report (headings, tables, summary, methodology) are translated into Slovak, Czech, Hungarian and Polish. Dates follow the language. Question texts, requirement titles and scope explanations are still English.
+- Slovak and Czech pages name the law in their own language, for example "Zákon č. 69/2018 Z. z." and "§ 20 ods. 4 zákona č. 69/2018 Z. z.".
+- The version shown in the app and report now comes from pyproject.toml only.
 - Security: Docker Compose now binds to localhost by default. Set NIS2_BIND to expose it.
 - Fixed: the PDF report drew wrong letters for Slovak, Czech, Hungarian and Polish characters (for example ť, ľ, ž, ň, Č). The PDF now uses one font file per weight that covers them.
 - Fixed: the remediation plan table no longer runs off the A4 page, and long legal references wrap inside their column.

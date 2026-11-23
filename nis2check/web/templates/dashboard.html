@@ -1,22 +1,23 @@
 {% extends "base.html" %}
-{% block title %}Overview{% endblock %}
+{% block title %}{{ _("Overview") }}{% endblock %}
 {% block content %}
 {% set c = result.counts %}
-{% set critical_open = result.gaps | selectattr("question.priority", "equalto", "critical") | rejectattr("status", "equalto", "partial") | list %}
+{% set critical_open = result.gaps | selectattr("question.priority", "equalto", "critical") | selectattr("status", "equalto", "gap") | list %}
+{% set not_assessed = result.counts.unanswered %}
 
 <div class="page-head">
   <div>
-    <h1>{{ org.name or "Your organisation" }}</h1>
-    <div class="sub">{{ result.applicability.label }}.</div>
+    <h1>{{ org.name or _("Your organisation") }}</h1>
+    <div class="sub">{{ _(result.applicability.label) }}.</div>
   </div>
   <div class="actions" style="margin: 0;">
-    <a class="btn" href="{{ url_for('main.report_download', fmt='pdf') }}">Download report</a>
-    <a class="btn secondary" href="{{ url_for('main.report_download', fmt='csv') }}">Gap register for Excel</a>
+    <a class="btn" href="{{ url_for('main.report_download', fmt='pdf') }}">{{ _("Download report") }}</a>
+    <a class="btn secondary" href="{{ url_for('main.report_download', fmt='csv') }}">{{ _("Gap register for Excel") }}</a>
   </div>
 </div>
 
 {% if pending %}
-<div class="note">New threat data is waiting for your approval. <a href="{{ url_for('admin.threat_data') }}">Review it</a></div>
+<div class="note">{{ _("New threat data is waiting for your approval.") }} <a href="{{ url_for('admin.threat_data') }}">{{ _("Review it") }}</a></div>
 {% endif %}
 {% if 'dora' in framework_ids %}
 <div class="note">{{ lex_specialis }}</div>
@@ -26,7 +27,7 @@
   <strong>{{ tr('dash.deadlines') }}</strong>
   <ul>
   {% for item in deadlines %}
-    <li>{% if item.date %}{{ item.date.strftime("%-d %b %Y") }}: {% endif %}{{ item.label(lang) }}</li>
+    <li>{% if item.date %}{{ item.date | local_date }}: {% endif %}{{ item.label(lang) }}</li>
   {% endfor %}
   </ul>
 </div>
@@ -35,42 +36,45 @@
 {% if answered == 0 %}
 <div class="headline">
   <div class="figure">0<sup>%</sup></div>
-  <p class="lede">Nothing assessed yet. Check your <a href="{{ url_for('main.organisation_page') }}">organisation details</a>, then start the <a href="{{ url_for('main.assessment_index') }}">assessment</a>.</p>
+  <p class="lede">{{ _("Nothing assessed yet.") }} <a href="{{ url_for('main.organisation_page') }}">{{ _("Check your organisation details") }}</a>, {{ _("then start the") }} <a href="{{ url_for('main.assessment_index') }}">{{ _("assessment") }}</a>.</p>
 </div>
 {% else %}
 <div class="headline">
   <div class="figure">{{ "%.0f" | format(result.score_pct or 0) }}<sup>%</sup></div>
-  <p class="lede">of the {{ framework_label }} measures are in place. {{ result.verified_pct | pct }} can be shown with evidence today.</p>
+  <p class="lede">{{ _("of the {label} measures are in place.", label=framework_label) }} {{ _("{pct} can be shown with evidence today.", pct=result.verified_pct | pct) }}{% if not_assessed %} <span class="muted">{{ _("{n} of {total} questions are not assessed yet and count as not in place.", n=not_assessed, total=total) }}</span>{% endif %}</p>
 </div>
 {% endif %}
 <ul class="facts">
-  <li><strong><span class="rag rag-{{ result.score_pct | rag }}"></span>{{ result.maturity }}</strong>maturity</li>
-  <li><strong>{{ answered }} of {{ total }}</strong>questions answered</li>
-  <li><strong>{{ critical_open | length }}</strong>critical {{ "measure" if critical_open | length == 1 else "measures" }} not met</li>
-  <li><strong>{{ result.evidence_issues | length }}</strong>{{ "answer needs" if result.evidence_issues | length == 1 else "answers need" }} evidence</li>
+  <li><strong><span class="rag rag-{{ result.score_pct | rag }}"></span>{{ _(result.maturity) }}</strong>{{ _("Maturity") }}</li>
+  <li><strong>{{ answered }} / {{ total }}</strong>{{ _("Questions answered") }}</li>
+  <li><strong>{{ critical_open | length }}</strong>{{ _("Critical measures not met") }}</li>
+  <li><strong class="muted">{{ not_assessed }}</strong>{{ _("Not assessed yet") }}</li>
+  <li><strong>{{ result.evidence_issues | length }}</strong>{{ _("Answers without evidence") }}</li>
 </ul>
 
 <div class="grid2">
   <section>
-    <h2>Where you stand</h2>
+    <h2>{{ _("Where you stand") }}</h2>
     <table>
-      <thead><tr><th>Requirement</th><th class="nowrap">Article</th><th style="width: 22%;"></th><th class="num">Score</th></tr></thead>
+      <thead><tr><th>{{ _("Requirement") }}</th><th class="nowrap">{{ _("Article") }}</th><th style="width: 22%;"></th><th class="num">{{ _("Score") }}</th></tr></thead>
       <tbody>
       {% for d in result.domains %}
+        {% set st = d | domain_state %}
         <tr>
-          <td><span class="rag rag-{{ d.score_pct | rag }}" aria-hidden="true"></span><a href="{{ url_for('main.assessment_domain', domain_id=d.domain.id) }}">{{ d.domain.title }}</a></td>
-          <td class="nowrap small muted">{{ d.domain.article }}</td>
-          <td><div class="bar" aria-hidden="true"><span class="rag-{{ d.score_pct | rag }}" style="width: {{ d.score_pct or 0 }}%"></span></div></td>
-          <td class="num">{{ d.score_pct | pct }}</td>
+          <td><span class="rag rag-{{ st.rag }}" aria-hidden="true" title="{{ _(st.title) }}"></span><a href="{{ url_for('main.assessment_domain', domain_id=d.domain.id) }}">{{ d.domain.title }}</a>{% if st.partly_assessed %} <span class="small muted">{{ _("{a} of {t} assessed", a=st.assessed, t=st.total) }}</span>{% endif %}</td>
+          <td class="nowrap small muted">{{ d.domain.article | article_label }}</td>
+          <td>{% if st.not_assessed %}<span class="small muted">{{ _("Not assessed") }}</span>{% else %}<div class="bar two" aria-hidden="true"><span class="rag-{{ st.rag }}" style="width: {{ st.proven }}%"></span><span class="claimed rag-{{ st.rag }}" style="width: {{ st.claimed }}%"></span></div>{% endif %}</td>
+          <td class="num">{% if st.not_assessed %}<span class="muted">-</span>{% else %}{{ d.score_pct | pct }}{% endif %}</td>
         </tr>
       {% endfor %}
       </tbody>
     </table>
+    <p class="small muted">{{ _("Solid bar: backed by evidence. Light bar: answered yes, evidence still missing. Grey dot: not assessed yet.") }}</p>
   </section>
   <section>
-    <h2>Progress</h2>
+    <h2>{{ _("Progress") }}</h2>
     {% if trend %}
-      <svg class="trend" viewBox="0 0 {{ trend.w }} {{ trend.h }}" width="100%" role="img" aria-label="Compliance score over time">
+      <svg class="trend" viewBox="0 0 {{ trend.w }} {{ trend.h }}" width="100%" role="img" aria-label="{{ _("Compliance score over time") }}">
         {% for v, y in trend.grid %}
           <line x1="{{ trend.pad }}" x2="{{ trend.w - trend.pad }}" y1="{{ y }}" y2="{{ y }}" stroke="rgba(0,0,0,.1)"/>
           <text x="0" y="{{ y + 4 }}">{{ v }}%</text>
@@ -79,35 +83,35 @@
         <polyline points="{{ trend.line }}" fill="none" stroke="#16285a" stroke-width="2.5"/>
         {% for x, label in trend.labels %}<text x="{{ x }}" y="{{ trend.h - 6 }}" text-anchor="middle">{{ label }}</text>{% endfor %}
       </svg>
-      <p class="small muted">The solid line is your overall score, the dashed line the part backed by evidence.</p>
+      <p class="small muted">{{ _("The solid line is your overall score, the dashed line the part backed by evidence.") }}</p>
     {% else %}
-      <p class="muted small">A progress line appears once answers have been saved on two different days.</p>
+      <p class="muted small">{{ _("A progress line appears once answers have been saved on two different days.") }}</p>
     {% endif %}
 
-    <h2>Start here</h2>
+    <h2>{{ _("Start here") }}</h2>
     {% set quick = matrix["Quick win"] %}
     {% if quick %}
-    <p class="small muted">High impact and little effort.</p>
+    <p class="small muted">{{ _("High impact and little effort.") }}</p>
     <ol class="wins">
       {% for f in quick[:5] %}
         <li><a href="{{ url_for('main.assessment_domain', domain_id=f.question.domain_id, _anchor=f.question.id) }}">{{ f.question.id }}</a><span>{{ f.question.remediation }}</span></li>
       {% endfor %}
     </ol>
-    {% if quick | length > 5 %}<p class="small muted" style="margin-top: 8px;">{{ quick | length - 5 }} more in the report.</p>{% endif %}
+    {% if quick | length > 5 %}<p class="small muted" style="margin-top: 8px;">{{ _("{n} more in the report.", n=quick | length - 5) }}</p>{% endif %}
     {% else %}
-    <p class="muted small">No quick wins open right now.</p>
+    <p class="muted small">{{ _("No quick wins open right now.") }}</p>
     {% endif %}
   </section>
 </div>
 
-<h2>Recent activity</h2>
+<h2>{{ _("Recent activity") }}</h2>
 <table>
-  <thead><tr><th>When (UTC)</th><th>Who</th><th>What</th><th>Item</th></tr></thead>
+  <thead><tr><th>{{ _("When (UTC)") }}</th><th>{{ _("Who") }}</th><th>{{ _("What") }}</th><th>{{ _("Item") }}</th></tr></thead>
   <tbody>
   {% for a in activity %}
-    <tr><td class="nowrap small">{{ a.ts.strftime("%d %b %Y, %H:%M") }}</td><td class="small">{{ a.actor }}</td><td class="small">{{ a.action | humanize }}</td><td class="small">{{ a.target }}{% if a.detail %}: {{ a.detail }}{% endif %}</td></tr>
+    <tr><td class="nowrap small">{{ a.ts | local_date(True) }}</td><td class="small">{{ a.actor }}</td><td class="small">{{ a | activity_what }}</td><td class="small">{{ a | activity_item }}</td></tr>
   {% else %}
-    <tr><td colspan="4" class="muted">Nothing yet.</td></tr>
+    <tr><td colspan="4" class="muted">{{ _("Nothing yet.") }}</td></tr>
   {% endfor %}
   </tbody>
 </table>

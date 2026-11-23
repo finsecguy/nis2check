@@ -234,3 +234,54 @@ def t(key: str, lang: str | None = None, **kwargs) -> str:
     if kwargs:
         return text.format(**kwargs)
     return text
+
+
+# ---------------------------------------------------------------- sentence catalogue
+# Template text is written in English and wrapped in _("..."). The English text is the
+# key, so a missing translation simply shows English. Translations live in
+# nis2check/data/translations.yaml, one entry per English string.
+
+_MESSAGES: dict[str, dict[str, str]] | None = None
+
+NATIVE_LANGUAGE_NAMES = {
+    "en": "English",
+    "sk": "Slovenčina",
+    "cs": "Čeština",
+    "hu": "Magyar",
+    "pl": "Polski",
+}
+
+
+def _messages() -> dict[str, dict[str, str]]:
+    global _MESSAGES
+    if _MESSAGES is None:
+        from importlib import resources
+
+        import yaml
+
+        text = resources.files("nis2check").joinpath("data/translations.yaml").read_text("utf-8")
+        loaded = yaml.safe_load(text) or {}
+        _MESSAGES = {str(k): {str(lc): str(v) for lc, v in (tr or {}).items()} for k, tr in loaded.items()}
+    return _MESSAGES
+
+
+def gettext(text: str, lang: str | None = None, **kwargs) -> str:
+    """Translate an English UI sentence. Unknown text or language falls back to English."""
+    code = (lang or "en").strip().lower()
+    out = None if code == "en" else _messages().get(text, {}).get(code)
+    if out is None:
+        # "context|Text" keys tell apart words that are the same in English only.
+        out = text.split("|", 1)[1] if "|" in text else text
+    return out.format(**kwargs) if kwargs else out
+
+
+
+def format_date(value, lang: str | None = None, with_time: bool = False) -> str:
+    """A date in the local style: 23 Nov 2026 (en), 23.11.2026 (sk, cs, pl), 2026. 11. 23. (hu)."""
+    if value is None:
+        return ""
+    code = (lang or "en").strip().lower()
+    fmt = {"en": "%d %b %Y", "hu": "%Y. %m. %d."}.get(code, "%d.%m.%Y")
+    if with_time:
+        fmt += ", %H:%M"
+    return value.strftime(fmt)

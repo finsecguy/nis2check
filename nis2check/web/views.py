@@ -13,10 +13,11 @@ from flask import (
     Blueprint, Response as FlaskResponse, abort, current_app, flash, g, redirect, render_template,
     request, send_file, url_for,
 )
-from sqlalchemy import select
+from sqlalchemy import func, select
 
 from ..assessment import ANSWER_VALUES
 from ..ciso import export_zip
+from ..i18n import gettext
 from ..frameworks import DORA_SCOPE_NOTE, framework_ids_of, framework_label, parse_frameworks
 from ..jurisdictions import COUNTRY_CODES, LANGUAGES, get_jurisdiction
 from ..sk_export import render_sk_self_assessment
@@ -36,6 +37,11 @@ ALLOWED_EXTENSIONS = {
     "gif", "zip", "msg", "eml", "json", "xml", "odt", "ods",
 }
 ANSWER_LABELS = {"yes": "Yes", "partial": "Partially", "no": "No", "na": "Not applicable"}
+
+
+def _(text: str, **kwargs) -> str:
+    """Translate a message into the signed-in user's language."""
+    return gettext(text, getattr(g, "lang", None), **kwargs)
 
 
 def _safe_filename(name: str) -> str:
@@ -156,18 +162,18 @@ def organisation_page():
             db.rollback()
             message = str(exc)
             if message.startswith("select at least"):
-                message = "Select at least one framework (NIS2, DORA, or both)."
+                message = _("Select at least one framework (NIS2, DORA, or both).")
             elif message.startswith("unknown framework"):
                 message = message[0].upper() + message[1:] + "."
             elif message == "country":
-                message = "Choose a country from the list."
+                message = _("Choose a country from the list.")
             else:
-                message = f"Enter a number for {message.replace('_', ' ')}."
+                message = _("Enter a number for {field}.", field=_(message.replace('_', ' ')))
             flash(message, "error")
             return redirect(url_for("main.organisation_page"))
         except KeyError:
             db.rollback()
-            flash("Choose a sector from the list.", "error")
+            flash(_("Choose a sector from the list."), "error")
             return redirect(url_for("main.organisation_page"))
         audit(db, "organisation.updated", org.name, f"frameworks: {org.frameworks}; country: {org.country_code}")
         if changed:
@@ -177,7 +183,7 @@ def organisation_page():
             scored, _a, _t = evaluate_current(db, full, settings.evidence_dir)
             record_snapshot(db, scored)
         db.commit()
-        flash("Organisation details saved.", "ok")
+        flash(_("Organisation details saved."), "ok")
         return redirect(url_for("main.organisation_page"))
     rules = cached_scope_rules()
     scope = scope_for_organisation(
@@ -189,7 +195,6 @@ def organisation_page():
         selected_subsector=org.subsector_id or implied_subsector(rules, org.sector),
         dora_scope_note=DORA_SCOPE_NOTE,
         countries=COUNTRY_CODES,
-        languages=LANGUAGES,
         jurisdiction=get_jurisdiction(org.country_code),
     )
 
@@ -205,7 +210,11 @@ def set_language():
     g.user.language = lang or None
     audit(db, "user.language", g.user.email, lang or "country")
     db.commit()
-    return redirect(request.referrer or url_for("main.organisation_page"))
+    back = request.form.get("next", "")
+    # Only a local path: never send the user to another site.
+    if not back.startswith("/") or back.startswith("//") or "\\" in back:
+        back = url_for("main.dashboard")
+    return redirect(back)
 
 
 # ------------------------------------------------------------------ assessment
@@ -271,7 +280,7 @@ def save_question(qid: str):
     errors: list[str] = []
     link = request.form.get("link", "").strip()
     if link and not _is_http_url(link):
-        errors.append("Links must start with https:// or http://")
+        errors.append(_("Links must start with https:// or http://"))
         link = ""
     upload = request.files.get("file")
     pending_file = None
@@ -316,8 +325,13 @@ def save_question(qid: str):
         raise
     for message in errors:
         flash(message, "error")
-    flash(f"{qid} answer saved; see the error above about the evidence." if errors
-          else f"{qid} saved.", "ok")
+    if errors:
+        flash(_("{qid}: answer saved. See the message above about the evidence.", qid=qid), "ok")
+    elif answer in ("yes", "partial") and not (pending_file or link) and not db.scalar(
+            select(func.count()).select_from(Evidence).where(Evidence.question_id == qid)):
+        flash(_("{qid}: saved. Add evidence when you have it: answers without evidence count as not proven.", qid=qid), "info")
+    else:
+        flash(_("{qid}: saved.", qid=qid), "ok")
     return back
 
 
@@ -346,10 +360,10 @@ def _read_upload(upload) -> tuple[dict | None, str | None]:
     filename = _safe_filename(upload.filename)
     ext = filename.rsplit(".", 1)[-1].lower() if "." in filename else ""
     if ext not in ALLOWED_EXTENSIONS:
-        return None, f"Files of type .{ext or '?'} are not accepted. Allowed: {', '.join(sorted(ALLOWED_EXTENSIONS))}."
+        return None, _("Files of type .{ext} are not accepted. Allowed: {allowed}.", ext=ext or "?", allowed=", ".join(sorted(ALLOWED_EXTENSIONS)))
     data = upload.read()
     if not data:
-        return None, "The file is empty."
+        return None, _("The file is empty.")
     return {"filename": filename, "data": data}, None
 
 
@@ -409,7 +423,7 @@ def delete_evidence(eid: int):
     db.commit()
     if stored_path is not None:
         stored_path.unlink(missing_ok=True)
-    flash("Evidence removed.", "ok")
+    flash(_("Evidence removed."), "ok")
     return redirect(url_for("main.assessment_domain", domain_id=catalogue.question(qid).domain_id, _anchor=qid))
 
 

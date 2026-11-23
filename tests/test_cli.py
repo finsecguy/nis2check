@@ -66,3 +66,13 @@ def test_round_trip_preserves_example(tmp_path):
     assert {k: (r.answer, r.evidence, r.notes) for k, r in again.responses.items()} == {
         k: (r.answer, r.evidence, r.notes) for k, r in original.responses.items()
     }
+
+
+def test_version_comes_from_the_package_metadata():
+    import tomllib
+    from pathlib import Path
+
+    from nis2check import __version__
+
+    pyproject = tomllib.loads((Path(__file__).resolve().parent.parent / "pyproject.toml").read_text("utf-8"))
+    assert __version__ == pyproject["project"]["version"]

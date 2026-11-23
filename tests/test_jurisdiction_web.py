@@ -49,10 +49,11 @@ def test_report_shows_dual_citation_and_unverified_marker(client):
     _admin(client)
     _country(client, "cz")
     html = client.get("/report/view").data.decode()
-    assert "Assessed against:" in html
+    # Czech organisation, so the report follows the country language.
+    assert "Posouzeno podle:" in html
     assert "264/2025" in html
     assert "NIS2 Art. 21(2)(a)" in html
-    assert "unverified" in html
+    assert "neověřeno" in html
 
 
 def test_incident_page_names_the_national_authority(client):
@@ -81,7 +82,7 @@ def test_polish_dashboard_shows_the_april_2027_deadline(client):
     _admin(client)
     _country(client, "pl")
     page = client.get("/").data.decode()
-    assert "3 Apr 2027" in page
+    assert "03.04.2027" in page
     assert "National requirements (PL)" in client.get("/assessment").data.decode()
 
 

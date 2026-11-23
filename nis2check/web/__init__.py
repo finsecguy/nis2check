@@ -12,8 +12,9 @@ from flask_wtf.csrf import CSRFError, CSRFProtect
 
 from .. import __version__
 from ..frameworks import FRAMEWORK_IDS, LEX_SPECIALIS, framework_label, load_bundled_catalogue
-from ..i18n import t
-from ..jurisdictions import COUNTRY_LANGUAGE, question_text
+from ..i18n import NATIVE_LANGUAGE_NAMES, format_date, gettext, t
+from ..jurisdictions import COUNTRY_LANGUAGE, get_jurisdiction, question_text
+from ..report import domain_state
 from .config import load_settings
 from .models import ROLE_LABELS, User, make_session
 
@@ -130,6 +131,21 @@ def create_app(**overrides) -> Flask:
         return f"{n} bytes" if n < 1024 else f"{n / 1024:.0f} KB" if n < 1024 ** 2 else f"{n / 1024 ** 2:.1f} MB"
 
     app.jinja_env.filters["humanize"] = humanize
+    app.jinja_env.filters["domain_state"] = domain_state
+    app.jinja_env.filters["local_date"] = lambda value, with_time=False: format_date(value, _lang(), with_time)
+    app.jinja_env.filters["activity_what"] = lambda entry: gettext(
+        ACTIVITY_LABELS.get(entry.action, humanize(entry.action)), _lang())
+    app.jinja_env.filters["activity_item"] = lambda entry: activity_item(entry, _lang())
+
+    def article_label(article: str) -> str:
+        """A national domain shows the law's own short name in its language."""
+        from .services import organisation
+        jurisdiction = get_jurisdiction(organisation(db()).country_code)
+        if jurisdiction and article == jurisdiction.law.citation_label:
+            return jurisdiction.law.label(_lang(), jurisdiction.language)
+        return article
+
+    app.jinja_env.filters["article_label"] = article_label
     app.jinja_env.filters["filesize"] = filesize
     app.jinja_env.filters["qtext"] = lambda question: question_text(
         question, getattr(g, "lang", None) or "en",
@@ -151,7 +167,9 @@ def create_app(**overrides) -> Flask:
                 "org_name": org_name, "framework_ids": framework_ids,
                 "framework_label": framework_label(framework_ids), "lex_specialis": LEX_SPECIALIS,
                 "org_country": org_country,
-                "tr": lambda key, **kwargs: t(key, lang, **kwargs), "lang": lang}
+                "tr": lambda key, **kwargs: t(key, lang, **kwargs), "lang": lang,
+                "_": lambda text, **kwargs: gettext(text, lang, **kwargs),
+                "language_names": NATIVE_LANGUAGE_NAMES}
 
     @app.errorhandler(403)
     def forbidden(_e):
@@ -183,3 +201,57 @@ def create_app(**overrides) -> Flask:
     app.register_blueprint(incident_views.bp)
 
     return app
+
+
+def _lang() -> str:
+    return getattr(g, "lang", None) or "en"
+
+
+# Plain-language names for audit actions, translated with gettext.
+ACTIVITY_LABELS = {
+    "answer.saved": "Answer saved",
+    "assessment.imported": "Assessment imported",
+    "board.downloaded": "Board report downloaded",
+    "board.gaps": "Board report gaps changed",
+    "evidence.deleted": "Evidence removed",
+    "evidence.downloaded": "Evidence downloaded",
+    "evidence.link_added": "Evidence link added",
+    "evidence.uploaded": "Evidence uploaded",
+    "incident.created": "Incident recorded",
+    "incident.exported": "Incident report exported",
+    "incident.report": "Incident report updated",
+    "login": "Signed in",
+    "login.failed": "Failed sign-in",
+    "login.sso_refused": "Single sign-on refused",
+    "logout": "Signed out",
+    "organisation.updated": "Organisation updated",
+    "password.changed": "Password changed",
+    "report.downloaded": "Report downloaded",
+    "setting.changed": "Setting changed",
+    "setup.completed": "Setup completed",
+    "threat_data.check_failed": "Threat data check failed",
+    "threat_data.check_started": "Threat data check started",
+    "threat_data.checked": "Threat data checked",
+    "user.activated": "User activated",
+    "user.created": "User created",
+    "user.created_by_sso": "User created by single sign-on",
+    "user.deactivated": "User deactivated",
+    "user.language": "Language changed",
+    "user.password_reset": "Password reset",
+    "user.role_changed": "Role changed",
+    "user.sso_linked": "Single sign-on linked",
+    "user.sso_unlinked": "Single sign-on unlinked",
+}
+
+ANSWER_NAMES = {"yes": "Yes", "partial": "Partially", "no": "No", "na": "Not applicable",
+                "not assessed": "Not assessed", "None": "Not assessed"}
+
+
+def activity_item(entry, lang: str) -> str:
+    """The audit target, with a saved answer shown as a word rather than answer=yes."""
+    detail = entry.detail or ""
+    if entry.action == "answer.saved" and detail.startswith("answer="):
+        value = detail.removeprefix("answer=")
+        return f"{entry.target}: {gettext(ANSWER_NAMES.get(value, value), lang)}"
+    return f"{entry.target}: {detail}" if detail else entry.target
+

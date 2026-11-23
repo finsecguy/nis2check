@@ -11,3 +11,11 @@ document.addEventListener("submit", function (e) {
     setTimeout(function () { btn.disabled = true; }, 0);
   }
 });
+
+// A select marked data-autosubmit (the language menu) saves as soon as it changes.
+document.addEventListener("change", function (e) {
+  var el = e.target;
+  if (el.matches && el.matches("select[data-autosubmit]") && el.form) {
+    el.form.submit();
+  }
+});

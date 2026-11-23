@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ lang }}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{% block title %}NIS2 Gap Assessment{% endblock %}</title>
+<title>{% block title %}{{ _("NIS2 Gap Assessment") }}{% endblock %}</title>
 <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" sizes="32x32">
 <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
 <link rel="apple-touch-icon" href="{{ url_for('static', filename='apple-touch-icon.png') }}">
@@ -16,11 +16,23 @@
 <header class="topbar">
   <a class="brand" href="{{ url_for('main.dashboard') if current_user else url_for('scope.wizard') }}">
     <img class="brand-mark" src="{{ url_for('static', filename='logo-mark.svg') }}" alt="" width="26" height="26">
-    <span>NIS2 Gap Assessment</span>
+    <span>{{ _("NIS2 Gap Assessment") }}</span>
   </a>
   {% if current_user %}
   <div class="who">
-    <span>{{ current_user.name or current_user.email }}, {{ role_labels[current_user.role] | lower }}</span>
+    <span>{{ current_user.name or current_user.email }}, {{ _(role_labels[current_user.role]) | lower }}</span>
+    <form class="inline lang" method="post" action="{{ url_for('main.set_language') }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <input type="hidden" name="next" value="{{ request.full_path if request.query_string else request.path }}">
+      <label class="visually-hidden" for="ui-language">{{ tr('org.language') }}</label>
+      <select id="ui-language" name="language" data-autosubmit>
+        <option value="" {{ 'selected' if not current_user.language }}>{{ tr('org.language_follow') }}</option>
+        {% for code, name in language_names.items() %}
+          <option value="{{ code }}" lang="{{ code }}" {{ 'selected' if current_user.language == code }}>{{ name }}</option>
+        {% endfor %}
+      </select>
+      <noscript><button class="linkbtn" type="submit">{{ tr('org.save') }}</button></noscript>
+    </form>
     {% if current_user.password_hash %}<a href="{{ url_for('auth.change_password') }}">{{ tr('nav.change_password') }}</a>{% endif %}
     <form class="inline" method="post" action="{{ url_for('auth.logout') }}">
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
@@ -34,7 +46,7 @@
 <div class="shell">
   {% if current_user %}
   {% set ep = request.endpoint or '' %}
-  <nav class="side" aria-label="Main">
+  <nav class="side" aria-label="{{ _("Main") }}">
     <a href="{{ url_for('main.dashboard') }}" class="{{ 'on' if ep == 'main.dashboard' }}">{{ tr('nav.overview') }}</a>
     <a href="{{ url_for('main.assessment_index') }}" class="{{ 'on' if ep.startswith('main.assessment') }}">{{ tr('nav.assessment') }}</a>
     <a href="{{ url_for('incidents.index') }}" class="{{ 'on' if ep.startswith('incidents.') }}">{{ tr('nav.incidents') }}</a>

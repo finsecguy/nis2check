@@ -16,7 +16,7 @@ from .applicability import SECTORS
 from .assessment import Assessment
 from .controls import Catalogue
 from .frameworks import DORA_SCOPE_NOTE, LEX_SPECIALIS, framework_label
-from .i18n import t
+from .i18n import format_date, gettext, t
 from .jurisdictions import COUNTRY_LANGUAGE, format_citation, get_jurisdiction, question_text
 from .scoring import Finding, Result
 
@@ -64,6 +64,34 @@ def rag(value: float | None) -> str:
     if value >= 40:
         return "amber"
     return "red"
+
+
+def domain_state(d) -> dict:
+    """How a requirement row should look: not assessed, partly assessed, claimed vs proven."""
+    counts = d.counts
+    total = len(d.findings) - counts["na"]
+    unanswered = counts["unanswered"]
+    assessed = total - unanswered
+    not_assessed = total > 0 and assessed == 0
+    score = d.score_pct or 0.0
+    proven = d.verified_pct or 0.0
+    colour = rag(d.score_pct)
+    title = ""
+    if not_assessed:
+        colour, title = "grey", "Not assessed yet"
+    elif colour == "green" and proven < 70:
+        # Green only when the evidence shows it; a claim alone stops at amber.
+        colour, title = "amber", "Answered as in place, but not yet backed by evidence"
+    return {
+        "not_assessed": not_assessed,
+        "partly_assessed": 0 < assessed < total,
+        "assessed": assessed,
+        "total": total,
+        "rag": colour,
+        "title": title,
+        "proven": round(min(proven, score), 1),
+        "claimed": round(max(score - proven, 0.0), 1),
+    }
 
 
 def finding_rag(f: Finding) -> str:
@@ -172,11 +200,13 @@ def _domain_title(result: Result, domain_id: str) -> str:
     return next(d.domain.title for d in result.domains if d.domain.id == domain_id)
 
 
-def executive_summary(result: Result, assessment: Assessment) -> list[Markup]:
+def executive_summary(result: Result, assessment: Assessment, lang: str | None = None) -> list[Markup]:
     """Plain-language summary paragraphs for the first page.
 
     Paragraphs contain <b> markup, so every user-supplied value is escaped.
     """
+    if lang and lang != "en":
+        return [Markup(p) for p in _summary_text_translated(result, assessment, lang)]
     return [Markup(p) for p in _summary_text(result, assessment)]
 
 
@@ -267,6 +297,84 @@ def _summary_text(result: Result, assessment: Assessment) -> list[str]:
     return paras
 
 
+def _summary_text_translated(result: Result, assessment: Assessment, lang: str) -> list[str]:
+    """The summary for other languages, in short sentences with "label: number" counts.
+
+    Slavic languages change the noun with the number (1, 2 to 4, 5 and more), so counts are
+    given as labelled figures instead of inside running sentences.
+    """
+    def _(text: str, **kwargs) -> str:
+        safe = {k: v if isinstance(v, Markup) else escape(v) for k, v in kwargs.items()}
+        return str(escape(gettext(text, lang))).format(**safe)
+
+    name = assessment.entity.name or gettext("The organisation", lang)
+    a = result.applicability
+    c = result.counts
+    applicable = c["met"] + c["partial"] + c["gap"] + c["unanswered"]
+    ids = _framework_ids(result)
+
+    if ids == ("dora",):
+        opening = _("{name} was assessed against Regulation (EU) 2022/2554 (DORA), Articles 5 to 45.", name=name)
+    elif "dora" in ids and "nis2" in ids:
+        opening = _("{name} was assessed against Directive (EU) 2022/2555 (NIS2), Articles 20, 21 and 23, "
+                    "and against Regulation (EU) 2022/2554 (DORA), Articles 5 to 45.", name=name)
+    else:
+        opening = _("{name} was assessed against the cybersecurity risk-management, governance and incident "
+                    "reporting requirements of Directive (EU) 2022/2555 (NIS2), Articles 20, 21 and 23.", name=name)
+    if a.in_scope is True and a.classification == "essential":
+        scope = _("Based on the information provided, the organisation is likely within the scope of NIS2 as an essential entity.")
+    elif a.in_scope is True and a.classification == "important":
+        scope = _("Based on the information provided, the organisation is likely within the scope of NIS2 as an important entity.")
+    elif a.in_scope is True:
+        scope = _("Based on the information provided, the organisation is likely within the scope of NIS2.")
+    elif a.in_scope is False:
+        scope = _("Based on the information provided, the organisation appears to fall outside the direct scope of "
+                  "NIS2. In-scope customers may still require NIS2-aligned controls through their supply chain obligations.")
+    else:
+        scope = _("The scope could not be conclusively classified and requires further review.")
+    paras = [f"{opening} {scope}"]
+    if ids == ("dora",):
+        paras[0] += " " + _("That scope check is the NIS2 test and does not decide whether DORA applies.")
+
+    overall = _("Overall compliance: {pct} (maturity: {maturity}).",
+                pct=Markup(f"<b>{_pct(result.score_pct)}</b>"), maturity=gettext(result.maturity, lang).lower())
+    overall += " " + _("Applicable controls: {n}. Met: {met}, partially met: {partial}, not met: {gap}, not yet assessed: {unanswered}.",
+                       n=applicable, met=c["met"], partial=c["partial"], gap=c["gap"], unanswered=c["unanswered"])
+    if result.verified_pct is not None and result.score_pct and result.verified_pct < result.score_pct:
+        overall += " " + _("Only {pct} is supported by evidence, so treat the result as indicative until the missing evidence is added (controls without evidence: {n}).",
+                           pct=Markup(f"<b>{_pct(result.verified_pct)}</b>"), n=len(result.evidence_issues))
+    paras.append(overall)
+
+    scored = [d for d in result.domains if d.score_pct is not None]
+    weakest = sorted(scored, key=lambda d: d.score_pct)[:3]
+    if weakest and weakest[0].score_pct < 70:
+        jurisdiction = get_jurisdiction(getattr(assessment, "country", None))
+
+        def where(article: str) -> str:
+            if jurisdiction and article == jurisdiction.law.citation_label:
+                return jurisdiction.law.label(lang, jurisdiction.language)
+            return article
+
+        parts = Markup("; ").join(
+            Markup("{} ({}, {})").format(d.domain.title, where(d.domain.article), _pct(d.score_pct)) for d in weakest
+        )
+        text = _("Weakest areas: {areas}.", areas=parts)
+        critical_open = [
+            f for f in result.gaps if f.question.priority == "critical" and f.status in ("gap", "unanswered")
+        ]
+        if critical_open:
+            text += " " + _("Critical controls not met or not assessed: {n}. Address these first (see section 4).",
+                            n=len(critical_open))
+        paras.append(text)
+
+    quick = effort_matrix(result)["Quick win"] if result.gaps else []
+    if quick:
+        paras.append(_("Quick wins (high impact, low effort): {n}, for example {ids}. Closing these first gives the "
+                       "fastest reduction in risk (see section 3.3).",
+                       n=len(quick), ids=", ".join(f.question.id for f in quick[:6])))
+    return paras
+
+
 def gap_rows(result: Result, threat=None) -> list[dict]:
     gaps = result.gaps
     median = gap_median(gaps)
@@ -335,12 +443,12 @@ def render_html(
 
     def cite(article, question=None):
         national = question if question is not None and str(getattr(question, "domain_id", "")).startswith("NAT-") else None
-        pieces = format_citation(article or "", jurisdiction, national)
+        pieces = format_citation(article or "", jurisdiction, national, lang)
         bits = []
         for piece in pieces:
             text = str(escape(piece["text"]))
             if piece.get("unverified"):
-                text += ' <span class="small">unverified</span>'
+                text += f' <span class="small">{escape(t("report.unverified", lang))}</span>'
             bits.append(text)
         return Markup("<br>".join(bits))
 
@@ -351,6 +459,9 @@ def render_html(
         status_label=STATUS_LABELS,
         priority_label=PRIORITY_LABELS,
         cite=cite,
+        domain_state=domain_state,
+        local_date=lambda value: format_date(value, lang),
+        _=lambda text, **kwargs: gettext(text, lang, **kwargs),
     )
     slug = "".join(ch if ch.isalnum() else "-" for ch in (assessment.entity.name or "nis2")).strip("-")
     ids = _framework_ids(result)
@@ -366,7 +477,7 @@ def render_html(
         result=result,
         assessment=assessment,
         catalogue=catalogue,
-        summary=executive_summary(result, assessment),
+        summary=executive_summary(result, assessment, lang),
         heat=heat_map(result),
         matrix=effort_matrix(result),
         threat=threat if result.weighting == "threat" else None,
@@ -388,23 +499,21 @@ def render_html(
             "h_plan": t("report.h_plan", lang),
             "h_evidence": t("report.h_evidence", lang),
             "col_article": t("report.col_article", lang),
-            "assessed_against": (
-                f"Assessed against: {jurisdiction.law.name}, transposing Directive (EU) 2022/2555."
-                if jurisdiction else ""
-            ),
+            "assessed_against": t("report.assessed_against", lang, law=jurisdiction.law.name) if jurisdiction else "",
             "unverified": t("report.unverified", lang),
         },
         jurisdiction=jurisdiction,
         lang=lang,
         deadlines=jurisdiction.upcoming_deadlines() if jurisdiction else [],
         measures=f"{label} measures",
+        measures_label=label,
         cover_line=cover,
         show_lex="dora" in ids,
         lex_specialis=LEX_SPECIALIS,
         dora_scope_note=DORA_SCOPE_NOTE,
         sector_label=SECTORS.get(assessment.entity.sector or "", assessment.entity.sector),
         report_date=assessment.assessed_on or dt.date.today().isoformat(),
-        generated=dt.datetime.now().strftime("%d %b %Y"),
+        generated=format_date(dt.datetime.now(), lang),
         version=__version__,
         not_legal_advice=NOT_LEGAL_ADVICE,
     )

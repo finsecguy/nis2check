@@ -57,6 +57,16 @@ class Law:
     source_url: str
     citation_label: str
     note: str = ""
+    # In the country's own language: the law's short name on its own ("Zákon č. 69/2018 Z. z.")
+    # and the form used after a section reference ("§ 20 ods. 4 zákona č. 69/2018 Z. z.").
+    local_label: str = ""
+    local_citation: str = ""
+
+    def label(self, lang: str | None, language: str) -> str:
+        return self.local_label if lang == language and self.local_label else self.citation_label
+
+    def citation(self, lang: str | None, language: str) -> str:
+        return self.local_citation if lang == language and self.local_citation else self.citation_label
 
 
 @dataclass(frozen=True)
@@ -311,6 +321,8 @@ def parse_jurisdiction(data: dict, code: str | None = None) -> Jurisdiction:
         source_url=str(_require(law_raw, "source_url", where)).strip(),
         citation_label=str(_require(law_raw, "citation_label", where)).strip(),
         note=" ".join(str(law_raw.get("note") or "").split()),
+        local_label=str(law_raw.get("local_label") or "").strip(),
+        local_citation=str(law_raw.get("local_citation") or "").strip(),
     )
 
     terms_raw = data.get("entity_terms")
@@ -549,7 +561,10 @@ def with_national(catalogue: Catalogue, jurisdiction: Jurisdiction | None) -> Ca
     )
 
 
-def format_citation(directive_article: str, jurisdiction: Jurisdiction | None, question: Question | None = None) -> list[dict]:
+def format_citation(
+    directive_article: str, jurisdiction: Jurisdiction | None, question: Question | None = None,
+    lang: str | None = None,
+) -> list[dict]:
     """Pieces to print for one finding: the Directive citation and the national one.
 
     Each piece is ``{"text", "unverified", "note"}``. An empty national ref is
@@ -565,22 +580,23 @@ def format_citation(directive_article: str, jurisdiction: Jurisdiction | None, q
         pieces.append({"text": text, "unverified": False, "note": ""})
     if jurisdiction is None:
         return pieces
+    law_label = jurisdiction.law.citation(lang, jurisdiction.language)
     entry = jurisdiction.article_map.get(article) if directive and not national_question else None
     if entry and entry.ref:
         pieces.append({
-            "text": f"{entry.ref} {jurisdiction.law.citation_label}",
+            "text": f"{entry.ref} {law_label}",
             "unverified": not entry.verified,
             "note": entry.note,
         })
     elif national_question and question and question.article:
         pieces.append({
-            "text": f"{question.article} {jurisdiction.law.citation_label}",
+            "text": f"{question.article} {law_label}",
             "unverified": question.verified is False,
             "note": question.note,
         })
     elif entry and not entry.verified:
         pieces.append({
-            "text": jurisdiction.law.citation_label,
+            "text": jurisdiction.law.label(lang, jurisdiction.language),
             "unverified": True,
             "note": entry.note,
         })

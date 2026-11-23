@@ -67,6 +67,9 @@ tr.flag td { font-weight: 600; }
 .bar { height: 4px; background: var(--line); min-width: 120px; margin-top: 9px; }
 .bar span { display: block; height: 100%; }
 .bar .rag-red, .bar .rag-amber, .bar .rag-green, .bar .rag-grey { border-radius: 0; width: auto; margin: 0; }
+.bar.two { display: flex; }
+.bar.two span { flex: none; }
+.bar.two .claimed { opacity: .35; }
 .tag { display: inline-block; font-size: 12px; padding: 1px 8px; border: 1px solid var(--line-2); border-radius: 3px; white-space: nowrap; color: var(--text-2); }
 .tag.critical { border-color: var(--black); color: var(--black); font-weight: 600; }
 
@@ -135,6 +138,7 @@ form.inline { display: inline; }
 /* messages */
 .flash { padding: 12px 16px; margin-bottom: 20px; border-left: 3px solid var(--navy); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 .flash.error { border-left-color: var(--red); }
+.flash.info { border-left-color: var(--amber); }
 .flash.secret { border-left-color: var(--black); font-weight: 600; }
 .note { border-left: 3px solid var(--navy); padding: 4px 0 4px 16px; margin: 14px 0; font-size: 14px; max-width: 80ch; }
 
@@ -159,3 +163,7 @@ svg.trend text { font: 12px var(--sans); fill: rgba(0, 0, 0, .55); }
 .change-report h3 { margin-top: 0; }
 
 @media (prefers-reduced-motion: no-preference) { .btn, nav.side a { transition: background-color .12s, color .12s; } }
+
+.who form.lang select { width: auto; padding: 2px 6px; font-size: 13px; margin: 0; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.pending { font-size: 13px; color: var(--text-2); background: #f3f1ec; border-left: 3px solid var(--amber); padding: 6px 10px; margin-top: 8px; }
