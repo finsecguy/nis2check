@@ -232,8 +232,12 @@ from nis2check.web import create_app  # noqa: E402
 from nis2check.web.models import Response  # noqa: E402
 
 
+SETUP_TOKEN = "test-setup-token"
+
+
 @pytest.fixture
-def app(tmp_path):
+def app(tmp_path, monkeypatch):
+    monkeypatch.setenv("NIS2CHECK_SETUP_TOKEN", SETUP_TOKEN)
     application = create_app(data_dir=tmp_path / "data", start_scheduler=False)
     application.config.update(WTF_CSRF_ENABLED=False, TESTING=True)
     return application
@@ -247,7 +251,7 @@ def client(app):
 def _admin(client):
     client.post("/setup", data=dict(
         org_name="Acme", name="Admin", email="admin@acme.sk",
-        password="CorrectHorse12", password2="CorrectHorse12",
+        password="CorrectHorse12", password2="CorrectHorse12", token=SETUP_TOKEN,
     ))
 
 

@@ -52,6 +52,8 @@ def create_app(**overrides) -> Flask:
     app.extensions["nis2_db"] = db
     app.extensions["nis2_settings"] = settings
     app.extensions["nis2_catalogue"] = load_bundled_catalogue(FRAMEWORK_IDS)
+    from .auth import ensure_setup_token
+    ensure_setup_token(db)
     csrf.init_app(app)
 
     if settings.oidc_providers:

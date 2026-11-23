@@ -15,10 +15,12 @@ from nis2check.web.services import run_threat_check  # noqa: E402
 ROOT = Path(__file__).resolve().parent.parent
 FIX = Path(__file__).resolve().parent / "fixtures" / "threat"
 PASSWORD = "CorrectHorse12"
+SETUP_TOKEN = "test-setup-token"
 
 
 @pytest.fixture
-def app(tmp_path):
+def app(tmp_path, monkeypatch):
+    monkeypatch.setenv("NIS2CHECK_SETUP_TOKEN", SETUP_TOKEN)
     app = create_app(data_dir=tmp_path / "data", start_scheduler=False, threat_source_dir=str(FIX))
     app.config.update(WTF_CSRF_ENABLED=False, TESTING=True)
     from nis2check.web import auth
@@ -33,7 +35,7 @@ def client(app):
 
 def setup_admin(client):
     return client.post("/setup", data=dict(org_name="Acme", name="Admin", email="admin@acme.sk",
-                                           password=PASSWORD, password2=PASSWORD))
+                                           password=PASSWORD, password2=PASSWORD, token=SETUP_TOKEN))
 
 
 def add_user(app, email, role):
@@ -70,7 +72,8 @@ def test_first_run_goes_to_setup(client):
 
 
 def test_setup_rejects_weak_password(client):
-    r = client.post("/setup", data=dict(org_name="A", name="A", email="a@a.sk", password="short", password2="short"))
+    r = client.post("/setup", data=dict(org_name="A", name="A", email="a@a.sk", password="short", password2="short",
+                                       token=SETUP_TOKEN))
     assert b"at least 12" in r.data
     assert client.get("/login").headers["Location"] == "/setup"
 

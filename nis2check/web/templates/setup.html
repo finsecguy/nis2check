@@ -5,6 +5,7 @@
 <p class="muted">Create the first administrator account. You can invite colleagues and connect single sign-on afterwards.</p>
 <form method="post">
   <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <input type="hidden" name="token" value="{{ setup_token }}">
   <label for="org_name">Organisation name</label>
   <input type="text" id="org_name" name="org_name" required>
   <label for="name">Your name</label>

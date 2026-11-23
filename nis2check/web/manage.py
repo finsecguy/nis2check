@@ -9,7 +9,7 @@ from pathlib import Path
 from sqlalchemy import select
 
 from ..assessment import load_assessment
-from .auth import hash_password, password_problem
+from .auth import clear_setup_token, hash_password, password_problem
 from .models import Evidence, Response, User, utcnow
 from .services import audit, evaluate_current, organisation, record_snapshot
 
@@ -113,5 +113,6 @@ def create_admin(app, email: str, password: str, name: str = "") -> None:
         raise ValueError(f"{email} already exists")
     db.add(User(email=email, name=name, role="admin", password_hash=hash_password(password)))
     audit(db, "user.created", email, "admin via command line", actor="command line")
+    clear_setup_token(db)
     db.commit()
     app.extensions["nis2_db"].remove()

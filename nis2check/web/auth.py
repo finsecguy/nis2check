@@ -3,16 +3,21 @@
 from __future__ import annotations
 
 import functools
+import hashlib
+import hmac
+import os
 import secrets
+import threading
 import time
 from collections import deque
 
 from flask import Blueprint, abort, current_app, flash, g, redirect, render_template, request, session, url_for
-from sqlalchemy import func, select
+from sqlalchemy import func, select, text
+from sqlalchemy.exc import IntegrityError
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from .models import User, utcnow
-from .services import audit, organisation
+from .models import Setting, User, utcnow
+from .services import audit, get_setting, organisation, set_setting
 
 bp = Blueprint("auth", __name__)
 
@@ -26,6 +31,12 @@ MAX_FAILURES_PER_ACCOUNT = 30  # across all addresses, against distributed guess
 # inside the window is never deleted, so a full table cannot clear a lockout.
 _failures: dict[str, deque] = {}
 _MAX_FAILURE_KEYS = 4096
+
+# First-run /setup. The plaintext is printed once; the database keeps only a SHA-256 digest.
+SETUP_TOKEN_ENV = "NIS2CHECK_SETUP_TOKEN"
+SETUP_TOKEN_KEY = "setup_token_sha256"
+SETUP_TOKEN_BYTES = 32
+_setup_lock = threading.Lock()
 
 
 class SSOError(Exception):
@@ -237,36 +248,150 @@ def resolve_sso_user(db, settings, provider: str, claims: dict) -> User:
     return user
 
 
+# ------------------------------------------------------------------ first-run token
+
+def _presented_setup_token() -> str:
+    """Token from the form field, or from the query string when the field is absent."""
+    if request.method == "POST":
+        field = request.form.get("token", "").strip()
+        if field:
+            return field
+    return request.args.get("token", "").strip()
+
+
+def _hash_setup_token(token: str) -> str:
+    return hashlib.sha256(token.encode("utf-8")).hexdigest()
+
+
+def _setup_token_ok(db, presented: str) -> bool:
+    """True when `presented` matches the stored hash. Digests are compared in constant time."""
+    stored = get_setting(db, SETUP_TOKEN_KEY, "")
+    digest = _hash_setup_token(presented)
+    if len(stored) != len(digest):
+        return False
+    return hmac.compare_digest(stored, digest)
+
+
+def clear_setup_token(db) -> bool:
+    row = db.get(Setting, SETUP_TOKEN_KEY)
+    if row is None:
+        return False
+    db.delete(row)
+    return True
+
+
+def _announce_setup_token(token: str) -> None:
+    print(
+        f"nis2check setup token: {token}\n"
+        "Open /setup?token=<this value> to create the first administrator. "
+        "The token works once. In Docker, read it with: docker logs nis2check",
+        flush=True,
+    )
+
+
+def ensure_setup_token(session_factory) -> None:
+    """Store a setup-token hash when no administrator exists yet.
+
+    NIS2CHECK_SETUP_TOKEN, when set, is used as given and is not printed.
+    Otherwise a new token is generated, printed to stdout once, and only its
+    hash is kept. A later start keeps that hash and does not print again.
+    """
+    db = session_factory()
+    try:
+        if users_exist(db):
+            if clear_setup_token(db):
+                db.commit()
+            return
+        supplied = os.environ.get(SETUP_TOKEN_ENV, "").strip()
+        if supplied:
+            set_setting(db, SETUP_TOKEN_KEY, _hash_setup_token(supplied))
+            db.commit()
+            return
+        if get_setting(db, SETUP_TOKEN_KEY):
+            return
+        token = secrets.token_urlsafe(SETUP_TOKEN_BYTES)
+        set_setting(db, SETUP_TOKEN_KEY, _hash_setup_token(token))
+        try:
+            db.commit()
+        except IntegrityError:
+            db.rollback()
+            return
+        _announce_setup_token(token)
+    finally:
+        session_factory.remove()
+
+
+def _create_first_admin(db, presented: str):
+    """Create the first administrator, or return None to show the form again.
+
+    The write transaction starts only after the form is valid, so a rejected
+    password does not consume the token. BEGIN IMMEDIATE serialises two
+    overlapping requests (two threads, or two processes) so only one account
+    is created.
+    """
+    db.rollback()
+    if users_exist(db):
+        return redirect(url_for("auth.login"))
+    if not _setup_token_ok(db, presented):
+        abort(404)
+    name = request.form.get("name", "").strip()
+    email = request.form.get("email", "").strip().lower()
+    password = request.form.get("password", "")
+    org_name = request.form.get("org_name", "").strip()
+    problem = password_problem(password)
+    if not email or "@" not in email:
+        db.rollback()
+        flash("Enter a valid email address.", "error")
+        return None
+    if problem:
+        db.rollback()
+        flash(problem, "error")
+        return None
+    if password != request.form.get("password2", ""):
+        db.rollback()
+        flash("The passwords do not match.", "error")
+        return None
+    db.rollback()
+    password_hash = hash_password(password)
+    db.execute(text("BEGIN IMMEDIATE"))
+    try:
+        if users_exist(db):
+            db.rollback()
+            return redirect(url_for("auth.login"))
+        if not _setup_token_ok(db, presented) or not clear_setup_token(db):
+            db.rollback()
+            abort(404)
+        user = User(email=email, name=name, role="admin", password_hash=password_hash)
+        db.add(user)
+        organisation(db).name = org_name
+        db.flush()
+        audit(db, "setup.completed", email, actor=email)
+        login_user(user)
+        db.commit()
+    except Exception:
+        db.rollback()
+        raise
+    flash("Setup complete. Start by checking your organisation details.", "ok")
+    return redirect(url_for("main.organisation_page"))
+
+
 # ------------------------------------------------------------------ routes
 
 @bp.route("/setup", methods=["GET", "POST"])
 def setup():
     db = current_app.extensions["nis2_db"]()
+    presented = _presented_setup_token()
     if users_exist(db):
         return redirect(url_for("auth.login"))
-    if request.method == "POST":
-        name = request.form.get("name", "").strip()
-        email = request.form.get("email", "").strip().lower()
-        password = request.form.get("password", "")
-        org_name = request.form.get("org_name", "").strip()
-        problem = password_problem(password)
-        if not email or "@" not in email:
-            flash("Enter a valid email address.", "error")
-        elif problem:
-            flash(problem, "error")
-        elif password != request.form.get("password2", ""):
-            flash("The passwords do not match.", "error")
-        else:
-            user = User(email=email, name=name, role="admin", password_hash=hash_password(password))
-            db.add(user)
-            organisation(db).name = org_name
-            db.flush()
-            audit(db, "setup.completed", email, actor=email)
-            login_user(user)
-            db.commit()
-            flash("Setup complete. Start by checking your organisation details.", "ok")
-            return redirect(url_for("main.organisation_page"))
-    return render_template("setup.html")
+    if not _setup_token_ok(db, presented):
+        abort(404)
+    if request.method == "GET":
+        return render_template("setup.html", setup_token=presented)
+    with _setup_lock:
+        outcome = _create_first_admin(db, presented)
+    if outcome is not None:
+        return outcome
+    return render_template("setup.html", setup_token=presented)
 
 
 @bp.route("/login", methods=["GET", "POST"])

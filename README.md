@@ -43,7 +43,7 @@ cd nis2check
 docker compose up -d
 ```
 
-Open `http://<your-server>:8080`. The first visit asks you to create the administrator account. That is all that is required; everything else is optional.
+Open `http://<your-server>:8080/setup?token=<setup-token>` to create the administrator account. On a fresh install the app prints a one-time setup token to stdout (`docker logs nis2check`, the line `nis2check setup token`). The token is required on `/setup` (query string or form field) and works once. A restart does not print it again; if that line is no longer in the logs, set `NIS2CHECK_SETUP_TOKEN` and start again. Set `NIS2CHECK_SETUP_TOKEN` before the first start to choose the token yourself; a token you supply is not printed. Everything else is optional.
 
 ### Recommended for production
 
