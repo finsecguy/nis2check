@@ -18,6 +18,8 @@ from sqlalchemy import select
 from ..assessment import ANSWER_VALUES
 from ..ciso import export_zip
 from ..frameworks import DORA_SCOPE_NOTE, framework_ids_of, framework_label, parse_frameworks
+from ..jurisdictions import COUNTRY_CODES, LANGUAGES, get_jurisdiction
+from ..sk_export import render_sk_self_assessment
 from ..scope import assess_scope, cached_scope_rules, implied_subsector, scope_for_organisation
 from ..report import STATUS_LABELS, effort_matrix, fonts_css_uri, render_csv, render_html, render_json, write_pdf
 from ..weighting import plain_reason
@@ -94,6 +96,8 @@ def dashboard():
         pending=pending,
         activity=activity,
         threat=threat,
+        deadlines=(get_jurisdiction(organisation(db).country_code).upcoming_deadlines()
+                   if get_jurisdiction(organisation(db).country_code) else []),
     )
 
 
@@ -142,6 +146,12 @@ def organisation_page():
             selected = parse_frameworks(request.form.getlist("frameworks"), default=None)
             changed = tuple(selected) != org.framework_ids
             org.frameworks = ",".join(selected)
+            country = request.form.get("country", "eu").strip().lower() or "eu"
+            if country not in COUNTRY_CODES:
+                raise ValueError("country")
+            if country != org.country_code:
+                changed = True
+            org.country = country
         except ValueError as exc:
             db.rollback()
             message = str(exc)
@@ -149,6 +159,8 @@ def organisation_page():
                 message = "Select at least one framework (NIS2, DORA, or both)."
             elif message.startswith("unknown framework"):
                 message = message[0].upper() + message[1:] + "."
+            elif message == "country":
+                message = "Choose a country from the list."
             else:
                 message = f"Enter a number for {message.replace('_', ' ')}."
             flash(message, "error")
@@ -157,7 +169,7 @@ def organisation_page():
             db.rollback()
             flash("Choose a sector from the list.", "error")
             return redirect(url_for("main.organisation_page"))
-        audit(db, "organisation.updated", org.name, "frameworks: " + org.frameworks)
+        audit(db, "organisation.updated", org.name, f"frameworks: {org.frameworks}; country: {org.country_code}")
         if changed:
             # Score the newly selected frameworks. evaluate_current narrows the
             # full catalogue to whatever is now stored on the organisation.
@@ -176,7 +188,24 @@ def organisation_page():
         "organisation.html", org=org, rules=rules, scope=scope,
         selected_subsector=org.subsector_id or implied_subsector(rules, org.sector),
         dora_scope_note=DORA_SCOPE_NOTE,
+        countries=COUNTRY_CODES,
+        languages=LANGUAGES,
+        jurisdiction=get_jurisdiction(org.country_code),
     )
+
+
+@bp.route("/language", methods=["POST"])
+@require("view")
+def set_language():
+    """Per-user language. Empty follows the organisation country."""
+    db, _catalogue, _settings = current_app_parts()
+    lang = request.form.get("language", "").strip().lower()
+    if lang and lang not in LANGUAGES:
+        abort(400)
+    g.user.language = lang or None
+    audit(db, "user.language", g.user.email, lang or "country")
+    db.commit()
+    return redirect(request.referrer or url_for("main.organisation_page"))
 
 
 # ------------------------------------------------------------------ assessment
@@ -257,8 +286,9 @@ def save_question(qid: str):
         if r is None:
             r = Response(question_id=qid)
             db.add(r)
-        changed = (r.answer != answer) or (r.notes != notes)
-        r.answer, r.notes = answer, notes
+        remediation_due = _parse_date(request.form.get("remediation_due"))
+        changed = (r.answer != answer) or (r.notes != notes) or (r.remediation_due != remediation_due)
+        r.answer, r.notes, r.remediation_due = answer, notes, remediation_due
         if changed:
             r.updated_by, r.updated_at = g.user.email, utcnow()
             audit(db, "answer.saved", qid, f"answer={answer or 'not assessed'}")
@@ -401,7 +431,8 @@ def report_page():
 def report_view():
     _db, catalogue, result, assessment, threat, _org = _report_parts()
     html = render_html(result, assessment, catalogue, top=10, threat=threat, embedded=True,
-                       font_css=url_for("static", filename="fonts/fonts.css"))
+                       font_css=url_for("static", filename="fonts/fonts.css"),
+                       lang=getattr(g, "lang", None))
     return FlaskResponse(html, mimetype="text/html")
 
 
@@ -417,7 +448,7 @@ def report_download(fmt: str):
     if fmt == "pdf":
         import tempfile
         html = render_html(result, assessment, catalogue, top=10, threat=threat, embedded=True,
-                           font_css=fonts_css_uri())
+                           font_css=fonts_css_uri(), lang=getattr(g, "lang", None))
         with tempfile.NamedTemporaryFile(suffix=".pdf") as tmp:
             write_pdf(html, tmp.name)
             data = Path(tmp.name).read_bytes()
@@ -428,12 +459,21 @@ def report_download(fmt: str):
     elif fmt == "json":
         body, mime = render_json(result, assessment, catalogue, threat).encode("utf-8"), "application/json"
     elif fmt == "html":
-        body = render_html(result, assessment, catalogue, top=10, threat=threat).encode("utf-8")
+        body = render_html(result, assessment, catalogue, top=10, threat=threat,
+                           lang=getattr(g, "lang", None)).encode("utf-8")
         mime = "text/html; charset=utf-8"
     elif fmt == "ciso":
         body, mime = export_zip(result, catalogue, assessment), "application/zip"
         stem = f"ciso-assistant-{_slug(org.name)}-{dt.date.today():%Y-%m-%d}"
         ext = "zip"
+    elif fmt == "sk":
+        jur = get_jurisdiction(org.country_code)
+        if jur is None or jur.code != "sk":
+            abort(404)
+        body = render_sk_self_assessment(result, assessment, catalogue, jur).encode("utf-8")
+        mime = "text/html; charset=utf-8"
+        stem = f"sk-self-assessment-{_slug(org.name)}-{dt.date.today():%Y-%m-%d}"
+        ext = "html"
     else:
         abort(404)
     audit(db, "report.downloaded", fmt)

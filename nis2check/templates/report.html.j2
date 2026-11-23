@@ -104,6 +104,19 @@
   <div class="kicker">{{ kicker }}</div>
   <h1>{{ assessment.entity.name or "Unnamed organisation" }}</h1>
   <p class="muted" style="margin-bottom: 14pt;">A self-assessment against {{ cover_line }}.</p>
+  {% if labels.assessed_against %}<p>{{ labels.assessed_against }}</p>{% endif %}
+  {% if jurisdiction %}
+    {% for notice in jurisdiction.notices %}
+      <div class="note">{{ notice.label(lang) }}{% if notice.status %} ({{ notice.status }}){% endif %}</div>
+    {% endfor %}
+  {% endif %}
+  {% if deadlines %}
+    <ul>
+    {% for item in deadlines %}
+      <li>{% if item.date %}{{ item.date.strftime("%-d %b %Y") }}: {% endif %}{{ item.label(lang) }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
 
   <table class="control">
     <tbody>
@@ -117,7 +130,7 @@
     </tbody>
   </table>
 
-  <h2>1. Executive summary</h2>
+  <h2>{{ labels.h_summary }}</h2>
 
   {% set c = result.counts %}
   {% set critical_open = result.gaps | selectattr("question.priority", "equalto", "critical") | rejectattr("status", "equalto", "partial") | list %}
@@ -137,7 +150,7 @@
   </table>
   {% for p in summary %}<p>{{ p }}</p>{% endfor %}
 
-  <h2>2. Scope and applicability</h2>
+  <h2>{{ labels.h_scope }}</h2>
   <table class="control">
     <tbody>
       <tr><th>Indicative outcome</th><td><strong>{{ result.applicability.label }}</strong></td></tr>
@@ -153,11 +166,11 @@
   <div class="note">{{ lex_specialis }}</div>
   {% endif %}
 
-  <h2>3. Compliance overview</h2>
-  <h3>3.1 Status by requirement</h3>
+  <h2>{{ labels.h_overview }}</h2>
+  <h3>{{ labels.h_status }}</h3>
   <table>
     <thead><tr>
-      <th class="c">RAG</th><th>Ref</th><th>Requirement</th><th class="nowrap">Article</th>
+      <th class="c">RAG</th><th>Ref</th><th>Requirement</th><th class="nowrap">{{ labels.col_article }}</th>
       <th class="c">Met</th><th style="width: 22%;">Coverage</th><th class="num">Score</th><th class="num">Evidenced</th>
     </tr></thead>
     <tbody>
@@ -167,7 +180,7 @@
         <td class="c"><span class="rag rag-{{ d.score_pct | rag }}" style="margin:0"></span></td>
         <td><strong>{{ d.domain.id }}</strong></td>
         <td>{{ d.domain.title }}</td>
-        <td class="nowrap">{{ d.domain.article }}</td>
+        <td class="nowrap">{{ cite(d.domain.article) }}</td>
         <td class="c nowrap">{{ dc.met }}/{{ dc.met + dc.partial + dc.gap + dc.unanswered }}</td>
         <td style="vertical-align: middle;"><div class="bar"><span class="rag-{{ d.score_pct | rag }}" style="width: {{ d.score_pct or 0 }}%"></span></div></td>
         <td class="num"><strong>{{ d.score_pct | pct }}</strong></td>
@@ -216,7 +229,7 @@
   <p>No open items.</p>
   {% endif %}
 
-  <h2>4. Remediation plan</h2>
+  <h2>{{ labels.h_plan }}</h2>
   {% if top_gaps %}
   <p>The {{ top_gaps | length }} highest-priority open items are listed below{% if result.gaps | length > top_gaps | length %}, out of {{ result.gaps | length }} in total. The full gap register is available as a CSV download{% endif %}. Items are ranked by {% if result.rank_by == "value" %}risk reduction per unit of effort{% else %}risk reduction (control weight x missing coverage){% endif %}{% if threat %}, using threat-informed weights{% endif %}. Owners and target dates are left for the organisation to assign.</p>
   <table>
@@ -228,8 +241,8 @@
     {% for f in top_gaps %}
       <tr>
         <td>{{ loop.index }}</td>
-        <td class="nowrap"><strong>{{ f.question.id }}</strong><br><span class="small muted">{{ f.question.article or (result.domains | selectattr("domain.id", "equalto", f.question.domain_id) | map(attribute="domain.article") | first) }}</span></td>
-        <td>{{ f.question.text }}</td>
+        <td class="nowrap"><strong>{{ f.question.id }}</strong><br><span class="small muted">{{ cite(f.question.article or (result.domains | selectattr("domain.id", "equalto", f.question.domain_id) | map(attribute="domain.article") | first), f.question) }}</span></td>
+        <td>{{ f.question | qtext }}</td>
         <td class="nowrap"><span class="rag rag-{{ finding_rag(f) }}"></span>{{ priority_label[f.question.priority] }}</td>
         <td class="nowrap">{{ status_label[f.status] }}</td>
         <td class="nowrap">{{ f.question.effort | capitalize }}</td>
@@ -243,7 +256,7 @@
   <p>No open items. All applicable controls are reported as met.</p>
   {% endif %}
 
-  <h2>5. Evidence review</h2>
+  <h2>{{ labels.h_evidence }}</h2>
   {% if result.evidence_issues %}
   <p>{{ result.evidence_issues | length }} control{{ "s are" if result.evidence_issues | length != 1 else " is" }} reported as met or partially met without usable evidence. Until evidence is provided, these controls are excluded from the evidence-backed score.</p>
   <table>
@@ -266,14 +279,14 @@
   <div class="appendix">
     <h2>Appendix A. Detailed control results</h2>
     {% for d in result.domains %}
-    <h3>{{ d.domain.id }}. {{ d.domain.title }} ({{ d.domain.article }}): {{ d.score_pct | pct }}</h3>
+    <h3>{{ d.domain.id }}. {{ d.domain.title }} ({{ cite(d.domain.article) }}): {{ d.score_pct | pct }}</h3>
     <table>
       <thead><tr><th style="width: 8%;">Ref</th><th style="width: 32%;">Control</th><th style="width: 8%;">Priority</th><th style="width: 13%;">Status</th><th style="width: 19%;">Evidence</th><th style="width: 20%;">Notes</th></tr></thead>
       <tbody>
       {% for f in d.findings %}
         <tr>
-          <td class="nowrap">{{ f.question.id }}{% if f.question.article %}<br><span class="small muted">{{ f.question.article }}</span>{% endif %}</td>
-          <td>{{ f.question.text }}</td>
+          <td class="nowrap">{{ f.question.id }}<br><span class="small muted">{{ cite(f.question.article or d.domain.article, f.question) }}</span></td>
+          <td>{{ f.question | qtext }}</td>
           <td class="nowrap">{{ priority_label[f.question.priority] }}</td>
           <td class="nowrap"><span class="rag rag-{{ finding_rag(f) }}"></span>{{ status_label[f.status] }}</td>
           <td class="small">{% for e in f.response.evidence %}{{ e }}{% if not loop.last %}<br>{% endif %}{% endfor %}{% if f.evidence_issues %}<br><span style="color: var(--red);">{{ f.evidence_issues | join("; ") }}</span>{% endif %}</td>

@@ -6,8 +6,9 @@ sector, size and size-exempt flag onto the organisation and open the assessment.
 
 from __future__ import annotations
 
-from flask import Blueprint, current_app, flash, redirect, render_template, request, session, url_for
+from flask import Blueprint, current_app, flash, g, redirect, render_template, request, session, url_for
 
+from ..jurisdictions import get_jurisdiction
 from ..scope import ScopeRulesError, assess_scope, cached_scope_rules
 from .auth import require
 from .services import audit, organisation
@@ -121,7 +122,10 @@ def wizard():
         except (ScopeRulesError, ValueError):
             session.pop(SESSION_KEY, None)
             form = _blank()
-    return render_template("scope_wizard.html", rules=rules, form=form, result=result)
+    jurisdiction = None
+    if getattr(g, "user", None):
+        jurisdiction = get_jurisdiction(organisation(current_app.extensions["nis2_db"]()).country_code)
+    return render_template("scope_wizard.html", rules=rules, form=form, result=result, jurisdiction=jurisdiction)
 
 
 @bp.route("/scope/apply", methods=["POST"])

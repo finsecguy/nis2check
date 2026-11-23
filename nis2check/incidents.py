@@ -109,33 +109,54 @@ def incident_clocks(
     handling_completed_at: dt.datetime | None = None,
     progress_submitted_at: dt.datetime | None = None,
     final_ongoing: bool = False,
+    *,
+    early_hours: int = 24,
+    notification_hours: int = 72,
+    final_days: int | None = None,
+    further_days: int | None = None,
 ) -> list[Clock]:
-    """The Art. 23(4) clocks, plus the further final report when handling ends later."""
-    early_due = detected_at + dt.timedelta(hours=24)
-    notification_due = detected_at + dt.timedelta(hours=72)
+    """The Art. 23(4) clocks, plus the further final report when handling ends later.
+
+    ``early_hours``, ``notification_hours``, ``final_days`` and ``further_days``
+    override the Directive only where a national file says the law differs.
+    """
+    early_due = detected_at + dt.timedelta(hours=early_hours)
+    notification_due = detected_at + dt.timedelta(hours=notification_hours)
     if notification_submitted_at is not None:
-        final_due = add_months(notification_submitted_at, 1)
+        final_due = (
+            notification_submitted_at + dt.timedelta(days=final_days)
+            if final_days is not None else add_months(notification_submitted_at, 1)
+        )
         final_provisional = False
-        final_note = "One month after the incident notification was submitted."
-    else:
-        final_due = add_months(notification_due, 1)
-        final_provisional = True
         final_note = (
-            "Provisional, one month after the 72-hour deadline. "
-            "The report is due one month after the notification is actually submitted."
+            f"{final_days} days after the incident notification was submitted."
+            if final_days is not None else
+            "One month after the incident notification was submitted."
+        )
+    else:
+        final_due = (
+            notification_due + dt.timedelta(days=final_days)
+            if final_days is not None else add_months(notification_due, 1)
+        )
+        final_provisional = True
+        final_span = f"{final_days} days" if final_days is not None else "one month"
+        hour_span = f"{notification_hours}-hour"
+        final_note = (
+            f"Provisional, {final_span} after the {hour_span} deadline. "
+            f"The report is due {final_span} after the notification is actually submitted."
         )
     clocks = [
         Clock(
             EARLY, STAGE_LABELS[EARLY], STAGE_ARTICLES[EARLY], early_due, False,
             early_submitted_at, deadline_status(early_due, early_submitted_at, now),
-            "Within 24 hours of becoming aware. Say whether an unlawful or malicious "
+            f"Within {early_hours} hours of becoming aware. Say whether an unlawful or malicious "
             "cause is suspected, and whether there could be a cross-border impact.",
         ),
         Clock(
             NOTIFICATION, STAGE_LABELS[NOTIFICATION], STAGE_ARTICLES[NOTIFICATION],
             notification_due, False, notification_submitted_at,
             deadline_status(notification_due, notification_submitted_at, now),
-            "Within 72 hours of becoming aware. Update the early warning and give an "
+            f"Within {notification_hours} hours of becoming aware. Update the early warning and give an "
             "initial assessment of severity and impact, and indicators of compromise where you have them.",
         ),
         Clock(
@@ -145,20 +166,24 @@ def incident_clocks(
         ),
     ]
     if handling_completed_at is not None or final_ongoing:
+        further_span = f"{further_days} days" if further_days is not None else "one month"
         if handling_completed_at is not None:
-            further_due = add_months(handling_completed_at, 1)
+            further_due = (
+                handling_completed_at + dt.timedelta(days=further_days)
+                if further_days is not None else add_months(handling_completed_at, 1)
+            )
             clocks.append(Clock(
                 "further_final", "Further final report", "Art. 23(4)(e)", further_due, False,
                 None, deadline_status(further_due, None, now),
                 "The incident was still ongoing when the final report was due. "
-                "A final report is due within one month of handling it.",
+                f"A final report is due within {further_span} of handling it.",
             ))
         else:
             clocks.append(Clock(
                 "further_final", "Further final report", "Art. 23(4)(e)", None, True,
                 progress_submitted_at, "not_recorded" if progress_submitted_at is None else "recorded",
                 "The incident was still ongoing. Record when handling finishes; "
-                "a final report is then due within one month.",
+                f"a final report is then due within {further_span}.",
             ))
     return clocks
 
@@ -200,7 +225,7 @@ def clip(value: str | None, limit: int = 5000) -> str:
     return (value or "").strip()[:limit]
 
 
-def report_markdown(incident, report, clocks: list[Clock]) -> str:
+def report_markdown(incident, report, clocks: list[Clock], channel: str = "") -> str:
     """Markdown for one submitted stage. ``incident`` and ``report`` are the ORM rows."""
     label = STAGE_LABELS.get(report.stage, report.stage)
     article = STAGE_ARTICLES.get(report.stage, "Art. 23(4)")
@@ -213,6 +238,8 @@ def report_markdown(incident, report, clocks: list[Clock]) -> str:
         f"Provision: {article} of Directive (EU) 2022/2555",
         "",
     ]
+    if channel:
+        lines += [channel.rstrip(), ""]
     if incident.summary:
         lines += ["## What happened", "", incident.summary, ""]
     fields = _field_lines(report)
@@ -259,9 +286,9 @@ def _stamp(moment: dt.datetime | None) -> str:
     return moment.strftime("%Y-%m-%d %H:%M UTC")
 
 
-def report_pdf(incident, report, clocks: list[Clock]) -> bytes:
+def report_pdf(incident, report, clocks: list[Clock], channel: str = "") -> bytes:
     """A text PDF of one stage. Pure Python, so it does not need system libraries."""
-    markdown = report_markdown(incident, report, clocks)
+    markdown = report_markdown(incident, report, clocks, channel)
     title = f"{STAGE_LABELS.get(report.stage, 'Report')}: {incident.title}"
     return text_pdf(title, markdown.splitlines())
 

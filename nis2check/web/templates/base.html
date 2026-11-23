@@ -21,33 +21,33 @@
   {% if current_user %}
   <div class="who">
     <span>{{ current_user.name or current_user.email }}, {{ role_labels[current_user.role] | lower }}</span>
-    {% if current_user.password_hash %}<a href="{{ url_for('auth.change_password') }}">Change password</a>{% endif %}
+    {% if current_user.password_hash %}<a href="{{ url_for('auth.change_password') }}">{{ tr('nav.change_password') }}</a>{% endif %}
     <form class="inline" method="post" action="{{ url_for('auth.logout') }}">
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-      <button class="linkbtn" type="submit">Sign out</button>
+      <button class="linkbtn" type="submit">{{ tr('nav.sign_out') }}</button>
     </form>
   </div>
   {% else %}
-  <div class="who"><a href="{{ url_for('auth.login', next=request.full_path) }}">Sign in</a></div>
+  <div class="who"><a href="{{ url_for('auth.login', next=request.full_path) }}">{{ tr('nav.sign_in') }}</a></div>
   {% endif %}
 </header>
 <div class="shell">
   {% if current_user %}
   {% set ep = request.endpoint or '' %}
   <nav class="side" aria-label="Main">
-    <a href="{{ url_for('main.dashboard') }}" class="{{ 'on' if ep == 'main.dashboard' }}">Overview</a>
-    <a href="{{ url_for('main.assessment_index') }}" class="{{ 'on' if ep.startswith('main.assessment') }}">Assessment</a>
-    <a href="{{ url_for('incidents.index') }}" class="{{ 'on' if ep.startswith('incidents.') }}">Incidents</a>
-    <a href="{{ url_for('main.report_page') }}" class="{{ 'on' if ep == 'main.report_page' }}">Report</a>
-    <a href="{{ url_for('board.page') }}" class="{{ 'on' if ep.startswith('board.') }}">Board report</a>
-    <a href="{{ url_for('main.organisation_page') }}" class="{{ 'on' if ep == 'main.organisation_page' }}">Organisation</a>
-    <a href="{{ url_for('scope.wizard') }}" class="{{ 'on' if ep.startswith('scope.') }}">Scope</a>
+    <a href="{{ url_for('main.dashboard') }}" class="{{ 'on' if ep == 'main.dashboard' }}">{{ tr('nav.overview') }}</a>
+    <a href="{{ url_for('main.assessment_index') }}" class="{{ 'on' if ep.startswith('main.assessment') }}">{{ tr('nav.assessment') }}</a>
+    <a href="{{ url_for('incidents.index') }}" class="{{ 'on' if ep.startswith('incidents.') }}">{{ tr('nav.incidents') }}</a>
+    <a href="{{ url_for('main.report_page') }}" class="{{ 'on' if ep == 'main.report_page' }}">{{ tr('nav.report') }}</a>
+    <a href="{{ url_for('board.page') }}" class="{{ 'on' if ep.startswith('board.') }}">{{ tr('nav.board') }}</a>
+    <a href="{{ url_for('main.organisation_page') }}" class="{{ 'on' if ep == 'main.organisation_page' }}">{{ tr('nav.organisation') }}</a>
+    <a href="{{ url_for('scope.wizard') }}" class="{{ 'on' if ep.startswith('scope.') }}">{{ tr('nav.scope') }}</a>
     {% if current_user.can('admin') %}
-    <div class="group">Administration</div>
-    <a href="{{ url_for('admin.users') }}" class="{{ 'on' if ep.startswith('admin.users') or ep == 'admin.update_user' }}">People and access</a>
-    <a href="{{ url_for('admin.threat_data') }}" class="{{ 'on' if ep.startswith('admin.threat') }}">Threat data</a>
-    <a href="{{ url_for('admin.settings_page') }}" class="{{ 'on' if ep == 'admin.settings_page' }}">Settings</a>
-    <a href="{{ url_for('admin.audit_log') }}" class="{{ 'on' if ep == 'admin.audit_log' }}">Activity log</a>
+    <div class="group">{{ tr('nav.administration') }}</div>
+    <a href="{{ url_for('admin.users') }}" class="{{ 'on' if ep.startswith('admin.users') or ep == 'admin.update_user' }}">{{ tr('nav.people') }}</a>
+    <a href="{{ url_for('admin.threat_data') }}" class="{{ 'on' if ep.startswith('admin.threat') }}">{{ tr('nav.threat') }}</a>
+    <a href="{{ url_for('admin.settings_page') }}" class="{{ 'on' if ep == 'admin.settings_page' }}">{{ tr('nav.settings') }}</a>
+    <a href="{{ url_for('admin.audit_log') }}" class="{{ 'on' if ep == 'admin.audit_log' }}">{{ tr('nav.activity') }}</a>
     {% endif %}
   </nav>
   {% endif %}
@@ -56,7 +56,7 @@
       {% for cat, msg in messages %}<div class="flash {{ cat }}" role="status">{{ msg }}</div>{% endfor %}
     {% endwith %}
     {% block content %}{% endblock %}
-    <footer class="foot">nis2check {{ app_version }}. A self-assessment against {{ framework_label }}, not legal advice.</footer>
+    <footer class="foot">nis2check {{ app_version }}. {{ tr('footer') }} ({{ framework_label }})</footer>
   </main>
 </div>
 </body>

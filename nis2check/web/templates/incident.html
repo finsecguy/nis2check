@@ -9,6 +9,13 @@
   </div>
 </div>
 {% if incident.summary %}<p>{{ incident.summary }}</p>{% endif %}
+{% if jurisdiction %}
+<div class="note">
+  <div><strong>{{ tr('incident.authority') }}:</strong> {{ authority }}</div>
+  <div><strong>{{ tr('incident.csirt') }}:</strong> {{ csirt }}</div>
+  <div><strong>{{ tr('incident.channel') }}:</strong> <a href="{{ jurisdiction.law.reporting_channel_url }}">{{ jurisdiction.law.reporting_channel_url }}</a></div>
+</div>
+{% endif %}
 <div class="note">{{ disclaimer }} An incident is significant under Art. 23(3) when it has caused or is capable of causing severe operational disruption or financial loss, or considerable material or non-material damage to other people.</div>
 
 <h2>Deadlines</h2>

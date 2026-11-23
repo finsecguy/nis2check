@@ -27,6 +27,7 @@ class Response:
     evidence: list[str] = field(default_factory=list)
     notes: str = ""
     extra_issues: list[str] = field(default_factory=list)  # e.g. expired evidence (web app)
+    remediation_due: str = ""
 
 
 @dataclass
@@ -37,6 +38,7 @@ class Assessment:
     assessed_on: str | None = None
     assessor: str = ""
     frameworks: tuple[str, ...] = ("nis2",)
+    country: str = "eu"
 
 
 def _number(value, field_name: str, cast=float):
@@ -102,6 +104,7 @@ def parse_assessment(data: dict, catalogue: Catalogue, base_dir: Path) -> Assess
             answer=_normalise_answer(raw.get("answer"), qid),
             evidence=[str(e).strip() for e in evidence if str(e).strip()],
             notes=str(raw.get("notes") or "").strip(),
+            remediation_due=str(raw.get("remediation_due") or "").strip(),
         )
 
     assessed_on = data.get("assessed_on")
@@ -112,6 +115,7 @@ def parse_assessment(data: dict, catalogue: Catalogue, base_dir: Path) -> Assess
             raise AssessmentError(str(exc)) from exc
     else:
         frameworks = framework_ids_of(catalogue)
+    country = str(data.get("country") or "eu").strip().lower() or "eu"
     return Assessment(
         entity=entity,
         responses=responses,
@@ -119,6 +123,7 @@ def parse_assessment(data: dict, catalogue: Catalogue, base_dir: Path) -> Assess
         assessed_on=str(assessed_on) if assessed_on else None,
         assessor=str(data.get("assessor") or ""),
         frameworks=frameworks,
+        country=country,
     )
 
 
@@ -131,13 +136,16 @@ def load_assessment(path: str | Path, catalogue: Catalogue) -> Assessment:
     return parse_assessment(data, catalogue, path.resolve().parent)
 
 
-def new_assessment(catalogue: Catalogue, name: str = "", base_dir: Path | None = None) -> Assessment:
+def new_assessment(
+    catalogue: Catalogue, name: str = "", base_dir: Path | None = None, country: str = "eu",
+) -> Assessment:
     return Assessment(
         entity=Entity(name=name),
         responses={qid: Response(qid) for qid in catalogue.question_ids},
         base_dir=base_dir or Path.cwd(),
         assessed_on=dt.date.today().isoformat(),
         frameworks=framework_ids_of(catalogue),
+        country=country or "eu",
     )
 
 
@@ -167,6 +175,7 @@ def render_assessment(assessment: Assessment, catalogue: Catalogue) -> str:
         f"assessed_on: {_scalar(assessment.assessed_on)}",
         f"assessor: {_scalar(assessment.assessor)}",
         "frameworks: [" + ", ".join(assessment.frameworks) + "]",
+        f"country: {_scalar(assessment.country or 'eu')}",
         "",
         "entity:",
         f"  name: {_scalar(e.name)}",
@@ -195,6 +204,8 @@ def render_assessment(assessment: Assessment, catalogue: Catalogue) -> str:
             else:
                 lines.append("    evidence: []")
             lines.append(f"    notes: {_scalar(r.notes) or chr(34) * 2}")
+            if r.remediation_due:
+                lines.append(f"    remediation_due: {_scalar(r.remediation_due)}")
     return "\n".join(lines) + "\n"
 
 

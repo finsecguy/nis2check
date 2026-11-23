@@ -16,6 +16,8 @@ from .applicability import SECTORS
 from .assessment import Assessment
 from .controls import Catalogue
 from .frameworks import DORA_SCOPE_NOTE, LEX_SPECIALIS, framework_label
+from .i18n import t
+from .jurisdictions import COUNTRY_LANGUAGE, format_citation, get_jurisdiction, question_text
 from .scoring import Finding, Result
 
 STATUS_LABELS = {
@@ -133,8 +135,31 @@ def _domain_article(result: Result, domain_id: str) -> str:
     return next(d.domain.article for d in result.domains if d.domain.id == domain_id)
 
 
-def _legal_reference(result: Result, finding: Finding) -> str:
-    return finding.question.article or _domain_article(result, finding.question.domain_id)
+def _legal_reference(result: Result, finding: Finding, jurisdiction=None) -> str:
+    article = finding.question.article or _domain_article(result, finding.question.domain_id)
+    framework = next(
+        (d.domain.framework for d in result.domains if d.domain.id == finding.question.domain_id),
+        "nis2",
+    )
+    pieces = format_citation(article, jurisdiction, finding.question if finding.question.domain_id.startswith("NAT-") else None)
+    if jurisdiction is None or not pieces:
+        return article
+    # Directive rows: format_citation already prefixes NIS2 when the article is a Directive citation.
+    if pieces and pieces[0]["text"].startswith("NIS2 "):
+        return _join_citation(pieces)
+    if framework == "nis2" and jurisdiction is not None and (article.startswith("Art.") or article.startswith("Annex")):
+        return _join_citation(format_citation(article, jurisdiction, None))
+    return _join_citation(pieces) if pieces else article
+
+
+def _join_citation(pieces: list[dict]) -> str:
+    parts = []
+    for piece in pieces:
+        text = piece["text"]
+        if piece.get("unverified"):
+            text += " (unverified)"
+        parts.append(text)
+    return " + ".join(parts)
 
 
 def _domain_title(result: Result, domain_id: str) -> str:
@@ -282,7 +307,7 @@ def fonts_css_uri() -> str:
 
 def render_html(
     result: Result, assessment: Assessment, catalogue: Catalogue, top: int = 10, threat=None,
-    embedded: bool = False, font_css: str | None = None,
+    embedded: bool = False, font_css: str | None = None, lang: str | None = None,
 ) -> str:
     """Render the report.
 
@@ -295,14 +320,31 @@ def render_html(
         trim_blocks=True,
         lstrip_blocks=True,
     )
+    jurisdiction = get_jurisdiction(getattr(assessment, "country", None))
+    if lang is None:
+        lang = COUNTRY_LANGUAGE.get(getattr(assessment, "country", "eu") or "eu", "en")
     env.filters["pct"] = _pct
     env.filters["rag"] = rag
+    env.filters["qtext"] = lambda question: question_text(question, lang)
+
+    def cite(article, question=None):
+        national = question if question is not None and str(getattr(question, "domain_id", "")).startswith("NAT-") else None
+        pieces = format_citation(article or "", jurisdiction, national)
+        bits = []
+        for piece in pieces:
+            text = str(escape(piece["text"]))
+            if piece.get("unverified"):
+                text += ' <span class="small">unverified</span>'
+            bits.append(text)
+        return Markup("<br>".join(bits))
+
     report_median = gap_median(result.gaps)
     env.globals.update(
         quadrant=lambda f: quadrant(f, report_median),
         finding_rag=finding_rag,
         status_label=STATUS_LABELS,
         priority_label=PRIORITY_LABELS,
+        cite=cite,
     )
     slug = "".join(ch if ch.isalnum() else "-" for ch in (assessment.entity.name or "nis2")).strip("-")
     ids = _framework_ids(result)
@@ -331,7 +373,24 @@ def render_html(
         embedded=embedded,
         font_css=font_css,
         file_slug=f"{label.replace(' ', '-')}-gap-register-{slug[:40]}",
-        kicker=f"{label} gap assessment",
+        kicker=t("report.kicker", lang, label=label),
+        labels={
+            "h_summary": t("report.h_summary", lang),
+            "h_scope": t("report.h_scope", lang),
+            "h_overview": t("report.h_overview", lang),
+            "h_status": t("report.h_status", lang),
+            "h_plan": t("report.h_plan", lang),
+            "h_evidence": t("report.h_evidence", lang),
+            "col_article": t("report.col_article", lang),
+            "assessed_against": (
+                f"Assessed against: {jurisdiction.law.name}, transposing Directive (EU) 2022/2555."
+                if jurisdiction else ""
+            ),
+            "unverified": t("report.unverified", lang),
+        },
+        jurisdiction=jurisdiction,
+        lang=lang,
+        deadlines=jurisdiction.upcoming_deadlines() if jurisdiction else [],
         measures=f"{label} measures",
         cover_line=cover,
         show_lex="dora" in ids,

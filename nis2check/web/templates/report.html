@@ -9,6 +9,7 @@
     <a class="btn secondary" href="{{ url_for('main.report_download', fmt='html') }}">HTML</a>
     <a class="btn secondary" href="{{ url_for('main.report_download', fmt='json') }}">JSON</a>
     <a class="btn secondary" href="{{ url_for('main.report_download', fmt='ciso') }}">CISO Assistant</a>
+    {% if org_country == 'sk' %}<a class="btn secondary" href="{{ url_for('main.report_download', fmt='sk') }}">SK self-assessment</a>{% endif %}
   </div>
 </div>
 {% if 'dora' in framework_ids %}<div class="note">{{ lex_specialis }}</div>{% endif %}

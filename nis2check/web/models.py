@@ -36,6 +36,8 @@ class User(Base):
     must_change_password: Mapped[bool] = mapped_column(Boolean, default=False)
     active: Mapped[bool] = mapped_column(Boolean, default=True)
     sso_subject: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    # Empty follows the organisation country. One of en, sk, cs, hu, pl.
+    language: Mapped[str | None] = mapped_column(String(8), nullable=True)
     # Rotated on login, logout, password change and password reset so an old cookie stops working.
     session_token: Mapped[str | None] = mapped_column(String(32), nullable=True)
     created_at: Mapped[dt.datetime] = mapped_column(DateTime, default=utcnow)
@@ -74,6 +76,8 @@ class Organisation(Base):
     # Comma-separated framework ids. NULL on a database created before this column
     # means NIS2, which is what those installs were assessing.
     frameworks: Mapped[str | None] = mapped_column(String(32), nullable=True, default="nis2")
+    # eu, sk, cz, hu or pl. NULL on a database from before this column means the Directive only.
+    country: Mapped[str | None] = mapped_column(String(8), nullable=True, default="eu")
     updated_at: Mapped[dt.datetime] = mapped_column(DateTime, default=utcnow, onupdate=utcnow)
 
     @property
@@ -85,12 +89,19 @@ class Organisation(Base):
         from ..frameworks import parse_frameworks
         return parse_frameworks(self.frameworks)
 
+    @property
+    def country_code(self) -> str:
+        from ..jurisdictions import COUNTRY_CODES
+        code = (self.country or "eu").strip().lower()
+        return code if code in COUNTRY_CODES else "eu"
+
 
 class Response(Base):
     __tablename__ = "responses"
     question_id: Mapped[str] = mapped_column(String(20), primary_key=True)
     answer: Mapped[str | None] = mapped_column(String(10), nullable=True)
     notes: Mapped[str] = mapped_column(Text, default="")
+    remediation_due: Mapped[dt.date | None] = mapped_column(Date, nullable=True)
     updated_by: Mapped[str] = mapped_column(String(255), default="")
     updated_at: Mapped[dt.datetime] = mapped_column(DateTime, default=utcnow)
 

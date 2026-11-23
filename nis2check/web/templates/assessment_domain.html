@@ -21,7 +21,7 @@
   {% set r = responses.get(q.id) %}
   <div class="question{{ ' first' if loop.first }}" id="{{ q.id }}">
     <div class="qhead">
-      <div class="qtext"><span class="qid">{{ q.id }}</span>{% if q.article %}<span class="small muted">{{ q.article }}</span> {% endif %}{{ q.text }}</div>
+      <div class="qtext"><span class="qid">{{ q.id }}</span>{% if q.article %}<span class="small muted">{{ q.article }}</span> {% endif %}{{ q | qtext }}</div>
       <div class="nowrap">
         <span class="tag {{ q.priority }}">{{ q.priority | capitalize }} priority</span>
         <span class="tag">{{ q.effort | capitalize }} effort</span>
@@ -39,6 +39,8 @@
         </div>
         <label for="notes-{{ q.id }}">Notes</label>
         <textarea id="notes-{{ q.id }}" name="notes" {{ 'disabled' if not editable }} placeholder="What is in place, what is missing, who owns it">{{ r.notes if r }}</textarea>
+        <label for="due-{{ q.id }}">Planned remediation date</label>
+        <input type="date" id="due-{{ q.id }}" name="remediation_due" value="{{ r.remediation_due.isoformat() if r and r.remediation_due else '' }}" {{ 'disabled' if not editable }}>
 
         {% if editable %}
         <details>

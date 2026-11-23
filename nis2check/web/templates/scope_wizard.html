@@ -64,9 +64,9 @@
 
 <div>
   {% if result %}
-    <h2 style="margin-top: 0;">{{ result.label }}</h2>
+    <h2 style="margin-top: 0;">{{ result.label }}{% if jurisdiction and result.outcome in ('essential', 'important') %} / {{ jurisdiction.term_for(result.outcome) }}{% endif %}</h2>
     <table class="kv">
-      <tr><th>Outcome</th><td><strong>{{ result.label }}</strong></td></tr>
+      <tr><th>Outcome</th><td><strong>{{ result.label }}{% if jurisdiction and result.outcome in ('essential', 'important') %} / {{ jurisdiction.term_for(result.outcome) }}{% endif %}</strong></td></tr>
       <tr><th>Enterprise size</th><td>{{ result.size_label }}</td></tr>
       <tr><th>Annex</th><td>{{ "Annex " ~ result.annex if result.annex else "Not listed" }}</td></tr>
       {% if result.sector_title %}
@@ -74,11 +74,11 @@
         <tr><th>Subsector</th><td>{{ result.subsector_title }}</td></tr>
       {% endif %}
       {% if result.articles %}
-        <tr><th>Provisions</th><td>{{ result.articles | join(", ") }}</td></tr>
+        <tr><th>Provisions</th><td>{% for article in result.articles %}{{ article }}{% if jurisdiction and jurisdiction.article(article) and jurisdiction.article(article).ref %} / {{ jurisdiction.article(article).ref }}{% if not jurisdiction.article(article).verified %} <span class="small muted">{{ tr('report.unverified') }}</span>{% endif %}{% endif %}{% if not loop.last %}, {% endif %}{% endfor %}</td></tr>
       {% endif %}
     </table>
     {% for reason in result.reasons %}
-      <div class="note">{{ reason.text }}{% if reason.articles %} <span class="small muted">{{ reason.articles | join(", ") }}.</span>{% endif %}</div>
+      <div class="note">{{ reason.text }}{% if reason.articles %} <span class="small muted">{% for article in reason.articles %}{{ article }}{% if jurisdiction and jurisdiction.article(article) and jurisdiction.article(article).ref %} / {{ jurisdiction.article(article).ref }}{% endif %}{% if not loop.last %}, {% endif %}{% endfor %}.</span>{% endif %}</div>
     {% endfor %}
     {% for note in result.size_notes %}<p class="small muted">{{ note }}</p>{% endfor %}
     <p class="small muted">{{ result.disclaimer }} Read against {{ result.source }} and {{ result.recommendation }}.</p>

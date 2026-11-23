@@ -21,6 +21,16 @@
 {% if 'dora' in framework_ids %}
 <div class="note">{{ lex_specialis }}</div>
 {% endif %}
+{% if deadlines %}
+<div class="note">
+  <strong>{{ tr('dash.deadlines') }}</strong>
+  <ul>
+  {% for item in deadlines %}
+    <li>{% if item.date %}{{ item.date.strftime("%-d %b %Y") }}: {% endif %}{{ item.label(lang) }}</li>
+  {% endfor %}
+  </ul>
+</div>
+{% endif %}
 
 {% if answered == 0 %}
 <div class="headline">

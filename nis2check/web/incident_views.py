@@ -15,10 +15,11 @@ from ..incidents import (
     STAGE_LABELS, STAGES, Clock, IncidentInputError, choice, clip, incident_clocks, parse_utc,
     report_markdown, report_pdf,
 )
+from ..jurisdictions import get_jurisdiction
 from .auth import require
 from .incident_models import Incident, IncidentReport
 from .models import utcnow
-from .services import audit
+from .services import audit, organisation
 
 bp = Blueprint("incidents", __name__)
 
@@ -47,6 +48,47 @@ def _one(reports: list[IncidentReport], stage: str) -> IncidentReport | None:
     return found[-1] if found else None
 
 
+def _jurisdiction():
+    return get_jurisdiction(organisation(_db()).country_code)
+
+
+def _clock_overrides(jurisdiction) -> dict:
+    """Apply a national clock only when the country file marks that difference verified."""
+    if jurisdiction is None or not jurisdiction.clocks.verified:
+        return {}
+    rules = jurisdiction.clocks
+    overrides = {}
+    if rules.early_hours:
+        overrides["early_hours"] = rules.early_hours
+    if rules.notification_hours:
+        overrides["notification_hours"] = rules.notification_hours
+    if rules.final_days:
+        overrides["final_days"] = rules.final_days
+    if rules.further_days:
+        overrides["further_days"] = rules.further_days
+    return overrides
+
+
+def _channel_pair(jurisdiction) -> tuple[str, str]:
+    if jurisdiction is None:
+        return "", ""
+    return jurisdiction.authority_for(organisation(_db()).sector)
+
+
+def _channel(jurisdiction) -> str:
+    if jurisdiction is None:
+        return ""
+    authority, csirt = _channel_pair(jurisdiction)
+    lines = [
+        f"Competent authority: {authority}",
+        f"CSIRT: {csirt}",
+        f"Reporting channel: {jurisdiction.law.reporting_channel_url}",
+    ]
+    if jurisdiction.clocks.note:
+        lines.append(jurisdiction.clocks.note)
+    return "\n".join(lines)
+
+
 def _clocks(incident: Incident, reports: list[IncidentReport], now: dt.datetime | None = None) -> list[Clock]:
     now = now or utcnow()
     final = _one(reports, FINAL)
@@ -62,6 +104,7 @@ def _clocks(incident: Incident, reports: list[IncidentReport], now: dt.datetime 
         handling_completed_at=(progress.handling_completed_at if progress else None),
         progress_submitted_at=(progress.submitted_at if progress else None),
         final_ongoing=bool(final and final.ongoing),
+        **_clock_overrides(_jurisdiction()),
     )
 
 
@@ -151,6 +194,10 @@ def detail(iid: int):
         articles=STAGE_ARTICLES,
         disclaimer=DISCLAIMER,
         editable=g.user.can("edit"),
+        jurisdiction=_jurisdiction(),
+        channel=_channel(_jurisdiction()),
+        authority=(_channel_pair(_jurisdiction())[0]),
+        csirt=(_channel_pair(_jurisdiction())[1]),
     )
 
 
@@ -189,10 +236,11 @@ def export_report(iid: int, rid: int, fmt: str):
     if row is None or row.incident_id != incident.id or fmt not in ("md", "pdf"):
         abort(404)
     clocks = _clocks(incident, _reports(db, iid))
+    channel = _channel(_jurisdiction())
     if fmt == "md":
-        body, mime = report_markdown(incident, row, clocks).encode("utf-8"), "text/markdown; charset=utf-8"
+        body, mime = report_markdown(incident, row, clocks, channel).encode("utf-8"), "text/markdown; charset=utf-8"
     else:
-        body, mime = report_pdf(incident, row, clocks), "application/pdf"
+        body, mime = report_pdf(incident, row, clocks, channel), "application/pdf"
     audit(db, "incident.exported", str(incident.id), f"{row.stage}.{fmt}")
     db.commit()
     filename = f"nis2-art23-{row.stage}-{incident.id}-{row.id}.{fmt}"

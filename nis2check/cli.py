@@ -13,7 +13,8 @@ from .applicability import SECTORS
 from .assessment import AssessmentError, load_assessment, new_assessment, save_assessment
 from .ciso import export_zip
 from .controls import CatalogueError, load_catalogue
-from .frameworks import FRAMEWORK_IDS, load_bundled_catalogue, parse_frameworks
+from .frameworks import FRAMEWORK_IDS, framework_ids_of, load_bundled_catalogue, parse_frameworks
+from .jurisdictions import COUNTRY_CODES, get_jurisdiction, with_national
 from .report import fonts_css_uri, render_csv, render_html, render_json, render_summary, write_pdf
 from .scoring import evaluate
 from .threat.data import load_threat_data
@@ -49,13 +50,42 @@ def _catalogue(args, path: Path | None = None):
     return load_catalogue()
 
 
+def _country(value: str | None, fallback: str = "eu") -> str:
+    code = (value or fallback or "eu").strip().lower()
+    if code not in COUNTRY_CODES:
+        known = ", ".join(COUNTRY_CODES)
+        raise CatalogueError(f"unknown country '{code}'. Known values: {known}")
+    return code
+
+
+def _peek_country(path: Path) -> str:
+    if not path.is_file():
+        return "eu"
+    try:
+        data = yaml.safe_load(path.read_text("utf-8")) or {}
+    except yaml.YAMLError:
+        return "eu"
+    if isinstance(data, dict):
+        return str(data.get("country") or "eu")
+    return "eu"
+
+
+def _with_country(catalogue, country: str):
+    if "nis2" not in framework_ids_of(catalogue):
+        return catalogue
+    return with_national(catalogue, get_jurisdiction(country))
+
+
 def cmd_init(args) -> int:
     out = Path(args.output)
     if out.exists() and not args.force:
         print(f"{out} already exists (use --force to overwrite)", file=sys.stderr)
         return 1
-    catalogue = _catalogue(args)
-    assessment = new_assessment(catalogue, name=args.name or "", base_dir=out.resolve().parent)
+    country = _country(args.country)
+    catalogue = _with_country(_catalogue(args), country)
+    assessment = new_assessment(
+        catalogue, name=args.name or "", base_dir=out.resolve().parent, country=country,
+    )
     save_assessment(assessment, catalogue, out)
     print(f"Created {out} with {len(catalogue.question_ids)} questions.")
     print(f"Fill it in by hand, or run: nis2check interview {out}")
@@ -81,11 +111,15 @@ def _ask_number(prompt: str, current):
 
 def cmd_interview(args) -> int:
     path = Path(args.assessment)
-    catalogue = _catalogue(args, path if path.exists() and not args.frameworks else None)
+    country = _country(args.country, _peek_country(path) if path.exists() else "eu")
+    catalogue = _with_country(
+        _catalogue(args, path if path.exists() and not args.frameworks else None), country,
+    )
     if path.exists():
         assessment = load_assessment(path, catalogue)
     else:
-        assessment = new_assessment(catalogue, base_dir=path.resolve().parent)
+        assessment = new_assessment(catalogue, base_dir=path.resolve().parent, country=country)
+    assessment.country = country
 
     e = assessment.entity
     try:
@@ -147,8 +181,11 @@ def cmd_interview(args) -> int:
 
 
 def cmd_report(args) -> int:
-    catalogue = _catalogue(args, Path(args.assessment))
-    assessment = load_assessment(args.assessment, catalogue)
+    path = Path(args.assessment)
+    country = _country(args.country, _peek_country(path))
+    catalogue = _with_country(_catalogue(args, path), country)
+    assessment = load_assessment(path, catalogue)
+    assessment.country = country
     threat = load_threat_data(args.threat_data) if args.weighting == "threat" else None
     weights = compute_weights(catalogue, threat, args.weighting)
     result = evaluate(catalogue, assessment, weights, args.weighting, args.rank_by)
@@ -170,6 +207,16 @@ def cmd_report(args) -> int:
     if args.ciso:
         Path(args.ciso).write_bytes(export_zip(result, catalogue, assessment))
         written.append(("CISO Assistant", args.ciso))
+    if args.self_assessment:
+        if assessment.country != "sk":
+            print("error: --self-assessment is the Slovak working paper. Set --country sk.", file=sys.stderr)
+            return 1
+        from .sk_export import render_sk_self_assessment
+        Path(args.self_assessment).write_text(
+            render_sk_self_assessment(result, assessment, catalogue, get_jurisdiction("sk")),
+            encoding="utf-8",
+        )
+        written.append(("SK self-assessment", args.self_assessment))
 
     if not args.quiet:
         print(render_summary(result, assessment))
@@ -270,7 +317,7 @@ def cmd_web_create_admin(args) -> int:
 
 
 def cmd_controls(args) -> int:
-    catalogue = _catalogue(args)
+    catalogue = _with_country(_catalogue(args), _country(args.country))
     for d in catalogue.domains:
         print(f"{d.id:<5} {d.article:<15} {d.title}")
         for q in d.questions:
@@ -292,6 +339,7 @@ def build_parser() -> argparse.ArgumentParser:
     s.add_argument("-o", "--output", default="assessment.yaml")
     s.add_argument("--name", help="organisation name")
     s.add_argument("--frameworks", help="comma-separated frameworks: nis2, dora, or both (default: nis2)")
+    s.add_argument("--country", choices=COUNTRY_CODES, help="eu, sk, cz, hu or pl (default: eu)")
     s.add_argument("--force", action="store_true", help="overwrite an existing file")
     s.set_defaults(func=cmd_init)
 
@@ -299,6 +347,7 @@ def build_parser() -> argparse.ArgumentParser:
     s.add_argument("assessment", nargs="?", default="assessment.yaml")
     s.add_argument("--all", action="store_true", help="revisit answered questions too")
     s.add_argument("--frameworks", help="comma-separated frameworks: nis2, dora, or both (default: the file's frameworks, or nis2)")
+    s.add_argument("--country", choices=COUNTRY_CODES, help="eu, sk, cz, hu or pl (default: the file, or eu)")
     s.set_defaults(func=cmd_interview)
 
     s = sub.add_parser("report", help="score an assessment and write the gap report")
@@ -318,6 +367,8 @@ def build_parser() -> argparse.ArgumentParser:
     s.add_argument("--rank-by", choices=["risk", "value"], default="risk",
                    help="order open items by risk reduction (default) or risk reduction per effort")
     s.add_argument("--frameworks", help="comma-separated frameworks: nis2, dora, or both (default: the file's frameworks, or nis2)")
+    s.add_argument("--country", choices=COUNTRY_CODES, help="eu, sk, cz, hu or pl (default: the file, or eu)")
+    s.add_argument("--self-assessment", help="write the Slovak working self-assessment (requires country sk)")
     s.add_argument("-q", "--quiet", action="store_true")
     s.set_defaults(func=cmd_report)
 
@@ -352,6 +403,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     s = sub.add_parser("controls", help="list the controls in the selected frameworks")
     s.add_argument("--frameworks", help="comma-separated frameworks: nis2, dora, or both (default: nis2)")
+    s.add_argument("--country", choices=COUNTRY_CODES, help="eu, sk, cz, hu or pl (default: eu)")
     s.set_defaults(func=cmd_controls)
     return p
 

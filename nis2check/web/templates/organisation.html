@@ -40,15 +40,23 @@
       NIS2, Directive (EU) 2022/2555: governance, risk management and incident reporting</label>
     <label class="check"><input type="checkbox" name="frameworks" value="dora" {{ 'checked' if 'dora' in org.framework_ids }} {{ 'disabled' if ro }}>
       DORA, Regulation (EU) 2022/2554: ICT risk, incidents, testing, third parties and information sharing</label>
+    <h2>{{ tr('org.country') }}</h2>
+    <p class="small muted">{{ tr('org.country_help') }}</p>
+    <label for="country">{{ tr('org.country') }}</label>
+    <select id="country" name="country" {{ 'disabled' if ro }}>
+      {% for code in countries %}
+        <option value="{{ code }}" {{ 'selected' if org.country_code == code }}>{{ tr('country.' ~ code) }}</option>
+      {% endfor %}
+    </select>
     <div class="note">{{ lex_specialis }}</div>
-    {% if not ro %}<div class="actions"><button class="btn" type="submit">Save</button></div>
+    {% if not ro %}<div class="actions"><button class="btn" type="submit">{{ tr('org.save') }}</button></div>
     {% else %}<p class="small muted">Only administrators can change these details.</p>{% endif %}
   </form>
 </div>
 <div>
   <h2 style="margin-top: 0;">Does NIS2 apply?</h2>
   <table class="kv">
-    <tr><th>Outcome</th><td><strong>{{ scope.label }}</strong></td></tr>
+    <tr><th>{{ tr('scope.outcome') }}</th><td><strong>{{ scope.label }}{% if jurisdiction and scope.outcome in ('essential', 'important') %} / {{ jurisdiction.term_for(scope.outcome) }}{% endif %}</strong></td></tr>
     <tr><th>Enterprise size</th><td>{{ scope.size_label }}</td></tr>
     <tr><th>NIS2 annex</th><td>{{ "Annex " ~ scope.annex if scope.annex else "Not listed" }}</td></tr>
     {% if scope.sector_title %}
@@ -60,6 +68,18 @@
   {% for note in scope.size_notes %}<p class="small muted">{{ note }}</p>{% endfor %}
   <p class="small muted">{{ scope.disclaimer }}</p>
   {% if 'dora' in org.framework_ids %}<div class="note">{{ dora_scope_note }}</div>{% endif %}
+  <h2>{{ tr('org.language') }}</h2>
+  <form method="post" action="{{ url_for('main.set_language') }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label for="language">{{ tr('org.language') }}</label>
+    <select id="language" name="language">
+      <option value="" {{ 'selected' if not current_user.language }}>{{ tr('org.language_follow') }}</option>
+      {% for code in languages %}
+        <option value="{{ code }}" {{ 'selected' if current_user.language == code }}>{{ code }}</option>
+      {% endfor %}
+    </select>
+    <div class="actions"><button class="btn secondary" type="submit">{{ tr('org.save') }}</button></div>
+  </form>
 </div>
 </div>
 {% endblock %}

@@ -16,6 +16,7 @@ from ..assessment import Assessment
 from ..assessment import Response as EngineResponse
 from ..controls import Catalogue
 from ..frameworks import narrow_catalogue
+from ..jurisdictions import get_jurisdiction, with_national
 from ..scoring import Result, evaluate
 from ..threat.data import ThreatData, load_threat_data
 from ..threat.sources import SourceError
@@ -93,6 +94,7 @@ def build_assessment(db, catalogue: Catalogue, evidence_dir: Path, today: dt.dat
             evidence=items,
             notes=r.notes if r else "",
             extra_issues=extra,
+            remediation_due=r.remediation_due.isoformat() if r and r.remediation_due else "",
         )
         if r and (last_update is None or r.updated_at > last_update):
             last_update = r.updated_at
@@ -110,6 +112,7 @@ def build_assessment(db, catalogue: Catalogue, evidence_dir: Path, today: dt.dat
         assessed_on=(last_update or utcnow()).date().isoformat(),
         assessor="",
         frameworks=org.framework_ids,
+        country=org.country_code,
     )
 
 
@@ -125,10 +128,19 @@ def active_threat_data(db) -> ThreatData:
     return load_threat_data()
 
 
+def catalogue_for(db, catalogue: Catalogue) -> Catalogue:
+    """The selected frameworks, plus national questions when NIS2 and a country are on."""
+    org = organisation(db)
+    narrowed = narrow_catalogue(catalogue, org.framework_ids)
+    if "nis2" not in org.framework_ids:
+        return narrowed
+    return with_national(narrowed, get_jurisdiction(org.country_code))
+
+
 def evaluate_current(db, catalogue: Catalogue, evidence_dir: Path) -> tuple[Result, Assessment, ThreatData | None]:
     # The app keeps every framework loaded so a YAML import can store either
     # set of answers. Scoring uses only the frameworks the organisation picked.
-    catalogue = narrow_catalogue(catalogue, organisation(db).framework_ids)
+    catalogue = catalogue_for(db, catalogue)
     assessment = build_assessment(db, catalogue, evidence_dir)
     mode = get_setting(db, "weighting", "threat")
     rank_by = get_setting(db, "rank_by", "risk")
@@ -268,5 +280,5 @@ def current_app_parts():
     """
     ext = current_app.extensions
     db = ext["nis2_db"]
-    catalogue = narrow_catalogue(ext["nis2_catalogue"], organisation(db).framework_ids)
+    catalogue = catalogue_for(db, ext["nis2_catalogue"])
     return db, catalogue, ext["nis2_settings"]

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="utf-8">
+<title>Samohodnotenie {{ assessment.entity.name or "organizácia" }}</title>
+<style>
+  body { font: 15px/1.45 Georgia, serif; color: #111; max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
+  h1 { font-size: 1.6rem; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+  th, td { border-bottom: 1px solid #ccc; text-align: left; vertical-align: top; padding: 0.4rem 0.5rem 0.4rem 0; }
+  .banner { border: 2px solid #16285a; padding: 0.8rem 1rem; margin: 1rem 0; }
+  .muted { color: #444; }
+</style>
+</head>
+<body>
+<div class="banner">
+  <strong>Pracovný dokument. Nie je to úradný formulár NBÚ a nie je to podanie.</strong>
+  <p class="muted">Working document. This is not an official NBU form and it is not a submission. It sets out the self-assessment an entity can use as the basis for its own filing.</p>
+</div>
+<h1>Súhrn samohodnotenia</h1>
+<p>Posúdené podľa: {{ law.name }}, ktorým sa preberá smernica (EÚ) 2022/2555.</p>
+
+<h2>Subjekt</h2>
+<table>
+  <tr><th>Názov</th><td>{{ assessment.entity.name or "neuvedený" }}</td></tr>
+  <tr><th>Sektor</th><td>{{ assessment.entity.sector or "neuvedený" }}</td></tr>
+  <tr><th>Zamestnanci</th><td>{{ assessment.entity.employees if assessment.entity.employees is not none else "neuvedené" }}</td></tr>
+  <tr><th>Obrat (EUR)</th><td>{{ assessment.entity.annual_turnover_eur if assessment.entity.annual_turnover_eur is not none else "neuvedené" }}</td></tr>
+  <tr><th>Suma súvahy (EUR)</th><td>{{ assessment.entity.balance_sheet_eur if assessment.entity.balance_sheet_eur is not none else "neuvedené" }}</td></tr>
+  <tr><th>Dátum</th><td>{{ assessment.assessed_on or "" }}</td></tr>
+</table>
+
+<h2>Výsledok pôsobnosti</h2>
+<p><strong>{{ result.applicability.label }}</strong>. Veľkosť: {{ result.applicability.size }}{% if result.applicability.annex %}, príloha {{ result.applicability.annex }}{% endif %}.</p>
+
+<h2>Stav opatrení</h2>
+<table>
+  <thead><tr><th>ID</th><th>Opatrenie</th><th>Stav</th><th>Náprava a termín</th></tr></thead>
+  <tbody>
+  {% for row in rows %}
+    <tr>
+      <td>{{ row.id }}<br><span class="muted">{{ row.article }}</span></td>
+      <td>{{ row.text }}<br><span class="muted">{{ row.text_en }}</span></td>
+      <td>{{ row.status }}</td>
+      <td>{{ row.remediation }}{% if row.due %}<br>Termín: {{ row.due }}{% else %}<br>Termín: neuvedený{% endif %}{% if row.notes %}<br>{{ row.notes }}{% endif %}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+<h2>Medzery</h2>
+{% if gaps %}
+<ul>
+  {% for row in gaps %}
+    <li><strong>{{ row.id }}</strong> {{ row.text }} ({{ row.status }}). {{ row.remediation }} {% if row.due %}Termín: {{ row.due }}.{% else %}Termín nie je zapísaný.{% endif %}</li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>Žiadna otvorená medzera v zodpovedaných kontrolách.</p>
+{% endif %}
+</body>
+</html>

@@ -12,6 +12,8 @@ from flask_wtf.csrf import CSRFError, CSRFProtect
 
 from .. import __version__
 from ..frameworks import FRAMEWORK_IDS, LEX_SPECIALIS, framework_label, load_bundled_catalogue
+from ..i18n import t
+from ..jurisdictions import COUNTRY_LANGUAGE, question_text
 from .config import load_settings
 from .models import ROLE_LABELS, User, make_session
 
@@ -84,6 +86,11 @@ def create_app(**overrides) -> Flask:
                 g.user = user
             else:
                 session.clear()
+        g.lang = "en"
+        if g.user:
+            from .services import organisation
+            org = organisation(db())
+            g.lang = (g.user.language or "").strip().lower() or COUNTRY_LANGUAGE.get(org.country_code, "en")
 
     @app.teardown_appcontext
     def remove_session(_exc=None):
@@ -122,19 +129,27 @@ def create_app(**overrides) -> Flask:
 
     app.jinja_env.filters["humanize"] = humanize
     app.jinja_env.filters["filesize"] = filesize
+    app.jinja_env.filters["qtext"] = lambda question: question_text(
+        question, getattr(g, "lang", None) or "en",
+    )
 
     @app.context_processor
     def globals_():
         org_name = ""
         framework_ids = ("nis2",)
+        org_country = "eu"
         if g.get("user"):
             from .services import organisation
             org = organisation(db())
             org_name = org.name
             framework_ids = org.framework_ids
+            org_country = org.country_code
+        lang = getattr(g, "lang", None) or "en"
         return {"current_user": g.get("user"), "role_labels": ROLE_LABELS, "app_version": __version__,
                 "org_name": org_name, "framework_ids": framework_ids,
-                "framework_label": framework_label(framework_ids), "lex_specialis": LEX_SPECIALIS}
+                "framework_label": framework_label(framework_ids), "lex_specialis": LEX_SPECIALIS,
+                "org_country": org_country,
+                "tr": lambda key, **kwargs: t(key, lang, **kwargs), "lang": lang}
 
     @app.errorhandler(403)
     def forbidden(_e):
