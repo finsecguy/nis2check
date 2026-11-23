@@ -1,0 +1,413 @@
+# National overlay for cz. verified is true only when the official consolidated
+# text was opened and the paragraph number and title were confirmed.
+# Hungary and Poland are unverified throughout.
+
+code: cz
+language: cs
+domain_title: National requirements (CZ)
+law:
+  name: Zákon č. 264/2025 Sb., o kybernetické bezpečnosti
+  number: 264/2025 Sb.
+  in_force: '2025-11-01'
+  competent_authority: Národní úřad pro kybernetickou a informační bezpečnost (NÚKIB)
+  csirt: NÚKIB (vyšší režim); Národní CERT (nižší režim)
+  reporting_channel_url: https://portal.nukib.gov.cz/
+  source_url: https://www.e-sbirka.cz/sb/2025/264
+  citation_label: Act 264/2025 Coll.
+  note: 'Act number and the 1 November 2025 in-force date are stated by the Ministry of Foreign Affairs (mzv.gov.cz) and by
+    NÚKIB. The Collection entry is částka 264/2025 Sb., published 4 August 2025. e-Sbírka did not return the consolidated
+    wording in this session (the public site is a script shell), so every paragraph below is unverified. The CSIRT split is
+    the secondary reading of § 15: the higher regime reports to the Authority and the lower regime to Národní CERT.'
+entity_terms:
+  essential:
+    national: poskytovatel regulované služby v režimu vyšších povinností
+    note: § 8 on the secondary reading. NÚKIB calls this the higher regime. Not confirmed in e-Sbírka.
+  important:
+    national: poskytovatel regulované služby v režimu nižších povinností
+    note: § 8 on the secondary reading. NÚKIB calls this the lower regime. Not confirmed in e-Sbírka.
+article_map:
+  Art. 2:
+    ref: § 4 a § 5
+    title: Podmínky pro registraci regulované služby
+    source_url: https://www.e-sbirka.cz/sb/2025/264
+    verified: false
+    note: Best reading. e-Sbírka returned only the application shell in this session, so the paragraph was not confirmed against
+      the official consolidated text. The reading follows a secondary consolidation that agrees with NÚKIB's public citations
+      of § 4, § 5 and § 6.
+  Art. 3:
+    ref: § 8
+    title: Režim poskytovatele regulované služby
+    source_url: https://www.e-sbirka.cz/sb/2025/264
+    verified: false
+    note: Higher regime (režim vyšších povinností) and lower regime (režim nižších povinností). The split of services is in
+      the decree cited by NÚKIB as č. 408/2025 Sb. Best reading. e-Sbírka returned only the application shell in this session,
+      so the paragraph was not confirmed against the official consolidated text. The reading follows a secondary consolidation
+      that agrees with NÚKIB's public citations of § 4, § 5 and § 6.
+  Art. 2(1):
+    ref: § 4 odst. 1 a § 7
+    title: Podmínky pro registraci regulované služby
+    source_url: https://www.e-sbirka.cz/sb/2025/264
+    verified: false
+    note: § 7 is the reading for the size rules, including that Art. 3(4) of the SME recommendation does not apply. Best reading.
+      e-Sbírka returned only the application shell in this session, so the paragraph was not confirmed against the official
+      consolidated text. The reading follows a secondary consolidation that agrees with NÚKIB's public citations of § 4, §
+      5 and § 6.
+  Art. 3(1)(a):
+    ref: § 8
+    title: Režim poskytovatele regulované služby
+    source_url: https://www.e-sbirka.cz/sb/2025/264
+    verified: false
+    note: Best reading. e-Sbírka returned only the application shell in this session, so the paragraph was not confirmed against
+      the official consolidated text. The reading follows a secondary consolidation that agrees with NÚKIB's public citations
+      of § 4, § 5 and § 6.
+  Art. 4:
+    ref: ''
+    title: ''
+    source_url: https://www.e-sbirka.cz/sb/2025/264
+    verified: false
+    note: No DORA lex-specialis paragraph was confirmed. Best reading. e-Sbírka returned only the application shell in this
+      session, so the paragraph was not confirmed against the official consolidated text. The reading follows a secondary
+      consolidation that agrees with NÚKIB's public citations of § 4, § 5 and § 6.
+  Art. 2(5)(b):
+    ref: ''
+    title: ''
+    source_url: https://www.e-sbirka.cz/sb/2025/264
+    verified: false
+    note: No separate education-institution paragraph was confirmed. Best reading. e-Sbírka returned only the application
+      shell in this session, so the paragraph was not confirmed against the official consolidated text. The reading follows
+      a secondary consolidation that agrees with NÚKIB's public citations of § 4, § 5 and § 6.
+  Annex I:
+    ref: ''
+    title: ''
+    source_url: https://www.e-sbirka.cz/sb/2025/264
+    verified: false
+    note: Sectors are in the decree NÚKIB cites as č. 408/2025 Sb. The decree text was not opened, so no annex point is given.
+      Best reading. e-Sbírka returned only the application shell in this session, so the paragraph was not confirmed against
+      the official consolidated text. The reading follows a secondary consolidation that agrees with NÚKIB's public citations
+      of § 4, § 5 and § 6.
+  Annex II:
+    ref: ''
+    title: ''
+    source_url: https://www.e-sbirka.cz/sb/2025/264
+    verified: false
+    note: 'Same as Annex I: the sector list is in the implementing decree, which was not opened. Best reading. e-Sbírka returned
+      only the application shell in this session, so the paragraph was not confirmed against the official consolidated text.
+      The reading follows a secondary consolidation that agrees with NÚKIB''s public citations of § 4, § 5 and § 6.'
+  Art. 20:
+    ref: § 14 odst. 1 písm. a) bod 2
+    title: Seznam bezpečnostních opatření
+    source_url: https://www.e-sbirka.cz/sb/2025/264
+    verified: false
+    note: Higher-regime organisational measure 'požadavky na vrcholné vedení'. The lower regime has the same heading at §
+      14 odst. 2 písm. b). Best reading. e-Sbírka returned only the application shell in this session, so the paragraph was
+      not confirmed against the official consolidated text. The reading follows a secondary consolidation that agrees with
+      NÚKIB's public citations of § 4, § 5 and § 6.
+  Art. 21(2)(a):
+    ref: § 14 odst. 1 písm. a) body 1, 4 a 6
+    title: Seznam bezpečnostních opatření
+    source_url: https://www.e-sbirka.cz/sb/2025/264
+    verified: false
+    note: Best reading. e-Sbírka returned only the application shell in this session, so the paragraph was not confirmed against
+      the official consolidated text. The reading follows a secondary consolidation that agrees with NÚKIB's public citations
+      of § 4, § 5 and § 6.
+  Art. 21(2)(b):
+    ref: § 14 odst. 1 písm. a) bod 12
+    title: Seznam bezpečnostních opatření
+    source_url: https://www.e-sbirka.cz/sb/2025/264
+    verified: false
+    note: Best reading. e-Sbírka returned only the application shell in this session, so the paragraph was not confirmed against
+      the official consolidated text. The reading follows a secondary consolidation that agrees with NÚKIB's public citations
+      of § 4, § 5 and § 6.
+  Art. 21(2)(c):
+    ref: § 14 odst. 1 písm. a) bod 13
+    title: Seznam bezpečnostních opatření
+    source_url: https://www.e-sbirka.cz/sb/2025/264
+    verified: false
+    note: Best reading. e-Sbírka returned only the application shell in this session, so the paragraph was not confirmed against
+      the official consolidated text. The reading follows a secondary consolidation that agrees with NÚKIB's public citations
+      of § 4, § 5 and § 6.
+  Art. 21(2)(d):
+    ref: § 14 odst. 1 písm. a) bod 7 a § 13 odst. 5
+    title: Seznam bezpečnostních opatření
+    source_url: https://www.e-sbirka.cz/sb/2025/264
+    verified: false
+    note: Best reading. e-Sbírka returned only the application shell in this session, so the paragraph was not confirmed against
+      the official consolidated text. The reading follows a secondary consolidation that agrees with NÚKIB's public citations
+      of § 4, § 5 and § 6.
+  Art. 21(2)(e):
+    ref: § 14 odst. 1 písm. a) bod 10
+    title: Seznam bezpečnostních opatření
+    source_url: https://www.e-sbirka.cz/sb/2025/264
+    verified: false
+    note: Best reading. e-Sbírka returned only the application shell in this session, so the paragraph was not confirmed against
+      the official consolidated text. The reading follows a secondary consolidation that agrees with NÚKIB's public citations
+      of § 4, § 5 and § 6.
+  Art. 21(2)(f):
+    ref: § 14 odst. 1 písm. a) bod 14
+    title: Seznam bezpečnostních opatření
+    source_url: https://www.e-sbirka.cz/sb/2025/264
+    verified: false
+    note: Higher regime lists an audit. The lower-regime list that was read does not use that heading. Best reading. e-Sbírka
+      returned only the application shell in this session, so the paragraph was not confirmed against the official consolidated
+      text. The reading follows a secondary consolidation that agrees with NÚKIB's public citations of § 4, § 5 and § 6.
+  Art. 21(2)(g):
+    ref: § 14 odst. 1 písm. a) bod 8
+    title: Seznam bezpečnostních opatření
+    source_url: https://www.e-sbirka.cz/sb/2025/264
+    verified: false
+    note: Best reading. e-Sbírka returned only the application shell in this session, so the paragraph was not confirmed against
+      the official consolidated text. The reading follows a secondary consolidation that agrees with NÚKIB's public citations
+      of § 4, § 5 and § 6.
+  Art. 21(2)(h):
+    ref: § 14 odst. 1 písm. b) bod 9
+    title: Seznam bezpečnostních opatření
+    source_url: https://www.e-sbirka.cz/sb/2025/264
+    verified: false
+    note: Kryptografické algoritmy. The lower-regime list ends with the same heading. Best reading. e-Sbírka returned only
+      the application shell in this session, so the paragraph was not confirmed against the official consolidated text. The
+      reading follows a secondary consolidation that agrees with NÚKIB's public citations of § 4, § 5 and § 6.
+  Art. 21(2)(i):
+    ref: § 14 odst. 1 písm. a) body 5, 8 a 11
+    title: Seznam bezpečnostních opatření
+    source_url: https://www.e-sbirka.cz/sb/2025/264
+    verified: false
+    note: Best reading. e-Sbírka returned only the application shell in this session, so the paragraph was not confirmed against
+      the official consolidated text. The reading follows a secondary consolidation that agrees with NÚKIB's public citations
+      of § 4, § 5 and § 6.
+  Art. 21(2)(j):
+    ref: § 14 odst. 1 písm. b) body 3 a 4
+    title: Seznam bezpečnostních opatření
+    source_url: https://www.e-sbirka.cz/sb/2025/264
+    verified: false
+    note: Identity and access rights. Multi-factor authentication was not named in the list that was read. Best reading. e-Sbírka
+      returned only the application shell in this session, so the paragraph was not confirmed against the official consolidated
+      text. The reading follows a secondary consolidation that agrees with NÚKIB's public citations of § 4, § 5 and § 6.
+  Art. 23:
+    ref: § 15 a § 16
+    title: Hlášení kybernetických bezpečnostních incidentů
+    source_url: https://www.e-sbirka.cz/sb/2025/264
+    verified: false
+    note: On the secondary reading, § 16 sets 24 hours for the first report, 72 hours for the follow-up where the impact is
+      significant, and 30 days for the final report. The 30-day figure is not applied as a clock until it is confirmed in
+      e-Sbírka. Best reading. e-Sbírka returned only the application shell in this session, so the paragraph was not confirmed
+      against the official consolidated text. The reading follows a secondary consolidation that agrees with NÚKIB's public
+      citations of § 4, § 5 and § 6.
+  Art. 2(2)(a)(i):
+    ref: § 4
+    title: Podmínky pro registraci regulované služby
+    source_url: https://www.e-sbirka.cz/sb/2025/264
+    verified: false
+    note: The Act does not copy this Directive sub-paragraph as its own numbered point. The regime is set by § 4, § 5 and
+      the decree on regulated services. Best reading. e-Sbírka returned only the application shell in this session, so the
+      paragraph was not confirmed against the official consolidated text. The reading follows a secondary consolidation that
+      agrees with NÚKIB's public citations of § 4, § 5 and § 6.
+  Art. 2(2)(a)(ii):
+    ref: § 4
+    title: Podmínky pro registraci regulované služby
+    source_url: https://www.e-sbirka.cz/sb/2025/264
+    verified: false
+    note: The Act does not copy this Directive sub-paragraph as its own numbered point. The regime is set by § 4, § 5 and
+      the decree on regulated services. Best reading. e-Sbírka returned only the application shell in this session, so the
+      paragraph was not confirmed against the official consolidated text. The reading follows a secondary consolidation that
+      agrees with NÚKIB's public citations of § 4, § 5 and § 6.
+  Art. 2(2)(a)(iii):
+    ref: § 4
+    title: Podmínky pro registraci regulované služby
+    source_url: https://www.e-sbirka.cz/sb/2025/264
+    verified: false
+    note: The Act does not copy this Directive sub-paragraph as its own numbered point. The regime is set by § 4, § 5 and
+      the decree on regulated services. Best reading. e-Sbírka returned only the application shell in this session, so the
+      paragraph was not confirmed against the official consolidated text. The reading follows a secondary consolidation that
+      agrees with NÚKIB's public citations of § 4, § 5 and § 6.
+  Art. 2(2)(b):
+    ref: § 5
+    title: Podmínky pro registraci regulované služby
+    source_url: https://www.e-sbirka.cz/sb/2025/264
+    verified: false
+    note: The Act does not copy this Directive sub-paragraph as its own numbered point. The regime is set by § 4, § 5 and
+      the decree on regulated services. Best reading. e-Sbírka returned only the application shell in this session, so the
+      paragraph was not confirmed against the official consolidated text. The reading follows a secondary consolidation that
+      agrees with NÚKIB's public citations of § 4, § 5 and § 6.
+  Art. 2(2)(f)(i):
+    ref: § 4
+    title: Podmínky pro registraci regulované služby
+    source_url: https://www.e-sbirka.cz/sb/2025/264
+    verified: false
+    note: The Act does not copy this Directive sub-paragraph as its own numbered point. The regime is set by § 4, § 5 and
+      the decree on regulated services. Best reading. e-Sbírka returned only the application shell in this session, so the
+      paragraph was not confirmed against the official consolidated text. The reading follows a secondary consolidation that
+      agrees with NÚKIB's public citations of § 4, § 5 and § 6.
+  Art. 2(2)(f)(ii):
+    ref: § 4
+    title: Podmínky pro registraci regulované služby
+    source_url: https://www.e-sbirka.cz/sb/2025/264
+    verified: false
+    note: The Act does not copy this Directive sub-paragraph as its own numbered point. The regime is set by § 4, § 5 and
+      the decree on regulated services. Best reading. e-Sbírka returned only the application shell in this session, so the
+      paragraph was not confirmed against the official consolidated text. The reading follows a secondary consolidation that
+      agrees with NÚKIB's public citations of § 4, § 5 and § 6.
+  Art. 2(3):
+    ref: § 5 písm. d)
+    title: Podmínky pro registraci regulované služby
+    source_url: https://www.e-sbirka.cz/sb/2025/264
+    verified: false
+    note: The Act does not copy this Directive sub-paragraph as its own numbered point. The regime is set by § 4, § 5 and
+      the decree on regulated services. Best reading. e-Sbírka returned only the application shell in this session, so the
+      paragraph was not confirmed against the official consolidated text. The reading follows a secondary consolidation that
+      agrees with NÚKIB's public citations of § 4, § 5 and § 6.
+  Art. 2(4):
+    ref: § 4
+    title: Podmínky pro registraci regulované služby
+    source_url: https://www.e-sbirka.cz/sb/2025/264
+    verified: false
+    note: The Act does not copy this Directive sub-paragraph as its own numbered point. The regime is set by § 4, § 5 and
+      the decree on regulated services. Best reading. e-Sbírka returned only the application shell in this session, so the
+      paragraph was not confirmed against the official consolidated text. The reading follows a secondary consolidation that
+      agrees with NÚKIB's public citations of § 4, § 5 and § 6.
+  Art. 2(5)(a):
+    ref: § 4
+    title: Podmínky pro registraci regulované služby
+    source_url: https://www.e-sbirka.cz/sb/2025/264
+    verified: false
+    note: The Act does not copy this Directive sub-paragraph as its own numbered point. The regime is set by § 4, § 5 and
+      the decree on regulated services. Best reading. e-Sbírka returned only the application shell in this session, so the
+      paragraph was not confirmed against the official consolidated text. The reading follows a secondary consolidation that
+      agrees with NÚKIB's public citations of § 4, § 5 and § 6.
+  Art. 3(1)(b):
+    ref: § 8
+    title: Režim poskytovatele regulované služby
+    source_url: https://www.e-sbirka.cz/sb/2025/264
+    verified: false
+    note: Best reading. e-Sbírka returned only the application shell in this session, so the paragraph was not confirmed against
+      the official consolidated text. The reading follows a secondary consolidation that agrees with NÚKIB's public citations
+      of § 4, § 5 and § 6.
+  Art. 3(1)(c):
+    ref: § 8
+    title: Režim poskytovatele regulované služby
+    source_url: https://www.e-sbirka.cz/sb/2025/264
+    verified: false
+    note: Best reading. e-Sbírka returned only the application shell in this session, so the paragraph was not confirmed against
+      the official consolidated text. The reading follows a secondary consolidation that agrees with NÚKIB's public citations
+      of § 4, § 5 and § 6.
+  Art. 3(1)(d):
+    ref: § 8
+    title: Režim poskytovatele regulované služby
+    source_url: https://www.e-sbirka.cz/sb/2025/264
+    verified: false
+    note: Best reading. e-Sbírka returned only the application shell in this session, so the paragraph was not confirmed against
+      the official consolidated text. The reading follows a secondary consolidation that agrees with NÚKIB's public citations
+      of § 4, § 5 and § 6.
+  Art. 3(1)(e):
+    ref: § 5
+    title: Podmínky pro registraci regulované služby
+    source_url: https://www.e-sbirka.cz/sb/2025/264
+    verified: false
+    note: § 5 is the reading for identification by the authority, including a sole provider and a critical-infrastructure
+      entity. Best reading. e-Sbírka returned only the application shell in this session, so the paragraph was not confirmed
+      against the official consolidated text. The reading follows a secondary consolidation that agrees with NÚKIB's public
+      citations of § 4, § 5 and § 6.
+  Art. 3(1)(f):
+    ref: § 5 písm. d)
+    title: Podmínky pro registraci regulované služby
+    source_url: https://www.e-sbirka.cz/sb/2025/264
+    verified: false
+    note: Best reading. e-Sbírka returned only the application shell in this session, so the paragraph was not confirmed against
+      the official consolidated text. The reading follows a secondary consolidation that agrees with NÚKIB's public citations
+      of § 4, § 5 and § 6.
+  Art. 3(2):
+    ref: § 8 odst. 1 věta druhá
+    title: Režim poskytovatele regulované služby
+    source_url: https://www.e-sbirka.cz/sb/2025/264
+    verified: false
+    note: The lower regime is whoever is not in the higher regime. Best reading. e-Sbírka returned only the application shell
+      in this session, so the paragraph was not confirmed against the official consolidated text. The reading follows a secondary
+      consolidation that agrees with NÚKIB's public citations of § 4, § 5 and § 6.
+  Art. 3(3):
+    ref: § 5 a § 8 odst. 3
+    title: Režim poskytovatele regulované služby
+    source_url: https://www.e-sbirka.cz/sb/2025/264
+    verified: false
+    note: A service registered under § 5 is in the higher regime on this reading. Best reading. e-Sbírka returned only the
+      application shell in this session, so the paragraph was not confirmed against the official consolidated text. The reading
+      follows a secondary consolidation that agrees with NÚKIB's public citations of § 4, § 5 and § 6.
+  Annex I, point 8:
+    ref: ''
+    title: ''
+    source_url: https://www.e-sbirka.cz/sb/2025/264
+    verified: false
+    note: Point-level correspondence was not read. Best reading. e-Sbírka returned only the application shell in this session,
+      so the paragraph was not confirmed against the official consolidated text. The reading follows a secondary consolidation
+      that agrees with NÚKIB's public citations of § 4, § 5 and § 6.
+  Annex I, point 10:
+    ref: ''
+    title: ''
+    source_url: https://www.e-sbirka.cz/sb/2025/264
+    verified: false
+    note: Point-level correspondence was not read. Best reading. e-Sbírka returned only the application shell in this session,
+      so the paragraph was not confirmed against the official consolidated text. The reading follows a secondary consolidation
+      that agrees with NÚKIB's public citations of § 4, § 5 and § 6.
+national_extras:
+- id: cz-reg-01
+  text: Ohlásila organizace regulovanou službu NÚKIB ve lhůtě 60 dnů ode dne, kdy splnila podmínky pro registraci?
+  text_en: Has the organisation notified the regulated service to NÚKIB within 60 days of meeting the conditions for registration?
+  priority: critical
+  effort: low
+  evidence_hint: Podání na Portálu NÚKIB, rozhodnutí o registraci
+  remediation: Podejte ohlášení na Portálu NÚKIB a uložte rozhodnutí o registraci.
+  article: § 6 odst. 1
+  source_url: https://portal.nukib.gov.cz/informacni-servis/podpurne-materialy/69d8ccc9af66639c2b0c3843
+  verified: false
+  note: NÚKIB's own guide cites § 6 and the 60-day period. The consolidated statute text was not opened.
+- id: cz-measures-01
+  text: 'Zavádí organizace bezpečnostní opatření podle vyhlášky pro svůj režim (vyšší režim: vyhláška č. 409/2025 Sb., nižší
+    režim: vyhláška č. 410/2025 Sb.)?'
+  text_en: 'Does the organisation apply the security measures in the decree for its regime (higher regime: Decree No. 409/2025
+    Coll., lower regime: Decree No. 410/2025 Coll.)?'
+  priority: critical
+  effort: high
+  evidence_hint: Rozhodnutí o režimu, přehled opatření podle příslušné vyhlášky
+  remediation: Zjistěte režim a veďte opatření podle vyhlášky, která se na něj vztahuje. Lhůta k zavedení je podle průvodce
+    NÚKIB jeden rok od doručení rozhodnutí o registraci.
+  article: § 13 a § 14
+  source_url: https://portal.nukib.gov.cz/pruvodce-novym-zakonem-o-kyberneticke-bezpecnosti
+  verified: false
+  note: Decree numbers are those published by NÚKIB. The decree texts were not opened, and § 13 and § 14 were not confirmed
+    in e-Sbírka.
+- id: cz-manager-01
+  text: Má organizace v režimu vyšších povinností manažera kybernetické bezpečnosti, který je pro tuto roli vyškolen a má
+    nejméně tříletou praxi s řízením kybernetické bezpečnosti nebo bezpečnosti informací?
+  text_en: If the organisation is in the higher regime, does it have a cybersecurity manager who is trained for the role and
+    has at least three years of practice managing cybersecurity or information security?
+  priority: high
+  effort: medium
+  evidence_hint: Jmenování, doklad o praxi a školení
+  remediation: Jmenujte manažera kybernetické bezpečnosti a uložte doklad o praxi. Podle NÚKIB vyhláška č. 409/2025 Sb. bližší
+    požadavky nestanoví.
+  article: ''
+  source_url: https://portal.nukib.gov.cz/manazer-kyberneticke-bezpecnosti
+  verified: false
+  note: The role and the three-year practice are described on the NÚKIB portal. No statute paragraph number is given here
+    because the consolidated Act was not opened and the portal page that was read did not cite one.
+incident_clocks:
+  source_url: https://portal.nukib.gov.cz/informacni-servis/podpurne-materialy/68f623fab8929270020d7f68
+  verified: false
+  note: Clocks stay at the Directive's 24 hours, 72 hours and one month. A secondary reading of § 16 odst. 3 písm. c) would
+    put the final report at 30 days. That paragraph was not confirmed in e-Sbírka, so it is not applied. NÚKIB says every
+    incident is reported first through Portál NÚKIB, and that the reporting duty starts at the latest one year after the registration
+    decision is delivered.
+deadlines:
+- id: cz-notify
+  description: Ohlášení regulované služby do 60 dnů od splnění podmínek.
+  description_en: Notify the regulated service within 60 days of meeting the conditions.
+  relative: 60 days from meeting the registration conditions
+  source_url: https://portal.nukib.gov.cz/pruvodce-novym-zakonem-o-kyberneticke-bezpecnosti
+  verified: false
+  note: Stated by NÚKIB. The statute paragraph was not confirmed in e-Sbírka.
+- id: cz-measures
+  description: Bezpečnostní opatření a hlášení incidentů nejpozději do 1 roku od doručení rozhodnutí o registraci.
+  description_en: Security measures and incident reporting at the latest one year after the registration decision is delivered.
+  relative: 1 year from delivery of the registration decision
+  source_url: https://portal.nukib.gov.cz/pruvodce-novym-zakonem-o-kyberneticke-bezpecnosti
+  verified: false
+  note: Stated by NÚKIB. Not confirmed in e-Sbírka.
+notices: []

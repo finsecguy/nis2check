@@ -1,0 +1,355 @@
+# National overlay for sk. verified is true only when the official consolidated
+# text was opened and the paragraph number and title were confirmed.
+# Hungary and Poland are unverified throughout.
+
+code: sk
+language: sk
+domain_title: National requirements (SK)
+law:
+  name: Zákon č. 69/2018 Z. z. o kybernetickej bezpečnosti a o zmene a doplnení niektorých zákonov
+  number: 69/2018 Z. z.
+  in_force: '2025-01-01'
+  competent_authority: Národný bezpečnostný úrad (NBÚ)
+  csirt: SK-CERT
+  reporting_channel_url: https://jiskb.nbu.gov.sk/
+  source_url: https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/69/20260430
+  citation_label: Act 69/2018
+  note: NIS2 was transposed by Act No. 366/2024 Z. z., in force on 1 January 2025. The consolidated text read for these citations
+    is the Slov-Lex version in force from 30 April 2026 (later amendments 318/2025 Z. z. and 67/2026 Z. z.). The Act does
+    not use the terms kľúčový subjekt and dôležitý subjekt.
+entity_terms:
+  essential:
+    national: prevádzkovateľ kritickej základnej služby
+    note: § 18. This is the higher tier. It is not the phrase kľúčový subjekt.
+  important:
+    national: prevádzkovateľ základnej služby
+    note: § 17. An operator who does not run a critical essential service is the closer match to an important entity. The
+      Act does not use dôležitý subjekt.
+article_map:
+  Art. 2:
+    ref: § 17
+    title: Prevádzkovateľ základnej služby
+    source_url: https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/69/20260430
+    verified: true
+    note: Territorial scope is § 2 Pôsobnosť zákona. Who is entered in the register is § 17.
+  Art. 3:
+    ref: § 18
+    title: Kritická základná služba
+    source_url: https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/69/20260430
+    verified: true
+    note: The Act does not use kľúčový subjekt or dôležitý subjekt. The higher tier is the operator of a critical essential
+      service.
+  Art. 2(1):
+    ref: § 17 ods. 1 písm. e)
+    title: Prevádzkovateľ základnej služby
+    source_url: https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/69/20260430
+    verified: true
+    note: A person who at least meets the medium-sized enterprise test and works in an annex sector.
+  Art. 3(1)(a):
+    ref: § 18 ods. 1 písm. b)
+    title: Kritická základná služba
+    source_url: https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/69/20260430
+    verified: true
+    note: Activity in annex 1, except public administration, by a person who exceeds the medium-sized ceiling.
+  Art. 4:
+    ref: ''
+    title: ''
+    source_url: https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/69/20260430
+    verified: false
+    note: A DORA carve-out matching Art. 4 was not confirmed. § 29 ods. 9 only says a DORA entity has the effectiveness check
+      done under that regulation.
+  Art. 2(5)(b):
+    ref: ''
+    title: ''
+    source_url: https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/69/20260430
+    verified: false
+    note: Education and research as an Art. 2(5)(b) option was not read as its own paragraph.
+  Annex I:
+    ref: príloha č. 1
+    title: ''
+    source_url: https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/69/20260430
+    verified: false
+    note: § 17 refers to príloha č. 1 for sectors. The annex file itself was not opened, so its title and point numbers were
+      not confirmed.
+  Annex II:
+    ref: príloha č. 2
+    title: ''
+    source_url: https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/69/20260430
+    verified: false
+    note: § 17 refers to príloha č. 2 for sectors. The annex file itself was not opened.
+  Art. 20:
+    ref: § 20 ods. 4 písm. h) a § 19 ods. 6 písm. h)
+    title: Bezpečnostné opatrenia
+    source_url: https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/69/20260430
+    verified: true
+    note: Named persons must approve the measures, oversee them and see that training happens, and the statutory body must
+      be informed. A separate management-liability paragraph was not found in the text that was read.
+  Art. 21(2)(a):
+    ref: § 20 ods. 2 písm. a) a c) a § 20 ods. 5
+    title: Bezpečnostné opatrenia
+    source_url: https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/69/20260430
+    verified: true
+    note: Organisation of security, asset and risk management, and the risk analysis in subsection 5.
+  Art. 21(2)(b):
+    ref: § 20 ods. 2 písm. d) a § 20 ods. 4 písm. b) až d)
+    title: Bezpečnostné opatrenia
+    source_url: https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/69/20260430
+    verified: true
+    note: ''
+  Art. 21(2)(c):
+    ref: § 20 ods. 2 písm. e)
+    title: Bezpečnostné opatrenia
+    source_url: https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/69/20260430
+    verified: true
+    note: Continuity, backup, disaster recovery and crisis management.
+  Art. 21(2)(d):
+    ref: § 20 ods. 2 písm. q) a § 19 ods. 2
+    title: Bezpečnostné opatrenia
+    source_url: https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/69/20260430
+    verified: true
+    note: Supply chain, and the contract duty in § 19.
+  Art. 21(2)(e):
+    ref: § 20 ods. 2 písm. b) a f)
+    title: Bezpečnostné opatrenia
+    source_url: https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/69/20260430
+    verified: true
+    note: Vulnerability and threat management, and security in acquisition, development and maintenance.
+  Art. 21(2)(f):
+    ref: § 20 ods. 2 písm. g)
+    title: Bezpečnostné opatrenia
+    source_url: https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/69/20260430
+    verified: true
+    note: Assessing whether measures work, compliance and control. The audit timetable is § 29, which goes further than this
+      point.
+  Art. 21(2)(g):
+    ref: § 20 ods. 4 písm. g) a i)
+    title: Bezpečnostné opatrenia
+    source_url: https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/69/20260430
+    verified: true
+    note: Role training and building security awareness. The Act does not list MFA here.
+  Art. 21(2)(h):
+    ref: § 20 ods. 2 písm. h)
+    title: Bezpečnostné opatrenia
+    source_url: https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/69/20260430
+    verified: true
+    note: Cryptographic measures and rules for using cryptography.
+  Art. 21(2)(i):
+    ref: § 20 ods. 2 písm. c), i) a j)
+    title: Bezpečnostné opatrenia
+    source_url: https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/69/20260430
+    verified: true
+    note: Assets, human-resource security and capability, and identity and access management.
+  Art. 21(2)(j):
+    ref: § 20 ods. 2 písm. j) a m)
+    title: Bezpečnostné opatrenia
+    source_url: https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/69/20260430
+    verified: true
+    note: Identity and access, and system, network and communication security. Multi-factor authentication is not named in
+      these points.
+  Art. 23:
+    ref: § 24
+    title: Hlásenia
+    source_url: https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/69/20260430
+    verified: true
+    note: Early warning within 24 hours, notification within 72 hours (24 hours for a trust service provider), final report
+      within one month. An updated final report is due within 30 days in the cases in § 24 ods. 3 písm. e).
+  Art. 2(2)(a)(i):
+    ref: § 17 ods. 1 písm. c) prvý bod
+    title: Prevádzkovateľ základnej služby
+    source_url: https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/69/20260430
+    verified: true
+    note: ''
+  Art. 2(2)(a)(ii):
+    ref: § 17 ods. 1 písm. c) druhý bod
+    title: Prevádzkovateľ základnej služby
+    source_url: https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/69/20260430
+    verified: true
+    note: ''
+  Art. 2(2)(a)(iii):
+    ref: § 17 ods. 1 písm. c) tretí a štvrtý bod
+    title: Prevádzkovateľ základnej služby
+    source_url: https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/69/20260430
+    verified: true
+    note: TLD administrator and DNS service, each its own point.
+  Art. 2(2)(b):
+    ref: § 17 ods. 1 písm. c) piaty bod
+    title: Prevádzkovateľ základnej služby
+    source_url: https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/69/20260430
+    verified: true
+    note: Sole provider in Slovakia of a service that is a key service (kľúčová služba).
+  Art. 2(2)(f)(i):
+    ref: § 17 ods. 1 písm. a)
+    title: Prevádzkovateľ základnej služby
+    source_url: https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/69/20260430
+    verified: true
+    note: ''
+  Art. 2(2)(f)(ii):
+    ref: § 17 ods. 1 písm. d)
+    title: Prevádzkovateľ základnej služby
+    source_url: https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/69/20260430
+    verified: true
+    note: A state body acting in at least two districts, and a higher territorial unit, where disruption could have a significant
+      impact.
+  Art. 2(3):
+    ref: § 17 ods. 1 písm. b)
+    title: Prevádzkovateľ základnej služby
+    source_url: https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/69/20260430
+    verified: true
+    note: A critical entity.
+  Art. 2(4):
+    ref: § 17 ods. 1 písm. h)
+    title: Prevádzkovateľ základnej služby
+    source_url: https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/69/20260430
+    verified: true
+    note: Domain-name registration service, regardless of the medium-sized test.
+  Art. 2(5)(a):
+    ref: § 17 ods. 1 písm. f)
+    title: Prevádzkovateľ základnej služby
+    source_url: https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/69/20260430
+    verified: true
+    note: A city is in the register where disruption of its powers could have a significant impact. That is a national choice
+      to cover a local body.
+  Art. 3(1)(b):
+    ref: § 18 ods. 1 písm. c) až e)
+    title: Kritická základná služba
+    source_url: https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/69/20260430
+    verified: true
+    note: Qualified trust service, TLD administration and DNS.
+  Art. 3(1)(c):
+    ref: § 18 ods. 1 písm. f)
+    title: Kritická základná služba
+    source_url: https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/69/20260430
+    verified: true
+    note: Public electronic communications network or service, at least medium-sized.
+  Art. 3(1)(d):
+    ref: § 18 ods. 1 písm. a)
+    title: Kritická základná služba
+    source_url: https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/69/20260430
+    verified: true
+    note: Exercise of the powers of a central state body.
+  Art. 3(1)(e):
+    ref: § 18 ods. 1 písm. g)
+    title: Kritická základná služba
+    source_url: https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/69/20260430
+    verified: true
+    note: Points back to § 17 ods. 1 písm. c) fifth to ninth points, which is wider than the sole-provider case.
+  Art. 3(1)(f):
+    ref: § 18 ods. 1 písm. h)
+    title: Kritická základná služba
+    source_url: https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/69/20260430
+    verified: true
+    note: An essential service provided by a critical entity. Registration of a critical entity is also § 17 ods. 1 písm.
+      b).
+  Art. 3(2):
+    ref: § 17 a § 18 ods. 2
+    title: Prevádzkovateľ základnej služby
+    source_url: https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/69/20260430
+    verified: true
+    note: There is no paragraph titled important entity. The residual category is an operator of an essential service who
+      does not operate a critical essential service.
+  Art. 3(3):
+    ref: § 17 ods. 3
+    title: Prevádzkovateľ základnej služby
+    source_url: https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/69/20260430
+    verified: true
+    note: The office can enter a person in the register on its own initiative or on a proposal. This is not worded as an Art.
+      3(3) identification power.
+  Annex I, point 8:
+    ref: ''
+    title: ''
+    source_url: https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/69/20260430
+    verified: false
+    note: Digital infrastructure is in the Act's annexes, but the annex point that matches Annex I, point 8 was not read.
+  Annex I, point 10:
+    ref: ''
+    title: ''
+    source_url: https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/69/20260430
+    verified: false
+    note: Public administration is in the Act's annexes, but the annex point that matches Annex I, point 10 was not read.
+national_extras:
+- id: sk-reg-01
+  text: Oznámila organizácia úradu do 60 dní od začatia činnosti, že vykonáva činnosť podľa § 17 ods. 1, a je zapísaná v registri
+    prevádzkovateľov základnej služby?
+  text_en: Has the organisation notified the authority within 60 days of starting the activity under section 17(1), and is
+    it entered in the register of operators of an essential service?
+  priority: critical
+  effort: low
+  evidence_hint: Podanie v jednotnom informačnom systéme, oznam o zápise do registra
+  remediation: Podajte oznámenie úradu cez jednotný informačný systém kybernetickej bezpečnosti a uložte oznam o zápise.
+  article: § 17 ods. 2
+  source_url: https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/69/20260430
+  verified: true
+  note: ''
+- id: sk-mkb-01
+  text: Je určený manažér kybernetickej bezpečnosti, ktorý je pri návrhu a presadzovaní bezpečnostných opatrení nezávislý
+    od riadenia prevádzky a vývoja služieb informačných technológií a spĺňa znalostné štandardy pre túto rolu?
+  text_en: Has a cybersecurity manager been designated who is independent of IT operations and development when measures are
+    adopted, and who meets the knowledge standards for that role?
+  priority: critical
+  effort: medium
+  evidence_hint: Menovací dekrét, opis roly, doklad o splnení znalostných štandardov
+  remediation: Určte manažéra kybernetickej bezpečnosti a doložte, že spĺňa znalostné štandardy.
+  article: § 20 ods. 4 písm. a)
+  source_url: https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/69/20260430
+  verified: true
+  note: The Act requires knowledge standards, not a named certificate. Decree No. 492/2022 Z. z. sets those standards; the
+    decree text was not read paragraph by paragraph.
+- id: sk-audit-01
+  text: Je dohodnuté, či sa účinnosť opatrení preverí auditom, alebo, ak organizácia nie je prevádzkovateľom kritickej základnej
+    služby, samohodnotením, a je známy termín (audit do dvoch rokov od zápisu do registra, pri samohodnotení audit najneskôr
+    do piatich rokov)?
+  text_en: Has the organisation chosen a cybersecurity audit or, where it is not an operator of a critical essential service,
+    a self-assessment, and is the deadline recorded (an audit within two years of registration, and for a self-assessment
+    an audit within five years at the latest)?
+  priority: high
+  effort: medium
+  evidence_hint: Plán auditu alebo záznam o samohodnotení v jednotnom informačnom systéme, termín ďalšieho auditu
+  remediation: Zapíšte voľbu auditu alebo samohodnotenia a termín. Samohodnotenie vykonáva manažér kybernetickej bezpečnosti.
+  article: § 29 ods. 1 a ods. 8
+  source_url: https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/69/20260430
+  verified: true
+  note: The periodicity of later audits is set by a decree under § 32 ods. 1 písm. d). That decree interval was not read.
+- id: sk-report-01
+  text: Hlási organizácia závažný kybernetický bezpečnostný incident cez jednotný informačný systém kybernetickej bezpečnosti?
+  text_en: Does the organisation report a significant cybersecurity incident through the unified cybersecurity information
+    system?
+  priority: critical
+  effort: low
+  evidence_hint: Postup hlásenia, prístup do JISKB, kontakt na SK-CERT
+  remediation: Nastavte hlásenie v JISKB. Verejný formulár SK-CERT nenahrádza zákonné hlásenie prevádzkovateľa základnej služby.
+  article: § 24 ods. 3
+  source_url: https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/69/20260430
+  verified: true
+  note: 'SK-CERT states that only a report through JISKB meets the statutory duty. Channel: https://jiskb.nbu.gov.sk/'
+incident_clocks:
+  further_days: 30
+  source_url: https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/69/20260430
+  verified: true
+  note: '§ 24 ods. 3 keeps the Directive clocks: early warning within 24 hours, notification within 72 hours (24 hours for
+    a trust service provider), final report within one month of the notification. § 24 ods. 3 písm. e) sets the updated final
+    report at 30 days, which is the only override.'
+deadlines:
+- id: sk-notify
+  description: Oznámenie úradu do 60 dní od začatia činnosti podľa § 17 ods. 1.
+  description_en: Notify the authority within 60 days of starting an activity under section 17(1).
+  relative: 60 days from the start of the activity
+  source_url: https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/69/20260430
+  verified: true
+  note: § 17 ods. 2.
+- id: sk-measures
+  description: Bezpečnostné opatrenia najneskôr do 12 mesiacov od zápisu do registra.
+  description_en: Security measures within 12 months of entry in the register.
+  relative: 12 months from entry in the register
+  source_url: https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/69/20260430
+  verified: true
+  note: § 19 ods. 1.
+- id: sk-audit
+  description: Audit do dvoch rokov od zápisu do registra. Prevádzkovateľ, ktorý nie je prevádzkovateľom kritickej základnej
+    služby, môže medzitým použiť samohodnotenie a auditu sa podrobí do piatich rokov.
+  description_en: An audit within two years of registration. An operator who is not an operator of a critical essential service
+    may self-assess until then and must be audited within five years.
+  relative: 2 years from registration, or 5 years where self-assessment is used
+  source_url: https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/69/20260430
+  verified: true
+  note: § 29 ods. 1 a ods. 8.
+notices: []

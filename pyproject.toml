@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "nis2check"
-version = "0.3.0"
+version = "0.4.0"
 description = "Self-hosted NIS2 and DORA gap assessment: questionnaire, evidence, threat-informed priorities and audit-ready reports"
 readme = "README.md"
 license = { text = "MIT" }
@@ -32,7 +32,7 @@ nis2check = "nis2check.cli:main"
 include = ["nis2check*"]
 
 [tool.setuptools.package-data]
-nis2check = ["data/*.yaml", "templates/*.j2", "web/templates/*.html", "web/static/*.css", "web/static/*.js",
+nis2check = ["data/*.yaml", "data/jurisdictions/*.yaml", "templates/*.j2", "web/templates/*.html", "web/static/*.css", "web/static/*.js",
              "web/static/*.svg", "web/static/*.png", "web/static/*.ico", "web/static/*.webmanifest", "web/static/fonts/*"]
 
 [tool.pytest.ini_options]

@@ -1,0 +1,570 @@
+# National overlay for pl. verified is true only when the official consolidated
+# text was opened and the paragraph number and title were confirmed.
+# Hungary and Poland are unverified throughout.
+
+code: pl
+language: pl
+domain_title: National requirements (PL)
+law:
+  name: Ustawa z dnia 5 lipca 2018 r. o krajowym systemie cyberbezpieczeństwa
+  number: Dz.U. 2026 poz. 252 (zmiana); ustawa z 5 lipca 2018 r.
+  in_force: '2026-04-03'
+  competent_authority: Organy właściwe do spraw cyberbezpieczeństwa, koordynowane przez ministra właściwego do spraw informatyzacji
+  csirt: CSIRT NASK, CSIRT GOV, CSIRT MON
+  reporting_channel_url: https://www.gov.pl/web/cyfryzacja/nowelizacja-ustawy-o-krajowym-systemie-cyberbezpieczenstwa-ksc---obowiazki-podmiotow-kluczowych-i-waznych
+  source_url: https://www.dziennikustaw.gov.pl/D2026000025201.pdf
+  citation_label: UKSC
+  note: The NIS2 amendment is the Act of 23 January 2026 amending the National Cybersecurity System Act, Journal of Laws 2026,
+    item 252 (the Journal PDF and the Sejm ELI text were opened; the item number follows that ELI). The Journal header shows
+    publication in Warsaw on 2 March 2026. The Ministry of Digital Affairs says it entered into force on 3 April 2026. A signature
+    date of 19 February 2026 was not in the pages that were opened. A consolidated text on isap.sejm.gov.pl was not opened.
+    Every citation is unverified. Authorities are per sector; empty cells are not a finding that no authority exists.
+entity_terms:
+  essential:
+    national: podmiot kluczowy
+    note: art. 5 ust. 1. Unverified.
+  important:
+    national: podmiot ważny
+    note: art. 5 ust. 2. Unverified.
+article_map:
+  Art. 2:
+    ref: art. 5
+    title: Podmiot kluczowy i podmiot ważny
+    source_url: https://www.dziennikustaw.gov.pl/D2026000025201.pdf
+    verified: false
+    note: Best reading of the amending act of 23 January 2026 (Journal of Laws 2026, item 252, ELI DU/2026/252), in force
+      3 April 2026 according to the Ministry of Digital Affairs. Marked unverified. A consolidated ISAP text was not opened,
+      so article numbers are those of the amendment, not re-checked in a consolidated code.
+  Art. 3:
+    ref: art. 5
+    title: Podmiot kluczowy i podmiot ważny
+    source_url: https://www.dziennikustaw.gov.pl/D2026000025201.pdf
+    verified: false
+    note: podmiot kluczowy is the essential category and podmiot ważny is the important category. Best reading of the amending
+      act of 23 January 2026 (Journal of Laws 2026, item 252, ELI DU/2026/252), in force 3 April 2026 according to the Ministry
+      of Digital Affairs. Marked unverified. A consolidated ISAP text was not opened, so article numbers are those of the
+      amendment, not re-checked in a consolidated code.
+  Art. 2(1):
+    ref: art. 5
+    title: Podmiot kluczowy i podmiot ważny
+    source_url: https://www.dziennikustaw.gov.pl/D2026000025201.pdf
+    verified: false
+    note: Size uses the Commission regulation cited in art. 5, and art. 5 ust. 3 sets aside art. 3 ust. 4 of that annex. Best
+      reading of the amending act of 23 January 2026 (Journal of Laws 2026, item 252, ELI DU/2026/252), in force 3 April 2026
+      according to the Ministry of Digital Affairs. Marked unverified. A consolidated ISAP text was not opened, so article
+      numbers are those of the amendment, not re-checked in a consolidated code.
+  Art. 3(1)(a):
+    ref: art. 5
+    title: Podmiot kluczowy i podmiot ważny
+    source_url: https://www.dziennikustaw.gov.pl/D2026000025201.pdf
+    verified: false
+    note: art. 5 collects the essential and important cases. This Directive sub-paragraph was not given its own Polish number
+      in the text that was indexed. Best reading of the amending act of 23 January 2026 (Journal of Laws 2026, item 252, ELI
+      DU/2026/252), in force 3 April 2026 according to the Ministry of Digital Affairs. Marked unverified. A consolidated
+      ISAP text was not opened, so article numbers are those of the amendment, not re-checked in a consolidated code.
+  Art. 4:
+    ref: ''
+    title: ''
+    source_url: https://www.dziennikustaw.gov.pl/D2026000025201.pdf
+    verified: false
+    note: No DORA paragraph was pinned. Best reading of the amending act of 23 January 2026 (Journal of Laws 2026, item 252,
+      ELI DU/2026/252), in force 3 April 2026 according to the Ministry of Digital Affairs. Marked unverified. A consolidated
+      ISAP text was not opened, so article numbers are those of the amendment, not re-checked in a consolidated code.
+  Art. 2(5)(b):
+    ref: art. 5
+    title: Podmiot kluczowy i podmiot ważny
+    source_url: https://www.dziennikustaw.gov.pl/D2026000025201.pdf
+    verified: false
+    note: art. 5 collects the essential and important cases. This Directive sub-paragraph was not given its own Polish number
+      in the text that was indexed. Best reading of the amending act of 23 January 2026 (Journal of Laws 2026, item 252, ELI
+      DU/2026/252), in force 3 April 2026 according to the Ministry of Digital Affairs. Marked unverified. A consolidated
+      ISAP text was not opened, so article numbers are those of the amendment, not re-checked in a consolidated code.
+  Annex I:
+    ref: załącznik nr 1
+    title: ''
+    source_url: https://www.dziennikustaw.gov.pl/D2026000025201.pdf
+    verified: false
+    note: art. 5 refers to załącznik nr 1. The annex text was not opened. Best reading of the amending act of 23 January 2026
+      (Journal of Laws 2026, item 252, ELI DU/2026/252), in force 3 April 2026 according to the Ministry of Digital Affairs.
+      Marked unverified. A consolidated ISAP text was not opened, so article numbers are those of the amendment, not re-checked
+      in a consolidated code.
+  Annex II:
+    ref: załącznik nr 2
+    title: ''
+    source_url: https://www.dziennikustaw.gov.pl/D2026000025201.pdf
+    verified: false
+    note: art. 5 refers to załącznik nr 2. The annex text was not opened. Best reading of the amending act of 23 January 2026
+      (Journal of Laws 2026, item 252, ELI DU/2026/252), in force 3 April 2026 according to the Ministry of Digital Affairs.
+      Marked unverified. A consolidated ISAP text was not opened, so article numbers are those of the amendment, not re-checked
+      in a consolidated code.
+  Art. 20:
+    ref: ''
+    title: ''
+    source_url: https://www.dziennikustaw.gov.pl/D2026000025201.pdf
+    verified: false
+    note: No paragraph was pinned to the management-body duty. art. 8 is referred to as a duties article but its text was
+      not indexed point by point. Best reading of the amending act of 23 January 2026 (Journal of Laws 2026, item 252, ELI
+      DU/2026/252), in force 3 April 2026 according to the Ministry of Digital Affairs. Marked unverified. A consolidated
+      ISAP text was not opened, so article numbers are those of the amendment, not re-checked in a consolidated code.
+  Art. 21(2)(a):
+    ref: ''
+    title: ''
+    source_url: https://www.dziennikustaw.gov.pl/D2026000025201.pdf
+    verified: false
+    note: No Polish point was pinned to this Directive letter. art. 8 is cited in the amendment as a duties article; its letters
+      were not checked. Best reading of the amending act of 23 January 2026 (Journal of Laws 2026, item 252, ELI DU/2026/252),
+      in force 3 April 2026 according to the Ministry of Digital Affairs. Marked unverified. A consolidated ISAP text was
+      not opened, so article numbers are those of the amendment, not re-checked in a consolidated code.
+  Art. 21(2)(b):
+    ref: ''
+    title: ''
+    source_url: https://www.dziennikustaw.gov.pl/D2026000025201.pdf
+    verified: false
+    note: No Polish point was pinned to this Directive letter. art. 8 is cited in the amendment as a duties article; its letters
+      were not checked. Best reading of the amending act of 23 January 2026 (Journal of Laws 2026, item 252, ELI DU/2026/252),
+      in force 3 April 2026 according to the Ministry of Digital Affairs. Marked unverified. A consolidated ISAP text was
+      not opened, so article numbers are those of the amendment, not re-checked in a consolidated code.
+  Art. 21(2)(c):
+    ref: ''
+    title: ''
+    source_url: https://www.dziennikustaw.gov.pl/D2026000025201.pdf
+    verified: false
+    note: No Polish point was pinned to this Directive letter. art. 8 is cited in the amendment as a duties article; its letters
+      were not checked. Best reading of the amending act of 23 January 2026 (Journal of Laws 2026, item 252, ELI DU/2026/252),
+      in force 3 April 2026 according to the Ministry of Digital Affairs. Marked unverified. A consolidated ISAP text was
+      not opened, so article numbers are those of the amendment, not re-checked in a consolidated code.
+  Art. 21(2)(d):
+    ref: ''
+    title: ''
+    source_url: https://www.dziennikustaw.gov.pl/D2026000025201.pdf
+    verified: false
+    note: No Polish point was pinned to this Directive letter. art. 8 is cited in the amendment as a duties article; its letters
+      were not checked. Best reading of the amending act of 23 January 2026 (Journal of Laws 2026, item 252, ELI DU/2026/252),
+      in force 3 April 2026 according to the Ministry of Digital Affairs. Marked unverified. A consolidated ISAP text was
+      not opened, so article numbers are those of the amendment, not re-checked in a consolidated code.
+  Art. 21(2)(e):
+    ref: ''
+    title: ''
+    source_url: https://www.dziennikustaw.gov.pl/D2026000025201.pdf
+    verified: false
+    note: No Polish point was pinned to this Directive letter. art. 8 is cited in the amendment as a duties article; its letters
+      were not checked. Best reading of the amending act of 23 January 2026 (Journal of Laws 2026, item 252, ELI DU/2026/252),
+      in force 3 April 2026 according to the Ministry of Digital Affairs. Marked unverified. A consolidated ISAP text was
+      not opened, so article numbers are those of the amendment, not re-checked in a consolidated code.
+  Art. 21(2)(f):
+    ref: ''
+    title: ''
+    source_url: https://www.dziennikustaw.gov.pl/D2026000025201.pdf
+    verified: false
+    note: No Polish point was pinned to this Directive letter. art. 8 is cited in the amendment as a duties article; its letters
+      were not checked. Best reading of the amending act of 23 January 2026 (Journal of Laws 2026, item 252, ELI DU/2026/252),
+      in force 3 April 2026 according to the Ministry of Digital Affairs. Marked unverified. A consolidated ISAP text was
+      not opened, so article numbers are those of the amendment, not re-checked in a consolidated code.
+  Art. 21(2)(g):
+    ref: ''
+    title: ''
+    source_url: https://www.dziennikustaw.gov.pl/D2026000025201.pdf
+    verified: false
+    note: No Polish point was pinned to this Directive letter. art. 8 is cited in the amendment as a duties article; its letters
+      were not checked. Best reading of the amending act of 23 January 2026 (Journal of Laws 2026, item 252, ELI DU/2026/252),
+      in force 3 April 2026 according to the Ministry of Digital Affairs. Marked unverified. A consolidated ISAP text was
+      not opened, so article numbers are those of the amendment, not re-checked in a consolidated code.
+  Art. 21(2)(h):
+    ref: ''
+    title: ''
+    source_url: https://www.dziennikustaw.gov.pl/D2026000025201.pdf
+    verified: false
+    note: No Polish point was pinned to this Directive letter. art. 8 is cited in the amendment as a duties article; its letters
+      were not checked. Best reading of the amending act of 23 January 2026 (Journal of Laws 2026, item 252, ELI DU/2026/252),
+      in force 3 April 2026 according to the Ministry of Digital Affairs. Marked unverified. A consolidated ISAP text was
+      not opened, so article numbers are those of the amendment, not re-checked in a consolidated code.
+  Art. 21(2)(i):
+    ref: ''
+    title: ''
+    source_url: https://www.dziennikustaw.gov.pl/D2026000025201.pdf
+    verified: false
+    note: No Polish point was pinned to this Directive letter. art. 8 is cited in the amendment as a duties article; its letters
+      were not checked. Best reading of the amending act of 23 January 2026 (Journal of Laws 2026, item 252, ELI DU/2026/252),
+      in force 3 April 2026 according to the Ministry of Digital Affairs. Marked unverified. A consolidated ISAP text was
+      not opened, so article numbers are those of the amendment, not re-checked in a consolidated code.
+  Art. 21(2)(j):
+    ref: ''
+    title: ''
+    source_url: https://www.dziennikustaw.gov.pl/D2026000025201.pdf
+    verified: false
+    note: No Polish point was pinned to this Directive letter. art. 8 is cited in the amendment as a duties article; its letters
+      were not checked. Best reading of the amending act of 23 January 2026 (Journal of Laws 2026, item 252, ELI DU/2026/252),
+      in force 3 April 2026 according to the Ministry of Digital Affairs. Marked unverified. A consolidated ISAP text was
+      not opened, so article numbers are those of the amendment, not re-checked in a consolidated code.
+  Art. 23:
+    ref: art. 11
+    title: Incydent poważny
+    source_url: https://www.dziennikustaw.gov.pl/D2026000025201.pdf
+    verified: false
+    note: The amendment sets an early warning within 24 hours, a notification within 72 hours and a final report within one
+      month, to the sector CSIRT. A trust service provider notifies within 24 hours. Best reading of the amending act of 23
+      January 2026 (Journal of Laws 2026, item 252, ELI DU/2026/252), in force 3 April 2026 according to the Ministry of Digital
+      Affairs. Marked unverified. A consolidated ISAP text was not opened, so article numbers are those of the amendment,
+      not re-checked in a consolidated code.
+  Art. 2(2)(a)(i):
+    ref: art. 5
+    title: Podmiot kluczowy i podmiot ważny
+    source_url: https://www.dziennikustaw.gov.pl/D2026000025201.pdf
+    verified: false
+    note: art. 5 collects the essential and important cases. This Directive sub-paragraph was not given its own Polish number
+      in the text that was indexed. Best reading of the amending act of 23 January 2026 (Journal of Laws 2026, item 252, ELI
+      DU/2026/252), in force 3 April 2026 according to the Ministry of Digital Affairs. Marked unverified. A consolidated
+      ISAP text was not opened, so article numbers are those of the amendment, not re-checked in a consolidated code.
+  Art. 2(2)(a)(ii):
+    ref: art. 5
+    title: Podmiot kluczowy i podmiot ważny
+    source_url: https://www.dziennikustaw.gov.pl/D2026000025201.pdf
+    verified: false
+    note: art. 5 collects the essential and important cases. This Directive sub-paragraph was not given its own Polish number
+      in the text that was indexed. Best reading of the amending act of 23 January 2026 (Journal of Laws 2026, item 252, ELI
+      DU/2026/252), in force 3 April 2026 according to the Ministry of Digital Affairs. Marked unverified. A consolidated
+      ISAP text was not opened, so article numbers are those of the amendment, not re-checked in a consolidated code.
+  Art. 2(2)(a)(iii):
+    ref: art. 5
+    title: Podmiot kluczowy i podmiot ważny
+    source_url: https://www.dziennikustaw.gov.pl/D2026000025201.pdf
+    verified: false
+    note: art. 5 collects the essential and important cases. This Directive sub-paragraph was not given its own Polish number
+      in the text that was indexed. Best reading of the amending act of 23 January 2026 (Journal of Laws 2026, item 252, ELI
+      DU/2026/252), in force 3 April 2026 according to the Ministry of Digital Affairs. Marked unverified. A consolidated
+      ISAP text was not opened, so article numbers are those of the amendment, not re-checked in a consolidated code.
+  Art. 2(2)(b):
+    ref: art. 5
+    title: Podmiot kluczowy i podmiot ważny
+    source_url: https://www.dziennikustaw.gov.pl/D2026000025201.pdf
+    verified: false
+    note: art. 5 collects the essential and important cases. This Directive sub-paragraph was not given its own Polish number
+      in the text that was indexed. Best reading of the amending act of 23 January 2026 (Journal of Laws 2026, item 252, ELI
+      DU/2026/252), in force 3 April 2026 according to the Ministry of Digital Affairs. Marked unverified. A consolidated
+      ISAP text was not opened, so article numbers are those of the amendment, not re-checked in a consolidated code.
+  Art. 2(2)(f)(i):
+    ref: art. 5
+    title: Podmiot kluczowy i podmiot ważny
+    source_url: https://www.dziennikustaw.gov.pl/D2026000025201.pdf
+    verified: false
+    note: art. 5 collects the essential and important cases. This Directive sub-paragraph was not given its own Polish number
+      in the text that was indexed. Best reading of the amending act of 23 January 2026 (Journal of Laws 2026, item 252, ELI
+      DU/2026/252), in force 3 April 2026 according to the Ministry of Digital Affairs. Marked unverified. A consolidated
+      ISAP text was not opened, so article numbers are those of the amendment, not re-checked in a consolidated code.
+  Art. 2(2)(f)(ii):
+    ref: art. 5
+    title: Podmiot kluczowy i podmiot ważny
+    source_url: https://www.dziennikustaw.gov.pl/D2026000025201.pdf
+    verified: false
+    note: art. 5 collects the essential and important cases. This Directive sub-paragraph was not given its own Polish number
+      in the text that was indexed. Best reading of the amending act of 23 January 2026 (Journal of Laws 2026, item 252, ELI
+      DU/2026/252), in force 3 April 2026 according to the Ministry of Digital Affairs. Marked unverified. A consolidated
+      ISAP text was not opened, so article numbers are those of the amendment, not re-checked in a consolidated code.
+  Art. 2(3):
+    ref: art. 5
+    title: Podmiot kluczowy i podmiot ważny
+    source_url: https://www.dziennikustaw.gov.pl/D2026000025201.pdf
+    verified: false
+    note: art. 5 collects the essential and important cases. This Directive sub-paragraph was not given its own Polish number
+      in the text that was indexed. Best reading of the amending act of 23 January 2026 (Journal of Laws 2026, item 252, ELI
+      DU/2026/252), in force 3 April 2026 according to the Ministry of Digital Affairs. Marked unverified. A consolidated
+      ISAP text was not opened, so article numbers are those of the amendment, not re-checked in a consolidated code.
+  Art. 2(4):
+    ref: art. 5
+    title: Podmiot kluczowy i podmiot ważny
+    source_url: https://www.dziennikustaw.gov.pl/D2026000025201.pdf
+    verified: false
+    note: art. 5 collects the essential and important cases. This Directive sub-paragraph was not given its own Polish number
+      in the text that was indexed. Best reading of the amending act of 23 January 2026 (Journal of Laws 2026, item 252, ELI
+      DU/2026/252), in force 3 April 2026 according to the Ministry of Digital Affairs. Marked unverified. A consolidated
+      ISAP text was not opened, so article numbers are those of the amendment, not re-checked in a consolidated code.
+  Art. 2(5)(a):
+    ref: art. 5
+    title: Podmiot kluczowy i podmiot ważny
+    source_url: https://www.dziennikustaw.gov.pl/D2026000025201.pdf
+    verified: false
+    note: art. 5 collects the essential and important cases. This Directive sub-paragraph was not given its own Polish number
+      in the text that was indexed. Best reading of the amending act of 23 January 2026 (Journal of Laws 2026, item 252, ELI
+      DU/2026/252), in force 3 April 2026 according to the Ministry of Digital Affairs. Marked unverified. A consolidated
+      ISAP text was not opened, so article numbers are those of the amendment, not re-checked in a consolidated code.
+  Art. 3(1)(b):
+    ref: art. 5
+    title: Podmiot kluczowy i podmiot ważny
+    source_url: https://www.dziennikustaw.gov.pl/D2026000025201.pdf
+    verified: false
+    note: art. 5 collects the essential and important cases. This Directive sub-paragraph was not given its own Polish number
+      in the text that was indexed. Best reading of the amending act of 23 January 2026 (Journal of Laws 2026, item 252, ELI
+      DU/2026/252), in force 3 April 2026 according to the Ministry of Digital Affairs. Marked unverified. A consolidated
+      ISAP text was not opened, so article numbers are those of the amendment, not re-checked in a consolidated code.
+  Art. 3(1)(c):
+    ref: art. 5
+    title: Podmiot kluczowy i podmiot ważny
+    source_url: https://www.dziennikustaw.gov.pl/D2026000025201.pdf
+    verified: false
+    note: art. 5 collects the essential and important cases. This Directive sub-paragraph was not given its own Polish number
+      in the text that was indexed. Best reading of the amending act of 23 January 2026 (Journal of Laws 2026, item 252, ELI
+      DU/2026/252), in force 3 April 2026 according to the Ministry of Digital Affairs. Marked unverified. A consolidated
+      ISAP text was not opened, so article numbers are those of the amendment, not re-checked in a consolidated code.
+  Art. 3(1)(d):
+    ref: art. 5
+    title: Podmiot kluczowy i podmiot ważny
+    source_url: https://www.dziennikustaw.gov.pl/D2026000025201.pdf
+    verified: false
+    note: art. 5 collects the essential and important cases. This Directive sub-paragraph was not given its own Polish number
+      in the text that was indexed. Best reading of the amending act of 23 January 2026 (Journal of Laws 2026, item 252, ELI
+      DU/2026/252), in force 3 April 2026 according to the Ministry of Digital Affairs. Marked unverified. A consolidated
+      ISAP text was not opened, so article numbers are those of the amendment, not re-checked in a consolidated code.
+  Art. 3(1)(e):
+    ref: art. 5
+    title: Podmiot kluczowy i podmiot ważny
+    source_url: https://www.dziennikustaw.gov.pl/D2026000025201.pdf
+    verified: false
+    note: art. 5 collects the essential and important cases. This Directive sub-paragraph was not given its own Polish number
+      in the text that was indexed. Best reading of the amending act of 23 January 2026 (Journal of Laws 2026, item 252, ELI
+      DU/2026/252), in force 3 April 2026 according to the Ministry of Digital Affairs. Marked unverified. A consolidated
+      ISAP text was not opened, so article numbers are those of the amendment, not re-checked in a consolidated code.
+  Art. 3(1)(f):
+    ref: art. 5
+    title: Podmiot kluczowy i podmiot ważny
+    source_url: https://www.dziennikustaw.gov.pl/D2026000025201.pdf
+    verified: false
+    note: art. 5 collects the essential and important cases. This Directive sub-paragraph was not given its own Polish number
+      in the text that was indexed. Best reading of the amending act of 23 January 2026 (Journal of Laws 2026, item 252, ELI
+      DU/2026/252), in force 3 April 2026 according to the Ministry of Digital Affairs. Marked unverified. A consolidated
+      ISAP text was not opened, so article numbers are those of the amendment, not re-checked in a consolidated code.
+  Art. 3(2):
+    ref: art. 5
+    title: Podmiot kluczowy i podmiot ważny
+    source_url: https://www.dziennikustaw.gov.pl/D2026000025201.pdf
+    verified: false
+    note: art. 5 collects the essential and important cases. This Directive sub-paragraph was not given its own Polish number
+      in the text that was indexed. Best reading of the amending act of 23 January 2026 (Journal of Laws 2026, item 252, ELI
+      DU/2026/252), in force 3 April 2026 according to the Ministry of Digital Affairs. Marked unverified. A consolidated
+      ISAP text was not opened, so article numbers are those of the amendment, not re-checked in a consolidated code.
+  Art. 3(3):
+    ref: art. 5
+    title: Podmiot kluczowy i podmiot ważny
+    source_url: https://www.dziennikustaw.gov.pl/D2026000025201.pdf
+    verified: false
+    note: art. 5 collects the essential and important cases. This Directive sub-paragraph was not given its own Polish number
+      in the text that was indexed. Best reading of the amending act of 23 January 2026 (Journal of Laws 2026, item 252, ELI
+      DU/2026/252), in force 3 April 2026 according to the Ministry of Digital Affairs. Marked unverified. A consolidated
+      ISAP text was not opened, so article numbers are those of the amendment, not re-checked in a consolidated code.
+  Annex I, point 8:
+    ref: ''
+    title: ''
+    source_url: https://www.dziennikustaw.gov.pl/D2026000025201.pdf
+    verified: false
+    note: Point-level correspondence was not read. Best reading of the amending act of 23 January 2026 (Journal of Laws 2026,
+      item 252, ELI DU/2026/252), in force 3 April 2026 according to the Ministry of Digital Affairs. Marked unverified. A
+      consolidated ISAP text was not opened, so article numbers are those of the amendment, not re-checked in a consolidated
+      code.
+  Annex I, point 10:
+    ref: ''
+    title: ''
+    source_url: https://www.dziennikustaw.gov.pl/D2026000025201.pdf
+    verified: false
+    note: Point-level correspondence was not read. Best reading of the amending act of 23 January 2026 (Journal of Laws 2026,
+      item 252, ELI DU/2026/252), in force 3 April 2026 according to the Ministry of Digital Affairs. Marked unverified. A
+      consolidated ISAP text was not opened, so article numbers are those of the amendment, not re-checked in a consolidated
+      code.
+sector_authorities:
+  energy:
+    authority: ''
+    csirt: ''
+    note: 'TODO: sector authority and CSIRT were not confirmed. Competent authorities are sector-based and coordinated by
+      the minister responsible for informatisation. CSIRT NASK, CSIRT GOV and CSIRT MON are the national teams; a sector CSIRT
+      may also exist.'
+  transport:
+    authority: ''
+    csirt: ''
+    note: 'TODO: sector authority and CSIRT were not confirmed. Competent authorities are sector-based and coordinated by
+      the minister responsible for informatisation. CSIRT NASK, CSIRT GOV and CSIRT MON are the national teams; a sector CSIRT
+      may also exist.'
+  banking:
+    authority: ''
+    csirt: ''
+    note: 'TODO: sector authority and CSIRT were not confirmed. Competent authorities are sector-based and coordinated by
+      the minister responsible for informatisation. CSIRT NASK, CSIRT GOV and CSIRT MON are the national teams; a sector CSIRT
+      may also exist.'
+  financial_market_infrastructure:
+    authority: ''
+    csirt: ''
+    note: 'TODO: sector authority and CSIRT were not confirmed. Competent authorities are sector-based and coordinated by
+      the minister responsible for informatisation. CSIRT NASK, CSIRT GOV and CSIRT MON are the national teams; a sector CSIRT
+      may also exist.'
+  health:
+    authority: ''
+    csirt: ''
+    note: 'TODO: sector authority and CSIRT were not confirmed. Competent authorities are sector-based and coordinated by
+      the minister responsible for informatisation. CSIRT NASK, CSIRT GOV and CSIRT MON are the national teams; a sector CSIRT
+      may also exist.'
+  drinking_water:
+    authority: ''
+    csirt: ''
+    note: 'TODO: sector authority and CSIRT were not confirmed. Competent authorities are sector-based and coordinated by
+      the minister responsible for informatisation. CSIRT NASK, CSIRT GOV and CSIRT MON are the national teams; a sector CSIRT
+      may also exist.'
+  waste_water:
+    authority: ''
+    csirt: ''
+    note: 'TODO: sector authority and CSIRT were not confirmed. Competent authorities are sector-based and coordinated by
+      the minister responsible for informatisation. CSIRT NASK, CSIRT GOV and CSIRT MON are the national teams; a sector CSIRT
+      may also exist.'
+  digital_infrastructure:
+    authority: ''
+    csirt: ''
+    note: 'TODO: sector authority and CSIRT were not confirmed. Competent authorities are sector-based and coordinated by
+      the minister responsible for informatisation. CSIRT NASK, CSIRT GOV and CSIRT MON are the national teams; a sector CSIRT
+      may also exist.'
+  ict_service_management:
+    authority: ''
+    csirt: ''
+    note: 'TODO: sector authority and CSIRT were not confirmed. Competent authorities are sector-based and coordinated by
+      the minister responsible for informatisation. CSIRT NASK, CSIRT GOV and CSIRT MON are the national teams; a sector CSIRT
+      may also exist.'
+  public_administration:
+    authority: ''
+    csirt: ''
+    note: 'TODO: sector authority and CSIRT were not confirmed. Competent authorities are sector-based and coordinated by
+      the minister responsible for informatisation. CSIRT NASK, CSIRT GOV and CSIRT MON are the national teams; a sector CSIRT
+      may also exist.'
+  space:
+    authority: ''
+    csirt: ''
+    note: 'TODO: sector authority and CSIRT were not confirmed. Competent authorities are sector-based and coordinated by
+      the minister responsible for informatisation. CSIRT NASK, CSIRT GOV and CSIRT MON are the national teams; a sector CSIRT
+      may also exist.'
+  postal_courier:
+    authority: ''
+    csirt: ''
+    note: 'TODO: sector authority and CSIRT were not confirmed. Competent authorities are sector-based and coordinated by
+      the minister responsible for informatisation. CSIRT NASK, CSIRT GOV and CSIRT MON are the national teams; a sector CSIRT
+      may also exist.'
+  waste_management:
+    authority: ''
+    csirt: ''
+    note: 'TODO: sector authority and CSIRT were not confirmed. Competent authorities are sector-based and coordinated by
+      the minister responsible for informatisation. CSIRT NASK, CSIRT GOV and CSIRT MON are the national teams; a sector CSIRT
+      may also exist.'
+  chemicals:
+    authority: ''
+    csirt: ''
+    note: 'TODO: sector authority and CSIRT were not confirmed. Competent authorities are sector-based and coordinated by
+      the minister responsible for informatisation. CSIRT NASK, CSIRT GOV and CSIRT MON are the national teams; a sector CSIRT
+      may also exist.'
+  food:
+    authority: ''
+    csirt: ''
+    note: 'TODO: sector authority and CSIRT were not confirmed. Competent authorities are sector-based and coordinated by
+      the minister responsible for informatisation. CSIRT NASK, CSIRT GOV and CSIRT MON are the national teams; a sector CSIRT
+      may also exist.'
+  manufacturing:
+    authority: ''
+    csirt: ''
+    note: 'TODO: sector authority and CSIRT were not confirmed. Competent authorities are sector-based and coordinated by
+      the minister responsible for informatisation. CSIRT NASK, CSIRT GOV and CSIRT MON are the national teams; a sector CSIRT
+      may also exist.'
+  digital_providers:
+    authority: ''
+    csirt: ''
+    note: 'TODO: sector authority and CSIRT were not confirmed. Competent authorities are sector-based and coordinated by
+      the minister responsible for informatisation. CSIRT NASK, CSIRT GOV and CSIRT MON are the national teams; a sector CSIRT
+      may also exist.'
+  research:
+    authority: ''
+    csirt: ''
+    note: 'TODO: sector authority and CSIRT were not confirmed. Competent authorities are sector-based and coordinated by
+      the minister responsible for informatisation. CSIRT NASK, CSIRT GOV and CSIRT MON are the national teams; a sector CSIRT
+      may also exist.'
+national_extras:
+- id: pl-register-01
+  text: Czy podmiot złożył wniosek o wpis do wykazu podmiotów kluczowych i ważnych?
+  text_en: Has the entity applied for entry in the list of essential and important entities (wykaz)?
+  priority: critical
+  effort: low
+  evidence_hint: Wniosek w systemie teleinformatycznym, numer wpisu w wykazie
+  remediation: Złóż wniosek o wpis do wykazu. Ministerstwo podaje, że samoocena i wnioski za okres otwarcia wykazu kończyły
+    się 3 października 2026 r.
+  article: art. 7
+  source_url: https://www.gov.pl/web/baza-wiedzy/nowelizacja-ustawy-o-krajowym-systemie-cyberbezpieczenstwa
+  verified: false
+  note: 'art. 7 creates the wykaz, on the amending act that was opened. The ministry page says entities that met the criteria
+    had to file after a self-assessment by 3 October 2026, through system S46. The opening date 13 April 2026 and the self-registration
+    window starting 7 May 2026 were not on the ministry extract that was read, so they are not stated as sourced. Later entrants:
+    a six-month period appears in the amendment for completing data after a call, but a general ''six months from meeting
+    the criteria'' rule was not pinned to one article. Unverified.'
+- id: pl-isms-01
+  text: Czy podmiot ma system zarządzania bezpieczeństwem informacji, dokumentację, procedury incydentów, struktury cyberbezpieczeństwa
+    i osoby kontaktowe, w terminie do 3 kwietnia 2027 r. dla podmiotów, które 3 kwietnia 2026 r. spełniały kryteria?
+  text_en: Does the entity have an information security management system, the documentation, incident procedures, cybersecurity
+    structures and contact persons, by 3 April 2027 where it already met the criteria on 3 April 2026?
+  priority: critical
+  effort: high
+  evidence_hint: Polityka SZBI, procedury incydentowe, wykaz ról i osób kontaktowych
+  remediation: Wdróż SZBI i dokumentację do 3 kwietnia 2027 r., jeżeli kryteria były spełnione w dniu wejścia ustawy w życie.
+  article: ''
+  source_url: https://www.gov.pl/web/baza-wiedzy/nowelizacja-ustawy-o-krajowym-systemie-cyberbezpieczenstwa
+  verified: false
+  note: The ministry page states 12 months, until 3 April 2027, for the information-security management duties of entities
+    that met the criteria on 3 April 2026. The amending act that was opened says chapter 3 duties are performed within 12
+    months in a transitional rule, but that article number was not pinned. Unverified.
+- id: pl-incident-01
+  text: Czy proces zgłaszania incydentu poważnego został dostosowany do nowych terminów (wczesne ostrzeżenie do 24 godzin,
+    zgłoszenie do 72 godzin, sprawozdanie końcowe w ciągu miesiąca)?
+  text_en: Has the serious-incident reporting process been adapted to the new clocks (early warning within 24 hours, notification
+    within 72 hours, final report within one month)?
+  priority: high
+  effort: medium
+  evidence_hint: Procedura zgłaszania, wskazanie właściwego CSIRT sektorowego
+  remediation: Zaktualizuj procedurę zgłaszania incydentu poważnego i wskaż właściwy CSIRT.
+  article: art. 11
+  source_url: https://www.dziennikustaw.gov.pl/D2026000025201.pdf
+  verified: false
+  note: art. 11 of the amendment, as read, sets 24 hours, 72 hours and one month, so the clocks are not overridden. A separate
+    six-month deadline, counted from entry into force, for adapting the process was not pinned to an article in the text that
+    was indexed. The question records the clocks. It does not score a date that was not sourced. Unverified.
+incident_clocks:
+  source_url: https://www.dziennikustaw.gov.pl/D2026000025201.pdf
+  verified: false
+  note: 'The amendment''s art. 11, as read, matches the Directive: early warning within 24 hours, notification within 72 hours,
+    final report within one month, sent to the sector CSIRT. A trust service provider notifies within 24 hours. No override
+    is applied.'
+deadlines:
+- id: pl-isms
+  description: System zarządzania bezpieczeństwem informacji i związane z nim obowiązki do 3 kwietnia 2027 r. dla podmiotów,
+    które 3 kwietnia 2026 r. spełniały kryteria.
+  description_en: Information security management system and the related duties by 3 April 2027, for entities that met the
+    criteria on 3 April 2026.
+  date: '2027-04-03'
+  source_url: https://www.gov.pl/web/baza-wiedzy/nowelizacja-ustawy-o-krajowym-systemie-cyberbezpieczenstwa
+  verified: false
+  note: Ministry of Digital Affairs. Twelve months from 3 April 2026.
+- id: pl-later-entry
+  description: Podmiot, który później spełni kryteria, uzupełnia obowiązki rejestracyjne. Sześciomiesięczny termin pojawia
+    się w nowelizacji przy wezwaniu do uzupełnienia danych; ogólna reguła sześciu miesięcy od spełnienia kryteriów nie została
+    przypisana do jednego artykułu.
+  description_en: An entity that meets the criteria later completes the registration duties. A six-month period appears in
+    the amendment where the authority calls for missing data. A general rule of six months from meeting the criteria was not
+    pinned to one article.
+  relative: see the note; no single article was confirmed
+  source_url: https://www.dziennikustaw.gov.pl/D2026000025201.pdf
+  verified: false
+  note: Left as a relative rule without a calendar date.
+notices:
+- id: pl-fines
+  text: Kary administracyjne za część obowiązków mają, według opisu wdrożenia, być stosowane dopiero dwa lata po wejściu nowelizacji
+    w życie. To jest nota, a nie pytanie i nie wchodzi do wyniku.
+  text_en: Administrative fines for some obligations are described as applying only two years after the amendment entered
+    into force. This is a note. It is not a question and it is not scored.
+  source_url: https://www.gov.pl/web/cyfryzacja/nowelizacja-ustawy-o-krajowym-systemie-cyberbezpieczenstwa-ksc---obowiazki-podmiotow-kluczowych-i-waznych
+  status: ''
+  scored: false
+- id: pl-vendors
+  text: 'Przepisy o dostawcach wysokiego ryzyka zostały skierowane do Trybunału Konstytucyjnego. Status: w toku. Ten punkt
+    nie jest oceniany.'
+  text_en: 'The rules on high-risk vendors were referred to the Constitutional Tribunal. Status: under review. This item is
+    not scored.'
+  source_url: https://www.gov.pl/web/cyfryzacja/nowelizacja-ustawy-o-krajowym-systemie-cyberbezpieczenstwa-ksc---obowiazki-podmiotow-kluczowych-i-waznych
+  status: under_review
+  scored: false

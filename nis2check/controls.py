@@ -29,6 +29,13 @@ class Question:
     attack_mitigations: tuple[str, ...] = ()
     threat_patterns: tuple[str, ...] = ()
     article: str = ""
+    # Optional fields used by national-law questions. Directive questions leave them empty.
+    # ``translations`` is the hook for a later translation of the directive question text.
+    text_en: str = ""
+    translations: tuple[tuple[str, str], ...] = ()
+    source_url: str = ""
+    verified: bool | None = None
+    note: str = ""
 
     @property
     def effort_cost(self) -> int:
@@ -113,6 +120,12 @@ def parse_catalogue(data: dict) -> Catalogue:
                 raise CatalogueError(
                     f"question {qid}: effort must be one of {sorted(EFFORT_COST)}"
                 )
+            raw_translations = q.get("translations") or {}
+            if raw_translations and not isinstance(raw_translations, dict):
+                raise CatalogueError(f"question {qid}: translations must be a mapping")
+            verified = q.get("verified", None)
+            if verified is not None and not isinstance(verified, bool):
+                raise CatalogueError(f"question {qid}: verified must be true or false")
             questions.append(
                 Question(
                     id=qid,
@@ -125,6 +138,15 @@ def parse_catalogue(data: dict) -> Catalogue:
                     attack_mitigations=tuple(q.get("attack_mitigations") or ()),
                     threat_patterns=tuple(q.get("threat_patterns") or ()),
                     article=str(q.get("article") or "").strip(),
+                    text_en=str(q.get("text_en") or "").strip(),
+                    translations=tuple(
+                        (str(lang), str(value).strip())
+                        for lang, value in raw_translations.items()
+                        if str(value).strip()
+                    ),
+                    source_url=str(q.get("source_url") or "").strip(),
+                    verified=verified,
+                    note=" ".join(str(q.get("note") or "").split()),
                 )
             )
         if not questions:
