@@ -28,7 +28,7 @@ jobs:
           python-version: "3.12"
 
       - name: Install
-        run: pip install -e ".[dev]"
+        run: pip install -e ".[dev,web]"
 
       - name: Fetch sources and rebuild threat data
         run: |
