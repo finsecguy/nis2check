@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.1
+
+- Security fix. Before this release, anyone who could reach `/setup` on a fresh install with no administrator could create the first admin account and take over the instance. Installs from v0.4.0 and earlier should update before `/setup` is reachable by anyone else.
+- First-run setup now needs a one-time token. A generated token is printed once to the logs (`docker logs nis2check`), or you can set `NIS2CHECK_SETUP_TOKEN`. Only a hash is stored. A missing or wrong token returns 404 and creates nothing. The token stops working once an admin exists, including an admin created from the command line.
+
 ## 0.4.0
 
 - A country on the organisation (EU, Slovakia, Czechia, Hungary or Poland) shows the national provision next to each NIS2 article. EU leaves the Directive text as it was.

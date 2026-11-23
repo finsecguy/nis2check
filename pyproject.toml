@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "nis2check"
-version = "0.4.0"
+version = "0.4.1"
 description = "Self-hosted NIS2 and DORA gap assessment: questionnaire, evidence, threat-informed priorities and audit-ready reports"
 readme = "README.md"
 license = { text = "MIT" }
