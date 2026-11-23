@@ -36,7 +36,7 @@ Page 1 of the PDF names the organisation, the score, and the indicative scope re
 - Audit log of sign-ins, answers, uploads, downloads and setting changes.
 - Optional country overlay for Slovakia, Czechia, Hungary and Poland. EU keeps the Directive text only.
 
-## Install
+## Quick start
 
 You need [Docker](https://docs.docker.com/engine/install/).
 
@@ -46,9 +46,14 @@ cd nis2check
 docker compose up -d
 ```
 
-Open `http://<your-server>:8080` and create the administrator account. For production, put the app behind HTTPS, copy `.env.example` to `.env`, and set `NIS2_BASE_URL`, `NIS2_SECURE_COOKIES=true`, and `NIS2_BEHIND_PROXY=true` if a proxy sits in front.
+Docker Compose binds the app to localhost by default. No compose override is needed. Open `http://127.0.0.1:8080/setup?token=<setup-token>` to create the administrator account. On a fresh install the app prints a one-time setup token to stdout (`docker logs nis2check`, the line `nis2check setup token`). The token is required on `/setup` (query string or form field) and works once. A restart does not print it again. If that line is no longer in the logs, set `NIS2CHECK_SETUP_TOKEN` and start again. Set `NIS2CHECK_SETUP_TOKEN` before the first start to choose the token yourself. A token you supply is not printed.
 
-SSO setup (Entra ID or Google) is in `.env.example`. By default only people an administrator has added can sign in. Set `NIS2_SSO_ALLOWED_DOMAINS` and `NIS2_SSO_AUTO_PROVISION=true` to create viewer accounts on first sign-in.
+## Documentation
+
+- [Single sign-on](docs/sso.md)
+- [Operations](docs/operations.md)
+- [CISO Assistant export](docs/ciso-assistant.md)
+- [Country files](docs/jurisdictions/README.md)
 
 ## Backups
 
