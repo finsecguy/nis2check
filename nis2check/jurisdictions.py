@@ -76,6 +76,8 @@ class ArticleRef:
     source_url: str
     verified: bool
     note: str = ""
+    evidence_quote: str = ""
+    checked_against: str = ""
 
 
 @dataclass(frozen=True)
@@ -88,6 +90,8 @@ class Deadline:
     relative: str = ""
     verified: bool = False
     note: str = ""
+    evidence_quote: str = ""
+    checked_against: str = ""
 
     def label(self, lang: str) -> str:
         if lang == "en" and self.description_en:
@@ -133,6 +137,8 @@ class ClockRules:
     source_url: str = ""
     note: str = ""
     verified: bool = False
+    evidence_quote: str = ""
+    checked_against: str = ""
 
 
 @dataclass(frozen=True)
@@ -282,6 +288,8 @@ def _clocks(raw, where: str) -> ClockRules:
         source_url=str(raw.get("source_url") or "").strip(),
         note=" ".join(str(raw.get("note") or "").split()),
         verified=_bool(raw.get("verified", False), f"{where} incident_clocks"),
+        evidence_quote=" ".join(str(raw.get("evidence_quote") or "").split()),
+        checked_against=" ".join(str(raw.get("checked_against") or "").split()),
     )
 
 
@@ -352,6 +360,8 @@ def parse_jurisdiction(data: dict, code: str | None = None) -> Jurisdiction:
             source_url=source,
             verified=_bool(raw.get("verified", False), f"{where} article '{article}'"),
             note=" ".join(str(raw.get("note") or "").split()),
+            evidence_quote=" ".join(str(raw.get("evidence_quote") or "").split()),
+            checked_against=" ".join(str(raw.get("checked_against") or "").split()),
         )
     required = required | {"Art. 2", "Art. 3"}
     missing = sorted(required - set(article_map))
@@ -400,6 +410,8 @@ def parse_jurisdiction(data: dict, code: str | None = None) -> Jurisdiction:
                 source_url=extra_source,
                 verified=_bool(verified, f"question {qid}"),
                 note=" ".join(str(raw.get("note") or "").split()),
+                evidence_quote=" ".join(str(raw.get("evidence_quote") or "").split()),
+                checked_against=" ".join(str(raw.get("checked_against") or "").split()),
             )
         )
     if not extras:
@@ -436,6 +448,8 @@ def parse_jurisdiction(data: dict, code: str | None = None) -> Jurisdiction:
                 relative=" ".join(str(raw.get("relative") or "").split()),
                 verified=_bool(raw.get("verified", False), f"{where} deadline '{did}'"),
                 note=" ".join(str(raw.get("note") or "").split()),
+                evidence_quote=" ".join(str(raw.get("evidence_quote") or "").split()),
+                checked_against=" ".join(str(raw.get("checked_against") or "").split()),
             )
         )
 
