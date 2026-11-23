@@ -40,6 +40,32 @@ def test_startup_adds_frameworks_column_and_keeps_nis2(tmp_path):
     assert "frameworks" in cols
 
 
+def test_startup_adds_country_and_language(tmp_path):
+    # an install from before the country column: the organisation and user rows stay
+    url = f"sqlite:///{tmp_path / 'old-country.db'}"
+    eng = create_engine(url)
+    with eng.begin() as c:
+        c.execute(text("CREATE TABLE organisation (id INTEGER PRIMARY KEY, name VARCHAR(255))"))
+        c.execute(text("INSERT INTO organisation (name) VALUES ('Old Co')"))
+        c.execute(text("CREATE TABLE users (id INTEGER PRIMARY KEY, email VARCHAR(255))"))
+        c.execute(text("INSERT INTO users (email) VALUES ('a@old.example')"))
+    eng.dispose()
+
+    session = make_session(url)
+    org = session.execute(select(Organisation)).scalar_one()
+    assert org.name == "Old Co"
+    assert org.country in (None, "")
+    assert org.country_code == "eu"
+    session.remove()
+
+    org_cols = {c["name"] for c in inspect(create_engine(url)).get_columns("organisation")}
+    user_cols = {c["name"] for c in inspect(create_engine(url)).get_columns("users")}
+    response_cols = {c["name"] for c in inspect(create_engine(url)).get_columns("responses")}
+    assert "country" in org_cols
+    assert "language" in user_cols
+    assert "remediation_due" in response_cols
+
+
 def test_sync_is_idempotent_on_current_schema(tmp_path):
     # a fresh database created by make_session must need no further changes on reopen
     url = f"sqlite:///{tmp_path / 'fresh.db'}"
