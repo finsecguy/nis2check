@@ -78,12 +78,12 @@ article_map:
     verified: false
     note: § 17 refers to príloha č. 2 for sectors. The annex file itself was not opened.
   Art. 20:
-    ref: § 20 ods. 4 písm. h) a § 19 ods. 6 písm. h)
+    ref: § 20 ods. 4 písm. h)
     title: Bezpečnostné opatrenia
     source_url: https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/69/20260430
     verified: true
-    note: Named persons must approve the measures, oversee them and see that training happens, and the statutory body must
-      be informed. A separate management-liability paragraph was not found in the text that was read.
+    note: The act names responsible persons for approving measures and training, but it does not expressly require the statutory
+      body itself to approve the measures or to be trained.
   Art. 21(2)(a):
     ref: § 20 ods. 2 písm. a) a c) a § 20 ods. 5
     title: Bezpečnostné opatrenia
@@ -122,11 +122,12 @@ article_map:
     note: Assessing whether measures work, compliance and control. The audit timetable is § 29, which goes further than this
       point.
   Art. 21(2)(g):
-    ref: § 20 ods. 4 písm. g) a i)
+    ref: § 20 ods. 4 písm. i)
     title: Bezpečnostné opatrenia
     source_url: https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/69/20260430
     verified: true
-    note: Role training and building security awareness. The Act does not list MFA here.
+    note: The Slovak act has no explicit cyber hygiene provision. Letter i) covers training and building security awareness.
+      Letter g) is role assignment, not hygiene.
   Art. 21(2)(h):
     ref: § 20 ods. 2 písm. h)
     title: Bezpečnostné opatrenia

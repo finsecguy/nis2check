@@ -97,9 +97,23 @@ def test_slovakia_keeps_verified_paragraphs_it_confirmed():
     assert reporting.ref.startswith("§ 24")
     assert slovakia.clocks.further_days == 30
     assert slovakia.clocks.verified is True
+    hygiene = slovakia.article("Art. 21(2)(g)")
+    assert hygiene.ref == "§ 20 ods. 4 písm. i)"
+    assert hygiene.verified is True
+    assert "no explicit cyber hygiene" in hygiene.note
+    governance = slovakia.article("Art. 20")
+    assert governance.ref == "§ 20 ods. 4 písm. h)"
+    assert "§ 19" not in governance.ref
     czechia = load_jurisdiction("cz")
     assert czechia.law.number.startswith("264/2025")
-    assert all(ref.verified is False for ref in czechia.article_map.values())
+    verified = sorted(key for key, ref in czechia.article_map.items() if ref.verified)
+    assert verified == ["Art. 21(2)(c)", "Art. 23"]
+    continuity = czechia.article("Art. 21(2)(c)")
+    assert continuity.ref == "§ 14 odst. 1 písm. a) bod 13"
+    assert "continuity only" in continuity.note
+    reporting_cz = czechia.article("Art. 23")
+    assert reporting_cz.ref == "§ 15 a § 16"
+    assert reporting_cz.verified is True
 
 
 def test_national_domain_is_appended_once():

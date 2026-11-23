@@ -121,11 +121,10 @@ article_map:
   Art. 21(2)(c):
     ref: § 14 odst. 1 písm. a) bod 13
     title: Seznam bezpečnostních opatření
-    source_url: https://www.e-sbirka.cz/sb/2025/264
-    verified: false
-    note: Best reading. e-Sbírka returned only the application shell in this session, so the paragraph was not confirmed against
-      the official consolidated text. The reading follows a secondary consolidation that agrees with NÚKIB's public citations
-      of § 4, § 5 and § 6.
+    source_url: https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/2025/264/2025-11-01
+    verified: true
+    note: Confirmed in the e-Sbírka open data for Act 264/2025 Sb. Point 13 is řízení kontinuity činností, which covers business
+      continuity only, not backup, disaster recovery or crisis management.
   Art. 21(2)(d):
     ref: § 14 odst. 1 písm. a) bod 7 a § 13 odst. 5
     title: Seznam bezpečnostních opatření
@@ -185,13 +184,10 @@ article_map:
   Art. 23:
     ref: § 15 a § 16
     title: Hlášení kybernetických bezpečnostních incidentů
-    source_url: https://www.e-sbirka.cz/sb/2025/264
-    verified: false
-    note: On the secondary reading, § 16 sets 24 hours for the first report, 72 hours for the follow-up where the impact is
-      significant, and 30 days for the final report. The 30-day figure is not applied as a clock until it is confirmed in
-      e-Sbírka. Best reading. e-Sbírka returned only the application shell in this session, so the paragraph was not confirmed
-      against the official consolidated text. The reading follows a secondary consolidation that agrees with NÚKIB's public
-      citations of § 4, § 5 and § 6.
+    source_url: https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/2025/264/2025-11-01
+    verified: true
+    note: Confirmed in the e-Sbírka open data for Act 264/2025 Sb. Reporting is 24 hours, 72 hours and 30 days. The incident
+      screen still uses the Directive one-month final report, because that clock override is a separate unverified field.
   Art. 2(2)(a)(i):
     ref: § 4
     title: Podmínky pro registraci regulované služby
@@ -391,10 +387,9 @@ national_extras:
 incident_clocks:
   source_url: https://portal.nukib.gov.cz/informacni-servis/podpurne-materialy/68f623fab8929270020d7f68
   verified: false
-  note: Clocks stay at the Directive's 24 hours, 72 hours and one month. A secondary reading of § 16 odst. 3 písm. c) would
-    put the final report at 30 days. That paragraph was not confirmed in e-Sbírka, so it is not applied. NÚKIB says every
-    incident is reported first through Portál NÚKIB, and that the reporting duty starts at the latest one year after the registration
-    decision is delivered.
+  note: Clocks stay at the Directive's 24 hours, 72 hours and one month. The article map for Art. 23 records a confirmed 30-day
+    final report, but this clock field is left unverified and is not applied. NÚKIB says every incident is reported first through
+    Portál NÚKIB, and that the reporting duty starts at the latest one year after the registration decision is delivered.
 deadlines:
 - id: cz-notify
   description: Ohlášení regulované služby do 60 dnů od splnění podmínek.
