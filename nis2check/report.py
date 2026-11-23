@@ -308,7 +308,7 @@ def render_csv(result: Result, threat=None) -> str:
 def fonts_css_uri() -> str:
     """file:// URI of the bundled font stylesheet, for PDF rendering."""
     from importlib import resources
-    return Path(str(resources.files("nis2check").joinpath("web/static/fonts/fonts.css"))).resolve().as_uri()
+    return Path(str(resources.files("nis2check").joinpath("web/static/fonts/pdf-fonts.css"))).resolve().as_uri()
 
 
 def render_html(
