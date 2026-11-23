@@ -3,6 +3,8 @@
 ## Unreleased
 
 - Security: Docker Compose now binds to localhost by default. Set NIS2_BIND to expose it.
+- Fixed: the PDF report drew wrong letters for Slovak, Czech, Hungarian and Polish characters (for example ť, ľ, ž, ň, Č). The PDF now uses one font file per weight that covers them.
+- Fixed: the remediation plan table no longer runs off the A4 page, and long legal references wrap inside their column.
 
 ## 0.4.1
 

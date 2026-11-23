@@ -9,7 +9,7 @@ from nis2check.cli import main
 from nis2check.controls import load_catalogue
 from nis2check.jurisdictions import get_jurisdiction, with_national
 from nis2check.report import (
-    CSV_COLUMNS, NOT_LEGAL_ADVICE, executive_summary, heat_map, render_csv, render_html,
+    CSV_COLUMNS, NOT_LEGAL_ADVICE, executive_summary, fonts_css_uri, heat_map, render_csv, render_html,
 )
 from nis2check.sk_export import render_sk_self_assessment
 from nis2check.scoring import evaluate
@@ -101,3 +101,20 @@ def test_cli_writes_pdf(tmp_path):
     assert out.read_bytes().startswith(b"%PDF")
     html = (tmp_path / "r.html").read_text(encoding="utf-8")
     assert NOT_LEGAL_ADVICE in html
+
+
+NATIONAL_TEXT = "Pôsobnosť Prehľad Článok spĺňa ťľžňčřůőűąęłśź ŘŽŐŰĄŁ 4 SDLC"
+
+
+def test_pdf_fonts_cover_national_letters():
+    fontTools = pytest.importorskip("fontTools.ttLib")
+    css_path = Path(fonts_css_uri().removeprefix("file://"))
+    css = css_path.read_text(encoding="utf-8")
+    # One face per weight: WeasyPrint garbles glyphs when a family is split by unicode-range.
+    assert "unicode-range" not in css
+    files = [line.split('url("')[1].split('"')[0] for line in css.splitlines() if 'url("' in line]
+    assert len(files) == 4
+    for name in files:
+        cmap = fontTools.TTFont(css_path.parent / name).getBestCmap()
+        missing = [c for c in NATIONAL_TEXT if not c.isspace() and ord(c) not in cmap]
+        assert not missing, f"{name} lacks {missing}"

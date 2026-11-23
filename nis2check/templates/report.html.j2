@@ -39,6 +39,10 @@
   td.num, th.num { text-align: right; white-space: nowrap; }
   td.c, th.c { text-align: center; }
   .nowrap { white-space: nowrap; }
+  td.ref { overflow-wrap: anywhere; }
+  table.plan { table-layout: fixed; font-size: 8pt; }
+  table.plan th, table.plan td { padding-right: 5pt; overflow-wrap: break-word; }
+  table.plan td.long { hyphens: auto; }
 
   table.control { border-top: 1pt solid var(--black); }
   table.control th { width: 30%; font-weight: 600; }
@@ -233,21 +237,25 @@
   <h2>{{ labels.h_plan }}</h2>
   {% if top_gaps %}
   <p>The {{ top_gaps | length }} highest-priority open items are listed below{% if result.gaps | length > top_gaps | length %}, out of {{ result.gaps | length }} in total. The full gap register is available as a CSV download{% endif %}. Items are ranked by {% if result.rank_by == "value" %}risk reduction per unit of effort{% else %}risk reduction (control weight x missing coverage){% endif %}{% if threat %}, using threat-informed weights{% endif %}. Owners and target dates are left for the organisation to assign.</p>
-  <table>
+  <table class="plan">
+    <colgroup>
+      <col style="width: 3%;"><col style="width: 14%;"><col style="width: 22%;"><col style="width: 10%;"><col style="width: 9%;">
+      <col style="width: 8%;"><col style="width: 20%;"><col style="width: 7%;"><col style="width: 7%;">
+    </colgroup>
     <thead><tr>
-      <th>#</th><th>Ref</th><th style="width: 27%;">Finding</th><th>Priority</th><th>Status</th><th>Effort</th>
-      <th style="width: 27%;">Recommended action</th><th>Owner</th><th>Target</th>
+      <th>#</th><th>Ref</th><th>Finding</th><th>Priority</th><th>Status</th><th>Effort</th>
+      <th>Recommended action</th><th>Owner</th><th>Target</th>
     </tr></thead>
     <tbody>
     {% for f in top_gaps %}
       <tr>
         <td>{{ loop.index }}</td>
-        <td class="nowrap"><strong>{{ f.question.id }}</strong><br><span class="small muted">{{ cite(f.question.article or (result.domains | selectattr("domain.id", "equalto", f.question.domain_id) | map(attribute="domain.article") | first), f.question) }}</span></td>
-        <td>{{ f.question | qtext }}</td>
+        <td class="ref"><strong class="nowrap">{{ f.question.id }}</strong><br><span class="small muted">{{ cite(f.question.article or (result.domains | selectattr("domain.id", "equalto", f.question.domain_id) | map(attribute="domain.article") | first), f.question) }}</span></td>
+        <td class="long">{{ f.question | qtext }}</td>
         <td class="nowrap"><span class="rag rag-{{ finding_rag(f) }}"></span>{{ priority_label[f.question.priority] }}</td>
-        <td class="nowrap">{{ status_label[f.status] }}</td>
-        <td class="nowrap">{{ f.question.effort | capitalize }}</td>
-        <td>{{ f.question.remediation }}</td>
+        <td>{{ status_label[f.status] }}</td>
+        <td>{{ f.question.effort | capitalize }}</td>
+        <td class="long">{{ f.question.remediation }}</td>
         <td></td><td></td>
       </tr>
     {% endfor %}
@@ -284,13 +292,13 @@
     {% if jurisdiction and jurisdiction.article(d.domain.article) and jurisdiction.article(d.domain.article).note %}
     <p class="small">{{ jurisdiction.article(d.domain.article).note }}</p>
     {% endif %}
-    <table>
-      <thead><tr><th style="width: 8%;">Ref</th><th style="width: 32%;">Control</th><th style="width: 8%;">Priority</th><th style="width: 13%;">Status</th><th style="width: 19%;">Evidence</th><th style="width: 20%;">Notes</th></tr></thead>
+    <table class="plan">
+      <thead><tr><th style="width: 21%;">Ref</th><th style="width: 28%;">Control</th><th style="width: 9%;">Priority</th><th style="width: 12%;">Status</th><th style="width: 17%;">Evidence</th><th style="width: 13%;">Notes</th></tr></thead>
       <tbody>
       {% for f in d.findings %}
         <tr>
-          <td class="nowrap">{{ f.question.id }}<br><span class="small muted">{{ cite(f.question.article or d.domain.article, f.question) }}</span></td>
-          <td>{{ f.question | qtext }}</td>
+          <td class="ref"><span class="nowrap">{{ f.question.id }}</span><br><span class="small muted">{{ cite(f.question.article or d.domain.article, f.question) }}</span></td>
+          <td class="long">{{ f.question | qtext }}</td>
           <td class="nowrap">{{ priority_label[f.question.priority] }}</td>
           <td class="nowrap"><span class="rag rag-{{ finding_rag(f) }}"></span>{{ status_label[f.status] }}</td>
           <td class="small">{% for e in f.response.evidence %}{{ e }}{% if not loop.last %}<br>{% endif %}{% endfor %}{% if f.evidence_issues %}<br><span style="color: var(--red);">{{ f.evidence_issues | join("; ") }}</span>{% endif %}</td>
