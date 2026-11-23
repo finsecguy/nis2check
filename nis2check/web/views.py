@@ -231,9 +231,12 @@ def assessment_domain(domain_id: str):
     responses = {r.question_id: r for r in db.execute(select(Response)).scalars()}
     ids = [d.id for d in catalogue.domains]
     i = ids.index(domain_id)
+    jur = get_jurisdiction(organisation(db).country_code)
+    national = jur.article(domain.article) if jur else None
     return render_template(
         "assessment_domain.html",
         domain=domain,
+        national=national,
         dres=dres,
         findings={f.question.id: f for f in dres.findings},
         responses=responses,

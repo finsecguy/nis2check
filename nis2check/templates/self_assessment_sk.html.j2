@@ -38,6 +38,7 @@
   <thead><tr><th>ID</th><th>Opatrenie</th><th>Stav</th><th>Náprava a termín</th></tr></thead>
   <tbody>
   {% for row in rows %}
+    {% if row.domain_note %}<tr><td colspan="4">{{ row.domain_note }}</td></tr>{% endif %}
     <tr>
       <td>{{ row.id }}<br><span class="muted">{{ row.article }}</span></td>
       <td>{{ row.text }}<br><span class="muted">{{ row.text_en }}</span></td>

@@ -6,6 +6,9 @@
     <div class="small"><a href="{{ url_for('main.assessment_index') }}">Assessment</a>, {{ domain.article }}</div>
     <h1>{{ domain.title }}</h1>
     <div class="sub">{{ domain.summary }}</div>
+    {% if national and (national.ref or national.note) %}
+    <div class="note">{% if national.ref %}<strong>{{ national.ref }}.</strong> {% endif %}{{ national.note }}</div>
+    {% endif %}
   </div>
   <div class="nowrap" style="text-align: right;">
     <div style="font: 400 44px/1 var(--serif); color: var(--navy);">{{ dres.score_pct | pct }}</div>

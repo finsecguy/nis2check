@@ -25,9 +25,13 @@ def render_sk_self_assessment(
     )
     rows = []
     for domain in result.domains:
+        entry = jurisdiction.article(domain.domain.article)
+        domain_note = entry.note if entry else ""
+        first = True
         for finding in domain.findings:
             response = assessment.responses.get(finding.question.id)
             rows.append({
+                "domain_note": domain_note if first else "",
                 "domain": domain.domain.title,
                 "id": finding.question.id,
                 "article": finding.question.article or domain.domain.article,
@@ -39,6 +43,7 @@ def render_sk_self_assessment(
                 "notes": response.notes if response else "",
                 "gap": finding.status in ("gap", "partial", "unanswered"),
             })
+            first = False
     gaps = [row for row in rows if row["gap"]]
     return env.get_template("self_assessment_sk.html.j2").render(
         assessment=assessment,

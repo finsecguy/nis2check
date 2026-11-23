@@ -68,6 +68,18 @@ def test_html_has_download_controls_and_sections(example):
     assert f'<footer class="report-foot">{NOT_LEGAL_ADVICE}</footer>' in html
 
 
+def test_sk_report_keeps_the_directive_article_20_duty(example):
+    result, assessment = example
+    assessment.country = "sk"
+    html = render_html(result, assessment, CATALOGUE)
+    assert "Art. 20(1) and (2)" in html
+    assert "requires the management body to approve and oversee the measures and to follow training" in html
+    paper = render_sk_self_assessment(
+        result, assessment, with_national(CATALOGUE, get_jurisdiction("sk")), get_jurisdiction("sk"),
+    )
+    assert "Art. 20(1) and (2)" in paper
+
+
 def test_sk_self_assessment_repeats_the_footer(example):
     result, assessment = example
     assessment.country = "sk"
