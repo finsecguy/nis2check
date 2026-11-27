@@ -13,7 +13,7 @@
 <div class="note">
   <div><strong>{{ tr('incident.authority') }}:</strong> {{ authority }}</div>
   <div><strong>{{ tr('incident.csirt') }}:</strong> {{ csirt }}</div>
-  <div><strong>{{ tr('incident.channel') }}:</strong> <a href="{{ jurisdiction.law.reporting_channel_url }}">{{ jurisdiction.law.reporting_channel_url }}</a></div>
+  {% if jurisdiction.law.reporting_channel_url %}<div><strong>{{ tr('incident.channel') }}:</strong> <a href="{{ jurisdiction.law.reporting_channel_url }}">{{ jurisdiction.law.reporting_channel_url }}</a></div>{% endif %}
 </div>
 {% endif %}
 <div class="note">{{ disclaimer }} An incident is significant under Art. 23(3) where it has caused or is capable of causing severe operational disruption of the services or financial loss for the entity, or it has affected or is capable of affecting other natural or legal persons by causing considerable material or non-material damage.</div>

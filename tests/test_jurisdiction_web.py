@@ -55,7 +55,8 @@ def test_report_shows_dual_citation_and_unverified_marker(client):
     assert "unverified" not in html.lower()
     _country(client, "hu")
     hungary = client.get("/report/view").data.decode()
-    assert "unverified" in hungary
+    assert "alapvető szervezet" in hungary or "Act LXIX of 2024" in hungary
+    assert "unverified" not in hungary.lower()
 
 
 def test_incident_page_names_the_national_authority(client):
@@ -96,7 +97,8 @@ def test_hungarian_report_says_the_auditor_must_do_the_audit(client):
     assert "Assessed against:" in html
     assert "SZTFH" in html
     assert "preparation material only" in html
-    assert "unverified" in html
+    assert "An auditor registered with SZTFH must perform the cybersecurity audit." in html
+    assert "unverified" not in html.lower()
     assert "National requirements (HU)" in client.get("/assessment").data.decode()
 
 

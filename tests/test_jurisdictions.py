@@ -82,11 +82,20 @@ def test_deadlines_and_sector_authorities_load():
         parse_jurisdiction(data, "pl")
 
 
-def test_hungary_and_poland_citations_are_unverified():
-    for code in ("hu", "pl"):
-        jurisdiction = load_jurisdiction(code)
-        assert all(ref.verified is False for ref in jurisdiction.article_map.values())
-        assert all(question.verified is False for question in jurisdiction.extras)
+def test_poland_citations_are_still_unverified():
+    poland = load_jurisdiction("pl")
+    assert all(ref.verified is False for ref in poland.article_map.values())
+    assert all(question.verified is False for question in poland.extras)
+
+
+def test_hungary_terms_and_clocks_match_the_act():
+    hungary = load_jurisdiction("hu")
+    assert hungary.term_for("essential") == "alapvető szervezet"
+    assert hungary.term_for("important") == "fontos szervezet"
+    assert hungary.article("Art. 3(1)(a)").ref == "1. § (4) f)"
+    assert hungary.clocks.early_hours is None
+    assert hungary.clocks.verified is True
+    assert all(ref.verified and ref.evidence_quote for ref in hungary.article_map.values())
 
 
 def test_slovakia_keeps_verified_paragraphs_it_confirmed():

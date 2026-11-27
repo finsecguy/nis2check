@@ -1,7 +1,3 @@
-# National overlay for hu. verified is true only when the official consolidated
-# text was opened and the paragraph number and title were confirmed.
-# Hungary and Poland are unverified throughout.
-
 code: hu
 language: hu
 domain_title: National requirements (HU)
@@ -11,419 +7,566 @@ law:
   in_force: '2025-01-01'
   competent_authority: Szabályozott Tevékenységek Felügyeleti Hatósága (SZTFH)
   csirt: nemzeti kiberbiztonsági incidenskezelő központ
-  reporting_channel_url: https://sztfh.hu/tevekenysegek/kiberbiztonsagi-tanusitasok/kiberbiztonsagi-felugyelet/
-  source_url: https://njt.hu/jogszabaly/2024-69-00-00
+  reporting_channel_url: ''
+  source_url: https://njt.jog.gov.hu/jogszabaly/2024-69-00-00
   citation_label: Act LXIX of 2024
-  note: 'The Act replaced Act XXIII of 2023 and has been amended since 1 January 2025. The NJT page that was read is the consolidated
-    text as presented there (version date shown on the page: 1 October 2026). Every citation is unverified. 63. § (1) says
-    the Government operates the national incident-response centre through a body designated by decree. The Act text that was
-    read does not itself name Nemzeti Kibervédelmi Intézet (NKI). SZTFH supervises the organisations in 1. § (1) d) and e),
-    under 23. § (1) b) as cited on sztfh.hu.'
+  note: '82. § (1): the Act enters into force on 1 January 2025, except 120. § (1) on 2 January 2025.
+    The page shows the temporal state 2026.10.01. The text was read on njt.jog.gov.hu. https://njt.hu/jogszabaly/2024-69-00-00
+    returned curl error 52, Empty reply from server. 1. § (8) names SZTFH. 23. § (1) b) gives SZTFH supervision
+    of organisations in 1. § (1) d) and e) that are not under point a). 66. § sends reports to the national
+    incident-response centre. The Act prints no URL for that centre, so no reporting-channel URL is stored.
+    The SZTFH supervision page returned HTTP 200 and is not stated as the reporting channel. The Act does
+    not name Nemzeti Kibervédelmi Intézet.'
 entity_terms:
   essential:
     national: alapvető szervezet
-    note: 1. § (4). Unverified.
+    note: 1. § (4). The statutory term is alapvető szervezet.
   important:
     national: fontos szervezet
-    note: 1. § (5). Unverified.
+    note: 1. § (5). The statutory term is fontos szervezet.
 article_map:
   Art. 2:
     ref: 1. §
-    title: Hatály
-    source_url: https://njt.hu/jogszabaly/2024-69-00-00
-    verified: false
-    note: Scope and the essential/important split are in 1. §. Best reading of the NJT consolidated text. Marked unverified
-      so the paragraph can be checked again before anyone relies on it.
+    title: A törvény hatálya
+    source_url: https://njt.jog.gov.hu/jogszabaly/2024-69-00-00
+    verified: true
+    note: Scope is 1. §, not a copy of Directive Article 2.
+    evidence_quote: E törvénynek a szervezetek kötelezettségeire és a kiberbiztonsági hatósági felügyeletre
+      vonatkozó rendelkezéseit kell alkalmazni
+    checked_against: 2024. évi LXIX. törvény, Nemzeti Jogszabálytár njt.jog.gov.hu, időállapot 2026.10.01,
+      read 2026-11-27
   Art. 3:
     ref: 1. § (3)-(5)
     title: Hatály
-    source_url: https://njt.hu/jogszabaly/2024-69-00-00
-    verified: false
-    note: alapvető szervezet and fontos szervezet. Best reading of the NJT consolidated text. Marked unverified so the paragraph
-      can be checked again before anyone relies on it.
+    source_url: https://njt.jog.gov.hu/jogszabaly/2024-69-00-00
+    verified: true
+    note: The two categories are alapvető szervezet and fontos szervezet.
+    evidence_quote: alapvető vagy fontos szervezeteknek minősülnek
+    checked_against: 2024. évi LXIX. törvény, Nemzeti Jogszabálytár njt.jog.gov.hu, időállapot 2026.10.01,
+      read 2026-11-27
   Art. 2(1):
-    ref: 1. § (1)
+    ref: 1. § (1) d)
     title: Hatály
-    source_url: https://njt.hu/jogszabaly/2024-69-00-00
-    verified: false
-    note: Best reading of the NJT consolidated text. Marked unverified so the paragraph can be checked again before anyone
-      relies on it.
+    source_url: https://njt.jog.gov.hu/jogszabaly/2024-69-00-00
+    verified: true
+    note: Annex 2 and 3 organisations are in scope when they are medium-sized or meet the 50-person or
+      10 million euro test. That is the medium floor, not a large-only test.
+    evidence_quote: összes foglalkoztatotti létszáma eléri vagy meghaladja az 50 főt
+    checked_against: 2024. évi LXIX. törvény, Nemzeti Jogszabálytár njt.jog.gov.hu, időállapot 2026.10.01,
+      read 2026-11-27
   Art. 3(1)(a):
-    ref: 1. § (4) és (5)
+    ref: 1. § (4) f)
     title: Hatály
-    source_url: https://njt.hu/jogszabaly/2024-69-00-00
-    verified: false
-    note: The Act groups essential and important organisations in 1. § (4) and (5) and in annexes 2 and 3. This Directive
-      sub-paragraph was not given its own Hungarian number. Best reading of the NJT consolidated text. Marked unverified so
-      the paragraph can be checked again before anyone relies on it.
+    source_url: https://njt.jog.gov.hu/jogszabaly/2024-69-00-00
+    verified: true
+    note: Annex 2 organisations that are medium-sized or larger are alapvető szervezetek. Directive Article
+      3(1)(a) makes only large Annex I entities essential. Medium Annex I entities are important under
+      the Directive.
+    evidence_quote: a 2. melléklet szerinti azon szervezetek, amelyek a kis- és középvállalkozásokról
+      szóló törvény szerint középvállalkozásnak minősülnek
+    checked_against: 2024. évi LXIX. törvény, Nemzeti Jogszabálytár njt.jog.gov.hu, időállapot 2026.10.01,
+      read 2026-11-27
   Art. 4:
-    ref: ''
-    title: ''
-    source_url: https://njt.hu/jogszabaly/2024-69-00-00
-    verified: false
-    note: No DORA paragraph was pinned. Best reading of the NJT consolidated text. Marked unverified so the paragraph can
-      be checked again before anyone relies on it.
+    ref: 1. § (1) c) és (2), 71. §
+    title: DORA
+    source_url: https://njt.jog.gov.hu/jogszabaly/2024-69-00-00
+    verified: true
+    note: 1. § (1) c) keeps DORA entities out of that identification case. 1. § (2) excepts a critical
+      entity that is under DORA. 71. § applies only some incident-handling sections to a DORA entity.
+      The Act does not disapply its security duties generally.
+    evidence_quote: az (EU) 2022/2554 európai parlamenti és tanácsi rendelet hatálya alá nem tartozó szervezetekre
+    checked_against: 2024. évi LXIX. törvény, Nemzeti Jogszabálytár njt.jog.gov.hu, időállapot 2026.10.01,
+      read 2026-11-27
   Art. 2(5)(b):
-    ref: 1. §
-    title: Hatály
-    source_url: https://njt.hu/jogszabaly/2024-69-00-00
-    verified: false
-    note: No separate Hungarian paragraph number was pinned to this Directive sub-paragraph. Best reading of the NJT consolidated
-      text. Marked unverified so the paragraph can be checked again before anyone relies on it.
+    ref: 63. pont és 3. melléklet
+    title: kutatóhely
+    source_url: https://njt.jog.gov.hu/jogszabaly/2024-69-00-00
+    verified: true
+    note: Research organisations are in annex 3. The definition excludes educational institutions. The
+      Act does not give a Member State option to add education institutions.
+    evidence_quote: 'kutatóhely: a tudományos kutatásról szóló törvény szerinti kutatóhely, az oktatási
+      intézmények kivételével'
+    checked_against: 2024. évi LXIX. törvény, Nemzeti Jogszabálytár njt.jog.gov.hu, időállapot 2026.10.01,
+      read 2026-11-27
   Annex I:
-    ref: 2. melléklet
-    title: ''
-    source_url: https://njt.hu/jogszabaly/2024-69-00-00
-    verified: false
-    note: Annex number is a best reading of the cross-references in 1. § and 8. §. The annex text was not opened. Best reading
-      of the NJT consolidated text. Marked unverified so the paragraph can be checked again before anyone relies on it.
+    ref: 1. melléklet és 2. melléklet
+    title: Kiemelten kockázatos ágazatok
+    source_url: https://njt.jog.gov.hu/jogszabaly/2024-69-00-00
+    verified: true
+    note: 2. melléklet is the high-criticality sector list. Public administration is 1. melléklet, not
+      inside 2. melléklet.
+    evidence_quote: Kiemelten kockázatos ágazatokban működő szolgáltatók és szervezetek
+    checked_against: 2024. évi LXIX. törvény, Nemzeti Jogszabálytár njt.jog.gov.hu, időállapot 2026.10.01,
+      read 2026-11-27
   Annex II:
     ref: 3. melléklet
-    title: ''
-    source_url: https://njt.hu/jogszabaly/2024-69-00-00
-    verified: false
-    note: Annex number is a best reading of the cross-references in 1. § and 8. §. The annex text was not opened. Best reading
-      of the NJT consolidated text. Marked unverified so the paragraph can be checked again before anyone relies on it.
+    title: Kockázatos ágazatok
+    source_url: https://njt.jog.gov.hu/jogszabaly/2024-69-00-00
+    verified: true
+    note: 3. melléklet is the other-critical list, including postal, food, waste, chemicals, manufacturing,
+      digital providers and research.
+    evidence_quote: Kockázatos ágazatokban működő szolgáltatók és szervezetek
+    checked_against: 2024. évi LXIX. törvény, Nemzeti Jogszabálytár njt.jog.gov.hu, időállapot 2026.10.01,
+      read 2026-11-27
   Art. 20:
-    ref: 6. §
-    title: Az alapvető és fontos szervezetek általános kötelezettségei
-    source_url: https://njt.hu/jogszabaly/2024-69-00-00
-    verified: false
-    note: 'Best reading: the head of the organisation appoints the person responsible for the security of electronic information
-      systems and sets roles. The subsection number inside 6. § was not re-checked line by line. Best reading of the NJT consolidated
-      text. Marked unverified so the paragraph can be checked again before anyone relies on it.'
+    ref: 6. § (2) és (5) a), 11. § (1)
+    title: Általános kötelezettségek
+    source_url: https://njt.jog.gov.hu/jogszabaly/2024-69-00-00
+    verified: true
+    note: The Act places the framework and training on the head of the organisation, and 11. § (1) requires
+      a designated security person. It does not use the Directive's management-body approval and liability
+      wording. 6. § (5) i) requires organisations in 1. § (1) a) to c) to spend at least 5 percent of
+      that year's IT development cost on cybersecurity. The Directive has no such percentage.
+    evidence_quote: A szervezet vezetője az elektronikus információs rendszerek védelme érdekében kockázatmenedzsment
+      keretrendszert hoz létre
+    checked_against: 2024. évi LXIX. törvény, Nemzeti Jogszabálytár njt.jog.gov.hu, időállapot 2026.10.01,
+      read 2026-11-27
   Art. 21(2)(a):
-    ref: 6. §
+    ref: 6. § (2) és (3) 4.
     title: Kockázatmenedzsment
-    source_url: https://njt.hu/jogszabaly/2024-69-00-00
-    verified: false
-    note: 8. § (4) points at the 6. § risk-management framework. Letter-level correspondence was not confirmed. Best reading
-      of the NJT consolidated text. Marked unverified so the paragraph can be checked again before anyone relies on it.
+    source_url: https://njt.jog.gov.hu/jogszabaly/2024-69-00-00
+    verified: true
+    note: The framework is created by the head. Detailed rules are in a ministerial decree or a directly
+      applicable EU act.
+    evidence_quote: hatáselemzést és kockázatmenedzsment tevékenységet végez
+    checked_against: 2024. évi LXIX. törvény, Nemzeti Jogszabálytár njt.jog.gov.hu, időállapot 2026.10.01,
+      read 2026-11-27
   Art. 21(2)(b):
-    ref: 70. §
+    ref: 70. § (1) és 6. § (5) e)
     title: Kiberbiztonsági incidensek kezelése
-    source_url: https://njt.hu/jogszabaly/2024-69-00-00
-    verified: false
-    note: Best reading of the NJT consolidated text. Marked unverified so the paragraph can be checked again before anyone
-      relies on it.
+    source_url: https://njt.jog.gov.hu/jogszabaly/2024-69-00-00
+    verified: true
+    note: ''
+    evidence_quote: Kiberbiztonsági incidens bekövetkezése esetén a szervezet intézkedik az érintett kiberbiztonsági
+      incidens kezelése érdekében
+    checked_against: 2024. évi LXIX. törvény, Nemzeti Jogszabálytár njt.jog.gov.hu, időállapot 2026.10.01,
+      read 2026-11-27
   Art. 21(2)(c):
-    ref: ''
-    title: ''
-    source_url: https://njt.hu/jogszabaly/2024-69-00-00
-    verified: false
-    note: No Hungarian paragraph was pinned to this Directive point. 10. § is the security-classification duty and the ministerial
-      decree that sets the measures was not opened. Best reading of the NJT consolidated text. Marked unverified so the paragraph
-      can be checked again before anyone relies on it.
+    ref: 6. § (5) e)
+    title: Helyreállítás
+    source_url: https://njt.jog.gov.hu/jogszabaly/2024-69-00-00
+    verified: true
+    note: The point names incident handling and restoration. It does not name backup management, disaster
+      recovery or crisis management.
+    evidence_quote: a kiberbiztonsági incidensek kezeléséről, valamint a helyreállításról
+    checked_against: 2024. évi LXIX. törvény, Nemzeti Jogszabálytár njt.jog.gov.hu, időállapot 2026.10.01,
+      read 2026-11-27
   Art. 21(2)(d):
-    ref: ''
-    title: ''
-    source_url: https://njt.hu/jogszabaly/2024-69-00-00
-    verified: false
-    note: No Hungarian paragraph was pinned to this Directive point. 10. § is the security-classification duty and the ministerial
-      decree that sets the measures was not opened. Best reading of the NJT consolidated text. Marked unverified so the paragraph
-      can be checked again before anyone relies on it.
+    ref: 6. § (5) d)
+    title: Közreműködő
+    source_url: https://njt.jog.gov.hu/jogszabaly/2024-69-00-00
+    verified: true
+    note: This is a contract duty when a contributor is used. It is narrower than Directive Article 21(2)(d)
+      and 21(3).
+    evidence_quote: a közreműködő által az elektronikus információs rendszerrel kapcsolatosan ellátott
+      tevékenységgel összefüggésben szükséges kiberbiztonsági követelmények az e törvényben foglaltaknak
+      megfelelően szerződéses kötelemként teljesüljenek
+    checked_against: 2024. évi LXIX. törvény, Nemzeti Jogszabálytár njt.jog.gov.hu, időállapot 2026.10.01,
+      read 2026-11-27
   Art. 21(2)(e):
     ref: ''
     title: ''
-    source_url: https://njt.hu/jogszabaly/2024-69-00-00
-    verified: false
-    note: No Hungarian paragraph was pinned to this Directive point. 10. § is the security-classification duty and the ministerial
-      decree that sets the measures was not opened. Best reading of the NJT consolidated text. Marked unverified so the paragraph
-      can be checked again before anyone relies on it.
+    source_url: https://njt.jog.gov.hu/jogszabaly/2024-69-00-00
+    verified: true
+    note: No separate paragraph was found for security in acquisition, development and maintenance or
+      for vulnerability disclosure.
+    evidence_quote: gondoskodik a biztonsági osztályhoz kapcsolódó védelmi intézkedések értékelése során
+      feltárt hiányosságok orvoslásáról
+    checked_against: 2024. évi LXIX. törvény, Nemzeti Jogszabálytár njt.jog.gov.hu, időállapot 2026.10.01,
+      read 2026-11-27
   Art. 21(2)(f):
-    ref: 16. §
-    title: Kiberbiztonsági audit
-    source_url: https://njt.hu/jogszabaly/2024-69-00-00
-    verified: false
-    note: Biennial audit by an SZTFH-registered auditor. There is no self-assessment alternative in the sections that were
-      read. Best reading of the NJT consolidated text. Marked unverified so the paragraph can be checked again before anyone
-      relies on it.
+    ref: 6. § (3) 10.
+    title: Értékelés
+    source_url: https://njt.jog.gov.hu/jogszabaly/2024-69-00-00
+    verified: true
+    note: ''
+    evidence_quote: rendszeresen gondoskodik a védelmi intézkedések időszakos értékeléséről
+    checked_against: 2024. évi LXIX. törvény, Nemzeti Jogszabálytár njt.jog.gov.hu, időállapot 2026.10.01,
+      read 2026-11-27
   Art. 21(2)(g):
-    ref: ''
-    title: ''
-    source_url: https://njt.hu/jogszabaly/2024-69-00-00
-    verified: false
-    note: No Hungarian paragraph was pinned to this Directive point. 10. § is the security-classification duty and the ministerial
-      decree that sets the measures was not opened. Best reading of the NJT consolidated text. Marked unverified so the paragraph
-      can be checked again before anyone relies on it.
+    ref: 6. § (5) a)
+    title: Képzés
+    source_url: https://njt.jog.gov.hu/jogszabaly/2024-69-00-00
+    verified: true
+    note: The Act requires training. It does not use the words basic cyber hygiene.
+    evidence_quote: kiberbiztonsági képzéséről, továbbképzéséről
+    checked_against: 2024. évi LXIX. törvény, Nemzeti Jogszabálytár njt.jog.gov.hu, időállapot 2026.10.01,
+      read 2026-11-27
   Art. 21(2)(h):
     ref: ''
     title: ''
-    source_url: https://njt.hu/jogszabaly/2024-69-00-00
-    verified: false
-    note: No Hungarian paragraph was pinned to this Directive point. 10. § is the security-classification duty and the ministerial
-      decree that sets the measures was not opened. Best reading of the NJT consolidated text. Marked unverified so the paragraph
-      can be checked again before anyone relies on it.
+    source_url: https://njt.jog.gov.hu/jogszabaly/2024-69-00-00
+    verified: true
+    note: 6. § does not require a cryptography or encryption policy. Post-quantum cryptography is a separate
+      regime.
+    evidence_quote: A szervezet vezetője az elektronikus információs rendszerek védelme érdekében kockázatmenedzsment
+      keretrendszert hoz létre
+    checked_against: 2024. évi LXIX. törvény, Nemzeti Jogszabálytár njt.jog.gov.hu, időállapot 2026.10.01,
+      read 2026-11-27
   Art. 21(2)(i):
-    ref: 11. §
-    title: Az elektronikus információs rendszer biztonságáért felelős személy
-    source_url: https://njt.hu/jogszabaly/2024-69-00-00
-    verified: false
-    note: Best reading of the NJT consolidated text. Marked unverified so the paragraph can be checked again before anyone
-      relies on it.
+    ref: 6. § (3) 2. és 11. §
+    title: Szerepkörök
+    source_url: https://njt.jog.gov.hu/jogszabaly/2024-69-00-00
+    verified: true
+    note: Roles and a designated security person are required. Access-control policies and asset management
+      are not named as those Directive words.
+    evidence_quote: meghatározza a szervezet rendelkezésében lévő elektronikus információs rendszerek
+      védelmével kapcsolatos szerepköröket
+    checked_against: 2024. évi LXIX. törvény, Nemzeti Jogszabálytár njt.jog.gov.hu, időállapot 2026.10.01,
+      read 2026-11-27
   Art. 21(2)(j):
     ref: ''
     title: ''
-    source_url: https://njt.hu/jogszabaly/2024-69-00-00
-    verified: false
-    note: No Hungarian paragraph was pinned to this Directive point. 10. § is the security-classification duty and the ministerial
-      decree that sets the measures was not opened. Best reading of the NJT consolidated text. Marked unverified so the paragraph
-      can be checked again before anyone relies on it.
+    source_url: https://njt.jog.gov.hu/jogszabaly/2024-69-00-00
+    verified: true
+    note: Multi-factor authentication and secured emergency communications are not named in 6. § or 11.
+      §.
+    evidence_quote: kiberbiztonsági képzéséről, továbbképzéséről
+    checked_against: 2024. évi LXIX. törvény, Nemzeti Jogszabálytár njt.jog.gov.hu, időállapot 2026.10.01,
+      read 2026-11-27
   Art. 23:
     ref: 66. §
-    title: A kiberbiztonsági incidensek bejelentése és kezelése
-    source_url: https://njt.hu/jogszabaly/2024-69-00-00
-    verified: false
-    note: Reporting is immediate, as a government decree specifies. The Act section that was read does not itself set 24 hours,
-      72 hours or one month, so the Directive clocks are kept. Best reading of the NJT consolidated text. Marked unverified
-      so the paragraph can be checked again before anyone relies on it.
+    title: A kiberbiztonsági incidensek bejelentése
+    source_url: https://njt.jog.gov.hu/jogszabaly/2024-69-00-00
+    verified: true
+    note: 66. § (1) and (2). The Act requires a report without delay, as a government decree specifies.
+      It does not set 24 hours, 72 hours or one month. Point 40 bb) adds reputational loss to the significant-incident
+      test. Directive Article 23(3) names operational disruption, financial loss, and material or non-material
+      damage, not reputational loss.
+    evidence_quote: kötelesek haladéktalanul, a kormányrendeletben meghatározottak szerint bejelenteni
+    checked_against: 2024. évi LXIX. törvény, Nemzeti Jogszabálytár njt.jog.gov.hu, időállapot 2026.10.01,
+      read 2026-11-27
   Art. 2(2)(a)(i):
-    ref: 1. §
-    title: Hatály
-    source_url: https://njt.hu/jogszabaly/2024-69-00-00
-    verified: false
-    note: No separate Hungarian paragraph number was pinned to this Directive sub-paragraph. Best reading of the NJT consolidated
-      text. Marked unverified so the paragraph can be checked again before anyone relies on it.
+    ref: 1. § (1) e) ea)
+    title: Hírközlés
+    source_url: https://njt.jog.gov.hu/jogszabaly/2024-69-00-00
+    verified: true
+    note: In scope regardless of size. Essential status is not automatic for a medium-sized provider.
+    evidence_quote: elektronikus hírközlési szolgáltató
+    checked_against: 2024. évi LXIX. törvény, Nemzeti Jogszabálytár njt.jog.gov.hu, időállapot 2026.10.01,
+      read 2026-11-27
   Art. 2(2)(a)(ii):
-    ref: 1. §
-    title: Hatály
-    source_url: https://njt.hu/jogszabaly/2024-69-00-00
-    verified: false
-    note: No separate Hungarian paragraph number was pinned to this Directive sub-paragraph. Best reading of the NJT consolidated
-      text. Marked unverified so the paragraph can be checked again before anyone relies on it.
+    ref: 1. § (1) e) eb) és (4) g)
+    title: Bizalmi szolgáltató
+    source_url: https://njt.jog.gov.hu/jogszabaly/2024-69-00-00
+    verified: true
+    note: Trust providers are in scope at any size. Qualified trust providers are essential at any size.
+    evidence_quote: a minősített bizalmi szolgáltatók és a legfelső szintű doménnév-nyilvántartók, valamint
+      a DNS-szolgáltatók, méretüktől függetlenül
+    checked_against: 2024. évi LXIX. törvény, Nemzeti Jogszabálytár njt.jog.gov.hu, időállapot 2026.10.01,
+      read 2026-11-27
   Art. 2(2)(a)(iii):
-    ref: 1. §
-    title: Hatály
-    source_url: https://njt.hu/jogszabaly/2024-69-00-00
-    verified: false
-    note: No separate Hungarian paragraph number was pinned to this Directive sub-paragraph. Best reading of the NJT consolidated
-      text. Marked unverified so the paragraph can be checked again before anyone relies on it.
+    ref: 1. § (1) e) ec)-ed) és (4) g)
+    title: DNS és TLD
+    source_url: https://njt.jog.gov.hu/jogszabaly/2024-69-00-00
+    verified: true
+    note: DNS providers and TLD registries are in scope and essential at any size. The annex line does
+      not repeat the directive's exclusion of root name servers.
+    evidence_quote: a DNS-szolgáltató
+    checked_against: 2024. évi LXIX. törvény, Nemzeti Jogszabálytár njt.jog.gov.hu, időállapot 2026.10.01,
+      read 2026-11-27
   Art. 2(2)(b):
-    ref: 1. §
-    title: Hatály
-    source_url: https://njt.hu/jogszabaly/2024-69-00-00
-    verified: false
-    note: No separate Hungarian paragraph number was pinned to this Directive sub-paragraph. Best reading of the NJT consolidated
-      text. Marked unverified so the paragraph can be checked again before anyone relies on it.
+    ref: 1. § (6) 1.
+    title: Egyedüli szolgáltató
+    source_url: https://njt.jog.gov.hu/jogszabaly/2024-69-00-00
+    verified: true
+    note: This is a condition for identification under 1. § (1) c), not an automatic size exemption.
+    evidence_quote: Magyarországon egyedüli szolgáltatója egy olyan szolgáltatásnak, amely elengedhetetlen
+      a kritikus társadalmi vagy gazdasági tevékenységek fenntartásához
+    checked_against: 2024. évi LXIX. törvény, Nemzeti Jogszabálytár njt.jog.gov.hu, időállapot 2026.10.01,
+      read 2026-11-27
   Art. 2(2)(f)(i):
-    ref: 1. §
-    title: Hatály
-    source_url: https://njt.hu/jogszabaly/2024-69-00-00
-    verified: false
-    note: No separate Hungarian paragraph number was pinned to this Directive sub-paragraph. Best reading of the NJT consolidated
-      text. Marked unverified so the paragraph can be checked again before anyone relies on it.
+    ref: 1. melléklet 1. pont és 1. § (4) a)
+    title: Közigazgatás
+    source_url: https://njt.jog.gov.hu/jogszabaly/2024-69-00-00
+    verified: true
+    note: Central state administration bodies in annex 1 are essential, with the Government excepted from
+      that point.
+    evidence_quote: a központi államigazgatási szerv, a Kormány kivételével
+    checked_against: 2024. évi LXIX. törvény, Nemzeti Jogszabálytár njt.jog.gov.hu, időállapot 2026.10.01,
+      read 2026-11-27
   Art. 2(2)(f)(ii):
-    ref: 1. §
-    title: Hatály
-    source_url: https://njt.hu/jogszabaly/2024-69-00-00
-    verified: false
-    note: No separate Hungarian paragraph number was pinned to this Directive sub-paragraph. Best reading of the NJT consolidated
-      text. Marked unverified so the paragraph can be checked again before anyone relies on it.
+    ref: 1. melléklet 11. pont
+    title: Közigazgatás
+    source_url: https://njt.jog.gov.hu/jogszabaly/2024-69-00-00
+    verified: true
+    note: There is no separate regional category. County and capital government offices in annex 1 are
+      essential under 1. § (4) a).
+    evidence_quote: a fővárosi és megyei kormányhivatalok, a megyei közgyűlések hivatalai
+    checked_against: 2024. évi LXIX. törvény, Nemzeti Jogszabálytár njt.jog.gov.hu, időállapot 2026.10.01,
+      read 2026-11-27
   Art. 2(3):
-    ref: 1. §
-    title: Hatály
-    source_url: https://njt.hu/jogszabaly/2024-69-00-00
-    verified: false
-    note: No separate Hungarian paragraph number was pinned to this Directive sub-paragraph. Best reading of the NJT consolidated
-      text. Marked unverified so the paragraph can be checked again before anyone relies on it.
+    ref: 1. § (4) d)
+    title: Kritikus szervezet
+    source_url: https://njt.jog.gov.hu/jogszabaly/2024-69-00-00
+    verified: true
+    note: A designated critical organisation is essential. 1. § (2) excepts one that is also under DORA.
+    evidence_quote: a Kszetv. alapján kijelölt kritikus szervezetek
+    checked_against: 2024. évi LXIX. törvény, Nemzeti Jogszabálytár njt.jog.gov.hu, időállapot 2026.10.01,
+      read 2026-11-27
   Art. 2(4):
-    ref: 1. §
-    title: Hatály
-    source_url: https://njt.hu/jogszabaly/2024-69-00-00
-    verified: false
-    note: No separate Hungarian paragraph number was pinned to this Directive sub-paragraph. Best reading of the NJT consolidated
-      text. Marked unverified so the paragraph can be checked again before anyone relies on it.
+    ref: 1. § (1) e) ee) és 3. melléklet
+    title: Doménnév
+    source_url: https://njt.jog.gov.hu/jogszabaly/2024-69-00-00
+    verified: true
+    note: In scope at any size, and also listed in annex 3. Not named in 1. § (4) g), so not automatically
+      essential.
+    evidence_quote: doménnév-regisztrációt végző szolgáltató
+    checked_against: 2024. évi LXIX. törvény, Nemzeti Jogszabálytár njt.jog.gov.hu, időállapot 2026.10.01,
+      read 2026-11-27
   Art. 2(5)(a):
-    ref: 1. §
-    title: Hatály
-    source_url: https://njt.hu/jogszabaly/2024-69-00-00
-    verified: false
-    note: No separate Hungarian paragraph number was pinned to this Directive sub-paragraph. Best reading of the NJT consolidated
-      text. Marked unverified so the paragraph can be checked again before anyone relies on it.
+    ref: 1. § (4) a) és (5) a)
+    title: Települések
+    source_url: https://njt.jog.gov.hu/jogszabaly/2024-69-00-00
+    verified: true
+    note: Municipal offices of towns with at most 20,000 inhabitants are important, not outside the Act.
+      Larger municipal offices in annex 1 are essential. Directive Article 2(5)(a) leaves local administration
+      optional.
+    evidence_quote: a 20 000 főt meg nem haladó lakosságszámú települések képviselő-testületének hivatalai
+    checked_against: 2024. évi LXIX. törvény, Nemzeti Jogszabálytár njt.jog.gov.hu, időállapot 2026.10.01,
+      read 2026-11-27
   Art. 3(1)(b):
-    ref: 1. § (4) és (5)
+    ref: 1. § (4) g)
     title: Hatály
-    source_url: https://njt.hu/jogszabaly/2024-69-00-00
-    verified: false
-    note: The Act groups essential and important organisations in 1. § (4) and (5) and in annexes 2 and 3. This Directive
-      sub-paragraph was not given its own Hungarian number. Best reading of the NJT consolidated text. Marked unverified so
-      the paragraph can be checked again before anyone relies on it.
+    source_url: https://njt.jog.gov.hu/jogszabaly/2024-69-00-00
+    verified: true
+    note: ''
+    evidence_quote: a minősített bizalmi szolgáltatók és a legfelső szintű doménnév-nyilvántartók, valamint
+      a DNS-szolgáltatók, méretüktől függetlenül
+    checked_against: 2024. évi LXIX. törvény, Nemzeti Jogszabálytár njt.jog.gov.hu, időállapot 2026.10.01,
+      read 2026-11-27
   Art. 3(1)(c):
-    ref: 1. § (4) és (5)
-    title: Hatály
-    source_url: https://njt.hu/jogszabaly/2024-69-00-00
-    verified: false
-    note: The Act groups essential and important organisations in 1. § (4) and (5) and in annexes 2 and 3. This Directive
-      sub-paragraph was not given its own Hungarian number. Best reading of the NJT consolidated text. Marked unverified so
-      the paragraph can be checked again before anyone relies on it.
+    ref: 1. § (1) e) ea) és (4) f)
+    title: Hírközlés
+    source_url: https://njt.jog.gov.hu/jogszabaly/2024-69-00-00
+    verified: true
+    note: A communications provider is in scope at any size. It is essential when it is a medium-sized
+      or larger annex 2 organisation under 1. § (4) f).
+    evidence_quote: elektronikus hírközlési szolgáltató
+    checked_against: 2024. évi LXIX. törvény, Nemzeti Jogszabálytár njt.jog.gov.hu, időállapot 2026.10.01,
+      read 2026-11-27
   Art. 3(1)(d):
-    ref: 1. § (4) és (5)
-    title: Hatály
-    source_url: https://njt.hu/jogszabaly/2024-69-00-00
-    verified: false
-    note: The Act groups essential and important organisations in 1. § (4) and (5) and in annexes 2 and 3. This Directive
-      sub-paragraph was not given its own Hungarian number. Best reading of the NJT consolidated text. Marked unverified so
-      the paragraph can be checked again before anyone relies on it.
+    ref: 1. melléklet 1. pont és 1. § (4) a)
+    title: Közigazgatás
+    source_url: https://njt.jog.gov.hu/jogszabaly/2024-69-00-00
+    verified: true
+    note: ''
+    evidence_quote: a központi államigazgatási szerv, a Kormány kivételével
+    checked_against: 2024. évi LXIX. törvény, Nemzeti Jogszabálytár njt.jog.gov.hu, időállapot 2026.10.01,
+      read 2026-11-27
   Art. 3(1)(e):
-    ref: 1. § (4) és (5)
-    title: Hatály
-    source_url: https://njt.hu/jogszabaly/2024-69-00-00
-    verified: false
-    note: The Act groups essential and important organisations in 1. § (4) and (5) and in annexes 2 and 3. This Directive
-      sub-paragraph was not given its own Hungarian number. Best reading of the NJT consolidated text. Marked unverified so
-      the paragraph can be checked again before anyone relies on it.
+    ref: 1. § (1) c) és (6)
+    title: Azonosítás
+    source_url: https://njt.jog.gov.hu/jogszabaly/2024-69-00-00
+    verified: true
+    note: Identification is by the national or defence cybersecurity authority when a condition in 1.
+      § (6) is met.
+    evidence_quote: alapvető vagy fontos szervezetként azonosított
+    checked_against: 2024. évi LXIX. törvény, Nemzeti Jogszabálytár njt.jog.gov.hu, időállapot 2026.10.01,
+      read 2026-11-27
   Art. 3(1)(f):
-    ref: 1. § (4) és (5)
-    title: Hatály
-    source_url: https://njt.hu/jogszabaly/2024-69-00-00
-    verified: false
-    note: The Act groups essential and important organisations in 1. § (4) and (5) and in annexes 2 and 3. This Directive
-      sub-paragraph was not given its own Hungarian number. Best reading of the NJT consolidated text. Marked unverified so
-      the paragraph can be checked again before anyone relies on it.
+    ref: 1. § (4) d)
+    title: Kritikus szervezet
+    source_url: https://njt.jog.gov.hu/jogszabaly/2024-69-00-00
+    verified: true
+    note: ''
+    evidence_quote: a Kszetv. alapján kijelölt kritikus szervezetek
+    checked_against: 2024. évi LXIX. törvény, Nemzeti Jogszabálytár njt.jog.gov.hu, időállapot 2026.10.01,
+      read 2026-11-27
   Art. 3(2):
-    ref: 1. § (4) és (5)
-    title: Hatály
-    source_url: https://njt.hu/jogszabaly/2024-69-00-00
-    verified: false
-    note: The Act groups essential and important organisations in 1. § (4) and (5) and in annexes 2 and 3. This Directive
-      sub-paragraph was not given its own Hungarian number. Best reading of the NJT consolidated text. Marked unverified so
-      the paragraph can be checked again before anyone relies on it.
+    ref: 1. § (5)
+    title: Fontos szervezet
+    source_url: https://njt.jog.gov.hu/jogszabaly/2024-69-00-00
+    verified: true
+    note: The residual category is a fontos szervezet.
+    evidence_quote: fontos szervezetnek minősülnek
+    checked_against: 2024. évi LXIX. törvény, Nemzeti Jogszabálytár njt.jog.gov.hu, időállapot 2026.10.01,
+      read 2026-11-27
   Art. 3(3):
-    ref: 1. § (4) és (5)
-    title: Hatály
-    source_url: https://njt.hu/jogszabaly/2024-69-00-00
-    verified: false
-    note: The Act groups essential and important organisations in 1. § (4) and (5) and in annexes 2 and 3. This Directive
-      sub-paragraph was not given its own Hungarian number. Best reading of the NJT consolidated text. Marked unverified so
-      the paragraph can be checked again before anyone relies on it.
+    ref: 1. § (6) és 8. §
+    title: Nyilvántartás
+    source_url: https://njt.jog.gov.hu/jogszabaly/2024-69-00-00
+    verified: true
+    note: The Act uses identification and registration, not the Directive's 17 April 2025 list.
+    evidence_quote: Az (1) bekezdés c) pontja szerinti azonosítási eljárás feltétele
+    checked_against: 2024. évi LXIX. törvény, Nemzeti Jogszabálytár njt.jog.gov.hu, időállapot 2026.10.01,
+      read 2026-11-27
   Annex I, point 8:
-    ref: ''
-    title: ''
-    source_url: https://njt.hu/jogszabaly/2024-69-00-00
-    verified: false
-    note: Point-level correspondence was not read. Best reading of the NJT consolidated text. Marked unverified so the paragraph
-      can be checked again before anyone relies on it.
+    ref: 2. melléklet, Digitális infrastruktúra
+    title: Digitális infrastruktúra
+    source_url: https://njt.jog.gov.hu/jogszabaly/2024-69-00-00
+    verified: true
+    note: The annex lists cloud, data centre, TLD, DNS and content-delivery providers. Electronic communications
+      and trust sit under Hírközlési szolgáltatás, not under this heading.
+    evidence_quote: Digitális infrastruktúra
+    checked_against: 2024. évi LXIX. törvény, Nemzeti Jogszabálytár njt.jog.gov.hu, időállapot 2026.10.01,
+      read 2026-11-27
   Annex I, point 10:
-    ref: ''
-    title: ''
-    source_url: https://njt.hu/jogszabaly/2024-69-00-00
-    verified: false
-    note: Point-level correspondence was not read. Best reading of the NJT consolidated text. Marked unverified so the paragraph
-      can be checked again before anyone relies on it.
+    ref: 1. melléklet
+    title: Közigazgatási ágazat
+    source_url: https://njt.jog.gov.hu/jogszabaly/2024-69-00-00
+    verified: true
+    note: Public administration is annex 1 of the Hungarian Act, not point 10 of annex 2.
+    evidence_quote: Közigazgatási ágazathoz tartozó szervezetek
+    checked_against: 2024. évi LXIX. törvény, Nemzeti Jogszabálytár njt.jog.gov.hu, időállapot 2026.10.01,
+      read 2026-11-27
 national_extras:
 - id: hu-reg-01
-  text: Megküldte a szervezet az SZTFH-nak a nyilvántartásba vételhez szükséges adatokat a működés megkezdésétől vagy a törvény
-    hatálya alá kerüléstől számított 30 napon belül?
-  text_en: Has the organisation sent SZTFH the data required for registration within 30 days of starting operations or of
+  text: Az 1. § (1) b) pontja szerinti és egyúttal a 2. és 3. melléklet szerinti szervezet, valamint az
+    1. § (1) d) és e) pontja szerinti szervezet megküldte az SZTFH-nak a nyilvántartási adatokat a működés
+    megkezdésétől vagy a hatály alá kerüléstől számított 30 napon belül?
+  text_en: Where the organisation is covered by section 1(1)(b) and also by annexes 2 and 3, or by section
+    1(1)(d) or (e), has it sent SZTFH the registration data within 30 days of starting operations or of
     coming within the Act?
   priority: critical
   effort: low
   evidence_hint: SZTFH 420 űrlap, nyilvántartásba vételi döntés
   remediation: Nyújtsa be a nyilvántartásba vételi kérelmet az SZTFH-hoz, és őrizze meg a döntést.
   article: 8. § (5)
-  source_url: https://njt.hu/jogszabaly/2024-69-00-00
-  verified: false
-  note: 8. § (5) is the reading for organisations under 1. § (1) b) that are also in annexes 2 and 3, and for 1. § (1) d)
-    and e). Other organisations notify the national cybersecurity authority under 8. § (4). Unverified.
+  source_url: https://njt.jog.gov.hu/jogszabaly/2024-69-00-00
+  verified: true
+  note: 8. § (4) a) is a different 30-day notice, to the national cybersecurity authority, for organisations
+    in 1. § (1) a) to c) and f).
+  evidence_quote: 30 napon belül a 29. § (1) bekezdés a) pontjában meghatározott adatokat megküldeni az
+    SZTFH részére
+  checked_against: 2024. évi LXIX. törvény, Nemzeti Jogszabálytár njt.jog.gov.hu, időállapot 2026.10.01,
+    read 2026-11-27
 - id: hu-audit-01
-  text: Kötött a szervezet a nyilvántartásba vételtől számított 120 napon belül szerződést az SZTFH nyilvántartásában szereplő
-    auditorral, és elvégezteti az első kiberbiztonsági auditot a nyilvántartásba vételtől számított két éven belül?
-  text_en: Has the organisation contracted an auditor listed in the SZTFH register within 120 days of registration, and will
-    the first cybersecurity audit be completed within two years of registration?
+  text: A 16. § (1) hatálya alá tartozó szervezet a nyilvántartásba vételtől számított 120 napon belül
+    szerződést kötött az SZTFH nyilvántartásában szereplő auditorral, és az első auditot a nyilvántartásba
+    vételtől számított két éven belül elvégezteti?
+  text_en: Where section 16(1) applies, has the organisation contracted an auditor in the SZTFH register
+    within 120 days of registration, and will the first audit be completed within two years of registration?
   priority: critical
   effort: high
   evidence_hint: Auditori szerződés, az auditor nyilvántartási száma, auditütemezés
-  remediation: Kössön szerződést SZTFH-nyilvántartásban szereplő auditorral. Önértékelés nem helyettesíti az auditot.
-  article: 16. § (2)
-  source_url: https://njt.hu/jogszabaly/2024-69-00-00
-  verified: false
-  note: 16. § (1) is the reading for a biennial audit. 21. § (9) lets the president of SZTFH set the procedure and the maximum
-    fee by decree. SZTFH Decree 1/2025 was named as that decree and was not opened, so its number is not confirmed here. There
-    is no self-assessment alternative in the sections that were read. Unverified.
+  remediation: Kössön szerződést SZTFH-nyilvántartásban szereplő auditorral. Önértékelés nem helyettesíti
+    az auditot.
+  article: 16. § (1) és (2)
+  source_url: https://njt.jog.gov.hu/jogszabaly/2024-69-00-00
+  verified: true
+  note: '16. § (1) also requires an audit every two years. It applies to annex 2 and 3 organisations that
+    are also in 1. § (1) b), to 1. § (1) d), and to 1. § (1) e) except a microenterprise. 89. § (1a) and
+    (2): an organisation in that group that started before 1 January 2025 must contract by 31 August 2025
+    and complete the first audit by 30 June 2026. No self-assessment alternative is in 16. §.'
+  evidence_quote: a nyilvántartásba vételét követő 120 napon belül a kiberbiztonsági audit elvégzésére
+    megállapodást kötni
+  checked_against: 2024. évi LXIX. törvény, Nemzeti Jogszabálytár njt.jog.gov.hu, időállapot 2026.10.01,
+    read 2026-11-27
 - id: hu-class-01
-  text: Sorolta a szervezet az elektronikus információs rendszereit alap, jelentős vagy magas biztonsági osztályba, és alkalmazza
-    az osztályhoz előírt védelmi intézkedéseket?
-  text_en: Has the organisation classified its electronic information systems as basic, significant or high, and does it apply
-    the protective measures required for that class?
+  text: Sorolta a szervezet az elektronikus információs rendszereit alap, jelentős vagy magas biztonsági
+    osztályba, és alkalmazza az osztályhoz előírt védelmi intézkedéseket?
+  text_en: Has the organisation classified its electronic information systems as basic, significant or
+    high, and does it apply the protective measures required for that class?
   priority: high
   effort: high
   evidence_hint: Biztonsági osztályba sorolás dokumentuma, az osztályhoz tartozó intézkedések listája
-  remediation: Végezzék el a biztonsági osztályba sorolást, és vezessék be a miniszteri rendelet szerinti intézkedéseket.
-  article: 10. §
-  source_url: https://njt.hu/jogszabaly/2024-69-00-00
-  verified: false
-  note: 10. § (1) names the three classes. 10. § (3) says the minister responsible for IT sets the requirements and the measures
-    by decree. That decree was not opened, so no decree number is given. Unverified.
+  remediation: Végezzék el a biztonsági osztályba sorolást, és vezessék be a miniszteri rendelet szerinti
+    intézkedéseket.
+  article: 10. § (1) és (4)
+  source_url: https://njt.jog.gov.hu/jogszabaly/2024-69-00-00
+  verified: true
+  note: 10. § (3) leaves the concrete measures to a decree of the minister responsible for IT. That decree
+    was not opened, so no decree number is given.
+  evidence_quote: „alap”, „jelentős” vagy „magas” biztonsági osztályba sorolja
+  checked_against: 2024. évi LXIX. törvény, Nemzeti Jogszabálytár njt.jog.gov.hu, időállapot 2026.10.01,
+    read 2026-11-27
 - id: hu-incident-01
-  text: Ha a szervezetnél nincs a kiberbiztonsági incidens kezelésére megfelelő szaktudású foglalkoztatott, az incidens kezelését
-    az SZTFH nyilvántartásában szereplő gazdálkodó szervezetre bízták?
-  text_en: If the organisation has no employee with the right expertise to handle a cybersecurity incident, has incident handling
-    been entrusted to an organisation listed in the SZTFH register for that purpose?
+  text: Ha a szervezetnél nincs a kiberbiztonsági incidens kezelésére megfelelő szaktudású foglalkoztatott,
+    az incidens kezelését az SZTFH nyilvántartásában szereplő gazdálkodó szervezetre bízták?
+  text_en: If the organisation has no employee with the right expertise to handle a cybersecurity incident,
+    has incident handling been entrusted to an organisation listed in the SZTFH register for that purpose?
   priority: high
   effort: medium
-  evidence_hint: Megbízási szerződés az SZTFH-nyilvántartásban szereplő szervezettel, vagy a belső szakértelem igazolása
-  remediation: Vagy foglalkoztasson megfelelő szakembert, vagy bízzon meg az SZTFH nyilvántartásában szereplő szervezetet.
+  evidence_hint: Megbízási szerződés az SZTFH-nyilvántartásban szereplő szervezettel, vagy a belső szakértelem
+    igazolása
+  remediation: Vagy foglalkoztasson megfelelő szakembert, vagy bízzon meg az SZTFH nyilvántartásában szereplő
+    szervezetet.
   article: 70. § (3) és (7)
-  source_url: https://njt.hu/jogszabaly/2024-69-00-00
-  verified: false
-  note: 70. § (3) a) allows the organisation to handle the incident itself when it employs someone with suitable expertise.
-    Otherwise 70. § (7), for the organisations in 1. § (1) d) and e), says it chooses from the SZTFH register. Unverified.
+  source_url: https://njt.jog.gov.hu/jogszabaly/2024-69-00-00
+  verified: true
+  note: 70. § (7) requires an organisation in 1. § (1) d) or e) that does not handle the incident itself
+    to choose a firm from the SZTFH register.
+  evidence_quote: megfelelő szaktudással rendelkező foglalkoztatott alkalmazása esetén a szervezet önmaga
+  checked_against: 2024. évi LXIX. törvény, Nemzeti Jogszabálytár njt.jog.gov.hu, időállapot 2026.10.01,
+    read 2026-11-27
 - id: hu-fee-01
-  text: Megfizeti a szervezet az éves kiberbiztonsági felügyeleti díjat az SZTFH-nak?
-  text_en: Does the organisation pay the annual cybersecurity supervision fee to SZTFH?
+  text: A 7. § (1) hatálya alá tartozó szervezet megfizeti az éves kiberbiztonsági felügyeleti díjat,
+    amely legfeljebb a nettó árbevétel 0,015 százaléka és legfeljebb 10 millió forint?
+  text_en: Where section 7(1) applies, does the organisation pay the annual cybersecurity supervision
+    fee, at most 0.015 percent of net turnover and at most 10 million forint?
   priority: medium
   effort: low
   evidence_hint: Díjfizetés bizonylata, árbevétel-számítás
   remediation: Állapítsa meg a díjat az SZTFH elnökének rendelete szerint, és fizessék meg.
-  article: 7. §
-  source_url: https://njt.hu/jogszabaly/2024-69-00-00
-  verified: false
-  note: 7. § (2) is the reading for a cap of 0.015 percent of net turnover and at most 10 million forint, with a 50 million
-    forint cap for a group. The payment date is in the presidential decree, which was not opened. Unverified.
+  article: 7. § (1) és (2)
+  source_url: https://njt.jog.gov.hu/jogszabaly/2024-69-00-00
+  verified: true
+  note: Budget organs are excluded. A group cap of 50 million forint is in the same subsection. The payment
+    date is in the presidential decree, which was not opened.
+  evidence_quote: legfeljebb 0,015 százaléka, de legfeljebb 10 millió forint
+  checked_against: 2024. évi LXIX. törvény, Nemzeti Jogszabálytár njt.jog.gov.hu, időállapot 2026.10.01,
+    read 2026-11-27
 - id: hu-officer-01
-  text: Kijelölte a szervezet vezetője az elektronikus információs rendszer biztonságáért felelős személyt, és az a személy
-    megfelel a törvényben írt feltételeknek?
-  text_en: Has the head of the organisation designated the person responsible for the security of electronic information systems,
-    and does that person meet the conditions set in the Act?
+  text: Kijelölte a szervezet vezetője az elektronikus információs rendszer biztonságáért felelős személyt,
+    és az a személy megfelel a törvényben írt feltételeknek?
+  text_en: Has the head of the organisation designated the person responsible for the security of electronic
+    information systems, and does that person meet the conditions set in the Act?
   priority: high
   effort: medium
   evidence_hint: Kijelölés, végzettség vagy szakmai gyakorlat igazolása, összeférhetetlenség vizsgálata
-  remediation: Jelöljék ki a felelős személyt. A 11. § (3) szerint cselekvőképesnek és büntetlen előéletűnek kell lennie;
-    egyes szervezeteknél a miniszteri rendelet szerinti végzettség vagy gyakorlat is kell.
-  article: 11. §
-  source_url: https://njt.hu/jogszabaly/2024-69-00-00
-  verified: false
-  note: The statutory title is elektronikus információs rendszer biztonságáért felelős személy. 11. § (4) limits who may not
-    be appointed, with exceptions for important organisations and for 1. § (1) d) and e). Unverified.
+  remediation: Jelöljék ki a felelős személyt. A 11. § (3) szerint cselekvőképesnek és büntetlen előéletűnek
+    kell lennie; egyes szervezeteknél a miniszteri rendelet szerinti végzettség vagy gyakorlat is kell.
+  article: 11. § (1) és (3)
+  source_url: https://njt.jog.gov.hu/jogszabaly/2024-69-00-00
+  verified: true
+  note: 11. § (3) a) requires legal capacity and a clean criminal record. Further qualifications for some
+    organisations are in a ministerial decree, which was not opened.
+  evidence_quote: kijelöli az elektronikus információs rendszer biztonságáért felelős személyt
+  checked_against: 2024. évi LXIX. törvény, Nemzeti Jogszabálytár njt.jog.gov.hu, időállapot 2026.10.01,
+    read 2026-11-27
 incident_clocks:
-  source_url: https://njt.hu/jogszabaly/2024-69-00-00
-  verified: false
-  note: 66. § requires a report without delay, as a government decree specifies. The Act section that was read does not replace
-    the Directive's 24 hours, 72 hours or one month, so those clocks are kept.
+  source_url: https://njt.jog.gov.hu/jogszabaly/2024-69-00-00
+  verified: true
+  evidence_quote: kötelesek haladéktalanul, a kormányrendeletben meghatározottak szerint bejelenteni
+  checked_against: 2024. évi LXIX. törvény, Nemzeti Jogszabálytár njt.jog.gov.hu, időállapot 2026.10.01,
+    read 2026-11-27
+  note: 66. § (1) and (2). The Act does not replace the Directive's 24 hours, 72 hours or one month. The
+    hours are left to a government decree, which was not opened. No clock override is applied. Point 40
+    bb) adds reputational loss to the significant-incident definition.
 deadlines:
 - id: hu-register
-  description: Nyilvántartásba vétel az SZTFH-nál a működés megkezdésétől vagy a hatályba kerüléstől számított 30 napon belül.
-  description_en: Registration with SZTFH within 30 days of starting operations or coming into scope.
+  description: Nyilvántartásba vétel az SZTFH-nál a működés megkezdésétől vagy a hatályba kerüléstől számított
+    30 napon belül.
+  description_en: For the organisations in section 8(5), send the registration data to SZTFH within 30
+    days of starting operations or coming within the Act.
   relative: 30 days from starting operations or coming into scope
-  source_url: https://njt.hu/jogszabaly/2024-69-00-00
-  verified: false
-  note: 8. § (5), unverified.
+  source_url: https://njt.jog.gov.hu/jogszabaly/2024-69-00-00
+  verified: true
+  note: 8. § (5). A different 30-day notice to the national cybersecurity authority is 8. § (4) a).
+  checked_against: 2024. évi LXIX. törvény, Nemzeti Jogszabálytár njt.jog.gov.hu, időállapot 2026.10.01,
+    read 2026-11-27
+  evidence_quote: 30 napon belül a 29. § (1) bekezdés a) pontjában meghatározott adatokat megküldeni az
+    SZTFH részére
 - id: hu-auditor-contract
-  description: Szerződés SZTFH-nyilvántartásbeli auditorral a nyilvántartásba vételtől számított 120 napon belül, első audit
-    két éven belül.
-  description_en: Contract with an SZTFH-registered auditor within 120 days of registration, and the first audit within two
-    years.
+  description: Szerződés SZTFH-nyilvántartásbeli auditorral a nyilvántartásba vételtől számított 120 napon
+    belül, első audit két éven belül.
+  description_en: Contract with an SZTFH-registered auditor within 120 days of registration, and the first
+    audit within two years.
   relative: 120 days to contract, 2 years to the first audit, from registration
-  source_url: https://njt.hu/jogszabaly/2024-69-00-00
-  verified: false
-  note: 16. § (2), unverified. SZTFH's own page also states these two periods for organisations registered after the Act took
-    effect.
+  source_url: https://njt.jog.gov.hu/jogszabaly/2024-69-00-00
+  verified: true
+  note: 16. § (2). The first audit is within two years of registration. The duty is limited to the organisations
+    in 16. § (1).
+  checked_against: 2024. évi LXIX. törvény, Nemzeti Jogszabálytár njt.jog.gov.hu, időállapot 2026.10.01,
+    read 2026-11-27
+  evidence_quote: 120 napon belül a kiberbiztonsági audit elvégzésére megállapodást kötni
 notices:
 - id: hu-auditor
-  text: A kiberbiztonsági auditot az SZTFH nyilvántartásában szereplő auditor végzi. Ennek az eszköznek a kimutatása csak
-    előkészítő anyag. Nem audit és nem hivatalos beadvány.
-  text_en: An auditor registered with SZTFH must perform the cybersecurity audit. This tool's output is preparation material
-    only. It is not the audit and it is not an official filing.
-  source_url: https://njt.hu/jogszabaly/2024-69-00-00
+  text: A kiberbiztonsági auditot az SZTFH nyilvántartásában szereplő auditor végzi. Ennek az eszköznek
+    a kimutatása csak előkészítő anyag. Nem audit és nem hivatalos beadvány.
+  text_en: An auditor registered with SZTFH must perform the cybersecurity audit. This tool's output is
+    preparation material only. It is not the audit and it is not an official filing.
+  source_url: https://njt.jog.gov.hu/jogszabaly/2024-69-00-00
   status: ''
   scored: false

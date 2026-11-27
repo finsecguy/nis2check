@@ -82,8 +82,9 @@ def _channel(jurisdiction) -> str:
     lines = [
         f"Competent authority: {authority}",
         f"CSIRT: {csirt}",
-        f"Reporting channel: {jurisdiction.law.reporting_channel_url}",
     ]
+    if jurisdiction.law.reporting_channel_url:
+        lines.append(f"Reporting channel: {jurisdiction.law.reporting_channel_url}")
     if jurisdiction.clocks.note:
         lines.append(jurisdiction.clocks.note)
     return "\n".join(lines)
