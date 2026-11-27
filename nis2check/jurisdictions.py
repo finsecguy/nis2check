@@ -13,6 +13,7 @@ unchecked citation is not filed as if it had been confirmed.
 from __future__ import annotations
 
 import datetime as dt
+import os
 from dataclasses import dataclass
 from functools import lru_cache
 from importlib import resources
@@ -78,6 +79,7 @@ class ArticleRef:
     note: str = ""
     evidence_quote: str = ""
     checked_against: str = ""
+    status: str = ""
 
 
 @dataclass(frozen=True)
@@ -362,6 +364,7 @@ def parse_jurisdiction(data: dict, code: str | None = None) -> Jurisdiction:
             note=" ".join(str(raw.get("note") or "").split()),
             evidence_quote=" ".join(str(raw.get("evidence_quote") or "").split()),
             checked_against=" ".join(str(raw.get("checked_against") or "").split()),
+            status=str(raw.get("status") or "").strip(),
         )
     required = required | {"Art. 2", "Art. 3"}
     missing = sorted(required - set(article_map))
@@ -520,8 +523,46 @@ def _cached(code: str) -> Jurisdiction:
     return load_jurisdiction(code)
 
 
+def experimental_countries() -> frozenset[str]:
+    """Countries named in ``NIS2_EXPERIMENTAL_COUNTRIES`` may be offered with blocked citations."""
+    raw = os.environ.get("NIS2_EXPERIMENTAL_COUNTRIES", "")
+    return frozenset(part.strip().lower() for part in raw.split(",") if part.strip())
+
+
+def references_acceptable(jurisdiction: Jurisdiction) -> bool:
+    """True when every citation is verified, or blocked and the country is experimental.
+
+    A blocked citation is never treated as verified. It can be offered only when
+    the country code is listed in ``NIS2_EXPERIMENTAL_COUNTRIES``.
+    """
+    experimental = jurisdiction.code in experimental_countries()
+    for ref in jurisdiction.article_map.values():
+        if ref.verified is True:
+            if not ref.evidence_quote.strip():
+                return False
+            continue
+        if experimental and ref.status == "blocked":
+            continue
+        return False
+    for question in jurisdiction.extras:
+        if question.verified is not True or not question.evidence_quote.strip():
+            return False
+    for deadline in jurisdiction.deadlines:
+        if deadline.verified is not True or not deadline.evidence_quote.strip():
+            return False
+    clocks = jurisdiction.clocks
+    if clocks.source_url and (clocks.verified is not True or not clocks.evidence_quote.strip()):
+        return False
+    return True
+
+
 def get_jurisdiction(code: str | None) -> Jurisdiction | None:
-    """The overlay for ``sk``, ``cz``, ``hu`` or ``pl``. ``eu`` and unknown codes are None."""
+    """The overlay for ``sk``, ``cz``, ``hu`` or ``pl``. ``eu`` and unknown codes are None.
+
+    A country that is not fully verified is not offered, unless it is listed in
+    ``NIS2_EXPERIMENTAL_COUNTRIES`` and every citation that is not verified is
+    marked ``blocked``.
+    """
     if not code:
         return None
     normalised = str(code).strip().lower()
@@ -529,7 +570,10 @@ def get_jurisdiction(code: str | None) -> Jurisdiction | None:
         return None
     if normalised not in NATIONAL_CODES:
         return None
-    return _cached(normalised)
+    loaded = _cached(normalised)
+    if references_acceptable(loaded):
+        return loaded
+    return None
 
 
 def with_national(catalogue: Catalogue, jurisdiction: Jurisdiction | None) -> Catalogue:

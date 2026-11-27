@@ -3,6 +3,7 @@
 ## Unreleased
 
 - Security: Docker Compose now binds to localhost by default. Set NIS2_BIND to expose it.
+- The Slovakia, Czechia, Hungary and Poland country files were checked against the official consolidated texts. The 0.4.0 note that Hungary and Poland are unverified throughout described that release. It does not describe the current files.
 
 ## 0.4.1
 

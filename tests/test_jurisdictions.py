@@ -12,6 +12,7 @@ from nis2check.jurisdictions import (
     get_jurisdiction,
     load_jurisdiction,
     parse_jurisdiction,
+    references_acceptable,
     with_national,
 )
 
@@ -142,3 +143,25 @@ def test_national_domain_is_appended_once():
     assert "sk-reg-01" in extended.question_ids
     again = with_national(extended, slovakia)
     assert again is extended
+
+
+def test_a_country_is_offered_only_when_verified_or_experimentally_blocked(monkeypatch):
+    monkeypatch.delenv("NIS2_EXPERIMENTAL_COUNTRIES", raising=False)
+    for code in ("sk", "cz", "hu", "pl"):
+        offered = get_jurisdiction(code)
+        assert offered is not None
+        assert references_acceptable(offered)
+        assert all(ref.verified is True and ref.evidence_quote for ref in offered.article_map.values())
+
+    data = yaml.safe_load((DATA / "sk.yaml").read_text(encoding="utf-8"))
+    data["article_map"]["Art. 20"]["verified"] = False
+    data["article_map"]["Art. 20"]["status"] = "blocked"
+    blocked = parse_jurisdiction(data, "sk")
+    assert references_acceptable(blocked) is False
+    monkeypatch.setenv("NIS2_EXPERIMENTAL_COUNTRIES", "sk")
+    assert references_acceptable(blocked) is True
+    assert blocked.article("Art. 20").verified is not True
+
+    data["article_map"]["Art. 20"]["status"] = ""
+    unverified = parse_jurisdiction(data, "sk")
+    assert references_acceptable(unverified) is False

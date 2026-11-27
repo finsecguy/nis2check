@@ -382,15 +382,15 @@ national_extras:
   evidence_quote: povinen ohlásit tuto službu Úřadu nejpozději do 60 dnů ode dne, kdy ke splnění podmínek
     došlo
 - id: cz-measures-01
-  text: 'Zavádí organizace bezpečnostní opatření podle vyhlášky pro svůj režim (vyšší režim: vyhláška
-    č. 409/2025 Sb., nižší režim: vyhláška č. 410/2025 Sb.)?'
-  text_en: 'Does the organisation apply the security measures in the decree for its regime (higher regime:
-    Decree No. 409/2025 Coll., lower regime: Decree No. 410/2025 Coll.)?'
+  text: Zavádí organizace bezpečnostní opatření podle vyhlášky, která se na její režim vztahuje, nejpozději
+    do 1 roku ode dne doručení rozhodnutí o registraci?
+  text_en: Does the organisation apply the security measures in the decree that applies to its regime, at
+    the latest one year after delivery of the registration decision?
   priority: critical
   effort: high
   evidence_hint: Rozhodnutí o režimu, přehled opatření podle příslušné vyhlášky
   remediation: Zjistěte režim a veďte opatření podle vyhlášky, která se na něj vztahuje. Lhůta k zavedení
-    je podle průvodce NÚKIB jeden rok od doručení rozhodnutí o registraci.
+    je jeden rok od doručení rozhodnutí o registraci.
   article: § 13 odst. 4 a § 15 odst. 4
   source_url: https://opendata.eselpoint.gov.cz/esel-esb/eli/cz/sb/2025/264/2025-11-01
   verified: true

@@ -7,7 +7,7 @@
 
 > **Disclaimer.** nis2check is an indicative self-assessment. It is not legal advice, not an official audit, and not a certification. NIS2 is applied through national law. DORA applies to financial entities as a regulation. Your competent authority and your own advisers decide scope and duties. nis2check supports a self-assessment and does not replace a certified auditor. National citations must be checked against the official text.
 
-NIS2 (Directive (EU) 2022/2555) asks in-scope organisations to manage cybersecurity risk, have management approve the measures, and report significant incidents. DORA (Regulation (EU) 2022/2554) sets digital resilience duties for financial entities. Where DORA covers ICT risk and incident reporting, it is lex specialis to NIS2. `nis2check` runs on your own server.
+NIS2 (Directive (EU) 2022/2555) asks in-scope organisations to manage cybersecurity risk, have management approve the measures, and report significant incidents. DORA (Regulation (EU) 2022/2554) sets digital resilience duties for financial entities. For a financial entity identified as essential or important, DORA is lex specialis where its requirements are at least equivalent in effect (DORA Article 1(2), NIS2 Article 4). `nis2check` runs on your own server.
 
 1. **Are we likely in scope?** Size and Annex I and II sectors. Indicative only.
 2. **Where are our gaps?** 40 NIS2 questions (Articles 20, 21(2)(a) to (j) and 23) and 27 DORA questions (Articles 5 to 45).
@@ -107,7 +107,7 @@ The PDF is an internal gap assessment and prints to A4.
 
 ## Coverage
 
-NIS2 domains: governance (Art. 20), risk policy (Art. 21(2)(a)), incident handling (b), continuity (c), supply chain (d), secure development (e), effectiveness (f), hygiene and training (g), cryptography (h), access and assets (i), multi-factor authentication (j), and incident reporting (Art. 23).
+NIS2 domains: governance (Art. 20), risk policy (Art. 21(2)(a)), incident handling (b), continuity (c), supply chain (d), secure development (e), effectiveness (f), hygiene and training (g), cryptography (h), access and assets (i), multi-factor authentication where appropriate (j), and incident reporting (Art. 23).
 
 DORA pillars: ICT risk (Art. 5-16), incidents (Art. 17-23), resilience testing (Art. 24-27), third parties (Art. 28-44), and information sharing (Art. 45). The question text is original. The article number says which duty it is about.
 
@@ -115,7 +115,7 @@ DORA pillars: ICT risk (Art. 5-16), incidents (Art. 17-23), resilience testing (
 
 Set the country on the organisation page, or pass `--country sk|cz|hu|pl` to `init`, `interview`, `report` and `controls`. `eu` leaves the Directive text unchanged. The screen language follows the country unless a user picks another one.
 
-Each finding shows the Directive article and the national provision. A citation that was not read in the official consolidated text is marked **unverified**. Hungary and Poland are unverified on purpose. Slovakia can download a working self-assessment for an NBU filing. It is not an official form.
+Each finding shows the Directive article and the national provision. A citation that was not read in the official consolidated text is marked **unverified**. Slovakia, Czechia, Hungary and Poland are offered only when their citations are verified, or when the country is listed in `NIS2_EXPERIMENTAL_COUNTRIES` and every citation that is not verified is marked blocked. Slovakia can download a working self-assessment for an NBU filing. It is not an official form.
 
 Add a country by writing `nis2check/data/jurisdictions/<code>.yaml`. The schema is in `docs/jurisdictions/README.md`. Set `verified: true` only after you have read the paragraph and its title in the official text.
 
