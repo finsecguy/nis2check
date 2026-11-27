@@ -1,6 +1,6 @@
 # National overlay for sk. verified is true only when the official consolidated
 # text was opened and the paragraph number and title were confirmed.
-# Poland is unverified until its consolidated text is checked.
+# Each verified flag below was checked against the consolidated Slovak text.
 
 code: sk
 language: sk

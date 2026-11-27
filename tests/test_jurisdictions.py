@@ -73,8 +73,9 @@ def test_deadlines_and_sector_authorities_load():
     dated = [item for item in poland.deadlines if item.date is not None]
     assert any(item.date.isoformat() == "2027-04-03" for item in dated)
     assert "energy" in poland.sector_authorities
-    assert poland.sector_authorities["energy"].authority == ""
-    assert any(note.status == "under_review" and note.scored is False for note in poland.notices)
+    assert poland.sector_authorities["energy"].authority == "minister właściwy do spraw energii"
+    assert any(note.id == "pl-fines" and note.scored is False for note in poland.notices)
+    assert all(note.status != "under_review" for note in poland.notices)
 
     data = yaml.safe_load((DATA / "pl.yaml").read_text(encoding="utf-8"))
     data["sector_authorities"]["not_a_sector"] = {"authority": "X", "csirt": "Y"}
@@ -82,10 +83,16 @@ def test_deadlines_and_sector_authorities_load():
         parse_jurisdiction(data, "pl")
 
 
-def test_poland_citations_are_still_unverified():
+def test_poland_terms_and_clocks_match_the_act():
     poland = load_jurisdiction("pl")
-    assert all(ref.verified is False for ref in poland.article_map.values())
-    assert all(question.verified is False for question in poland.extras)
+    assert poland.term_for("essential") == "podmiot kluczowy"
+    assert poland.term_for("important") == "podmiot ważny"
+    assert poland.article("Art. 23").ref.startswith("art. 11")
+    assert poland.clocks.early_hours is None
+    assert poland.clocks.verified is True
+    assert poland.law.reporting_channel_url == ""
+    assert all(ref.verified and ref.evidence_quote for ref in poland.article_map.values())
+    assert all(question.verified and question.evidence_quote for question in poland.extras)
 
 
 def test_hungary_terms_and_clocks_match_the_act():
