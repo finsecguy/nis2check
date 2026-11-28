@@ -1,9 +1,11 @@
 # Changelog
 
-## Unreleased
+## 0.4.2 - 2026-11-28
 
 - Security: Docker Compose now binds to localhost by default. Set NIS2_BIND to expose it.
-- The Slovakia, Czechia, Hungary and Poland country files were checked against the official consolidated texts. The 0.4.0 note that Hungary and Poland are unverified throughout described that release. It does not describe the current files.
+- Every legal citation (EU, SK, CZ, HU, PL) was checked against official texts. Evidence is in docs/verification/claims.csv. Corrected: EU 61, SK 9, CZ 6, HU 36, PL 14. Removed: HU 1, PL 2. HU-0311 and PL-0361 stay blocked.
+- NIS2_EXPERIMENTAL_COUNTRIES lists countries that may be loaded with blocked citations. Any other country is offered only when its citations are verified.
+- The long README sections now live in docs/operations.md, docs/sso.md, docs/ciso-assistant.md and docs/jurisdictions/README.md.
 
 ## 0.4.1
 
